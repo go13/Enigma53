@@ -3,4 +3,4 @@
 # is deployed and started.  This script gets executed directly, so 
 # it could be python, php, ruby, etc.
 
-mysql --user=adminuWJebAu --password=CbbTZnik1KrN --database=enigma53 < ${OPENSHIFT_REPO_DIR}/db.sql
+echo `mysql --user=adminuWJebAu --password=CbbTZnik1KrN --database=enigma53 < ${OPENSHIFT_REPO_DIR}/db.sql`
