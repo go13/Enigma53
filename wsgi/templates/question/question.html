@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form, render_field, render_label, render_checkbox %}
+
+{% block content %}
+
+{% if question %}
+<div class="well">
+    {{ question.question }}
+</div>
+        {% if question.type == 1 %}
+            {% call render_form(form=form, action=url_for('submit_question') ) %}
+                {{ form.answer(class_="checkbox unstyled") }}
+                {% call render_field(form.submit) %}
+                <button type="submit" class="btn">Previous</button>
+                {{ form.submit(class_="btn btn-success") }}
+                <button type="submit"  class="btn">Skip</button>
+                {% endcall %}
+            {% endcall %}
+        {% elif question.type == 2 %}
+            <form action="">
+                {% for answer in question.answerList %}
+                    <label class="radio">
+                        <input type="radio" value="{{ answer.id }}"> {{ answer.answer }}
+                    </label>
+                {% endfor %}
+                <button type="submit" class="btn">Previous</button>
+                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn">Skip</button>
+            </form>
+        {% else %}
+        {% endif %}
+
+{% endif %}
+
+{% endblock content %}

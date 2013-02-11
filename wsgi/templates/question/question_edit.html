@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if question %}
+ <textarea rows="5" placeholder="Type your question...">{{ question.question }}</textarea>
+{% if question.type == 1 %}
+<form action="">
+<div class="btn-group">
+    <button class="btn">Checkbox</button>
+    <button class="btn">Radio</button>
+    <button class="btn">Text</button>
+</div>
+</form>
+<form action="">
+    <table class="table">
+        <thead>
+            <th>
+                Correct
+            </th>
+            <th>
+                Answer
+            </th>
+            <th>
+                Delete
+            </th>
+        </thead>
+    {% for answer in question.answerList %}
+        <tr>
+            <td>
+                <input type="checkbox" value="{{ answer.id }}">
+            </td>
+            <td>
+                <input type="text" placeholder="Type something…" value="{{ answer.answer }}">
+            </td>
+            <td>
+                <button type="submit" class="btn">-</button>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </table>
+    <button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+{% elif question.type == 2 %}
+<form action="">
+    {% for answer in question.answerList %}
+    <label class="radio">
+        <input type="radio" value="{{ answer.id }}"> {{ answer.answer }}
+    </label>
+    {% endfor %}
+
+    <button type="submit" class="btn">Submit</button>
+
+</form>
+
+{% else %}
+{% endif %}
+
+{% endif %}
+
+{% endblock content %}
