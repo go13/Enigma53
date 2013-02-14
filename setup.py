@@ -1,8 +1,8 @@
 from setuptools import setup
 
-setup(name='qnet',
+setup(name='enigma53',
       version='1.0',
-      description='BlueLemonToRemember',
+      description='enigma53',
       author='Dmitro',
       author_email='example@example.com',
       url='http://www.python.org/sigs/distutils-sig/',
