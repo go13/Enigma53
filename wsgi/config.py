@@ -1,3 +1,5 @@
+import os
+
 dbhost = os.environ['OPENSHIFT_MYSQL_DB_HOST'] #:$OPENSHIFT_MYSQL_DB_PORT'
 
 dbuser = 'adminuWJebAu'
