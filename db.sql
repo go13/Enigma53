@@ -18,6 +18,7 @@ create table answers
    id                   integer not null,
    questionid           integer,
    answer               text,
+   correct              integer,
    primary key (id)
 );
 
@@ -28,7 +29,7 @@ create table questions
 (
    id                   integer not null,
    quizid               integer,
-   nextquestionid               integer,
+   nextquestionid       integer,
    question             text,
    type                 integer,
    primary key (id)
