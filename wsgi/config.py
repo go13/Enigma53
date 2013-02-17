@@ -1,6 +1,6 @@
-dbhost = '127.0.0.1 '
-dbuser = 'root'
-dbpass = 'root'
-dbname = 'qnet'
+dbhost = '$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT'
+dbuser = 'adminuWJebAu'
+dbpass = 'CbbTZnik1KrN'
+dbname = 'enigma53'
 
 DB_URI = 'mysql://' + dbuser + ':' + dbpass + '@' + dbhost + '/' +dbname
