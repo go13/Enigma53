@@ -4,6 +4,6 @@
 # up again.  This script gets executed directly, so it could be python, php,
 # ruby, etc.
 
-#mysql --user=adminuWJebAu --password=CbbTZnik1KrN --database=enigma53 < db.sql
+mysql --user=adminuWJebAu --password=CbbTZnik1KrN --database=enigma53 < ~/app-root/repo/db.sql
 
-echo `pwd` > ~/app-root/runtime/repo/deploy.log
+#echo `pwd` > ~/app-root/runtime/repo/deploy.log
