@@ -3,3 +3,7 @@
 # build hook has been run but before the application has been started back
 # up again.  This script gets executed directly, so it could be python, php,
 # ruby, etc.
+
+#mysql --user=adminuWJebAu --password=CbbTZnik1KrN --database=enigma53 < db.sql
+
+echo `pwd` > ~/app-root/runtime/repo/deploy.log
