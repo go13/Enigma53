@@ -79,7 +79,7 @@ class Question(db.Model):
 
     id = db.Column('id', Integer, primary_key=True)
     quizid = db.Column('quizid', Integer)
-    nextquestion = db.Column('nextquestion', Integer)
+    nextquestion = db.Column('nextquestionid', Integer)
     question = db.Column('question', String)
     type = db.Column('type', Integer)
     answerList = []

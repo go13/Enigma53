@@ -28,6 +28,7 @@ create table questions
 (
    id                   integer not null,
    quizid               integer,
+   nextquestionid               integer,
    question             text,
    type                 integer,
    primary key (id)
