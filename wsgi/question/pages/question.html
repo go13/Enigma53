@@ -10,10 +10,11 @@
         {% if question.type == 1 %}
             {% call render_form(form=form, action=url_for('questionbp.submit_question') ) %}
                 {{ form.answer(class_="checkbox unstyled") }}
+                {{ form.hidden_tag() }}
                 {% call render_field(form.submit) %}
                 <button type="submit" class="btn">Previous</button>
                 {{ form.submit(class_="btn btn-success") }}
-                <button type="submit"  class="btn">Skip</button>
+                <button type="submit" class="btn">Skip</button>
                 {% endcall %}
             {% endcall %}
         {% elif question.type == 2 %}
@@ -23,9 +24,9 @@
                         <input type="radio" value="{{ answer.id }}"> {{ answer.answer }}
                     </label>
                 {% endfor %}
-                <button type="submit" class="btn">Previous</button>
-                <button type="submit" class="btn">Submit</button>
-                <button type="submit" class="btn">Skip</button>
+                <button type="submit" class="btn" value="Previous">Previous</button>
+                <button type="submit" class="btn" value="Submit">Submit</button>
+                <button type="submit" class="btn" value="Skip">Skip</button>
             </form>
         {% else %}
         {% endif %}
