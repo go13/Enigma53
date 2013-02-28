@@ -1,16 +1,16 @@
-from flask import Flask, Blueprint, render_template, request, redirect, url_for
+from flask import Flask, Blueprint, render_template, request, redirect, url_for, jsonify
 from sqlalchemy import Table, Column, Integer, String
 from flask.ext.wtf import Form, SelectMultipleField , SubmitField, RadioField, SelectField, BooleanField, HiddenField
 from wtforms import widgets
 import time, datetime
 
 from model import db
-from answer import Answer, Answerhistory
+from answer import Answer, Answerhistory, Answer_Submit_Form
 
 questionbp = Blueprint('questionbp', __name__, template_folder='pages')
 
 class Question_Submit_Form(Form):
-    answer = SelectMultipleField(
+    answers = SelectMultipleField(
         choices = [],
         default = [],
         option_widget=widgets.CheckboxInput(),
@@ -59,21 +59,32 @@ class Question(db.Model):
             q.questionList=Answer.get_answer_by_question_id(id)
             return q
         return None
-
+    
 @questionbp.route('/<int:question_id>/')
 def question(question_id):
     action = request.args.get('action')
     question=Question.get_question_by_id(question_id)
-
+    
     if action == 'edit':
-        return render_template('question_edit.html', question=question)
+        form = Answer_Submit_Form(csrf_enabled=False)
+        form.questionid.data = question_id
+        choices = []
+        defaults = []          
+        for a in question.answerList:
+            form.texts._add_entry(data=a.answer)
+            choices.append((a.id,a.id))
+            if a.correct:
+                defaults.append(a.correct)
+        form.answers.choices = choices
+        form.answers.default = defaults 
+        return render_template('editquestion.html', question=question, form=form)
     else:
         if question:
             form=Question_Submit_Form(csrf_enabled=False)
             choices = []
             for a in question.answerList:
                 choices.append((a.id, a.answer))
-            form.answer.choices = choices
+            form.answers.choices = choices
             form.questionid.data=question.id
             return render_template('question.html',question=question, form=form)
         else:
@@ -83,12 +94,10 @@ def question(question_id):
 def submit_question():
     form = Question_Submit_Form(request.form, csrf_enabled=False)
     qid = form.questionid.data
+    choices = form.answers.data
 
-    choices = form.answer.data
-    print choices
     submittimes = []
     for ch in choices:
-        print 'choice ', ch
         submittimes.append(Answerhistory(1, qid, ch, None))
     Answerhistory.add_answer_histories(submittimes)
 
@@ -97,5 +106,35 @@ def submit_question():
         return redirect(url_for('questionbp.question', question_id = nextquestion.id))
     else:
         return redirect(url_for('index'))
+    
+@questionbp.route('/answer_ajax/delete/')
+def answer_ajax_delete():
+    answer_id = request.args.get('answer_id')
+    if Answer.delete_answer_by_id(answer_id)>0:
+        return jsonify(status='OK')
+    else:
+        return jsonify(status='ERROR')
+    
+@questionbp.route('/answer_ajax/update/')
+def answer_ajax_update():
+    answer_id = request.args.get('answer_id')
+    correct = request.args.get('correct')
+    answer = request.args.get('answer')
+    
+    if Answer.update_answer_by_id(answer_id, answer, correct)>0:
+        return jsonify(status='OK')
+    else:
+        return jsonify(status='ERROR')
+        
+
+@questionbp.route('/answer_ajax/create/')
+def answer_ajax_create():
+    question_id = request.args.get('question_id')
+    answer = request.args.get('answer')
+    correct = request.args.get('correct')
+    
+    answer_id = Answer.create_answer(question_id, answer, correct)
+    return jsonify(status='OK', answer_id=answer_id)
+    
 
     

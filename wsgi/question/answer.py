@@ -1,9 +1,20 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
-from flask.ext.wtf import Form, SelectMultipleField , SubmitField, RadioField, SelectField, BooleanField, HiddenField
+from flask.ext.wtf import Form, SelectMultipleField , SubmitField, RadioField, SelectField, BooleanField, HiddenField, FieldList, TextField
 from wtforms import widgets
 
 from model import db
+
+class Answer_Submit_Form(Form):
+    answers = SelectMultipleField(
+        choices = [],
+        default = [],
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False, html_tag='ol')
+    )
+    texts = FieldList(TextField('texts'))
+    questionid = HiddenField("questionid")
+    submit = SubmitField("Submit")
 
 class Answer(db.Model):
     __tablename__ = 'answers'
@@ -34,6 +45,23 @@ class Answer(db.Model):
         if q is not None:
             return q
         return None
+    
+    @staticmethod
+    def delete_answer_by_id(id):
+        return Answer.query.filter_by(id=id).delete()
+    
+    @staticmethod
+    def update_answer_by_id(id, answer, correct):
+        result = Answer.query.filter_by(id=id).update({'answer':answer, 'correct':correct})                
+        db.session.commit()        
+        return result
+    
+    @staticmethod
+    def create_answer(questionid, answer, correct):
+        answer = Answer(questionid, answer, correct)
+        db.session.add(answer)                
+        db.session.commit()        
+        return answer.id   
 
 class Answerhistory(db.Model):
     __tablename__ = 'answerhistory'

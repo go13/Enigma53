@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form, render_field, render_label, render_checkbox %}
+{% block content %}
+
+<form>
+
+{% if question %}
+{% if question.type == 1 %}
+	
+	<div class="container" style="width: 650px;" >
+		<textarea rows="7" style="width: 100%;" placeholder="Type your question...">{{ question.question }}</textarea>
+		<script id="answer_template" type="text/x-jquery-tmpl">
+			<div id="${AnswerId}" class="qanswer input-prepend input-append">
+				<a class="qanswer-check btn btn-primary" onclick="qanswer_check(this)">
+					<i class="icon-ok icon-white"></i> 
+				</a> 
+				<input type="text" class="input-xxlarge">		
+				<div class="btn-group">
+					<a class="qanswer-move btn btn-primary" href="#">
+						<span class="icon-move icon-white"></span>
+					</a>
+					<a class="qanswer-delete btn btn-primary" onclick="qanswer_delete(this)">
+						<span class="icon-trash icon-white" ></span>
+					</a>
+				</div>
+			</div>		
+		</script>
+		
+		<div id="questions">
+		</div>			
+		
+		<div class="input-prepend input-append">
+			<a class="qanswer-check btn btn-success" onclick="qanswer_check(this)">
+				<i class="icon-ban-circle icon-white"></i> 
+			</a> 
+			<input type="text" class="input-xxlarge">
+			<a id="qanswer-add" style="width: 53px" class="btn btn-success" onclick="qanswer_add(this)"> 
+				<i class="icon-plus icon-white"></i> Add
+			</a>
+		</div>
+	
+		<div align="center">
+			<button class="btn btn-success" type="button" id="ccl">Submit</button>
+			<button class="btn" type="button">Cancel</button>
+		</div>		
+	</div>		
+
+</form>
+
+<script type="text/javascript">
+jQuery(document).ready(
+	
+);		
+</script>
+
+{% elif question.type == 2 %}
+{% else %}
+{% endif %}
+
+{% endif %}
+
+{% endblock content %}

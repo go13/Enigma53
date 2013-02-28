@@ -14,7 +14,7 @@ except IOError:
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 
-from question.questionbp import questionbp, Question
+from question.questionbp import questionbp
 from quiz.quizbp import quizbp
 
 DEBUG = True
@@ -44,4 +44,3 @@ def page(path):
 
 if __name__ == '__main__':
     application.run()
- 

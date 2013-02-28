@@ -20,10 +20,16 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
- 
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/bootstrap.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/lib.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/jquery.tmpl.min.js") }}"></script>
+    
 </head>
  
 <body>
+
  
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
@@ -53,11 +59,6 @@
         </div>
  
     </div> <!-- /container -->
- 
-<!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename="bootstrap/js/bootstrap.min.js") }}"></script>
+
 </body>
 </html>
