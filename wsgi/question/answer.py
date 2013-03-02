@@ -21,11 +21,11 @@ class Answer(db.Model):
 
     id = db.Column('id', Integer, primary_key=True)
     questionid = db.Column('questionid', Integer)
-    answer = db.Column('answer', String)
+    atext = db.Column('atext', String)
     correct = db.Column('correct', Integer)
 
-    def __init__(self, questionid=questionid, answer=answer, correct=correct):
-        self.answer = answer
+    def __init__(self, questionid=questionid, atext=atext, correct=correct):
+        self.atext = atext
         self.questionid = questionid
         self.correct = correct
 
@@ -57,11 +57,19 @@ class Answer(db.Model):
         return result
     
     @staticmethod
-    def create_answer(questionid, answer, correct):
+    def create_answer(questionid, answer, correct, batch):
         answer = Answer(questionid, answer, correct)
         db.session.add(answer)                
-        db.session.commit()        
-        return answer.id   
+        if batch: 
+            db.session.commit()        
+        return answer.id
+    
+    @staticmethod
+    def delete_answer_by_question_id(questionid, batch):
+        result = Answer.query.filter_by(questionid=questionid).delete()                
+        if batch: 
+            db.session.commit()        
+        return result 
 
 class Answerhistory(db.Model):
     __tablename__ = 'answerhistory'

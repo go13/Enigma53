@@ -21,7 +21,7 @@ create table answers
 (
    id                   integer not null AUTO_INCREMENT,
    questionid           integer,
-   answer               text,
+   atext                text,
    correct              integer,
    primary key (id)
 );
@@ -37,7 +37,7 @@ create table questions
    id                   integer not null AUTO_INCREMENT,
    quizid               integer,
    nextquestionid       integer,
-   question             text,
+   qtext                text,
    type                 integer,
    primary key (id)
 );

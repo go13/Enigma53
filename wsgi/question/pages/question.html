@@ -1,9 +1,7 @@
 {% extends "base.html" %} {% from "macros.html" import render_form,
 render_field, render_label, render_checkbox %} {% block content %}
 
-<form>
-	<div class="container" style="width: 750px">
-
+	<div class="container" style="width: 750px;">
 		<div class="tabbable tabs-right"> <!-- Only required for left/right tabs -->
 		  <ul id="questionNavigation" class="nav nav-tabs">
 		    <li class="active">
@@ -16,46 +14,34 @@ render_field, render_label, render_checkbox %} {% block content %}
 		  <div class="tab-content">
 		    <div class="tab-pane active" id="tab1">
 		      <p>I'm in Question 1.</p>
-					<div class="form-actions">
-						ghjhgjkkl<br> 
-						ghjhgjkkl<br> 
-						ghjhgjkkl<br> 
-						ghjhgjkkl<br>
-						ghjhgjkkl<br>
-					</div>
-					<blockquote style="margin-bottom: 15px">
-						<label class="checkbox"> <input type="checkbox">
-							Check me out
-						</label> <label class="checkbox"> <input type="checkbox">
-							Check me out
-						</label> <label class="checkbox"> <input type="checkbox">
-							Check me out
-						</label> <label class="checkbox"> <input type="checkbox">
-							Check me out
-						</label>
-					</blockquote>
+				<div class="form-actions">
+					{{ question.qtext }}
+				</div>
+				<blockquote style="margin-bottom: 15px">
+					{%for item in question.answers %}					
+					<label class="checkbox"> 
+						<input type="checkbox">	{{ item.atext }}
+					</label> 
+					{% endfor %}
+				</blockquote>
+				<div align="center">
+					<ul class="pager">
+				  		<li class="previous">
+				    		<a href="#">&larr; Prev</a>
+				  		</li>
+				  		<button type="submit" class="btn btn-success">Submit</button>
+				  		<li class="next">
+				    		<a href="#">Next &rarr;</a>
+				  		</li>
+					</ul>
+				</div>
 		    </div>
 		    <div class="tab-pane" id="tab2">
 		      <p>Howdy, I'm in Section 2.</p>
 		    </div>
 		  </div>
-		</div>
-
-		<div align="center">
-			<ul class="pager">
-			  <li class="previous">
-			    <a href="#">&larr; Prev</a>
-			  </li>
-			  <button type="submit" class="btn btn-success">Submit</button>
-			  <li class="next">
-			    <a href="#">Next &rarr;</a>
-			  </li>
-			</ul>
-		</div>
+		</div>		
 	</div>
-
-
-</form>
 
 {% if question %} {% if question.type == 1 %} {% elif question.type == 2
 %} {% else %} {% endif %} {% endif %} {% endblock content %}

@@ -19,6 +19,7 @@ from quiz.quizbp import quizbp
 
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
+TRAP_BAD_REQUEST_ERRORS = True
 FLATPAGES_EXTENSION = '.md'
  
 application = Flask(__name__)
