@@ -1,7 +1,5 @@
-from flask import Flask, Blueprint, render_template, request
+from flask import Flask, Blueprint, render_template
 from sqlalchemy import Table, Column, Integer, String
-from flask.ext.wtf import Form, SelectMultipleField , SubmitField, RadioField, SelectField, BooleanField
-from wtforms import widgets
 
 from model import db
 from question.questionbp import Question

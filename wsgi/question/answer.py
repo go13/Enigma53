@@ -1,20 +1,7 @@
-from flask import Flask, Blueprint, render_template, request, redirect, url_for
+from flask import Flask, Blueprint, render_template
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
-from flask.ext.wtf import Form, SelectMultipleField , SubmitField, RadioField, SelectField, BooleanField, HiddenField, FieldList, TextField
-from wtforms import widgets
 
 from model import db
-
-class Answer_Submit_Form(Form):
-    answers = SelectMultipleField(
-        choices = [],
-        default = [],
-        option_widget=widgets.CheckboxInput(),
-        widget=widgets.ListWidget(prefix_label=False, html_tag='ol')
-    )
-    texts = FieldList(TextField('texts'))
-    questionid = HiddenField("questionid")
-    submit = SubmitField("Submit")
 
 class Answer(db.Model):
     __tablename__ = 'answers'

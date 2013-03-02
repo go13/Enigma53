@@ -1,8 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from sqlalchemy import Table, Column, Integer, String
-
 import config
 
 # DB class
