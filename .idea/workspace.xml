@@ -1,0 +1,1398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a8585fb6-a034-4a6f-9502-78cbfa955165" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wsgi/index.html" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\enigma53.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\enigma53.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\enigma53.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\enigma53.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\fixtures\fixtures.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\index.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\MIT-LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\changelog.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\README" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\demo\something.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\demo\something.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\demo\test.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\distance.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\doc" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\doc.bat" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\documentjs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\content.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\content.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\content_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\doc_updated.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\attribute.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\class.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\constructor.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\favorite.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\function.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\page.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\results.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\content\views\top.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\demo\demo.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\demo\demo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\highlight\highlight.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\highlight\languages\javascript.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\highlight\languages\www.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\iframe\iframe.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\_sidebar_top_close.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\close.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\fav-off.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\fav-on.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\favicon.ico" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\logo.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\logo80x30.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\main_sprite.jpg" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\main_sprite.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\menu_button.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\pre.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\sidebar_top_close.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\type.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_flat_0_aaaaaa_40x100.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_flat_75_ffffff_40x100.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_glass_55_fbf9ee_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_glass_65_ffffff_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_glass_75_dadada_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_glass_75_e6e6e6_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_glass_95_fef1ec_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-bg_highlight-soft_75_cccccc_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-icons_222222_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-icons_2e83ff_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-icons_454545_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-icons_888888_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\images\ui-icons_cd0a0a_256x240.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\jmvcdoc.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\jmvcdoc.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\models\favorites.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\models\search.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\nav\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\nav\nav.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\nav\nav.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\nav\nav_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\nav\views\results.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\production.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\production.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\resources\helpers.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\scripts\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\scripts\doc.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\search\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\search\search.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\search\search.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\search\search_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\style.less" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\summary.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\test\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\jmvcdoc\tooltip.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\json.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\pages\how.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\scripts\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\searchdata.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\showdown.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\alias.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\author.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\codeend.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\codestart.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\constructor.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\demo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\description.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\download.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\hide.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\iframe.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\image.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\inherits.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\page.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\param.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\parent.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\plugin.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\return.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\scope.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\tag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\tags.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\tags\type.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\docs.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\docs\Something.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\docs\searchData.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\page.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\something.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\test.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\test\test_script.txt" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\add.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\attribute.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\class.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\function.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\page.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\prototype.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\script.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\static.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\type.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\types\types.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\documentjs\update" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\README.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\actions.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\adapters.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\jasmine.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\test\app.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\test\jasmine.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\test\jasmine.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\test\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\adapters\test\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\core.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\events.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\getters.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\open.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\queue.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\resources\jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\resources\json.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\traversers.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\browser\waits.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\coverage\cobertura.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\coverage\coverage.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\coverage\coverage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\coverage\coverage.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\dependencies.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\funcunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\MIT.LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\jasmine-html.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\jasmine.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\jasmine.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\jasmine_favicon.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\jasmine.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\jasmine.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\spec\PlayerSpec.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\spec\SpecHelper.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\src\Player.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\jasmine\test\src\Song.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\envjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\output\json2.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\output\output.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\phantomjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\selenium" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\open\utils.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\actions.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\assertions.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\coverage.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\demos.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\envjs.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\features.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\finding.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\images\autosuggest.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\images\broken.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\images\commandline.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\images\console.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\images\qunit.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\integrations.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\jenkins.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\maven.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\phantomjs.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\remote.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\selenium.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\pages\waits.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\proxy.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\qunit\qunit.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\qunit\test\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\qunit\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\selenium\client.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\selenium\selenium-java-client-driver.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\selenium\selenium-server-standalone-2.12.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\selenium\selenium.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\selenium\user-extensions.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\README" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\browsers.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\demo.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\demo\record.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\dist\syn.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\dist\test.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\drag\drag.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\drag\drag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\drag\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\drag\test\qunit\drag_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\drag\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\key.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\mouse.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\recorder.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\resources\jquery.event.drag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\resources\jquery.event.drop.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\resources\jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\resources\qunit\qunit.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\resources\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\syn.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\synthetic.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\synthetic.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\clickbasic.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\h3.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\key_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\mouse_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\page1.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\page2.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\qunit\syn_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\submit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\syn\test\submitted.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\template.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\autosuggest.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\autosuggest.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\autosuggest_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\css\ui-lightness\jquery-ui-1.8.16.custom.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\autosuggest\js\jquery-ui-1.8.16.custom.min.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\confirm.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\coverage\test.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\coverage\widget.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\coverage\widget.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\coverage\widget_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\drag\drag.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\drag\drag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\findclosest.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\actions_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\confirm_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\find_closest_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\funcunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\funcunit_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\iframe_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\open_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\protodrag_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\funcunit\syn_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\google\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\google\google_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\iframe\haveframe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\iframe\iframe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\iframe\iframe2.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\iframe\replaceframe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\jquery.event.drag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\jquery.event.drop.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\myapp.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\myotherapp.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\open\first.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\open\second.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\dragdrop.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\effects.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\funcunit_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\myapp.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\prototype.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\protodrag\scriptaculous.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\test\scroll.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\funcunit\update" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\README" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\buildAll.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\class\class.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\class\class.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\class\class_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\class\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\controller.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\controller.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\controller_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\demo-update.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\pages\listening.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\pages\plugin.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\route\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\route\route.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\route\route.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\route\route_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\subscribe\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\subscribe\subscribe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\subscribe\subscribe.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\view\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\view\test\qunit\controller_view_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\view\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\view\test\qunit\views\init.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\controller\view\view.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\closest\closest.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\compare\compare.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\compare\compare.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\compare\compare_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\compare\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cookie\cookie.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cur_styles\cur_styles.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cur_styles\cur_styles.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cur_styles\cur_styles_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cur_styles\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\cur_styles\test\curStyles.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\dimensions.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\dimensions.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\dimensions_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\test\curStyles.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dimensions\test\outer.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\dom.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixture.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixture.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixture_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixtures\foo.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixtures\foobar.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixtures\messages.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixtures\remove.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\fixtures\test.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\fixture\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\form_params.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\form_params.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\form_params_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\test\basics.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\test\checkbox.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\test\non-form.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\form_params\test\truthy.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\range\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\range\range.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\range\range.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\range\range_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\route\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\route\route.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\route\route.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\route\route_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\selection\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\selection\selection.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\selection\selection.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\selection\selection_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\dom\within\within.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\btn.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\download.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\download.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\download.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\test\controllerpage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\test\jquery-1.4.3.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\download\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\default.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\default.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\default_pause_test.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\default_pause_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\default_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\defaultjquery.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\default\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\destroyed\destroyed.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\destroyed\destroyed.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\destroyed\destroyed_menu.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\destroyed\destroyed_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\destroyed\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\drag.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\drag.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\drag_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\limit\limit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\limit\limit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\scroll\scroll.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\step\step.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drag\step\step.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drop\drop.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drop\drop.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\drop\drop_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\event.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\handle\handle.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\hashchange\hashchange.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\hover\hover.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\hover\hover.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\hover\hover_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\hover\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\key\key.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\key\key.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\key\key_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\key\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\livehack\livehack.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\pause\pause.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\pause\pause.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\pause\pause_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\pause\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\resize\demo.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\resize\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\resize\resize.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\resize\resize.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\resize\resize_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\selection\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\selection\selection.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\selection\selection.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\selection\selection_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\swipe\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\swipe\swipe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\swipe\swipe.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\swipe\swipe_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\tap\tap.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\event\tap\tap.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\app" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\coffee\controller" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\coffee\templates\controller\(underscore).coffee.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\coffee\templates\controller\(underscore).html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\coffee\templates\controller\(underscore)_test.coffee.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\coffee\templates\controller\funcunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\controller" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\model" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\page" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\plugin" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\scaffold" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\(application_name).css.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\(application_name).html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\(application_name).js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\(application_name).md.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\docs\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\fixtures\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\fixtures\fixtures.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\funcunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\models\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\models\models.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\qunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\scripts\build.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\scripts\build.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\scripts\clean.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\scripts\crawl.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\scripts\docs.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\test\funcunit\(application_name)_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\test\funcunit\funcunit.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\test\qunit\(application_name)_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\app\test\qunit\qunit.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\(underscore).html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\(underscore).js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\(underscore)_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\funcunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\views\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\controller\views\init.ejs.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\fixturemake.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\model.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\model\models\(underscore).js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\model\test\qunit\(underscore)_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\page.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\plugin\(application_name).html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\plugin\(application_name).js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\plugin\(application_name)_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\plugin\qunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffoldHookup.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\create\create.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\create\create.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\create\create_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\create\funcunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\create\views\init.ejs.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\funcunit.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\list.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\list.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\list_test.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\views\(underscore).ejs.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\templates\scaffold\list\views\init.ejs.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\test\app_plugin_model_controller.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\generate\test\scaffold.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\jquerymx.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\json\json.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\lang_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\object\object.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\object\object.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\object\object_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\object\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\delegate\delegate.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\delegate\delegate_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\demo.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\observe.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\observe.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\observe.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\observe_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\observe\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\openajax\openajax.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\openajax\openajax.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\deparam\deparam.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\deparam\deparam_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\deparam\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\rsplit\rsplit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\string.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\string.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\string\string_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\lang\vector\vector.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\backup\backup.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\backup\backup.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\backup\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\backup\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\demo-convert.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\demo-dom.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\demo-encapsulate.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\demo-events.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\demo-setter.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\fixtures\school.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\fixtures\schools.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\cookie\cookie.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\cookie\cookie.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\cookie\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\cookie\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\list-insert.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\list.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\list.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\list_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\local\local.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\memory.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\list\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\model.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\modelBinder.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\pages\associations.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\pages\deferreds.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\pages\encapsulate.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\pages\typeconversion.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\json_rest\json_rest.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\service.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\twitter\twitter.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\twitter\twitter.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\yql\yql.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\service\yql\yql.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\store\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\store\store.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\store\store.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\store\store_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\4.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\create.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\people.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\person.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\qunit\associations_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\qunit\findAll.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\qunit\model_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\schools.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\test\update4.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\validations\demo.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\validations\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\validations\qunit\validations_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\validations\validations.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\model\validations\validations.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\test\qunit\integration.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\test\template.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\test\thing.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\tie\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\tie\tie.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\tie\tie.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\tie\tie_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\update" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\compress.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\ejs\easyhookup.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\ejs\ejs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\ejs\ejs_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\ejs\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\ejs\test_template.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\fulljslint.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\helpers\helpers.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\jaml\jaml.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\micro\micro.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\pages\deferreds.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\compression\compression.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\compression\compression.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\compression\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\compression\views\keep.me" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\compression\views\test.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\deferred.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\deferreds.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\hookup.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\hookupvalcall.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\large.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\nested_plugin.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\plugin.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\temp.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\template.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\template.jaml" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\template.micro" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\template.tmpl" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\test\qunit\view_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\tmpl\test.tmpl" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\tmpl\tmpl.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\tmpl\tmpl_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\view.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\jquery\view\view.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\js.bat" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\README.md" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\browser.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\client.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\envjs\client.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\envjs\envjs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\phantomjs\client.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\phantomjs\launcher.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\phantomjs\phantomjs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\test\browser.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\test\mypage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\test\trigger.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\browser\utils\rhinoServer.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\apps\apps.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\apps\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\open.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\pluginify.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\app\app.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\app\steal.build.pluginify.test.app.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\app\template.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\controller.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\controller.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\firstFunc.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\pluginify_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\secondFunc.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\test_steals.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\pluginify\test\weirdRegexps.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\compiler.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\scripts.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\README.org" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\bin\uglifyjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\docstyle.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\lib\parse-js.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\lib\process.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\lib\squeeze-more.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\package.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\scripts\uglify\uglify-js.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\cssmin.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\styles.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\app\app.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\app\app.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\app\app.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\css2.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\css3.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\css\css1.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\css\justin.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\dataurls\dataurls.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\dataurls\dataurls.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\dataurls\dataurls.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\dataurls\module\module.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\dataurls\module\module.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\multiline.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\page.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\production.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\production.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\productionCompare.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\styles_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\styles\test\upload.PNG" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\0.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\2.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\basicpage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\basicsource.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\circular\circular.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\circular\circular.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\circular\fileA.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\circular\fileB.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\circular\prod.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\dev.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\devCleaned.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\foo.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\foo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\foreign.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\foreign.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\https.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\https.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\jqueryready.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\jqueryready.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\removecode.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\stealpage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\stealprodpage.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\another.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\another.less" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\mystyles.less" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\prod.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\prod2.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\styles.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\build\test\styles\styles.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\buildjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\beautify.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\clean.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\jslint.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\test\clean_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\clean\test\testEnd.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\cleanjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee-script.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee.coffee" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee_build_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffee_demo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\coffee\coffeeprod.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\dev\dev.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\app" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\ejs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\generate.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\inflector.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\system.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\(application_name).coffee.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\(application_name).css.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\(application_name).html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\(application_name).js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\docs\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\plugin\plugin.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\plugin\plugin.less.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\scripts\build.html.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\scripts\build.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\scripts\clean.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\scripts\crawl.js.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\app\test\.ignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\templates\page.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\generate\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\basic.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\dummy.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\get.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\gets.json" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\git.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\json.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\test\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\test\.gitmodules" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\test\README" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\test\get_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\get\test\stealCode1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\getjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\html\crawl\crawl.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\html\html.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\html\test\async.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\html\test\html_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\html\test\page.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\instrument.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\parser.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\process.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\test\code.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\test\qunit\parse_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\test\tabs_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\instrument\utils.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\js.bat" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less.less" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less_demo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less_engine.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\less_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\another.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\anotherfile.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\less_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\page.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\production.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\productionCompare.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\styles.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\styles.less" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\less\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\make.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\parse.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\parse_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\test\dev.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\test\stealCode1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\test\testCode.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\test\trailslash.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\parse\tokens.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\pluginifyjs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\blank.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\empty.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\env.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\file.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\js.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\loader" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\loader.bat" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\loader.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\prompt.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\rhino.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\rhino\utils.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\steal.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\steal.production.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\absoluteurl.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\absoluteurl\absoluteurl.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\absoluteurl\alert.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\another\two.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\dup.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\duplicate.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\file1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\file2.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\file3.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\file4.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\file5.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\loadDuplicate.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\plugin\dependency.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\plugin\plugin.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\require.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\require.foo" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\require.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\something.txt" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\files\steal.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\funcunit\funcunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\funcunit\steal_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\another\another.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\foo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\foo2.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\foo3.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\second\second.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\foo\template.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\map.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\map.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\qunit\map_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\map\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\app2\app2.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\app2\zoo.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\multiple.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\multiple.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\qunit\multiple_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\multiple\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\one\four.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\one\one.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\package\1.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\package\package.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\package\start.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\package\steal.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\package\uses.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\qunit\loadtwice.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\qunit\one.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\qunit\qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\qunit\steal_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\run.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\steal.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\three.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\test\two.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\jsmvc\steal\update" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\models\models.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\models\question.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\create\create.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\create\create.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\create\create_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\create\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\create\views\init.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\item\item.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\item\views\init.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\funcunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\list.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\list.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\list_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\views\init.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\question\list\views\question.ejs" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\qunit.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\scripts\build.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\scripts\build.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\scripts\clean.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\scripts\crawl.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\scripts\docs.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\test\funcunit\enigma53_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\test\funcunit\funcunit.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\test\qunit\enigma53_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\test\qunit\question_test.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\PythonWorkspace\Enigma53\wsgi\static\test\qunit\qunit.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/application" afterPath="$PROJECT_DIR$/wsgi/application" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/templates/base.html" afterPath="$PROJECT_DIR$/wsgi/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/config.py" afterPath="$PROJECT_DIR$/wsgi/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/templates/index.html" afterPath="$PROJECT_DIR$/wsgi/templates/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wsgi/question/pages/question.html" afterPath="$PROJECT_DIR$/wsgi/question/pages/question.html" />
+    </list>
+    <ignored path="BlueLemonToRemember.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="/Dummy.txt" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362945658763" ignored="false" />
+    <file path="/index.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362944702234" ignored="false" />
+    <file path="/enigma53.js" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362840692140" ignored="false" />
+    <file path="/init.ejs" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362860554917" ignored="false" />
+    <file path="/a.dummy" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362852923963" ignored="false" />
+    <file path="/question.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362888651919" ignored="false" />
+    <file path="/*.regexp" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362847373747" ignored="false" />
+    <file path="/question_page.js" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362852276037" ignored="false" />
+    <file path="/funcunit.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362852826671" ignored="false" />
+    <file path="/questionpage.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362855369723" ignored="false" />
+    <file path="/qunit.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362852849464" ignored="false" />
+    <file path="/questionpage.js" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362853140426" ignored="false" />
+    <file path="/item.js" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362860166710" ignored="false" />
+    <file path="/fragment.js" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362884283602" ignored="false" />
+    <file path="/base.html" changelist="a8585fb6-a034-4a6f-9502-78cbfa955165" time="1362945068948" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="BlueLemonToRemember" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="item.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/question/item/item.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="9" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="questionpage.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="21" selection-start="219" selection-end="219" vertical-scroll-proportion="0.16966067">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="questionpage.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="70" selection-start="873" selection-end="873" vertical-scroll-proportion="-10.576923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wsgi/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="14" selection-start="210" selection-end="210" vertical-scroll-proportion="-7.1923075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/models/models.js" />
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/fixtures/fixtures.js" />
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/index.html" />
+        <option value="$PROJECT_DIR$/wsgi/index.html" />
+        <option value="127.0.0.1:5000/static/steal/steal.js" />
+        <option value="127.0.0.1:5000/static/questionpage/models/models.js" />
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/models/question.js" />
+        <option value="127.0.0.1:5000/static/questionpage/models/question.js" />
+        <option value="$PROJECT_DIR$/wsgi/question/pages/question.html" />
+        <option value="$PROJECT_DIR$/wsgi/templates/index.html" />
+        <option value="$PROJECT_DIR$/wsgi/templates/base.html" />
+        <option value="127.0.0.1:5000/static/steal/steal.js?questionpage" />
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/questionpage.js" />
+        <option value="127.0.0.1:5000/static/questionpage/questionpage.js" />
+        <option value="$PROJECT_DIR$/wsgi/static/questionpage/question/item/item.js" />
+        <option value="127.0.0.1:5000/static/questionpage/question/item/item.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1296" />
+    <option name="height" value="776" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents ProjectPane="true" />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BlueLemonToRemember" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wsgi/static/enigma53/index.html" />
+    <property name="FullScreen" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\static" />
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\static\QuestionPage\question" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\static\questionpage\question\item\views" />
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\static" />
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi" />
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\question\pages" />
+      <recent name="E:\PythonWorkspace\Enigma53\wsgi\static\questionpage" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.python">
+    <configuration default="false" name="questionpage.html" type="JavascriptDebugSession" factoryName="Local" singleton="true" temporary="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="chrome" />
+        <option name="fileUrl" value="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.html" />
+      </JSDebuggerConfigurationSettings>
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="base.html" type="JavascriptDebugSession" factoryName="Local" singleton="true" temporary="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="chrome" />
+        <option name="fileUrl" value="file://$PROJECT_DIR$/wsgi/templates/base.html" />
+      </JSDebuggerConfigurationSettings>
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="question.html" type="JavascriptDebugSession" factoryName="Local" singleton="true" temporary="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" value="file:///E:/PythonWorkspace/Enigma53/wsgi/question/pages/question.html" />
+      </JSDebuggerConfigurationSettings>
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="index.html" type="JavascriptDebugSession" factoryName="Local" singleton="true" temporary="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" value="file:///E:/PythonWorkspace/Enigma53/wsgi/index.html" />
+      </JSDebuggerConfigurationSettings>
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="false" name="python" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="chrome" />
+        <option name="fileUrl" value="http://127.0.0.1:5000/" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.questionpage.html" />
+      <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.base.html" />
+      <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.question.html" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.python" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.question.html" />
+        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8585fb6-a034-4a6f-9502-78cbfa955165" name="Default" comment="" />
+      <created>1198282683770</created>
+      <updated>1198282683770</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18774861" sideWeight="0.23176661" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29673827" sideWeight="0.8541329" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1458671" sideWeight="0.40193704" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28525123" sideWeight="0.49482897" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20133111" sideWeight="0.59241325" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
+    <option name="UPDATE_FILTER_SCOPE_NAME" />
+    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
+    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
+    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="75" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="8" selection-start="619" selection-end="693" vertical-scroll-proportion="0.5523466" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="41" selection-start="1391" selection-end="1391" vertical-scroll-proportion="-11.115385" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/question/pages/editquestion.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.9615384" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/models/models.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/models/question.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/fixtures/fixtures.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/test/funcunit/funcunit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/test/funcunit/questionpage_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="http://127.0.0.1:5000/static/steal/steal.js?questionpage">
+      <provider selected="true" editor-type-id="httpFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="http://127.0.0.1:5000/static/questionpage/questionpage.js">
+      <provider selected="true" editor-type-id="httpFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="http://127.0.0.1:5000/static/questionpage/question/item/item.js">
+      <provider selected="true" editor-type-id="httpFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/question/item/item.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="9" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="14" selection-start="210" selection-end="210" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.15369262">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="70" selection-start="873" selection-end="873" vertical-scroll-proportion="-10.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi/static/questionpage/questionpage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="21" selection-start="219" selection-end="219" vertical-scroll-proportion="0.16966067">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

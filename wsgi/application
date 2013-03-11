@@ -1,0 +1,47 @@
+#!/usr/bin/python
+import os
+
+#virtenv = os.environ['APPDIR'] + '/virtenv/'
+
+virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
+os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python-2.6/site-packages')
+virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
+try:
+    execfile(virtualenv, dict(__file__=virtualenv))
+except IOError:
+    pass
+
+from flask import Flask, render_template
+from flask_flatpages import FlatPages
+
+from question.questionbp import questionbp
+from quiz.quizbp import quizbp
+
+DEBUG = True
+FLATPAGES_AUTO_RELOAD = DEBUG
+TRAP_BAD_REQUEST_ERRORS = True
+FLATPAGES_EXTENSION = '.md'
+ 
+application = Flask(__name__)
+application.config.from_object(__name__)
+pages = FlatPages(application)
+
+application.register_blueprint(questionbp, url_prefix='/question')
+application.register_blueprint(quizbp, url_prefix='/quiz')
+
+@application.route('/')
+def index():
+    return render_template('index.html', pages=pages)
+
+@application.route('/user/<path:path>/')
+def user(path):
+    #user=User.get_user_by_id(path)
+    return render_template('user.html')#, pages=pages, user=user)
+
+@application.route('/<path:path>/')
+def page(path):
+    page = pages.get_or_404(path)
+    return render_template('page.html', page=page)
+
+if __name__ == '__main__':
+    application.run()

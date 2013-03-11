@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if quiz %}
+<h2>Quiz={{ quiz.title }}</h2>
+{{ quiz.description }}
+<br>
+<div class="tabbable tabs-right">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
+        <li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            <p>I'm in Section 1.</p>
+        </div>
+        <div class="tab-pane" id="tab2">
+            <p>Howdy, I'm in Section 2.</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}
