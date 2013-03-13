@@ -6,14 +6,15 @@ steal('jquery/model', function(){
  * @inherits jQuery.Model
  * Wraps backend question services.  
  */
-$.Model('questionpage.Models.Question',
+$.Model('Question', //questionpage.Models.
 /* @Static */
 {
     findAll: "/questions.json",
-    findOne : "/questions/{id}.json", 
+    findOne : "/question/jget/{id}",
     create : "/questions.json",
     update : "/questions/{id}.json",
     destroy : "/questions/{id}.json"
-});
+},
+    {});
 
 });

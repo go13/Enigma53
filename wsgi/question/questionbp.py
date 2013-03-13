@@ -20,8 +20,16 @@ class Question(db.Model):
     def __init__(self, qtext=qtext):
         self.qtext = qtext
 
-    def __repr__(self):
-        return '<Question %s>' % (self.description)
+    #def __repr__(self):
+
+    def to_json(self):
+        return {
+            "quizid":self.quizid,
+            "nextquestionid":self.nextquestionid,
+            "qtext":"kokoko", #self.qtext
+            "id":self.id
+            #"answers":[]
+            }
     
     @staticmethod
     def get_next_question(id):
@@ -47,58 +55,65 @@ class Question(db.Model):
             q.questionList=Answer.get_answer_by_question_id(id)
             return q
         return None
-   
-       
+
 @questionbp.route('/<int:question_id>/')
 def question(question_id):
     question=Question.get_question_by_id(question_id)
-    if question:        
+    if question:
         return render_template('question.html', question=question)
     else:
         return render_template('404.html')
-    
+
 @questionbp.route('/<int:question_id>/edit/')
 def question_edit(question_id):
     question=Question.get_question_by_id(question_id)
-    if question:        
+    if question:
         return render_template('editquestion.html', question=question)
     else:
         return render_template('404.html')
-     
+
 
 @questionbp.route('/edit_question_submit/',methods=['POST'])
 def edit_question_submit():
     # validate
     #for item in request.json:
-    
+
     print 'got a post ', request.json
-                
+
     questionid = request.json['qid']
     print 'submitting a question ', questionid
-    
+
     question = Question.get_question_by_id(questionid)
     print 'got a question from DB ', questionid
-    
+
     if question:
         answers = request.json['answers']
         qtext = request.json['qtext']
-                    
+
         question.qtext = qtext
-        
+
         Question.query.filter_by(id=questionid).update({'qtext':qtext})
-        Answer.delete_answer_by_question_id(questionid, True)        
-        
+        Answer.delete_answer_by_question_id(questionid, True)
+
         for answer in answers:
             atext = answer['atext']
             if answer['correct']=='T':
                 correct = 1
             else:
-                correct = 0;            
-            Answer.create_answer(questionid, atext, correct, True)                        
-        db.session.commit()            
-        
+                correct = 0;
+            Answer.create_answer(questionid, atext, correct, True)
+        db.session.commit()
+
         return jsonify(status='OK', redirect='/question/'+questionid)
     else:
         return jsonify(status='Error')
 
-    
+@questionbp.route('/jget/<int:question_id>/')
+def jget(question_id):
+    question=Question.get_question_by_id(question_id)
+    print 'OK'
+    if question:
+        return jsonify({"status":"OK", "question":question.to_json()})
+    else:
+        return jsonify({"status":"ERROR"})
+

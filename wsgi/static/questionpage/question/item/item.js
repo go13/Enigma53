@@ -2,8 +2,9 @@ steal( 'jquery/controller',
     'jquery/view/ejs',
     'jquery/dom/form_params',
     'jquery/controller/view',
-    'questionpage/models' )
+    'questionpage/models')
     .then('./views/init.ejs', function($){
+        //$.fixture.on = false;
 
         /**
          * @class Enigma53.Question.Item
@@ -15,15 +16,17 @@ steal( 'jquery/controller',
             /** @Prototype */
             {
                 init : function(){
-                    var obj = new Object();
-                    obj.qtext = "qtext";
 
-                    var a1 = new Object();
-                    a1.atext = "atext";
-                    obj.answers = [a1];
+                    //var obj = ; //questionpage.Models.
+                    //obj.qtext = questionpage.Models.Question.findOne(2).question.qtext;
 
-                    this.element.html(this.view('init', {question:obj}));
+                    //var a1 = new Object();
+                    //a1.atext = "atext";
+                    //obj.answers = [a1];
+                    //alert(obj.question);
+                    this.element.html(this.view('init', Question.findOne({id:2})));
                 }
-            })
+            });
+
 
     });

@@ -17,7 +17,7 @@ class Answer(db.Model):
         self.correct = correct
 
     def __repr__(self):
-        return '<Answer %s>' % (self.answer)
+        return '<Answer %s>' % (self.atext)
 
     @staticmethod
     def get_answer_by_id(id):
