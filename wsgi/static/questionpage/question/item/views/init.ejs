@@ -1,13 +1,11 @@
-<div>
-    <div class="form-actions">
-        <%= question.qtext %>
-    </div>
-
-    <blockquote style="margin-bottom: 15px">
-         for(var i=0; i < que stion.answers.length; i++){
-        <label class="checkbox">
-            <input type="checkbox">	 que stion.answers[i].atext
-        </label>
-         }
-    </blockquote>
+<div class="form-actions">
+    <%= qtext %>
 </div>
+
+<blockquote style="margin-bottom: 15px">
+    <% for(var i=0; i < answers.length; i++){ %>
+    <label class="checkbox">
+        <input type="checkbox">	 <%= answers[i].atext%>
+    </label>
+    <%}%>
+</blockquote>

@@ -4,5 +4,5 @@ steal(
     //'questionpage/fixtures/fixtures.js',	// sets up fixtures for your models
     'questionpage/question/item',
     function(){					// configure your application
-        $('#question').questionpage_question_item();
+        //$('#question').questionpage_question_item();
     })

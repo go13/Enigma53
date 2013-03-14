@@ -20,17 +20,16 @@ class Question(db.Model):
     def __init__(self, qtext=qtext):
         self.qtext = qtext
 
-    #def __repr__(self):
-
-    def to_json(self):
+    @property
+    def serialize(self):
         return {
-            "quizid":self.quizid,
-            "nextquestionid":self.nextquestionid,
-            "qtext":"kokoko", #self.qtext
-            "id":self.id
-            #"answers":[]
-            }
-    
+            'quizid':self.quizid,
+            'nextquestionid':self.nextquestionid,
+            'qtext':self.qtext,
+            'id':self.id,
+            'answers':[i.serialize for i in self.answers]
+           }
+
     @staticmethod
     def get_next_question(id):
         q  = Question.query.filter_by(id=id).first()
@@ -44,7 +43,7 @@ class Question(db.Model):
     def get_question_by_id(id):
         q  = Question.query.filter_by(id=id).first()
         if q is not None:
-            q.answers=Answer.get_answer_by_question_id(q.id)
+            q.answers=Answer.get_answer_by_question_id(q.id) #[{"atext":}]
             return q
         return None
 
@@ -111,9 +110,11 @@ def edit_question_submit():
 @questionbp.route('/jget/<int:question_id>/')
 def jget(question_id):
     question=Question.get_question_by_id(question_id)
-    print 'OK'
     if question:
-        return jsonify({"status":"OK", "question":question.to_json()})
+        result = {'jstaus':'OK'}
+        result.update(question.serialize)
+
+        return jsonify(result)
     else:
         return jsonify({"status":"ERROR"})
 

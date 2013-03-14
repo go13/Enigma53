@@ -16,17 +16,12 @@ steal( 'jquery/controller',
             /** @Prototype */
             {
                 init : function(){
-
-                    //var obj = ; //questionpage.Models.
-                    //obj.qtext = questionpage.Models.Question.findOne(2).question.qtext;
-
-                    //var a1 = new Object();
-                    //a1.atext = "atext";
-                    //obj.answers = [a1];
-                    //alert(obj.question);
-                    this.element.html(this.view('init', Question.findOne({id:2})));
+                    this.element.html(this.view('init', Question.findOne({id:2}, function( data ){
+                        console.log( "received a question" + data.status );
+                        console.log( "id - " + data.id );
+                        console.log( "quizid - " + data.quizid );
+                        console.log( "qtext - " + data.qtext );
+                    })));
                 }
             });
-
-
     });

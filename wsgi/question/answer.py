@@ -19,6 +19,15 @@ class Answer(db.Model):
     def __repr__(self):
         return '<Answer %s>' % (self.atext)
 
+    @property
+    def serialize(self):
+        return {
+            'id':self.id,
+            'questionid':self.questionid,
+            'atext':self.atext,
+            'correct':self.correct
+           }
+
     @staticmethod
     def get_answer_by_id(id):
         q  = Answer.query.filter_by(id=id).first()
@@ -28,9 +37,10 @@ class Answer(db.Model):
 
     @staticmethod
     def get_answer_by_question_id(questionid):
-        q  = Answer.query.filter_by(questionid=questionid).all()
-        if q is not None:
-            return q
+        list  = Answer.query.filter_by(questionid=questionid).all()
+        print list
+        if list is not None:
+            return list
         return None
     
     @staticmethod
