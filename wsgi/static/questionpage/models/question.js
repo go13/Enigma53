@@ -1,12 +1,6 @@
 steal('jquery/model', function(){
 
-/**
- * @class Questionpage.Models.Question
- * @parent index
- * @inherits jQuery.Model
- * Wraps backend question services.  
- */
-$.Model('Question', //questionpage.Models.
+$.Model('Question',
 /* @Static */
 {
     findAll: "/questions.json",

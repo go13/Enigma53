@@ -38,7 +38,6 @@ class Answer(db.Model):
     @staticmethod
     def get_answer_by_question_id(questionid):
         list  = Answer.query.filter_by(questionid=questionid).all()
-        print list
         if list is not None:
             return list
         return None

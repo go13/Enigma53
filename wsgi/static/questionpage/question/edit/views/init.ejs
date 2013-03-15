@@ -1,0 +1,54 @@
+<textarea id="qtext" rows="7" style="width: 100%;" placeholder="Type your question...">
+    <%= qtext %>
+</textarea>
+
+<script id="answer_template" type="text/x-jquery-tmpl">
+    <div id="${AnswerId}" class="qanswer input-prepend input-append">
+        <a class="qanswer-check btn btn-primary" onclick="TODO">
+            <i class="icon-ok icon-white"></i>
+        </a>
+        <input type="text" class="input-xxlarge" name="answer${AnswerId}">
+        <div class="btn-group">
+            <a class="qanswer-move btn btn-primary">
+                <span class="icon-move icon-white"></span>
+            </a>
+            <a class="qanswer-delete btn btn-primary" onclick="TODO">
+                <span class="icon-trash icon-white" ></span>
+            </a>
+        </div>
+    </div>
+</script>
+
+<div class="input-prepend input-append">
+    <a id="add-checked" class="qanswer-check btn btn-success" onclick="TODO">
+        <i class="icon-ban-circle icon-white"></i>
+    </a>
+    <input id="add-input" type="text" class="input-xxlarge">
+    <a id="qanswer-add" style="width: 53px" class="btn btn-success" onclick="TODO">
+        <i class="icon-plus icon-white"></i> Add
+    </a>
+</div>
+
+<div id="answers">
+    <% for(var i=0; i< answers.length; i++){ %>
+
+    <div id="answer<%= answers[i].id %>" class="qanswer input-prepend input-append">
+        <a class="qanswer-check btn btn-primary" onclick="TODO">
+            <% if(answers[i].correct == 1){ %>
+            <i class="icon-ok icon-white"></i>
+            <% }else{ %>
+            <i class="icon-ban-circle icon-white"></i>
+            <%}%>
+        </a>
+        <input type="text" class="input-xxlarge" name="answer<%= answers[i].id %>" value="<%= answers[i].atext %>">
+        <div class="btn-group">
+            <a class="qanswer-move btn btn-primary">
+                <span class="icon-move icon-white"></span>
+            </a>
+            <a class="qanswer-delete btn btn-primary" onclick="TODO">
+                <span class="icon-trash icon-white" ></span>
+            </a>
+        </div>
+    </div>
+    <%} %>
+</div>

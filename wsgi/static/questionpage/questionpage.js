@@ -3,6 +3,11 @@ steal(
     'questionpage/models/models.js',		// steals all your models
     //'questionpage/fixtures/fixtures.js',	// sets up fixtures for your models
     'questionpage/question/item',
+    'questionpage/question/edit',
     function(){					// configure your application
-        //$('#question').questionpage_question_item();
+        $('#question').questionpage_question_item();
+        $('#question-edit').questionpage_question_edit();
+        window.addEventListener('hashchange', function(){
+            console.log('the hash has changed') ;
+        })
     })

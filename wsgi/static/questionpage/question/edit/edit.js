@@ -6,8 +6,7 @@ steal( 'jquery/controller',
     .then('./views/init.ejs', function($){
         //$.fixture.on = false;
 
-        $.Controller('Questionpage.Question.Item',
-            /** @Prototype */
+        $.Controller('Questionpage.Question.Edit',
             {
                 init : function(){
                     this.element.html(this.view('init', Question.findOne({id:2}, function( data ){
