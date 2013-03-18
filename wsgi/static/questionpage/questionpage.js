@@ -4,10 +4,9 @@ steal(
     //'questionpage/fixtures/fixtures.js',	// sets up fixtures for your models
     'questionpage/question/item',
     'questionpage/question/edit',
+    //'questionpage/question/router',
     function(){					// configure your application
         $('#question').questionpage_question_item();
         $('#question-edit').questionpage_question_edit();
-        window.addEventListener('hashchange', function(){
-            console.log('the hash has changed') ;
-        })
+        //$(document).questionpage_question_router();
     })

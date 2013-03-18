@@ -2,29 +2,12 @@
     <%= qtext %>
 </textarea>
 
-<script id="answer_template" type="text/x-jquery-tmpl">
-    <div id="${AnswerId}" class="qanswer input-prepend input-append">
-        <a class="qanswer-check btn btn-primary" onclick="TODO">
-            <i class="icon-ok icon-white"></i>
-        </a>
-        <input type="text" class="input-xxlarge" name="answer${AnswerId}">
-        <div class="btn-group">
-            <a class="qanswer-move btn btn-primary">
-                <span class="icon-move icon-white"></span>
-            </a>
-            <a class="qanswer-delete btn btn-primary" onclick="TODO">
-                <span class="icon-trash icon-white" ></span>
-            </a>
-        </div>
-    </div>
-</script>
-
 <div class="input-prepend input-append">
-    <a id="add-checked" class="qanswer-check btn btn-success" onclick="TODO">
-        <i class="icon-ban-circle icon-white"></i>
+    <a id="add-checked" class="btn btn-success">
+        <i class="icon-ok icon-white"></i>
     </a>
-    <input id="add-input" type="text" class="input-xxlarge">
-    <a id="qanswer-add" style="width: 53px" class="btn btn-success" onclick="TODO">
+    <input id="add-input" type="text" class="input-xxlarge" placeholder="Type your answer here...">
+    <a id="qanswer-add" style="width: 53px" class="btn btn-success">
         <i class="icon-plus icon-white"></i> Add
     </a>
 </div>
@@ -33,22 +16,26 @@
     <% for(var i=0; i< answers.length; i++){ %>
 
     <div id="answer<%= answers[i].id %>" class="qanswer input-prepend input-append">
-        <a class="qanswer-check btn btn-primary" onclick="TODO">
+        <a class="qanswer-check btn btn-primary">
             <% if(answers[i].correct == 1){ %>
             <i class="icon-ok icon-white"></i>
             <% }else{ %>
             <i class="icon-ban-circle icon-white"></i>
             <%}%>
         </a>
-        <input type="text" class="input-xxlarge" name="answer<%= answers[i].id %>" value="<%= answers[i].atext %>">
+        <input type="text" class="qanswer-input input-xxlarge" value="<%= answers[i].atext %>">
         <div class="btn-group">
             <a class="qanswer-move btn btn-primary">
                 <span class="icon-move icon-white"></span>
             </a>
-            <a class="qanswer-delete btn btn-primary" onclick="TODO">
+            <a class="qanswer-delete btn btn-primary">
                 <span class="icon-trash icon-white" ></span>
             </a>
         </div>
     </div>
     <%} %>
+</div>
+<div align="center">
+	<button id="question-submit" class="btn btn-success" type="button" id="ccl">Submit</button>
+	<button id="question-cancel" class="btn" type="button" >Cancel</button>
 </div>

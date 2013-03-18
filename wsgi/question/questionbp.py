@@ -118,3 +118,31 @@ def jget(question_id):
     else:
         return jsonify({"status":"ERROR"})
 
+@questionbp.route('/jupd/<int:question_id>/',methods=['POST'])
+def jupd(question_id):
+    question=Question.get_question_by_id(question_id)
+    if question:
+        print 'got a question from DB, id = ', question_id
+        print 'qid ', request.json['qid']
+        print 'qtext ', request.json['qtext']
+        print 'answers ', request.json['answers']
+
+        qid = request.json['qid']
+        qtext = request.json['qtext']
+        answers = request.json['answers']
+
+        Question.query.filter_by(id=question_id).update({'qtext':qtext})
+        Answer.delete_answer_by_question_id(question_id, True)
+
+        for answer in answers:
+            atext = answer['atext']
+            correct = answer['correct']
+            Answer.create_answer(question_id, atext, correct, True)
+        db.session.commit()
+
+        result = {'jstaus':'OK'}
+        return jsonify(result)
+    else:
+        return jsonify({"status":"ERROR"})
+
+

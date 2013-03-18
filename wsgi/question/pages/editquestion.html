@@ -9,66 +9,8 @@
     <script type="text/javascript" src="/static/steal/steal.js?questionpage"></script>
 	
 	<div class="container" style="width: 650px;" >
-
-        <div id="question-edit">
-
-            <textarea id="qtext" rows="7" style="width: 100%;" placeholder="Type your question...">{{ question.qtext }}</textarea>
-            <script id="answer_template" type="text/x-jquery-tmpl">
-                <div id="${AnswerId}" class="qanswer input-prepend input-append">
-                    <a class="qanswer-check btn btn-primary" onclick="qanswer_check(this)">
-                        <i class="icon-ok icon-white"></i>
-                    </a>
-                    <input type="text" class="input-xxlarge" name="answer${AnswerId}">
-                    <div class="btn-group">
-                        <a class="qanswer-move btn btn-primary">
-                            <span class="icon-move icon-white"></span>
-                        </a>
-                        <a class="qanswer-delete btn btn-primary" onclick="qanswer_delete(this)">
-                            <span class="icon-trash icon-white" ></span>
-                        </a>
-                    </div>
-                </div>
-            </script>
-
-            <div class="input-prepend input-append">
-                <a id="add-checked" class="qanswer-check btn btn-success" onclick="qanswer_check(this)">
-                    <i class="icon-ban-circle icon-white"></i>
-                </a>
-                <input id="add-input" type="text" class="input-xxlarge">
-                <a id="qanswer-add" style="width: 53px" class="btn btn-success" onclick="qanswer_add(this)">
-                    <i class="icon-plus icon-white"></i> Add
-                </a>
-            </div>
-
-            <div id="answers">
-                {%for item in question.answers %}
-
-                <div id="{{ item.id }}" class="qanswer input-prepend input-append">
-                    <a class="qanswer-check btn btn-primary" onclick="qanswer_check(this)">
-                        {% if item.correct == 1 %}
-                        <i class="icon-ok icon-white"></i>
-                        {% else %}
-                        <i class="icon-ban-circle icon-white"></i>
-                        {% endif %}
-                    </a>
-                    <input type="text" class="input-xxlarge" name="answer{{ item.id }}" value="{{ item.atext }}">
-                    <div class="btn-group">
-                        <a class="qanswer-move btn btn-primary">
-                            <span class="icon-move icon-white"></span>
-                        </a>
-                        <a class="qanswer-delete btn btn-primary" onclick="qanswer_delete(this)">
-                            <span class="icon-trash icon-white" ></span>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+        <div id="question-edit" name="question{{question.id}}">
         </div>
-	
-		<div align="center">
-			<button class="btn btn-success" type="button" id="ccl" onclick="edit_question_submit()">Submit</button>
-			<button class="btn" type="button" >Cancel</button>
-		</div>		
 	</div>
 
 {% elif question.type == 2 %}

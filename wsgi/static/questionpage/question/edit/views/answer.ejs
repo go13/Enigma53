@@ -1,0 +1,18 @@
+<div id="answer<%= answer.id %>" class="qanswer input-prepend input-append">
+    <a class="qanswer-check btn btn-primary">
+        <% if(answer.correct == 1){ %>
+        <i class="icon-ok icon-white"></i>
+        <% }else{ %>
+        <i class="icon-ban-circle icon-white"></i>
+        <%}%>
+    </a>
+    <input type="text" class="qanswer-input input-xxlarge" value="<%= answer.atext %>">
+    <div class="btn-group">
+        <a class="qanswer-move btn btn-primary">
+            <span class="icon-move icon-white"></span>
+        </a>
+        <a class="qanswer-delete btn btn-primary">
+            <span class="icon-trash icon-white" ></span>
+        </a>
+    </div>
+</div>
