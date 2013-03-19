@@ -96,13 +96,13 @@ steal( 'jquery/controller',
                     Questionpage.Question.Edit.model.get_answer_by_id(id).atext = el.attr("value") ;
                 },
                 "#question-submit click" : function(data){
-                    Questionpage.Question.Edit.model.save(function(data){
-                        //alert(data);
+                    Questionpage.Question.Edit.model.save( function(){
+                        window.location.href = "/question/" + Questionpage.Question.Edit.model.qid;
                     });
                 },
                 "#question-cancel click" : function(){
                     //this.element.find(".answers").html(this.view('answer.ejs'));
-                    alert("cancel");
+                    window.location.href = "/question/" + Questionpage.Question.Edit.model.qid;
                 },
                 "#qtext keyup" : function(el){
                     Questionpage.Question.Edit.model.qtext = el.attr("value") ;
