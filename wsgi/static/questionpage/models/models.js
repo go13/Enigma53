@@ -1,2 +1,2 @@
 // steal model files
-steal('jquery/model', './question.js');
+steal('jquery/model', './question.js', './questionedit.js');

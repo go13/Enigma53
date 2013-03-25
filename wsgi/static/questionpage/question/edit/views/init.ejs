@@ -1,18 +1,18 @@
-<textarea id="qtext" rows="7" style="width: 100%;" placeholder="Type your question...">
+<textarea class="qtext" rows="7" style="width: 650px;" placeholder="Type your question...">
     <%= qtext %>
 </textarea>
 
 <div class="input-prepend input-append">
-    <a id="add-checked" class="btn btn-success">
+    <a class="add-checked btn btn-success">
         <i class="icon-ok icon-white"></i>
     </a>
-    <input id="add-input" type="text" class="input-xxlarge" placeholder="Type your answer here...">
-    <a id="qanswer-add" style="width: 53px" class="btn btn-success">
+    <input type="text" class="add-input input-xxlarge" placeholder="Type your answer here...">
+    <a style="width: 53px" class="qanswer-add btn btn-success">
         <i class="icon-plus icon-white"></i> Add
     </a>
 </div>
 
-<div id="answers">
+<div class="answers">
     <% for(var i=0; i< answers.length; i++){ %>
 
     <div id="answer<%= answers[i].id %>" class="qanswer input-prepend input-append">
@@ -36,6 +36,6 @@
     <%} %>
 </div>
 <div align="center">
-	<button id="question-submit" class="btn btn-success" type="button" id="ccl">Submit</button>
-	<button id="question-cancel" class="btn" type="button" >Cancel</button>
+	<button class="question-submit btn btn-success" type="button">Submit</button>
+	<button class="question-cancel btn" type="button" >Cancel</button>
 </div>

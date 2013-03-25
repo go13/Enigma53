@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, render_template
+from datetime import datetime
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
 
 from model import db
@@ -23,11 +24,17 @@ class Answer(db.Model):
     def serialize(self):
         return {
             'id':self.id,
-            'questionid':self.questionid,
+            'atext':self.atext
+           }
+
+    @property
+    def serialize_for_edit(self):
+        return {
+            'id':self.id,
+            'questionid':self.questionid, # ???
             'atext':self.atext,
             'correct':self.correct
            }
-
     @staticmethod
     def get_answer_by_id(id):
         q  = Answer.query.filter_by(id=id).first()
@@ -75,25 +82,26 @@ class Answerhistory(db.Model):
     questionid = db.Column('questionid', Integer)
     answerid = db.Column('answerid', Integer)
     submittime = db.Column('submittime', TIMESTAMP)
+    value = db.Column('value', String)
 
-    def __init__(self, userid=userid, questionid=questionid, answerid=answerid, submittime=submittime):
+    def __init__(self, userid=userid, questionid=questionid, answerid=answerid, submittime=submittime, value=value):
         self.userid = userid
         self.questionid = questionid
         self.answerid = answerid
         self.submittime = submittime
+        self.value = value
 
     def __repr__(self):
         return '<Answer %s>' % (self.answer)
 
     @staticmethod
-    def add_answer_history(userid, questionid, answerid):
-        ah = Answerhistory(userid, questionid, answerid)
+    def add_answer_history(user_id, question_id, answer_id, value, to_commit):
+        ah = Answerhistory(user_id, question_id, answer_id, datetime.now(), value)
         db.session.add(ah)
-        db.session.commit()
+        if to_commit:
+            db.session.commit()
 
     @staticmethod
     def add_answer_histories(submitdates):
         db.session.add_all(submitdates)
         db.session.commit()
-
-

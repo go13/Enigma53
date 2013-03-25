@@ -69,10 +69,11 @@ create table answerhistory
    questionid           integer not null,
    answerid             integer not null,
    submittime           timestamp not null,
+   value                text not null,
    primary key (id)
 );
-insert into answerhistory values (1, 1, 1, 1, sysdate());
-insert into answerhistory values (2, 1, 1, 3, sysdate());
+insert into answerhistory values (1, 1, 1, 1, sysdate(), '0' );
+insert into answerhistory values (2, 1, 1, 3, sysdate(), '1');
 
 /*==============================================================*/
 /* Table: users                                                */

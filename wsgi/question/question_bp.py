@@ -4,7 +4,7 @@ from sqlalchemy import Table, Column, Integer, String
 from model import db
 from answer import Answer, Answerhistory
 
-questionbp = Blueprint('questionbp', __name__, template_folder='pages')
+question_bp = Blueprint('question_bp', __name__, template_folder='pages')
 
 
 class Question(db.Model):
@@ -30,6 +30,16 @@ class Question(db.Model):
             'answers':[i.serialize for i in self.answers]
            }
 
+    @property
+    def serialize_for_edit(self):
+        return {
+            'quizid':self.quizid,
+            'nextquestionid':self.nextquestionid,
+            'qtext':self.qtext,
+            'id':self.id,
+            'answers':[i.serialize_for_edit for i in self.answers]
+           }
+
     @staticmethod
     def get_next_question(id):
         q  = Question.query.filter_by(id=id).first()
@@ -48,14 +58,30 @@ class Question(db.Model):
         return None
 
     @staticmethod
-    def get_question_by_quiz_id(quizid):
-        q  = Question.query.filter_by(quizid=quizid).first()
+    def get_question_by_quiz_id(quiz_id):
+        print 'get_question_by_quiz_id('+str(quiz_id)+')'
+        q  = Question.query.filter_by(quizid=quiz_id).first()
         if q is not None:
-            q.questionList=Answer.get_answer_by_question_id(id)
-            return q
-        return None
+            q.answers=Answer.get_answer_by_question_id(id)
+        return q
 
-@questionbp.route('/<int:question_id>/')
+    @staticmethod
+    def get_all_questions_by_quiz_id(quiz_id):
+        print 'get_all_questions_by_quiz_id('+str(quiz_id)+')'
+        qlist  = Question.query.filter_by(quizid=quiz_id).all()
+        #if qlist is not None:
+        #    q.answers=Answer.get_answer_by_question_id(id)
+        return qlist
+
+    @staticmethod
+    def add_answer_history_by_question_id(id, user_id, answer_id, value, to_commit):
+        question = Question.get_question_by_id(id)
+        if question:
+            Answerhistory.add_answer_history(user_id, id, answer_id, value, to_commit) # TODO: add userid
+
+
+
+@question_bp.route('/<int:question_id>/')
 def question(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -63,16 +89,16 @@ def question(question_id):
     else:
         return render_template('404.html')
 
-@questionbp.route('/<int:question_id>/edit/')
+@question_bp.route('/<int:question_id>/edit/')
 def question_edit(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
-        return render_template('editquestion.html', question=question)
+        return render_template('question_edit.html', question=question)
     else:
         return render_template('404.html')
 
 
-@questionbp.route('/edit_question_submit/',methods=['POST'])
+@question_bp.route('/edit_question_submit/',methods=['POST'])
 def edit_question_submit():
     # validate
     #for item in request.json:
@@ -107,18 +133,28 @@ def edit_question_submit():
     else:
         return jsonify(status='Error')
 
-@questionbp.route('/jget/<int:question_id>/')
+@question_bp.route('/jget/<int:question_id>/')
 def jget(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
         result = {'jstaus':'OK'}
         result.update(question.serialize)
-
         return jsonify(result)
     else:
         return jsonify({"status":"ERROR"})
 
-@questionbp.route('/jupd/<int:question_id>/',methods=['POST'])
+@question_bp.route('/jget_for_edit/<int:question_id>/')
+def jget_for_edit(question_id):
+    question=Question.get_question_by_id(question_id)
+    if question:
+        result = {'jstaus':'OK'}
+        result.update(question.serialize_for_edit)
+        return jsonify(result)
+    else:
+        return jsonify({"status":"ERROR"})
+
+
+@question_bp.route('/jupd/<int:question_id>/',methods=['POST'])
 def jupd(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -139,6 +175,26 @@ def jupd(question_id):
             correct = answer['correct']
             Answer.create_answer(question_id, atext, correct, True)
         db.session.commit()
+
+        result = {'jstaus':'OK'}
+        return jsonify(result)
+    else:
+        return jsonify({"status":"ERROR"})
+
+@question_bp.route('/jsubmit/<int:question_id>/',methods=['POST'])
+def jsubmit(question_id):
+    question=Question.get_question_by_id(question_id)
+    if question:
+        qid = request.json['qid']
+        answers = request.json['answers']
+
+        for answer in answers:
+            value = answer['value']
+            print 'val ', value
+            aid = answer['id']
+
+            Question.add_answer_history_by_question_id(qid, 1, aid,  value, False)
+            db.session.commit()
 
         result = {'jstaus':'OK'}
         return jsonify(result)

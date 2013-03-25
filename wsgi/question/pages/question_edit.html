@@ -2,21 +2,11 @@
 {% from "macros.html" import render_form, render_field, render_label, render_checkbox %}
 {% block content %}
 
-
-{% if question %}
-{% if question.type == 1 %}
-
     <script type="text/javascript" src="/static/steal/steal.js?questionpage"></script>
 	
 	<div class="container" style="width: 650px;" >
-        <div id="question-edit" name="question{{question.id}}">
+        <div class="question-edit" name="question{{ question.id }}">
         </div>
 	</div>
-
-{% elif question.type == 2 %}
-{% else %}
-{% endif %}
-
-{% endif %}
 
 {% endblock content %}

@@ -5,7 +5,19 @@
 <blockquote style="margin-bottom: 15px">
     <% for(var i=0; i < answers.length; i++){ %>
     <label class="checkbox">
-        <input type="checkbox">	 <%= answers[i].atext%>
+        <input id="answer<%=answers[i].id%>" class="answer-checkbox" type="checkbox"><%= answers[i].atext %>
     </label>
     <%}%>
 </blockquote>
+
+<div align="center">
+    <ul class="pager">
+        <li class="previous">
+            <a href="#">&larr; Prev</a>
+        </li>
+        <button type="submit" class="question-submit btn btn-success">Submit</button>
+        <li class="next">
+            <a href="#">Next &rarr;</a>
+        </li>
+    </ul>
+</div>

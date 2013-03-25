@@ -14,8 +14,8 @@ except IOError:
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 
-from question.questionbp import questionbp
-from quiz.quizbp import quizbp
+from question.question_bp import question_bp
+from quiz.quiz_bp import quiz_bp
 
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
@@ -26,8 +26,8 @@ application = Flask(__name__)
 application.config.from_object(__name__)
 pages = FlatPages(application)
 
-application.register_blueprint(questionbp, url_prefix='/question')
-application.register_blueprint(quizbp, url_prefix='/quiz')
+application.register_blueprint(question_bp, url_prefix='/question')
+application.register_blueprint(quiz_bp, url_prefix='/quiz')
 
 @application.route('/')
 def index():
