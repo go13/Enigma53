@@ -1,3 +1,4 @@
+<% if(!isNew){ %> <button class="question-delete btn btn-link pull-right" type="button">Delete</button> <%}%>
 <textarea class="qtext" rows="7" style="width: 650px;" placeholder="Type your question...">
     <%= qtext %>
 </textarea>
@@ -36,6 +37,7 @@
     <%} %>
 </div>
 <div align="center">
-	<button class="question-submit btn btn-success" type="button">Submit</button>
+	<button class="question-<% if(!isNew){ %>save<% }else{ %>create<% } %>  btn btn-success" type="button"><% if(!isNew){ %> Save <% }else{ %> Create <% } %> </button>
 	<button class="question-cancel btn" type="button" >Cancel</button>
+	<button class="question-cancel btn" type="button" >Next</button>
 </div>

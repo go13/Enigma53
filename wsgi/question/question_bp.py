@@ -17,8 +17,12 @@ class Question(db.Model):
     type = db.Column('type', Integer)
     answers = []
 
-    def __init__(self, qtext=qtext):
+    def __init__(self, quizid, nextquestionid, qtext, type, answers):
+        self.quizid = quizid
+        self.nextquestionid = nextquestionid
         self.qtext = qtext
+        self.type = type
+        self.answers = answers
 
     @property
     def serialize(self):
@@ -181,6 +185,51 @@ def jupd(question_id):
     else:
         return jsonify({"status":"ERROR"})
 
+
+@question_bp.route('/jcreate/',methods=['POST'])
+def jcreate():
+    print 'got a question to create'
+    print 'qtext ', request.json['qtext']
+    print 'quizid ', request.json['quizid']
+    print 'answers ', request.json['answers']
+
+    qtext = request.json['qtext']
+    quizid = request.json['quizid']
+    answers = request.json['answers']
+
+    newQuestion=Question(quizid=quizid, nextquestionid=2, qtext=qtext, type=1, answers=answers)
+    db.session.add(newQuestion)
+    db.session.commit()
+
+    for answer in answers:
+        atext = answer['atext']
+        correct = answer['correct']
+        id = answer['id']
+        newAnswer = Answer(newQuestion.id, atext, correct)
+        db.session.add(newAnswer)
+
+    db.session.commit()
+
+    result = {'jstaus':'OK', 'qid':newQuestion.id}
+    return jsonify(result)
+
+
+@question_bp.route('/jdelete/<int:question_id>/',methods=['POST'])
+def jdelete(question_id):
+    print 'deleting a question ', question_id
+
+    question=Question.get_question_by_id(question_id)
+
+    if question:
+        for answer in question.answers:
+            db.session.delete(answer)
+
+        db.session.delete(question)
+        db.session.commit()
+
+    result = {'jstaus':'OK'}
+    return jsonify(result)
+
 @question_bp.route('/jsubmit/<int:question_id>/',methods=['POST'])
 def jsubmit(question_id):
     question=Question.get_question_by_id(question_id)
@@ -195,6 +244,7 @@ def jsubmit(question_id):
 
             Question.add_answer_history_by_question_id(qid, 1, aid,  value, False)
             db.session.commit()
+
 
         result = {'jstaus':'OK'}
         return jsonify(result)

@@ -1,5 +1,37 @@
-{% extends "quiz_template.html" %}
+{% extends "base.html" %}
 
-{% macro render_question(question) %}
-<div class='question-edit' name='question{{question.id}}'></div>
-{% endmacro %}
+{% block content %}
+<script type="text/javascript" src="/static/steal/steal.js?quizpage"></script>
+
+<div class="container" style="width: 800px;">
+    <div style="height: 40px;" class="page-message">
+
+    </div>
+    <h4>Quiz={{ quiz.title|e }}</h4>
+    {{ quiz.description }}
+    <br>
+    <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
+        <ul id="tabs" class="nav nav-tabs">
+            <li id="tab-question-new" class="active question-tab">
+                <a href="#tab-question-page-new" data-toggle="tab">Add Question</a>
+            </li>
+            {%for item in quiz.questions %}
+            <li id="tab-question{{item.id}}" class="question-tab">
+                <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div id="tabs-container" class="tab-content">
+            <div id="tab-question-page-new" class="tab-pane active">
+                <div class='question-new' name='question-new'></div>
+            </div>
+            {%for item in quiz.questions %}
+            <div id="tab-question-page{{item.id}}" class="tab-pane">
+                <div class='question-edit' name='question{{item.id}}'></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

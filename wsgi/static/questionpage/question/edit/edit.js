@@ -6,29 +6,49 @@ steal( 'jquery/controller',
 
         $.Controller('Questionpage.Question.Edit',
             {
-
-            },
-            {
+            },{
                 model : null,
 
                 init : function(){
-                    this.model = new Questionedit();
-                    var id = this.element.attr("name").split("question")[1];
-                    var question = this.model;
+                    var type = this.options.type;
+                    if(type === "new"){
+                        this.model = new Questionedit();
+                        this.model.isNew = true;
+                        this.model.quizid = this.options.quizid;
+                        //this.set_question(this.options.question);
+                        this.element.html(this.view('init', this.model));
+                    }else if(type === "add"){
+                        this.model = new Questionedit();
+                        this.model.set_question(this.options.question);
+                        this.element.html(this.view('init',this.model));
+                    }else{
+                        var question_name = this.element.attr("name");
+                        this.model = new Questionedit();
+                        var question = this.model;
 
-                    this.element.html(this.view('init',Questionedit.findOne({id:id}, function(data){
-                        question.qid = data.id;
-                        question.nextquestionid = data.id;
-                        question.quizid = data.quizid;
-                        question.qtext = data.qtext;
-                        question.answers = data.answers;
+                        this.model.isNew = false;
+                        var id = parseInt(question_name.split("question")[1]);
+                        this.element.html(this.view('init',Questionedit.findOne({id:id}, function(data){
+                            question.qid = data.id;
+                            question.nextquestionid = data.id;
+                            question.quizid = data.quizid;
+                            question.qtext = data.qtext;
+                            question.answers = data.answers;
 
-                        console.log( "received a question:" );
-                        console.log( "id - " + data.id );
-                        console.log( "quizid - " + data.quizid );
-                        console.log( "qtext - " + data.qtext );
-                        console.log( "nextquestionid - " + data.nextquestionid );
-                    })));
+                            console.log( "received a question:" );
+                            console.log( "id - " + data.id );
+                            console.log( "quizid - " + data.quizid );
+                            console.log( "qtext - " + data.qtext );
+                            console.log( "nextquestionid - " + data.nextquestionid );
+                        })));
+                    }
+                },
+                set_question : function(question){
+                    this.model.qid = question.qid;
+                    this.model.nextquestionid = question.nextquestionid;
+                    this.model.quizid = question.quizid;
+                    this.model.qtext = question.qtext;
+                    this.model.answers = question.answers;
                 },
                 ".add-checked click" : function(el){
                     var correct = this.model.correct;
@@ -101,11 +121,28 @@ steal( 'jquery/controller',
                     var id = el.closest(".qanswer").attr("id").split("answer")[1];
                     this.model.get_answer_by_id(id).atext = el.attr("value") ;
                 },
-                ".question-submit click" : function(data){
-                    var question = this.model; 
+                ".question-save click" : function(data){
+                    var question = this.model;
                     question.save( function(){
-                        window.location.href = "/question/" + question.qid;
+                        Pagemessage.Message.Item.show_message("Success", "Saved");
                     });
+                },
+                ".question-create click" : function(data){
+                    var question = this.model;//jQuery.extend(true, {}, this.model);;
+                    question.create( function(data){
+                        var newQuestion = question.to_object();
+                        newQuestion.qid = data.qid;
+
+                        Quizpage.Quiz.Navigator.add_question_edit(newQuestion);
+                        Pagemessage.Message.Item.show_message("Success", "Created");
+                    });
+                },
+                ".question-delete click" : function(){
+                    var question = this.model;
+                    question.destroy(function(data){
+                        Quizpage.Quiz.Navigator.remove_question_by_id(question.qid);
+                        Pagemessage.Message.Item.show_message("Success", "Deleted");
+                    })
                 },
                 ".question-cancel click" : function(){
                     var question = this.model; 

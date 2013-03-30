@@ -9,10 +9,9 @@ steal(
 
             },
             {
-                model : null,
+                model : new Question(),
 
                 init : function(){
-                    this.model = new Question();
                     var id = this.element.attr("name").split("question")[1];
                     var question = this.model;
                                                         // Change to this.model
