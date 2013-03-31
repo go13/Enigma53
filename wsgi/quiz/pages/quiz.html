@@ -2,11 +2,7 @@
 
 {% block content %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage"></script>
-
 <div class="container" style="width: 800px;">
-    <h4>Quiz={{ quiz.title|e }}</h4>
-    {{ quiz.description }}
-    <br>
     <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
         <ul id="tabs" class="nav nav-tabs">
             {%for item in quiz.questions %}

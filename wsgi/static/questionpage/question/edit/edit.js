@@ -144,10 +144,6 @@ steal( 'jquery/controller',
                         Pagemessage.Message.Item.show_message("Success", "Deleted");
                     })
                 },
-                ".question-cancel click" : function(){
-                    var question = this.model; 
-                    window.location.href = "/question/" + question.qid;
-                },
                 ".qtext keyup" : function(el){
                     this.model.qtext = el.attr("value") ;
                 }/*,

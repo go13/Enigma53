@@ -51,22 +51,28 @@ steal( 'jquery/controller',
                     var quizid = parseInt(quiz_name.split("quiz")[1]);
                     Quizpage.Quiz.Navigator.instance = this;
                     this.model = new Navigator({quizid : quizid});
-                   // this.element.remove();
-                        //.find(".question-edit")
-                        //.questionpage_question_edit();
+                },
+                ".question-next click" : function(){
+                    var el = this.element.find("#tabs > .question-tab.active");
+                    if(el.next().length>0){
+                        el.removeClass("active");
+                        el.next().addClass("active");
+
+                        el = this.element.find("#tabs-container > .tab-pane.active");
+                        el.removeClass("active");
+                        el.next().addClass("active");
+                    }
+                },
+                ".question-back click" : function(){
+                    var el = this.element.find("#tabs > .question-tab.active");
+                    if(el.prev().length>0){
+                        el.removeClass("active");
+                        el.prev().addClass("active");
+
+                        el = this.element.find("#tabs-container > .tab-pane.active");
+                        el.removeClass("active");
+                        el.prev().addClass("active");
+                    }
                 }
-
-                /*".question-tab click" : function(el){
-                    var tab = this.element.find(".tab-content > .active").find(".question-item, .question-edit").each(function() {
-                        $(this).empty();
-                    });
-                    var tab_id = el.children("a").attr("href").split("#")[1];
-                    var q_id = tab_id.split("tab-question")[1];
-                    tab = this.element.find("#"+tab_id);
-                    //tab.html("<div class='question-item' name='question"+q_id+"'></div>");
-
-                    tab.find(".question-item").questionpage_question_item();
-                    tab.find(".question-edit").questionpage_question_edit();
-                }*/
             });
     });

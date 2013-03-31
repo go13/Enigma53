@@ -1,4 +1,9 @@
-<% if(!isNew){ %> <button class="question-delete btn btn-link pull-right" type="button">Delete</button> <%}%>
+<ul class="nav nav-pills">
+    <li><a href="#">Statistics</a></li>
+    <li class="pull-right"><a href="/quiz/<%= quizid %>/">View</a></li>
+    <% if(!isNew){ %><li class="pull-right question-delete"><a href="#">Delete</a></li><%}%>
+</ul>
+
 <textarea class="qtext" rows="7" style="width: 650px;" placeholder="Type your question...">
     <%= qtext %>
 </textarea>
@@ -37,7 +42,7 @@
     <%} %>
 </div>
 <div align="center">
+    <button class="question-back btn" type="button">Back</button>
 	<button class="question-<% if(!isNew){ %>save<% }else{ %>create<% } %>  btn btn-success" type="button"><% if(!isNew){ %> Save <% }else{ %> Create <% } %> </button>
-	<button class="question-cancel btn" type="button" >Cancel</button>
-	<button class="question-cancel btn" type="button" >Next</button>
+	<button class="question-next btn" type="button" >Next</button>
 </div>
