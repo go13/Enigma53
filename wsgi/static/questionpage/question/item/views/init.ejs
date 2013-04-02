@@ -1,9 +1,9 @@
-<ul class="nav nav-pills">
-    <li><a href="#">View</a></li>
-    <li><a href="#">History</a></li>
-    <li class="pull-right"><a href="/quiz/<%= quizid %>/edit/">Edit</a></li>
-</ul>
-<div class="form-actions">
+<button class="btn btn-link">Home</button>
+<button class="btn btn-link">History</button>
+
+<button class="btn question-edit-btn btn-link pull-right">Edit</button>
+
+<div style="margin-top: 5px" class="form-actions">
     <%= qtext %>
 </div>
 
@@ -17,6 +17,6 @@
 
 <div align="center">
     <button class="question-back btn" type="button">Back</button>
-	<button class="question-submit  btn btn-success" type="button">Submit</button>
+	<button class="question-submit-btn  btn btn-success" type="button">Submit</button>
 	<button class="question-next btn" type="button" >Next</button>
 </div>

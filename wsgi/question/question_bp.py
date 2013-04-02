@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 from sqlalchemy import Table, Column, Integer, String
 
 from model import db
-from answer import Answer, Answerhistory
+from answer import Answer, Answerhistory, Historysession
 
 question_bp = Blueprint('question_bp', __name__, template_folder='pages')
 
@@ -78,12 +78,10 @@ class Question(db.Model):
         return qlist
 
     @staticmethod
-    def add_answer_history_by_question_id(id, user_id, answer_id, value, to_commit):
+    def add_answer_history_by_question_id(id, historysessionid, answer_id, value, to_commit):
         question = Question.get_question_by_id(id)
         if question:
-            Answerhistory.add_answer_history(user_id, id, answer_id, value, to_commit) # TODO: add userid
-
-
+            Answerhistory.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
 
 @question_bp.route('/<int:question_id>/')
 def question(question_id):
@@ -233,16 +231,20 @@ def jdelete(question_id):
 @question_bp.route('/jsubmit/<int:question_id>/',methods=['POST'])
 def jsubmit(question_id):
     question=Question.get_question_by_id(question_id)
+    print question
     if question:
         qid = request.json['qid']
         answers = request.json['answers']
+
+        hs = Historysession.get_current_historysession_by_userid(1)
+        print 'answers', answers
 
         for answer in answers:
             value = answer['value']
             print 'val ', value
             aid = answer['id']
-
-            Question.add_answer_history_by_question_id(qid, 1, aid,  value, False)
+            print 'oko2'
+            Question.add_answer_history_by_question_id(qid, hs.id, aid,  value, False)
             db.session.commit()
 
 

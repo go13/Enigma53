@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template
 from datetime import datetime
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
+from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
 
 from model import db
 
@@ -78,25 +78,23 @@ class Answerhistory(db.Model):
     __tablename__ = 'answerhistory'
 
     id = db.Column('id', Integer, primary_key=True)
-    userid = db.Column('userid', Integer)
+    historysessionid = db.Column('historysessionid', Integer)
     questionid = db.Column('questionid', Integer)
     answerid = db.Column('answerid', Integer)
-    submittime = db.Column('submittime', TIMESTAMP)
     value = db.Column('value', String)
 
-    def __init__(self, userid=userid, questionid=questionid, answerid=answerid, submittime=submittime, value=value):
-        self.userid = userid
+    def __init__(self, questionid=questionid, answerid=answerid, historysessionid=historysessionid, value=value):
         self.questionid = questionid
         self.answerid = answerid
-        self.submittime = submittime
+        self.historysessionid = historysessionid
         self.value = value
 
     def __repr__(self):
         return '<Answer %s>' % (self.answer)
 
     @staticmethod
-    def add_answer_history(user_id, question_id, answer_id, value, to_commit):
-        ah = Answerhistory(user_id, question_id, answer_id, datetime.now(), value)
+    def add_answer_history(question_id, answer_id, historysessionid, value, to_commit): # todo:
+        ah = Answerhistory(question_id, answer_id, historysessionid, value) # datetime.now()
         db.session.add(ah)
         if to_commit:
             db.session.commit()
@@ -105,3 +103,39 @@ class Answerhistory(db.Model):
     def add_answer_histories(submitdates):
         db.session.add_all(submitdates)
         db.session.commit()
+
+class Historysession(db.Model):
+    __tablename__ = 'Historysessions'
+
+    id = db.Column('id', Integer, primary_key=True)
+    userid = db.Column('userid', Integer)
+    submittime = db.Column('submittime', TIMESTAMP)
+    nodetype = db.Column('nodetype', String)
+
+    def __init__(self, userid=userid, submittime=submittime, nodetype=nodetype):
+        self.userid = userid
+        self.submittime = submittime
+        self.nodetype = nodetype
+
+    @staticmethod
+    def start_history_session(userid=userid, nodetype=nodetype):
+        sh = Historysession(userid, datetime.now(), nodetype)
+        db.session.add(sh)
+        db.session.commit()
+
+    #Finish session
+
+    @staticmethod
+    def get_current_historysession_by_userid(userid=userid):
+        t = db.session.query(
+            func.max(Historysession.id).label('max_id'),
+        ).filter(Historysession.userid==userid).subquery('t')
+
+        query = db.session.query(Historysession).filter(
+            Historysession.id == t.c.max_id,
+        )
+        hs = query.first()
+
+        if hs:
+            return hs
+

@@ -3,6 +3,7 @@ from sqlalchemy import Table, Column, Integer, String
 
 from model import db
 from question.question_bp import Question
+from question.answer import Historysession
 
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 
@@ -39,7 +40,9 @@ class Quiz(db.Model):
 def quiz(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
     if quiz:
-        print quiz.questions
+        Historysession.start_history_session(1, 'quiz')
+        #Historysession.get_current_historysession_by_user(1)
+
         return render_template('quiz.html', quiz=quiz)
     else:
         return render_template('404.html')
@@ -52,6 +55,14 @@ def quiz_edit(quiz_id):
     else:
         return render_template('404.html')
 
+
+#@quiz_bp.route('/results/<int:session_id>/')
+#def quiz_results(session_id):
+    #quiz=Quiz.get_quiz_by_id(quiz_id)
+    #if quiz:
+#    return render_template('quiz_results.html')
+    #else:
+    #    return render_template('404.html')
 
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):

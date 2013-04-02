@@ -1,10 +1,9 @@
-<ul class="nav nav-pills">
-    <li><a href="#">Statistics</a></li>
-    <li class="pull-right"><a href="/quiz/<%= quizid %>/">View</a></li>
-    <% if(!isNew){ %><li class="pull-right question-delete"><a href="#">Delete</a></li><%}%>
-</ul>
+<button class="btn question-home-btn btn-link">Home</button>
+<button class="btn question-history-btn btn-link">History</button>
+<button class="btn question-view-btn btn-link pull-right">View</button>
+<% if(!isNew){ %><button class="btn question-delete-btn btn-link pull-right">Delete</button><%}%>
 
-<textarea class="qtext" rows="7" style="width: 650px;" placeholder="Type your question...">
+<textarea class="qtext" rows="7" style="width: 650px; margin-top: 5px" placeholder="Type your question...">
     <%= qtext %>
 </textarea>
 

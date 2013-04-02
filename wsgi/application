@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import os
 
-virtenv = os.environ['APPDIR'] + '/virtenv/'
+#virtenv = os.environ['APPDIR'] + '/virtenv/'
 
-#virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
+virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
 os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python-2.6/site-packages')
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
@@ -15,6 +15,7 @@ from flask import Flask, render_template
 from flask_flatpages import FlatPages
 
 from question.question_bp import question_bp
+from quiz.quiz_results_bp import quiz_results_bp
 from quiz.quiz_bp import quiz_bp
 
 DEBUG = True
@@ -28,6 +29,7 @@ pages = FlatPages(application)
 
 application.register_blueprint(question_bp, url_prefix='/question')
 application.register_blueprint(quiz_bp, url_prefix='/quiz')
+application.register_blueprint(quiz_results_bp, url_prefix='/quiz/results')
 
 @application.route('/')
 def index():

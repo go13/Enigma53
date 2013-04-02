@@ -137,12 +137,15 @@ steal( 'jquery/controller',
                         Pagemessage.Message.Item.show_message("Success", "Created");
                     });
                 },
-                ".question-delete click" : function(){
+                ".question-delete-btn click" : function(){
                     var question = this.model;
                     question.destroy(function(data){
                         Quizpage.Quiz.Navigator.remove_question_by_id(question.qid);
                         Pagemessage.Message.Item.show_message("Success", "Deleted");
                     })
+                },
+                ".question-view-btn click" : function(el){
+                    document.location.href = '/quiz/'+this.model.quizid+'/';
                 },
                 ".qtext keyup" : function(el){
                     this.model.qtext = el.attr("value") ;

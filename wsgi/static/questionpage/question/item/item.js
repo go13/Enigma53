@@ -9,9 +9,10 @@ steal(
 
             },
             {
-                model : new Question(),
+                model : null,
 
                 init : function(){
+                    this.model = new Question();
                     var id = this.element.attr("name").split("question")[1];
                     var question = this.model;
                                                         // Change to this.model
@@ -21,18 +22,24 @@ steal(
                         question.quizid = data.quizid;
                         question.qtext = data.qtext;
                         question.answers = data.answers;
-                        for(var i=0; i<question.answers.length; i++){
-                            question.answers[i].value='0';
-                        }
                         console.log( "received a question:" );
                         console.log( "id - " + data.id );
                         console.log( "quizid - " + data.quizid );
                         console.log( "qtext - " + data.qtext );
+
+                        for(var i=0; i<question.answers.length; i++){
+                            question.answers[i].value='0';
+                            console.log( "answer:"+i+" - "+ question.answers[i].value );
+                        }
+
                     })));
                 },
-                ".question-submit click" : function(el){
+                ".question-submit-btn click" : function(el){
                     this.model.submit_question();
                     //document.location.href = '/question/'+this.model.qid;
+                },
+                ".question-edit-btn click" : function(el){
+                    document.location.href = '/quiz/'+this.model.quizid+'/edit/';
                 },
                 ".answer-checkbox click" : function(el){
                     var id = el.attr("id").split("answer")[1];

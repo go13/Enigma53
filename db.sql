@@ -3,7 +3,6 @@
 /* Created on:     01.02.2013 7:05:21                           */
 /*==============================================================*/
 
-
 drop table if exists answers;
 
 drop table if exists questions;
@@ -13,6 +12,8 @@ drop table if exists quizes;
 drop table if exists answerhistory;
 
 drop table if exists users;
+
+drop table if exists historysessions;
 
 /*==============================================================*/
 /* Table: answers                                               */
@@ -65,15 +66,30 @@ insert into quizes values (2, 'Quiz 2', 'Quiz description');
 create table answerhistory
 (
    id                   integer not null AUTO_INCREMENT,
-   userid               integer not null,
+   historysessionid     integer not null,
    questionid           integer not null,
    answerid             integer not null,
-   submittime           timestamp not null,
    value                text not null,
    primary key (id)
 );
-insert into answerhistory values (1, 1, 1, 1, sysdate(), '0' );
-insert into answerhistory values (2, 1, 1, 3, sysdate(), '1');
+insert into answerhistory values (1, 1, 1, 1, '0');
+insert into answerhistory values (2, 1, 1, 1, '1');
+
+
+/*==============================================================*/
+/* Table: historysessions                                                */
+/*==============================================================*/
+create table historysessions
+(
+   id                   integer not null AUTO_INCREMENT,
+   userid               integer not null,
+   submittime           timestamp not null,
+   nodetype             text not null,
+   primary key (id)
+);
+insert into historysessions values (1, 1, sysdate(), 'quiz');
+insert into historysessions values (2, 1, sysdate(), 'quiz');
+
 
 /*==============================================================*/
 /* Table: users                                                */

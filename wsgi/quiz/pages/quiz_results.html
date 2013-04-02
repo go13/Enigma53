@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <script type="text/javascript" src="/static/steal/steal.js?quizpage"></script>
+    <div class="container" style="width: 800px;">
+        {%for item in quiz_results.questions %}
+
+        {% endfor %}
+    </div>
+
+{% endblock content %}
