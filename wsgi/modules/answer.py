@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
+from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
 
 from model import db
 

@@ -13,9 +13,7 @@ quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 def quiz(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
     if quiz:
-        #Historysession.start_history_session(1, 'quiz')
-        #Historysession.get_current_historysession_by_user(1)
-
+        Historysession.start_history_session(1, quiz_id)
         return render_template('quiz.html', quiz=quiz)
     else:
         return render_template('404.html')

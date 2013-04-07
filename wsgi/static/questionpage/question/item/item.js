@@ -36,7 +36,7 @@ steal(
                 },
                 ".question-submit-btn click" : function(el){
                     this.model.submit_question();
-                    //document.location.href = '/question/'+this.model.qid;
+                    Quizpage.Quiz.Navigator.to_next_tab();
                 },
                 ".question-edit-btn click" : function(el){
                     document.location.href = '/quiz/'+this.model.quizid+'/edit/';

@@ -90,11 +90,10 @@ create table historysessions
    id                   integer not null AUTO_INCREMENT,
    userid               integer not null,
    starttime            timestamp not null,
-   endtime              timestamp not null,
+   endtime              timestamp,
+   quizid               integer not null,
    primary key (id)
 );
-insert into historysessions values (1, 1, sysdate(), sysdate());
-insert into historysessions values (2, 1, sysdate(), sysdate());
 
 
 /*==============================================================*/

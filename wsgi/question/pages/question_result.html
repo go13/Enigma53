@@ -6,7 +6,7 @@
     {{ question_result.question.qtext }}
 </div>
     {% for item in question_result.answer_results %}
-        {% if item.answer.correct != (item.value == 'T') %}
+        {% if item.answer.correct != item.value %}
         <blockquote style="margin-bottom: 15px; border-left-color: #FF0000" />
         {% else %}
         <blockquote style="margin-bottom: 15px; border-left-color: #478948"/>

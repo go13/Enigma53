@@ -43,7 +43,62 @@ steal( 'jquery/controller',
                     Quizpage.Quiz.Navigator.instance.element.find("#tab-question-new").addClass("active");
                     Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page-new").addClass("active");
 
-                    Quizpage.Quiz.Navigator.instance.model.remove_question(qid);
+                    Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qid);
+                },
+                to_next_tab : function(){
+                    var navigator = Quizpage.Quiz.Navigator.instance;
+                    var el = navigator.element.find("#tabs > .question-tab.active");
+                    if(el.next().length > 0){
+                        el.removeClass("active");
+                        el.next().addClass("active");
+
+                        el = navigator.element.find("#tabs-container > .tab-pane.active");
+                        el.removeClass("active");
+                        el.next().addClass("active");
+
+                        el = el.next();
+
+                        var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
+                        navigator.model.set_current_question_by_id(qid);
+                    }
+                },
+                to_prev_tab : function(){
+                    var navigator = Quizpage.Quiz.Navigator.instance;
+                    var el = navigator.element.find("#tabs > .question-tab.active");
+                    if(el.prev().length>0){
+                        el.removeClass("active");
+                        el.prev().addClass("active");
+
+                        el = navigator.element.find("#tabs-container > .tab-pane.active");
+                        el.removeClass("active");
+                        el.prev().addClass("active");
+
+                        el = el.prev();
+
+                        var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
+                        navigator.model.set_current_question_by_id(qid);
+                    }
+                },
+                to_tab_by_id : function(qid){
+                    var navel = Quizpage.Quiz.Navigator.instance.element;
+                    var el = navel.find("#tabs > .question-tab.active");
+                    if(el){
+                        var tab_id_string = el.attr("id").split("tab-question")[1];
+                        if(tab_id_string != qid){
+                            el.removeClass("active");
+
+                            el = navel.find("#tabs > #tab-question"+qid);
+                            el.addClass("active");
+
+                            el = navel.find("#tabs-container > .tab-pane.active");
+                            el.removeClass("active");
+
+                            el = navel.find("#tabs-container > #tab-question-page"+qid);
+                            el.addClass("active");
+                            var qid_num = parseInt(qid);
+                            Quizpage.Quiz.Navigator.instance.model.set_current_question_by_id(qid_num);
+                        }
+                    }
                 }
             },{
                 init : function(){
@@ -53,26 +108,10 @@ steal( 'jquery/controller',
                     this.model = new Navigator({quizid : quizid});
                 },
                 ".question-next click" : function(){
-                    var el = this.element.find("#tabs > .question-tab.active");
-                    if(el.next().length>0){
-                        el.removeClass("active");
-                        el.next().addClass("active");
-
-                        el = this.element.find("#tabs-container > .tab-pane.active");
-                        el.removeClass("active");
-                        el.next().addClass("active");
-                    }
+                    Quizpage.Quiz.Navigator.to_next_tab();
                 },
                 ".question-back click" : function(){
-                    var el = this.element.find("#tabs > .question-tab.active");
-                    if(el.prev().length>0){
-                        el.removeClass("active");
-                        el.prev().addClass("active");
-
-                        el = this.element.find("#tabs-container > .tab-pane.active");
-                        el.removeClass("active");
-                        el.prev().addClass("active");
-                    }
+                    Quizpage.Quiz.Navigator.to_prev_tab();
                 }
             });
     });

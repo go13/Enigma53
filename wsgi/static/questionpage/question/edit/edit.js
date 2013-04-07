@@ -98,7 +98,7 @@ steal( 'jquery/controller',
                     }
                     maxid++;
 
-                    var answer = new Object();
+                    var answer = {};
                     answer.id = maxid;
                     answer.correct = this.model.correct;
 
