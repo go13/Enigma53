@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% macro render_question_results(question_result) %}
+
+
+<div class="form-actions">
+    {{ question_result.question.qtext }}
+</div>
+    {% for item in question_result.answer_results %}
+        {% if item.answer.correct != (item.value == 'T') %}
+        <blockquote style="margin-bottom: 15px; border-left-color: #FF0000" />
+        {% else %}
+        <blockquote style="margin-bottom: 15px; border-left-color: #478948"/>
+        {% endif %}
+            <label class="checkbox">
+            {% if item.value == 'T' %}
+                <input disabled checked type="checkbox">{{ item.answer.atext }}
+            {% else %}
+                <input disabled type="checkbox">{{ item.answer.atext }}
+            {% endif %}
+        </blockquote>
+        </label>
+{% endfor %}
+<br>
+{% if question_result.correct %}
+<span class="label label-success">Correct</span>
+{% else %}
+<span class="label label-important"> Error </span>
+{% endif %}
+<button class="btn btn-link pull-right" type="button">Add</button>
+<button class="btn btn-link pull-right" onclick="window.location='/question/{{question_result.questionid}}/edit/' " type="button">Edit</button>
+
+{% endmacro %}

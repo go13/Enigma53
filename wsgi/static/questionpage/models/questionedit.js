@@ -11,7 +11,7 @@ $.Model('Questionedit',
         answers : [],
 
         atext : "Type your answer here...",
-        correct : 1,
+        correct : 'T',
         isNew : false
     },
     findAll: "/questions.json",
@@ -42,7 +42,7 @@ $.Model('Questionedit',
     get_answer_by_id : function(id){
         var result = null;
         for(var i=0; i< this.answers.length; i++){
-            if(this.answers[i].id == id){
+            if(this.answers[i].id === id){
                 result = this.answers[i];
                 break;
             }
@@ -51,7 +51,7 @@ $.Model('Questionedit',
     },
     remove_answer_by_id : function(id){
         for(var i=0; i<this.answers.length; i++){
-            if(this.answers[i].id == id){
+            if(this.answers[i].id === id){
                 this.answers.splice(i,1);
                 break;
             }

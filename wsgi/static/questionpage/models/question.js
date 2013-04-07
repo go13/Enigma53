@@ -16,7 +16,7 @@ $.Model('Question',
     get_answer_by_id : function(id){
         var result = null;
         for(var i=0; i< this.answers.length; i++){
-            if(this.answers[i].id == id){
+            if(this.answers[i].id === id){
                 result = this.answers[i];
                 break;
             }

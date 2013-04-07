@@ -15,6 +15,12 @@ drop table if exists users;
 
 drop table if exists historysessions;
 
+drop table if exists quizresults;
+
+drop table if exists answerresults;
+
+drop table if exists questionresults;
+
 /*==============================================================*/
 /* Table: answers                                               */
 /*==============================================================*/
@@ -23,12 +29,12 @@ create table answers
    id                   integer not null AUTO_INCREMENT,
    questionid           integer,
    atext                text,
-   correct              integer,
+   correct              text not null,
    primary key (id)
 );
-insert into answers values (1, 1, 'Cporrect answer 1 ', 0);
-insert into answers values (2, 1, 'Cporrect answer 2 ', 0);
-insert into answers values (3, 1, 'Cporrect answer 3 ', 0);
+insert into answers values (1, 1, 'Cporrect answer 1 ', 'F');
+insert into answers values (2, 1, 'Cporrect answer 2 ', 'F');
+insert into answers values (3, 1, 'Cporrect answer 3 ', 'F');
 
 /*==============================================================*/
 /* Table: questions                                             */
@@ -83,12 +89,12 @@ create table historysessions
 (
    id                   integer not null AUTO_INCREMENT,
    userid               integer not null,
-   submittime           timestamp not null,
-   nodetype             text not null,
+   starttime            timestamp not null,
+   endtime              timestamp not null,
    primary key (id)
 );
-insert into historysessions values (1, 1, sysdate(), 'quiz');
-insert into historysessions values (2, 1, sysdate(), 'quiz');
+insert into historysessions values (1, 1, sysdate(), sysdate());
+insert into historysessions values (2, 1, sysdate(), sysdate());
 
 
 /*==============================================================*/
@@ -104,3 +110,41 @@ create table users
 );
 
 insert into users values (1, 'Dmitiry', 'dima.blinkov@gmail.com', 'Enigma');
+
+/*==============================================================*/
+/* Table: quizresults                                               */
+/*==============================================================*/
+create table quizresults
+(
+   sessionid            integer not null AUTO_INCREMENT,
+   userid               integer,
+   quizid               integer,
+   submittime           timestamp,
+   primary key (sessionid)
+);
+insert into quizresults values (1, 1, 1, sysdate());
+insert into quizresults values (2, 1, 1, sysdate());
+insert into quizresults values (3, 1, 1, sysdate());
+
+
+/*==============================================================*/
+/* Table: questionresults                                               */
+/*==============================================================*/
+create table questionresults
+(
+   sessionid            integer,
+   questionid           integer,
+   correct              integer default 0,
+   primary key (sessionid, questionid)
+);
+
+/*==============================================================*/
+/* Table: answerresults                                               */
+/*==============================================================*/
+create table answerresults
+(
+   sessionid            integer,
+   answerid             integer,
+   value                text,
+   primary key (sessionid, answerid)
+);

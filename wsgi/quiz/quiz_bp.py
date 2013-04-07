@@ -1,46 +1,19 @@
 from flask import Flask, Blueprint, render_template, jsonify
 from sqlalchemy import Table, Column, Integer, String
+from datetime import datetime
 
 from model import db
-from question.question_bp import Question
-from question.answer import Historysession
+from quiz import Quiz
+from question.question import Question
+from modules.results import Historysession
 
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
-
-class Quiz(db.Model):
-    __tablename__ = 'quizes'
-
-    id = db.Column('id', Integer, primary_key=True)
-    title = db.Column('title', String)
-    description = db.Column('description', String)
-    questions = []
-
-    def __init__(self, description=description, title=title):
-        self.description = description
-        self.title = title
-
-    @property
-    def serialize(self):
-        return {
-            'id':self.id,
-            'title':self.title,
-            'description':self.description,
-            'questions':[i.serialize for i in self.questions]
-           }
-
-    @staticmethod
-    def get_quiz_by_id(id):
-        print 'get_quiz_by_id('+str(id)+')'
-        q  = Quiz.query.filter_by(id=id).first()
-        if q is not None:
-            q.questions=Question.get_all_questions_by_quiz_id(id)
-        return q
 
 @quiz_bp.route('/<int:quiz_id>/')
 def quiz(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
     if quiz:
-        Historysession.start_history_session(1, 'quiz')
+        #Historysession.start_history_session(1, 'quiz')
         #Historysession.get_current_historysession_by_user(1)
 
         return render_template('quiz.html', quiz=quiz)
@@ -55,15 +28,6 @@ def quiz_edit(quiz_id):
     else:
         return render_template('404.html')
 
-
-#@quiz_bp.route('/results/<int:session_id>/')
-#def quiz_results(session_id):
-    #quiz=Quiz.get_quiz_by_id(quiz_id)
-    #if quiz:
-#    return render_template('quiz_results.html')
-    #else:
-    #    return render_template('404.html')
-
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
@@ -74,3 +38,11 @@ def jget(quiz_id):
     else:
        return jsonify({"status":"ERROR"})
 
+@quiz_bp.route('/jstartsession/<int:quiz_id>/')
+def jstart_session(quiz_id):
+    userid = 1
+    Historysession.start_history_session(userid, quiz_id)
+
+    quiz=Quiz.get_quiz_by_id(quiz_id)
+    result = {'jstaus':'OK'}
+    return jsonify(result)

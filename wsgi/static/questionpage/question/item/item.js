@@ -13,7 +13,7 @@ steal(
 
                 init : function(){
                     this.model = new Question();
-                    var id = this.element.attr("name").split("question")[1];
+                    var id = parseInt(this.element.attr("name").split("question")[1]);
                     var question = this.model;
                                                         // Change to this.model
                     this.element.html(this.view('init', Question.findOne({id:id}, function(data){
@@ -28,7 +28,7 @@ steal(
                         console.log( "qtext - " + data.qtext );
 
                         for(var i=0; i<question.answers.length; i++){
-                            question.answers[i].value='0';
+                            question.answers[i].value = 'F';
                             console.log( "answer:"+i+" - "+ question.answers[i].value );
                         }
 
@@ -42,12 +42,12 @@ steal(
                     document.location.href = '/quiz/'+this.model.quizid+'/edit/';
                 },
                 ".answer-checkbox click" : function(el){
-                    var id = el.attr("id").split("answer")[1];
+                    var id = parseInt(el.attr("id").split("answer")[1]);
                     var answer = this.model.get_answer_by_id(id);
                     if(el.prop('checked')){
-                        answer.value = '1';
+                        answer.value = 'T';
                     }else{
-                        answer.value = '0';
+                        answer.value = 'F';
                     }
                 }
             });

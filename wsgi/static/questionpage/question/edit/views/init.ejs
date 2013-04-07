@@ -22,7 +22,7 @@
 
     <div id="answer<%= answers[i].id %>" class="qanswer input-prepend input-append">
         <a class="qanswer-check btn btn-primary">
-            <% if(answers[i].correct == 1){ %>
+            <% if(answers[i].correct === 'T'){ %>
             <i class="icon-ok icon-white"></i>
             <% }else{ %>
             <i class="icon-ban-circle icon-white"></i>

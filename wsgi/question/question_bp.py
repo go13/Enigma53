@@ -2,86 +2,14 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 from sqlalchemy import Table, Column, Integer, String
 
 from model import db
-from answer import Answer, Answerhistory, Historysession
+from question import Question
+from modules.answer import Answer
+from quiz.quiz_result import QuizResult
+from question_result import QuestionResult
+from answer_result import AnswerResult
+#from modules.results import Historysession
 
 question_bp = Blueprint('question_bp', __name__, template_folder='pages')
-
-
-class Question(db.Model):
-    __tablename__ = 'questions'
-
-    id = db.Column('id', Integer, primary_key=True)
-    quizid = db.Column('quizid', Integer)
-    nextquestionid = db.Column('nextquestionid', Integer)
-    qtext = db.Column('qtext', String)
-    type = db.Column('type', Integer)
-    answers = []
-
-    def __init__(self, quizid, nextquestionid, qtext, type, answers):
-        self.quizid = quizid
-        self.nextquestionid = nextquestionid
-        self.qtext = qtext
-        self.type = type
-        self.answers = answers
-
-    @property
-    def serialize(self):
-        return {
-            'quizid':self.quizid,
-            'nextquestionid':self.nextquestionid,
-            'qtext':self.qtext,
-            'id':self.id,
-            'answers':[i.serialize for i in self.answers]
-           }
-
-    @property
-    def serialize_for_edit(self):
-        return {
-            'quizid':self.quizid,
-            'nextquestionid':self.nextquestionid,
-            'qtext':self.qtext,
-            'id':self.id,
-            'answers':[i.serialize_for_edit for i in self.answers]
-           }
-
-    @staticmethod
-    def get_next_question(id):
-        q  = Question.query.filter_by(id=id).first()
-        q  = Question.query.filter_by(id=q.nextquestionid).first()
-        if q is not None:
-            q.questionList=Answer.get_answer_by_question_id(q.id)
-            return q
-        return None
-
-    @staticmethod
-    def get_question_by_id(id):
-        q  = Question.query.filter_by(id=id).first()
-        if q is not None:
-            q.answers=Answer.get_answer_by_question_id(q.id) #[{"atext":}]
-            return q
-        return None
-
-    @staticmethod
-    def get_question_by_quiz_id(quiz_id):
-        print 'get_question_by_quiz_id('+str(quiz_id)+')'
-        q  = Question.query.filter_by(quizid=quiz_id).first()
-        if q is not None:
-            q.answers=Answer.get_answer_by_question_id(id)
-        return q
-
-    @staticmethod
-    def get_all_questions_by_quiz_id(quiz_id):
-        print 'get_all_questions_by_quiz_id('+str(quiz_id)+')'
-        qlist  = Question.query.filter_by(quizid=quiz_id).all()
-        #if qlist is not None:
-        #    q.answers=Answer.get_answer_by_question_id(id)
-        return qlist
-
-    @staticmethod
-    def add_answer_history_by_question_id(id, historysessionid, answer_id, value, to_commit):
-        question = Question.get_question_by_id(id)
-        if question:
-            Answerhistory.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
 
 @question_bp.route('/<int:question_id>/')
 def question(question_id):
@@ -125,9 +53,9 @@ def edit_question_submit():
         for answer in answers:
             atext = answer['atext']
             if answer['correct']=='T':
-                correct = 1
+                correct = 'T'
             else:
-                correct = 0;
+                correct = 'F';
             Answer.create_answer(questionid, atext, correct, True)
         db.session.commit()
 
@@ -174,7 +102,9 @@ def jupd(question_id):
 
         for answer in answers:
             atext = answer['atext']
-            correct = answer['correct']
+            correct = 'F'
+            if answer['correct']=='T':
+                correct = 'T'
             Answer.create_answer(question_id, atext, correct, True)
         db.session.commit()
 
@@ -201,8 +131,11 @@ def jcreate():
 
     for answer in answers:
         atext = answer['atext']
-        correct = answer['correct']
         id = answer['id']
+        correct = 'F'
+        if answer['correct'] == 1:
+            correct = 'T'
+
         newAnswer = Answer(newQuestion.id, atext, correct)
         db.session.add(newAnswer)
 
@@ -230,23 +163,35 @@ def jdelete(question_id):
 
 @question_bp.route('/jsubmit/<int:question_id>/',methods=['POST'])
 def jsubmit(question_id):
-    question=Question.get_question_by_id(question_id)
-    print question
+
+    sessionid = 1
+    question = Question.get_question_by_id(question_id)
+    print 'question_id', question_id
+
     if question:
         qid = request.json['qid']
-        answers = request.json['answers']
+        receivedanswers = request.json['answers']
+        correct = True
 
-        hs = Historysession.get_current_historysession_by_userid(1)
-        print 'answers', answers
+        for i in range(0,len(receivedanswers)):
+            item = receivedanswers[i]
+            aid = item['id']
 
-        for answer in answers:
-            value = answer['value']
-            print 'val ', value
-            aid = answer['id']
-            print 'oko2'
-            Question.add_answer_history_by_question_id(qid, hs.id, aid,  value, False)
+            value = 'F'
+            if item['value'] == 'T':
+                value = 'T'
+
+            AnswerResult.add_answer_result(sessionid, aid, value)
+
             db.session.commit()
 
+            correct = correct and (value == question.answers[i].correct)
+            print question.answers
+            print i, ' - ', question.answers[i].correct
+
+            print 'value - ', value, ' answer = ', question.answers[i].correct, ', correct - ', correct
+
+        QuestionResult.add_question_result(sessionid, qid, correct)
 
         result = {'jstaus':'OK'}
         return jsonify(result)

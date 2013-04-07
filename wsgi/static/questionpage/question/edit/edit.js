@@ -52,13 +52,13 @@ steal( 'jquery/controller',
                 },
                 ".add-checked click" : function(el){
                     var correct = this.model.correct;
-                    if( correct == 0){
-                        correct = 1;
+                    if( correct === 'F'){
+                        correct = 'T';
                         el.children("i:first").
                             removeClass("icon-ban-circle").
                             addClass("icon-ok");
                     }else{
-                        correct = 0;
+                        correct = 'F';
                         el.children("i:first").
                             addClass("icon-ban-circle").
                             removeClass("icon-ok");
@@ -67,16 +67,16 @@ steal( 'jquery/controller',
                 },
                 ".qanswer-check click" : function(el){
                     //alert(el.attr("id"));
-                    var id = el.closest(".qanswer").attr("id").split("answer")[1];
+                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
                     var answer = this.model.get_answer_by_id(id);
                     var correct = answer.correct;
-                    if( correct == 0){
-                        correct = 1;
+                    if( correct === 'F'){
+                        correct = 'T';
                         el.children("i:first").
                             removeClass("icon-ban-circle").
                             addClass("icon-ok");
                     }else{
-                        correct = 0;
+                        correct = 'F';
                         el.children("i:first").
                             addClass("icon-ban-circle").
                             removeClass("icon-ok");
@@ -84,7 +84,7 @@ steal( 'jquery/controller',
                     answer.correct = correct;
                 },
                 ".qanswer-delete click" : function(el){
-                    var id = el.closest(".qanswer").attr("id").split("answer")[1];
+                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
                     this.model.remove_answer_by_id(id);
                     el.closest(".qanswer").remove();
                 },
@@ -118,7 +118,7 @@ steal( 'jquery/controller',
                     this.model.atext = el.attr("value") ;
                 },
                 ".qanswer-input keyup" : function(el){
-                    var id = el.closest(".qanswer").attr("id").split("answer")[1];
+                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
                     this.model.get_answer_by_id(id).atext = el.attr("value") ;
                 },
                 ".question-save click" : function(data){
