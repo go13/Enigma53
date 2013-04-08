@@ -33,4 +33,4 @@ class Quiz(db.Model):
         q  = Quiz.query.filter_by(id=id).first()
         if q is not None:
             q.questions=Question.get_all_questions_by_quiz_id(id)
-        return q
+        return q    

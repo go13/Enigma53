@@ -17,6 +17,16 @@ def quiz(quiz_id):
         return render_template('quiz.html', quiz=quiz)
     else:
         return render_template('404.html')
+        
+@quiz_bp.route('/<int:quiz_id>/home/')
+def quiz_home(quiz_id):
+    quiz=Quiz.get_quiz_by_id(quiz_id)
+    if quiz:        
+        QuizResult.get_quiz_results_by_userid(1)
+        return render_template('quiz_home.html', quiz=quiz)
+    else:
+        return render_template('404.html')
+
 
 @quiz_bp.route('/<int:quiz_id>/edit/')
 def quiz_edit(quiz_id):

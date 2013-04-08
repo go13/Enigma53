@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container" style="width: 800px;">
+        {% include "quiz_menu.html" %}
+        
+        <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='/quiz/{{quiz.id}}/'" >Start</button>
+        </br>
+        {{quiz.description}}
+        
+    </div>
+
+{% endblock content %}

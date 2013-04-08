@@ -3,6 +3,7 @@ from quiz import Quiz
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
 
 from model import db
+from modules.results import Historysession
 
 class QuizResult(db.Model):
     __tablename__ = 'quizresults'
@@ -29,3 +30,10 @@ class QuizResult(db.Model):
         result = QuizResult(sessionid, quizid)
         db.session.add(result)
         db.session.commit()
+        
+    @staticmethod
+    def get_quiz_results_by_userid(userid):
+        results  = QuizResult.query.filter_by(userid.in_(
+            session.query(Historysession.id).filter(Historysession.userid==userid)
+            )).all()        
+        return results
