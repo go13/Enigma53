@@ -20,13 +20,14 @@
         </blockquote>
         </label>
 {% endfor %}
-<br>
+<div style="margin-top:3px">
 {% if question_result.correct %}
 <span class="label label-success">Correct</span>
 {% else %}
 <span class="label label-important"> Error </span>
 {% endif %}
+
 <button class="btn btn-link pull-right" type="button">Add</button>
 <button class="btn btn-link pull-right" onclick="window.location='/question/{{question_result.questionid}}/edit/' " type="button">Edit</button>
-
+</div>
 {% endmacro %}
