@@ -67,7 +67,17 @@ class Historysession(db.Model):
 
         return chs
 
-    #Finish session
+    @staticmethod
+    def finish_history_session(userid=userid, quizid=quizid):
+        print 'userid', userid
+        chs = Historysession.get_current_historysession_by_userid(userid)
+        print 'finish_history_session ', chs
+        if chs:
+            chs.endtime = datetime.now()
+            db.session.add(chs)
+            db.session.commit()
+
+        return chs
 
     @staticmethod
     def get_current_historysession_by_userid(userid=userid):
@@ -80,8 +90,7 @@ class Historysession(db.Model):
         )
         hs = query.first()
 
-        if hs and hs.endtime != None:
-            print hs.endtime
+        if hs and hs.endtime == None:
             return hs
         else:
             return None

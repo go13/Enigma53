@@ -5,6 +5,7 @@ from datetime import datetime
 from model import db
 from quiz import Quiz
 from question.question import Question
+from quiz_result import QuizResult
 from modules.results import Historysession
 
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
@@ -22,17 +23,25 @@ def quiz(quiz_id):
 def quiz_home(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
     if quiz:        
-        QuizResult.get_quiz_results_by_userid(1)
+        #QuizResult.get_quiz_results_by_userid(1)
         return render_template('quiz_home.html', quiz=quiz)
     else:
         return render_template('404.html')
-
 
 @quiz_bp.route('/<int:quiz_id>/edit/')
 def quiz_edit(quiz_id):
     quiz=Quiz.get_quiz_by_id(quiz_id)
     if quiz:
         return render_template('quiz_edit.html', quiz=quiz)
+    else:
+        return render_template('404.html')
+
+@quiz_bp.route('/list/')
+def quiz_list():
+    userid = 1
+    quizes=Quiz.get_quiz_by_userid(userid)
+    if quiz:
+        return render_template('quiz_list.html', quizes = quizes)
     else:
         return render_template('404.html')
 
@@ -46,11 +55,25 @@ def jget(quiz_id):
     else:
        return jsonify({"status":"ERROR"})
 
+@quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
+def jdelete(quiz_id):
+    # todo delete
+    return jsonify({"status":"OK"})
+
 @quiz_bp.route('/jstartsession/<int:quiz_id>/')
 def jstart_session(quiz_id):
     userid = 1
     Historysession.start_history_session(userid, quiz_id)
 
     quiz=Quiz.get_quiz_by_id(quiz_id)
+    result = {'jstaus':'OK'}
+    return jsonify(result)
+
+@quiz_bp.route('/jfinishsession/<int:quiz_id>/', methods=['POST'])
+def finish_session(quiz_id):
+    print 'FINISH'
+    userid = 1
+    Historysession.finish_history_session(userid, quiz_id)
+
     result = {'jstaus':'OK'}
     return jsonify(result)

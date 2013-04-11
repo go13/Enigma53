@@ -103,7 +103,6 @@ $.Model('Questionedit',
             }
         });
     },
-
     submit_question : function(success, error){
         var obj = new Object();
         obj.qid = this.qid;

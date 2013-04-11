@@ -60,11 +60,12 @@ create table quizes
    id                   integer not null AUTO_INCREMENT,
    title                text,
    description          text,
+   userid               integer not null,
    primary key (id)
 );
 
-insert into quizes values (1, 'Quiz 1', 'Quiz description');
-insert into quizes values (2, 'Quiz 2', 'Quiz description');
+insert into quizes values (1, 'Quiz 1', 'Quiz description', 1);
+insert into quizes values (2, 'Quiz 2', 'Quiz description', 1);
 
 /*==============================================================*/
 /* Table: quizes                                                */
@@ -90,7 +91,7 @@ create table historysessions
    id                   integer not null AUTO_INCREMENT,
    userid               integer not null,
    starttime            timestamp not null,
-   endtime              timestamp,
+   endtime              timestamp NULL,
    quizid               integer not null,
    primary key (id)
 );

@@ -112,6 +112,22 @@ steal( 'jquery/controller',
                 },
                 ".question-back click" : function(){
                     Quizpage.Quiz.Navigator.to_prev_tab();
+                },
+                ".quiz-finish-btn click" : function(){
+                    var quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
+                    $.ajax({
+                        type: "POST",
+                        url: "/quiz/jfinishsession/"+quizid+"/",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify("finish-session"),
+                        success :  function(){
+                            document.location.href = '/quiz/'+quizid+'/home/';
+                        },
+                        error: function (error){
+                            alert("There was an error posting the data to the server: " + error.responseText);
+                        }
+                    });
                 }
             });
     });

@@ -12,11 +12,13 @@ class Quiz(db.Model):
     id = db.Column('id', Integer, primary_key=True)
     title = db.Column('title', String)
     description = db.Column('description', String)
+    userid = db.Column('userid', Integer)
     questions = []
 
-    def __init__(self, description=description, title=title):
+    def __init__(self, description=description, title=title, userid=userid):
         self.description = description
         self.title = title
+        self.userid = userid
 
     @property
     def serialize(self):
@@ -29,8 +31,11 @@ class Quiz(db.Model):
 
     @staticmethod
     def get_quiz_by_id(id):
-        print 'get_quiz_by_id('+str(id)+')'
         q  = Quiz.query.filter_by(id=id).first()
         if q is not None:
             q.questions=Question.get_all_questions_by_quiz_id(id)
-        return q    
+        return q
+
+    @staticmethod
+    def get_quiz_by_userid(userid):
+        return Quiz.query.filter_by(userid = userid).all()

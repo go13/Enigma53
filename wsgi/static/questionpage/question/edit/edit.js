@@ -66,7 +66,6 @@ steal( 'jquery/controller',
                     this.model.correct = correct;
                 },
                 ".qanswer-check click" : function(el){
-                    //alert(el.attr("id"));
                     var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
                     var answer = this.model.get_answer_by_id(id);
                     var correct = answer.correct;
@@ -149,9 +148,6 @@ steal( 'jquery/controller',
                 },
                 ".qtext keyup" : function(el){
                     this.model.qtext = el.attr("value") ;
-                }/*,
-                ".question-tab click" : function(el){
-                    alert("ok");
-                }*/
+                }
             });
     });

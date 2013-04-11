@@ -14,10 +14,6 @@ steal('jquery/model', function(){
             },
             add_question : function (question){
                 this.questions.push(question);
-                /*if(this.questions.length === 1){
-                    this.current_question = this.questions[0];
-                    this.current_question_num = 0;
-                }*/
             },
             remove_question_by_id : function (qid){
                 if(this.questions.length === 0){

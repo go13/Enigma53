@@ -21,8 +21,10 @@ class QuizResult(db.Model):
     @staticmethod
     def get_quiz_results_by_id(sessionid):
         results =  QuizResult.query.filter_by(sessionid=sessionid).first()
-        results.quiz = Quiz.get_quiz_by_id(results.quizid)
-        results.questionresults = QuestionResult.get_question_results(sessionid)
+        if results:
+            print 'results.quizid->', results
+            results.quiz = Quiz.get_quiz_by_id(results.quizid)
+            results.questionresults = QuestionResult.get_question_results(sessionid)
         return results
 
     @staticmethod
@@ -33,7 +35,6 @@ class QuizResult(db.Model):
         
     @staticmethod
     def get_quiz_results_by_userid(userid):
-        results  = QuizResult.query.filter_by(userid.in_(
-            session.query(Historysession.id).filter(Historysession.userid==userid)
-            )).all()        
-        return results
+        query = db.session.query(Historysession).filter(
+            Historysession.id == db.session.query(Historysession.id).filter(Historysession.userid==userid))
+        return query.all()

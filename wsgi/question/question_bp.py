@@ -28,7 +28,7 @@ def question_edit(question_id):
         return render_template('404.html')
 
 
-@question_bp.route('/edit_question_submit/',methods=['POST'])
+@question_bp.route('/edit_question_submit/', methods=['POST'])
 def edit_question_submit():
     # validate
     #for item in request.json:
