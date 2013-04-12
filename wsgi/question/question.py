@@ -80,3 +80,18 @@ class Question(db.Model):
         question = Question.get_question_by_id(questionid)
         if question:
             AnswerResult.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
+
+    @staticmethod
+    def delete_questions_by_quiz_id(quizid, batch):
+        questions = Question.query.filter_by(quizid=quizid).all()
+        if questions:
+            f = True
+            for item in questions:
+                f = f and Answer.delete_answers_by_question_id(item.id, True)
+                f = f and  QuestionResult.delete_questionresults_by_questionid(item.id, True)
+                db.session.delete(item)
+            if not batch:
+                db.session.commit()
+            return f
+        else:
+            return False

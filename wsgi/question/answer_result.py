@@ -1,4 +1,4 @@
-from modules.answer import Answer
+#from modules.answer import Answer
 from sqlalchemy import Table, Column, Integer, String
 from model import db
 
@@ -35,3 +35,15 @@ class AnswerResult(db.Model):
         ar = AnswerResult(sessionid, answerid, value)
         db.session.merge(ar)
         db.session.commit()
+
+    @staticmethod
+    def delete_answerresults_by_answer_id(answerid, batch):
+        answers = AnswerResult.query.filter_by(answerid=answerid).all()
+        if answers:
+            for item in answers:
+                db.session.delete(item)
+            if not batch:
+                db.session.commit()
+            return True
+        else:
+            return False

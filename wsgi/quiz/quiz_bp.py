@@ -57,8 +57,10 @@ def jget(quiz_id):
 
 @quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
 def jdelete(quiz_id):
-    # todo delete
-    return jsonify({"status":"OK"})
+    if QuizResult.delete_quizresult_by_quizid(quiz_id, True):
+        return jsonify({"status":"OK"})
+    else:
+        return jsonify({"status":"ERROR"})
 
 @quiz_bp.route('/jstartsession/<int:quiz_id>/')
 def jstart_session(quiz_id):

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from model import db
 from question.question import Question
-#from quiz_results import QuizResults
+#from quiz_results import QuizResult
 
 class Quiz(db.Model):
     __tablename__ = 'quizes'
@@ -32,10 +32,23 @@ class Quiz(db.Model):
     @staticmethod
     def get_quiz_by_id(id):
         q  = Quiz.query.filter_by(id=id).first()
-        if q is not None:
-            q.questions=Question.get_all_questions_by_quiz_id(id)
+        if q:
+            q.questions = Question.get_all_questions_by_quiz_id(id)
         return q
 
     @staticmethod
     def get_quiz_by_userid(userid):
         return Quiz.query.filter_by(userid = userid).all()
+
+    @staticmethod
+    def delete_quiz_by_id(id, batch):
+        quiz = Quiz.query.filter_by(id=id).first()
+        if quiz:
+            f = True
+            for item in quiz.questions:
+                f = f and Question.delete_question_by_id(item.id, True)
+            if not batch:
+                db.session.commit()
+            return f
+        else:
+            return False
