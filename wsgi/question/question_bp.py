@@ -98,7 +98,7 @@ def jupd(question_id):
         answers = request.json['answers']
 
         Question.query.filter_by(id=question_id).update({'qtext':qtext})
-        Answer.delete_answer_by_question_id(question_id, True)
+        Answer.delete_answers_by_question_id(question_id, True)
 
         for answer in answers:
             atext = answer['atext']

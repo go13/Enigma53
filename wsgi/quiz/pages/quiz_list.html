@@ -3,29 +3,31 @@
 {% block content %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
 
-<div class="container" style="width: 800px;">
-    <div style="height: 50px;" class="page-message"></div>
+<div class="container quiz-list-container" style="width: 800px;">
+    <div style="height: 50px;" class="page-message"></div>   
+	
+	<div class="input-append">
+  		<input class="input-quiz-list" style="width:720px" type="text">
+  		<button class="btn btn-success quiz-list-create" type="button">Create</button>
+	</div>
+	      
     <table class="table table-striped">
         <thead>
         <tr>
             <th></th>
-            <th>Title</th>
-            <th>Description</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="quiz-list-table">	        	
         {%for item in quizes %}
-            <tr name="quiz{{item.id}}" class="quiz-list-item">
+            <tr name="quiz{{item.id}}" class="quizpage_quiz_listitem">
                 <td>
-                    <button class="btn btn-success quiz-list-item-start" type="button">Start</button>
+                    <button class="btn btn-primary quiz-list-item-start" type="button">Start</button>
                 </td>
                 <td>
                     {{item.title}}
-                </td>
-                <td>
-                    {{item.description}}
-                </td>
+                </td>                
                 <td>
                     <button class="btn btn-link quiz-list-item-edit pull-right" type="button">Edit</button>
                     <button class="btn btn-link quiz-list-item-delete pull-right" type="button">Delete</button>

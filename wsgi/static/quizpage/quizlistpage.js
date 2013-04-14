@@ -1,7 +1,9 @@
 steal(
-    'quizpage/quiz/listitem',
-    'pagemessage/message/item',
+    'quizpage/quiz/listitem',  
+    'quizpage/quiz/quizlist',
+    'pagemessage/message/item',    
     function(){					// configure your application
-        $(".quiz-list-item").quizpage_quiz_listitem();
+        $(".quizpage_quiz_listitem").quizpage_quiz_listitem();
         $(".page-message").pagemessage_message_item();
+        $(".quiz-list-container").quizpage_quiz_quizlist();
     })

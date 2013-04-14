@@ -35,13 +35,14 @@ class QuestionResult(db.Model):
         db.session.commit()
 
     @staticmethod
-    def delete_questionresults_by_questionid(questionid, batch):
-        results = QuestionResult.query.filter_by(questionid=questionid).all()
+    def delete_questionresults_by_sessionid(sessionid, batch):
+        print 'delete_questionresults_by_sessionid ', sessionid
+        AnswerResult.delete_answerresults_by_session_id(sessionid, False)
+        
+        results = QuestionResult.query.filter_by(sessionid = sessionid).all()
         if results:
-            for item in results:
+            for item in results:    
+                print 'QuestionResult found ', item.sessionid            
                 db.session.delete(item)
-            if not batch:
-                db.session.commit()
-            return True
-        else:
-            return False
+        if not batch:
+            db.session.commit()           

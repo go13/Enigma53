@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, jsonify
+from flask import Flask, Blueprint, render_template, jsonify, request
 from sqlalchemy import Table, Column, Integer, String
 from datetime import datetime
 
@@ -57,10 +57,21 @@ def jget(quiz_id):
 
 @quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
 def jdelete(quiz_id):
-    if QuizResult.delete_quizresult_by_quizid(quiz_id, True):
-        return jsonify({"status":"OK"})
-    else:
-        return jsonify({"status":"ERROR"})
+    print 'deleting the quiz ', quiz_id
+    Historysession.delete_historysession_by_quiz_id(quiz_id, True)
+    Quiz.delete_quiz_by_id(quiz_id, False)
+    
+    return jsonify({"status":"OK"})
+    #else:
+    #    return jsonify({"status":"ERROR"})
+    
+@quiz_bp.route('/jcreate/', methods=['CREATE'])
+def jcreate():
+    print 'creating a quiz ' 
+    title = request.json['title']
+    print title
+    quiz = Quiz.create_quiz('description', title, 1)   
+    return jsonify({"quizid" : quiz.id})
 
 @quiz_bp.route('/jstartsession/<int:quiz_id>/')
 def jstart_session(quiz_id):

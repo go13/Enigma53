@@ -1,5 +1,5 @@
 from flask import Flask
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Table, Column, Integer, String, Unicode
 from datetime import datetime
 
 from model import db
@@ -10,8 +10,8 @@ class Quiz(db.Model):
     __tablename__ = 'quizes'
 
     id = db.Column('id', Integer, primary_key=True)
-    title = db.Column('title', String)
-    description = db.Column('description', String)
+    title = db.Column('title', Unicode)
+    description = db.Column('description', Unicode)
     userid = db.Column('userid', Integer)
     questions = []
 
@@ -39,16 +39,23 @@ class Quiz(db.Model):
     @staticmethod
     def get_quiz_by_userid(userid):
         return Quiz.query.filter_by(userid = userid).all()
+    
+    @staticmethod
+    def create_quiz(description, title, userid):
+        quiz = Quiz(description = description, title = title, userid = userid)
+        db.session.add(quiz)
+        db.session.commit()
+        return quiz
 
     @staticmethod
     def delete_quiz_by_id(id, batch):
+        print 'delete_quiz_by_id ',id 
+        
         quiz = Quiz.query.filter_by(id=id).first()
+        print 'Quiz found ', quiz.id
         if quiz:
-            f = True
-            for item in quiz.questions:
-                f = f and Question.delete_question_by_id(item.id, True)
-            if not batch:
-                db.session.commit()
-            return f
-        else:
-            return False
+            Question.delete_questions_by_quiz_id(id, False)
+            db.session.delete(quiz)
+        if not batch:
+            db.session.commit()
+            print 'Commit'

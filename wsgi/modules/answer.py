@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
 
 from model import db
-from question.answer_result import AnswerResult
 
 class Answer(db.Model):
     __tablename__ = 'answers'
@@ -69,14 +68,12 @@ class Answer(db.Model):
     
     @staticmethod
     def delete_answers_by_question_id(questionid, batch):
+        print 'delete_answers_by_question_id ', questionid
         answers = Answer.query.filter_by(questionid=questionid).all()
         if answers:
-            for item in answers:
-                AnswerResult.delete_answerresults_by_answer_id(item.id, True)
+            for item in answers:       
+                print 'Answer found ', item.id         
                 db.session.delete(item)
-            if not batch:
-                db.session.commit()
-            return True
-        else:
-            return False
+        if not batch:
+            db.session.commit()
 

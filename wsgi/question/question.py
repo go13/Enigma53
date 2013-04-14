@@ -78,20 +78,16 @@ class Question(db.Model):
     @staticmethod
     def add_answer_result_by_question_id(questionid, sessionid, answer_id, value, to_commit):
         question = Question.get_question_by_id(questionid)
-        if question:
-            AnswerResult.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
+        #if question:
+        #    AnswerResult.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
 
     @staticmethod
     def delete_questions_by_quiz_id(quizid, batch):
-        questions = Question.query.filter_by(quizid=quizid).all()
+        print 'delete_questions_by_quiz_id ', quizid
+        questions = Question.query.filter_by(quizid = quizid).all()
         if questions:
-            f = True
             for item in questions:
-                f = f and Answer.delete_answers_by_question_id(item.id, True)
-                f = f and  QuestionResult.delete_questionresults_by_questionid(item.id, True)
+                Answer.delete_answers_by_question_id(item.id, True)
                 db.session.delete(item)
-            if not batch:
-                db.session.commit()
-            return f
-        else:
-            return False
+        if not batch:
+            db.session.commit()

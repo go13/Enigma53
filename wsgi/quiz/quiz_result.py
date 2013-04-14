@@ -3,7 +3,6 @@ from quiz import Quiz
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
 
 from model import db
-from modules.results import Historysession
 
 class QuizResult(db.Model):
     __tablename__ = 'quizresults'
@@ -33,20 +32,14 @@ class QuizResult(db.Model):
         db.session.commit()
         
     @staticmethod
-    def get_quiz_results_by_userid(userid):
-        query = db.session.query(Historysession).filter(
-            Historysession.id == db.session.query(Historysession.id).filter(Historysession.userid==userid))
-        return query.all()
-
-    @staticmethod
-    def delete_quizresult_by_quizid(quizid, batch):
-        results = QuizResult.query.filter_by(quizid=quizid).all()
+    def delete_quizresults_by_sessionid(sessionid, batch):
+        print 'delete_quizresults_by_sessionid ', sessionid
+        QuestionResult.delete_questionresults_by_sessionid(sessionid, False)
+        
+        results = QuizResult.query.filter_by(sessionid=sessionid).all()        
         if results:
             for item in results:
-                Quiz.delete_quiz_by_id(item.quizid, True)
+                print 'QuizResults found ', item.quizid                
                 db.session.delete(item)
-            if not batch:
-                db.session.commit()
-            return True
-        else:
-            return False
+        if not batch:
+            db.session.commit()

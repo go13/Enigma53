@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
 
 from model import db
+from quiz.quiz_result import QuizResult
 
 class Answerhistory(db.Model):
     __tablename__ = 'answerhistory'
@@ -96,8 +97,28 @@ class Historysession(db.Model):
             return None
 
     @staticmethod
-    def get_historysession_by_id(id=id):
+    def get_historysession_by_id(id = id):
         hs = Historysession.query.filter_by(id=id).first()
-        if hs:
-            hs.quizresult = QuizResult.get_quiz_results_by_id(id)
+        #if hs:
+        #    hs.quizresult = QuizResult.get_quiz_results_by_id(id)
         return hs
+    
+    @staticmethod
+    def get_historysessions_by_userid(userid):
+        query = db.session.query(Historysession).filter(
+            Historysession.id == db.session.query(Historysession.id).filter(Historysession.userid == userid))
+        return query.all()
+    
+    @staticmethod
+    def delete_historysession_by_quiz_id(quizid, batch):
+        print 'delete_historysession_by_quiz_id ', quizid        
+        hs = Historysession.query.filter_by(quizid = quizid).all()
+        print 'hs found ', hs
+        if hs:                   
+            for item in hs:
+                print 'Historysession found ', item.id                
+                QuizResult.delete_quizresults_by_sessionid(sessionid = item.id, batch = False)
+                db.session.delete(item)
+        if not batch:
+            db.session.commit()            
+        
