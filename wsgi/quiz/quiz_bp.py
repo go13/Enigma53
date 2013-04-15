@@ -12,9 +12,11 @@ quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 
 @quiz_bp.route('/<int:quiz_id>/')
 def quiz(quiz_id):
-    quiz=Quiz.get_quiz_by_id(quiz_id)
-    if quiz:
-        Historysession.start_history_session(1, quiz_id)
+    print 'quiz',quiz_id 
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    if quiz:    
+        hs = Historysession.start_history_session(1, quiz_id)
+        QuizResult.add_quiz_result(hs.id, quiz_id)
         return render_template('quiz.html', quiz=quiz)
     else:
         return render_template('404.html')
@@ -73,14 +75,19 @@ def jcreate():
     quiz = Quiz.create_quiz('description', title, 1)   
     return jsonify({"quizid" : quiz.id})
 
-@quiz_bp.route('/jstartsession/<int:quiz_id>/')
-def jstart_session(quiz_id):
-    userid = 1
-    Historysession.start_history_session(userid, quiz_id)
-
-    quiz=Quiz.get_quiz_by_id(quiz_id)
-    result = {'jstaus':'OK'}
-    return jsonify(result)
+#@quiz_bp.route('/jstartsession/<int:quiz_id>/')
+#def jstart_session(quiz_id):
+#    print 'jstart_session',quiz_id 
+    #userid = 1
+    #quiz = Quiz.get_quiz_by_id(quiz_id)
+    #if quiz:    
+    #    hs = Historysession.start_history_session(userid, quiz_id)
+    #    QuizResult.add_quiz_result(hs.id, quiz_id)
+    #    result = {'jstaus':'OK'}
+    #else:
+    #    result = {'jstaus':'ERROR', 'messgage':'No such Quiz found'}
+    #print result 
+    #return jsonify(result)
 
 @quiz_bp.route('/jfinishsession/<int:quiz_id>/', methods=['POST'])
 def finish_session(quiz_id):

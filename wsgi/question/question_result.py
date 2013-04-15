@@ -29,10 +29,11 @@ class QuestionResult(db.Model):
         return results
 
     @staticmethod
-    def add_question_result(sessionid, questionid, correct):
+    def add_question_result(sessionid, questionid, correct, batch):
         result = QuestionResult(sessionid, questionid, correct)
         db.session.merge(result)
-        db.session.commit()
+        if not batch:
+            db.session.commit()
 
     @staticmethod
     def delete_questionresults_by_sessionid(sessionid, batch):

@@ -5,8 +5,8 @@
 {% block content %}
 
     <div class="container" style="width: 800px;">
-        {{ quiz_results.quiz.title }}
-        {{ quiz_results.quiz.description }}
+        title - {{ quiz_results.quiz.title }}<br>
+        desc - {{ quiz_results.quiz.description }}<br>
 
         {% for item in quiz_results.questionresults %}
             <br>

@@ -31,10 +31,11 @@ class AnswerResult(db.Model):
         return results
 
     @staticmethod
-    def add_answer_result(sessionid, answerid, value):
+    def add_answer_result(sessionid, answerid, value, batch):
         ar = AnswerResult(sessionid, answerid, value)
         db.session.merge(ar)
-        db.session.commit()
+        if not batch:
+            db.session.commit()
 
     @staticmethod
     def delete_answerresults_by_session_id(sessionid, batch):

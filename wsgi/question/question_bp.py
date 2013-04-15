@@ -8,10 +8,12 @@ from quiz.quiz_result import QuizResult
 from question_result import QuestionResult
 from answer_result import AnswerResult
 #from modules.results import Historysession
+from flask_login import login_required
 
 question_bp = Blueprint('question_bp', __name__, template_folder='pages')
 
 @question_bp.route('/<int:question_id>/')
+@login_required
 def question(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -20,6 +22,7 @@ def question(question_id):
         return render_template('404.html')
 
 @question_bp.route('/<int:question_id>/edit/')
+@login_required
 def question_edit(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -48,7 +51,7 @@ def edit_question_submit():
         question.qtext = qtext
 
         Question.query.filter_by(id=questionid).update({'qtext':qtext})
-        Answer.delete_answer_by_question_id(questionid, True)
+        Answer.delete_answer_by_question_id(questionid, False)
 
         for answer in answers:
             atext = answer['atext']
@@ -56,7 +59,7 @@ def edit_question_submit():
                 correct = 'T'
             else:
                 correct = 'F';
-            Answer.create_answer(questionid, atext, correct, True)
+            Answer.create_answer(questionid, atext, correct, False)
         db.session.commit()
 
         return jsonify(status='OK', redirect='/question/'+questionid)
@@ -161,19 +164,19 @@ def jdelete(question_id):
     result = {'jstaus':'OK'}
     return jsonify(result)
 
-@question_bp.route('/jsubmit/<int:question_id>/',methods=['POST'])
+@question_bp.route('/jsubmit/<int:question_id>/', methods=['POST'])
 def jsubmit(question_id):
-
+    print 'jsubmit', question_id
+    
     sessionid = 1
     question = Question.get_question_by_id(question_id)
-    print 'question_id', question_id
 
     if question:
         qid = request.json['qid']
         receivedanswers = request.json['answers']
         correct = True
 
-        for i in range(0,len(receivedanswers)):
+        for i in range(0, len(receivedanswers)):
             item = receivedanswers[i]
             aid = item['id']
 
@@ -181,21 +184,18 @@ def jsubmit(question_id):
             if item['value'] == 'T':
                 value = 'T'
 
-            AnswerResult.add_answer_result(sessionid, aid, value)
-
-            db.session.commit()
+            AnswerResult.add_answer_result(sessionid, aid, value, False)
 
             correct = correct and (value == question.answers[i].correct)
-            print question.answers
+            
             print i, ' - ', question.answers[i].correct
-
             print 'value - ', value, ' answer = ', question.answers[i].correct, ', correct - ', correct
 
-        QuestionResult.add_question_result(sessionid, qid, correct)
-
+        QuestionResult.add_question_result(sessionid, qid, correct, False)
+        db.session.commit()
+        
         result = {'jstaus':'OK'}
         return jsonify(result)
     else:
         return jsonify({"status":"ERROR"})
-
 

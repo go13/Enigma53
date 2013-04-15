@@ -1,29 +1,21 @@
 {% extends "base.html" %}
 
-{% block content %}
-
-<form class="form-horizontal">
-    <div class="control-group">
-        <label class="control-label" for="inputEmail">Email</label>
-        <div class="controls">
-            <input type="text" id="inputEmail" placeholder="Email">
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="inputPassword">Password</label>
-        <div class="controls">
-            <input type="password" id="inputPassword" placeholder="Password">
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
+{% block content %}	
+	<div class="container">
+	<div class="row">
+		<div class="span4 offset4 ">
+			<legend>Please Sign In</legend>
+          	<div class="alert alert-error">
+                <a class="close" data-dismiss="alert" href="#">x</a>Incorrect Username or Password!
+            </div>
+			<form method="POST" action="/login" accept-charset="UTF-8">
+			<input type="text" id="username" class="span4" name="username" placeholder="Username">
+			<input type="password" id="password" class="span4" name="password" placeholder="Password">
             <label class="checkbox">
-                <input type="checkbox"> Remember me
+            	<input type="checkbox" name="remember" value="yes"> Remember Me
             </label>
-            <button type="submit" class="btn">Sign in</button>
-        </div>
-    </div>
-</form>
-
-
-{% endblock content %}
+			<button type="submit" name="submit" value=Login class="btn btn-primary">Sign in</button>
+			</form>    
+		</div>
+	</div>
+{% endblock %}

@@ -19,6 +19,7 @@ class QuizResult(db.Model):
 
     @staticmethod
     def get_quiz_results_by_id(sessionid):
+        print 'get_quiz_results_by_id', sessionid
         results =  QuizResult.query.filter_by(sessionid=sessionid).first()
         if results:
             results.quiz = Quiz.get_quiz_by_id(results.quizid)
@@ -27,9 +28,12 @@ class QuizResult(db.Model):
 
     @staticmethod
     def add_quiz_result(sessionid, quizid):
-        result = QuizResult(sessionid, quizid)
-        db.session.add(result)
-        db.session.commit()
+        qr = QuizResult.query.filter_by(sessionid=sessionid).first()
+        if not qr:
+            qr = QuizResult(sessionid, quizid)
+            db.session.add(qr)
+            db.session.commit()        
+        return qr            
         
     @staticmethod
     def delete_quizresults_by_sessionid(sessionid, batch):
