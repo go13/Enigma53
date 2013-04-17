@@ -9,14 +9,12 @@ class User(db.Model, UserMixin):
     name = db.Column('username', String)
     email = db.Column('email', String)
     password = db.Column('password', String)
-    #openid = Column(String)
 
-    def __init__(self, name, email, password, id):#, openid):
-        self.id = id
+    def __init__(self, name, email, password):#, openid):
+        #self.id = id
         self.name = name
         self.email = email
         self.password = password
-     #   self.openid = openid
         
     @staticmethod
     def get_user_by_id(id):
@@ -25,10 +23,22 @@ class User(db.Model, UserMixin):
     @staticmethod
     def get_user_by_name(name):
         return User.query.filter_by(name=name).first()
+    
+    @staticmethod
+    def get_user_by_email(email):
+        return User.query.filter_by(email=email).first()
 
-    #@staticmethod
-    #def get_user_by_openid(openid):
-    #    return User.query.filter_by(openid=openid).first()
+    @staticmethod
+    def update_user(user):
+        db.session.merge(user)
+        db.session.commit()                
+    
+    @staticmethod
+    def add_user(name, email, password):
+        user = User(name, email, password)
+        db.session.add(user)
+        db.session.commit()
+        return user
     
 class Anonymous(AnonymousUser):
     name = u"Anonymous"
