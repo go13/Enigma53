@@ -3,11 +3,37 @@
 {% block content %}
 
     <div class="container" style="width: 800px;">
-        {% include "quiz_menu.html" %}
         
+        <button class="btn btn-link pull-right" onclick="window.location.href='/quiz/{{quiz.id}}/edit/'">Edit</button>
         <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='/quiz/{{quiz.id}}/'" >Start</button>
         </br>
         {{quiz.description}}
+        
+        <table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th class="span1"><input type="checkbox"></th>
+      <th class="span2"></th>
+      <th class="span2"></th>
+      <th class="span9"></th>
+      <th class="span2"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in results %}
+    <tr>
+      <td><input type="checkbox"> <a href="#"><i class="icon-star-empty"></i></a></td>
+      <td><strong>{{ item.historysession.userid }}</strong></td>
+      <td>
+		<span class="label label-success pull-right">Correct</span>
+		<span class="label label-important pull-right"> Error </span>      
+      </td>
+      <td><strong>Message body goes here</strong></td>
+      <td><strong>{{ item.historysession.starttime.strftime('%Y-%m-%d') }}</strong></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
         
     </div>
 

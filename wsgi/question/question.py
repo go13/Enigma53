@@ -80,6 +80,13 @@ class Question(db.Model):
         question = Question.get_question_by_id(questionid)
         #if question:
         #    AnswerResult.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
+                
+    @staticmethod
+    def update_question_by_id(questionid, dict, to_commit):
+        Question.query.filter_by(id=questionid).update(dict)
+        if to_commit:
+            db.session.commit()
+             
 
     @staticmethod
     def delete_questions_by_quiz_id(quizid, batch):

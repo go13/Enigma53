@@ -8,11 +8,10 @@ from modules.results import Historysession
 quiz_results_bp = Blueprint('quiz_results_bp', __name__, template_folder='pages')
 
 @quiz_results_bp.route('/<int:session_id>/')
-def quiz_results(session_id):
+def quiz_results(session_id):# TODO: add permission verification
     print 'quiz_results ', session_id
-    #hs = Historysession.get_historysession_by_id(session_id)
-    qres = QuizResult.get_quiz_results_by_id(session_id)        
+    qres=QuizResult.get_quiz_results_by_id(session_id)        
     if qres:
-        return render_template('quiz_result.html', quiz_results = qres) #hs.quizresult)
+        return render_template('quiz_result.html', quiz_results=qres) #hs.quizresult)
     else:
         return render_template('404.html')

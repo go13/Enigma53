@@ -1,6 +1,8 @@
 from modules.answer import Answer
 from sqlalchemy import Table, Column, Integer, String
+
 from model import db
+from modules.results import Historysession
 
 class AnswerResult(db.Model):
     __tablename__ = 'answerresults'
@@ -39,11 +41,12 @@ class AnswerResult(db.Model):
 
     @staticmethod
     def delete_answerresults_by_session_id(sessionid, batch):
-        print 'delete_answerresults_by_session_id ', sessionid
-        answers = AnswerResult.query.filter_by(sessionid = sessionid).all()
+        print 'delete_answerresults_by_session_id ', sessionid        
+        Historysession.delete_historysession_by_sessionid(sessionid, True)        
+        answers=AnswerResult.query.filter_by(sessionid=sessionid).all()
         if answers:
-            for item in answers:
-                print 'AnswerResult found ', item.sessionid
+            for item in answers:                
+                print 'AnswerResult found ', item.answerid
                 db.session.delete(item)
         if not batch:
             db.session.commit()

@@ -53,6 +53,9 @@ steal( 'jquery/controller',
                 },
                 ".quiz-list-item-edit click" : function(){
                     window.location.href='/quiz/'+this.model.quizid+'/edit/';
-                }
+                },
+    	        ".quiz-title-click click" : function(el){
+    	        	window.location.href='/quiz/'+this.model.quizid+'/home/';
+            	}
             });
     });

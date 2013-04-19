@@ -15,9 +15,10 @@ steal( 'jquery/controller',
 	        	var qlist = this.element.find(".quiz-list-table");
 	        	Quizpage.Quiz.Listitem.create(this.quiztitle, function(model, el){
 	        		qlist.prepend(el);	
+	        		quiztitle = "";
+	        		$(".input-quiz-list").attr("value", quiztitle);
 	        	});	        	
 	        },
-	        
 	        ".input-quiz-list keyup" : function(el){
 	        	this.quiztitle = el.attr("value");
             },

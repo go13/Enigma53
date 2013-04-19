@@ -7,8 +7,8 @@ from modules.answer import Answer
 from quiz.quiz_result import QuizResult
 from question_result import QuestionResult
 from answer_result import AnswerResult
-#from modules.results import Historysession
-from flask_login import login_required
+from modules.results import Historysession
+from flask_login import login_required, current_user
 
 question_bp = Blueprint('question_bp', __name__, template_folder='pages')
 
@@ -50,7 +50,8 @@ def edit_question_submit():
 
         question.qtext = qtext
 
-        Question.query.filter_by(id=questionid).update({'qtext':qtext})
+        Question.update_question_by_id(questionid, {'qtext':qtext}, False)
+        #query.filter_by(id=questionid).update({'qtext':qtext})
         Answer.delete_answer_by_question_id(questionid, False)
 
         for answer in answers:
@@ -99,8 +100,8 @@ def jupd(question_id):
         qid = request.json['qid']
         qtext = request.json['qtext']
         answers = request.json['answers']
-
-        Question.query.filter_by(id=question_id).update({'qtext':qtext})
+        
+        Question.update_question_by_id(question_id, {'qtext':qtext}, False)
         Answer.delete_answers_by_question_id(question_id, True)
 
         for answer in answers:
@@ -168,8 +169,13 @@ def jdelete(question_id):
 def jsubmit(question_id):
     print 'jsubmit', question_id
     
-    sessionid = 1
-    question = Question.get_question_by_id(question_id)
+    hs=Historysession.get_current_historysession_by_userid(current_user.id)
+    
+    sessionid=hs.id
+    
+    print sessionid
+    
+    question=Question.get_question_by_id(question_id)
 
     if question:
         qid = request.json['qid']
@@ -183,7 +189,8 @@ def jsubmit(question_id):
             value = 'F'
             if item['value'] == 'T':
                 value = 'T'
-
+            
+            print '------------------------', sessionid, ' value - ', value,' aid - ', aid 
             AnswerResult.add_answer_result(sessionid, aid, value, False)
 
             correct = correct and (value == question.answers[i].correct)
