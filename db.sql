@@ -32,9 +32,6 @@ create table answers
    correct              text not null,
    primary key (id)
 );
-insert into answers values (1, 1, 'Cporrect answer 1 ', 'F');
-insert into answers values (2, 1, 'Cporrect answer 2 ', 'F');
-insert into answers values (3, 1, 'Cporrect answer 3 ', 'F');
 
 /*==============================================================*/
 /* Table: questions                                             */
@@ -48,9 +45,6 @@ create table questions
    type                 integer,
    primary key (id)
 );
-insert into questions values (1, 1, 2,'Question 1', 1);
-insert into questions values (2, 1, 3,'Question 2', 1);
-insert into questions values (3, 1, null,'Question 3', 1);
 
 /*==============================================================*/
 /* Table: quizes                                                */
@@ -64,8 +58,6 @@ create table quizes
    primary key (id)
 );
 
-insert into quizes values (1, 'Quiz 1', 'Quiz description', 1);
-insert into quizes values (2, 'Quiz 2', 'Quiz description', 1);
 
 /*==============================================================*/
 /* Table: quizes                                                */
@@ -79,8 +71,6 @@ create table answerhistory
    value                text not null,
    primary key (id)
 );
-insert into answerhistory values (1, 1, 1, 1, '0');
-insert into answerhistory values (2, 1, 1, 1, '1');
 
 
 /*==============================================================*/
@@ -92,7 +82,6 @@ create table historysessions
    userid               integer not null,
    starttime            timestamp not null,
    endtime              timestamp NULL,
-   quizid               integer not null,
    primary key (id)
 );
 
@@ -109,7 +98,6 @@ create table users
    primary key (id)
 );
 
-insert into users values (1, 'Dmitiry', 'dima.blinkov@gmail.com', 'Enigma');
 
 /*==============================================================*/
 /* Table: quizresults                                               */
@@ -117,14 +105,9 @@ insert into users values (1, 'Dmitiry', 'dima.blinkov@gmail.com', 'Enigma');
 create table quizresults
 (
    sessionid            integer not null AUTO_INCREMENT,
-   userid               integer,
    quizid               integer,
-   submittime           timestamp,
    primary key (sessionid)
 );
-insert into quizresults values (1, 1, 1, sysdate());
-insert into quizresults values (2, 1, 1, sysdate());
-insert into quizresults values (3, 1, 1, sysdate());
 
 
 /*==============================================================*/

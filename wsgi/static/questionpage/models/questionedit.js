@@ -31,13 +31,6 @@ $.Model('Questionedit',
         this.quizid = question.quizid;
         this.qtext = question.qtext;
         this.answers = question.answers;
-/*        for(var i=1; i<=question.answers.length; i++){
-            var answ = new Object();
-            answ.correct = question.answers[i].correct;
-            answ.atext = question.answers[i].atext;
-            this.answers.push(answ);
-        }*/
-
     },
     get_answer_by_id : function(id){
         var result = null;

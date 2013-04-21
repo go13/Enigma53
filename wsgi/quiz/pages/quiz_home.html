@@ -1,35 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <div class="container" style="width: 800px;">
-        
-        <button class="btn btn-link pull-right" onclick="window.location.href='/quiz/{{quiz.id}}/edit/'">Edit</button>
-        <button class="btn btn-primary pull-right" type="button" onclick="window.location.href='/quiz/{{quiz.id}}/'" >Start</button>
-        </br>
-        {{quiz.description}}
-        
-        <table class="table table-condensed table-hover">
+<div class="container" style="width: 800px;">
+	<h3>{{quiz.title}}</h3>
+	<div class="inline">					
+		<button class="btn btn-link pull-right" onclick="window.location.href='/quiz/{{quiz.id}}/edit/'">Edit</button>
+		<button class="btn btn-primary pull-right" type="button" onclick="window.location.href='/quiz/{{quiz.id}}/'">Start Quiz</button>
+		<blockquote>{{quiz.description}}</blockquote>
+	</div>
+  <table class="table table-condensed">
   <thead>
     <tr>
-      <th class="span1"><input type="checkbox"></th>
       <th class="span2"></th>
       <th class="span2"></th>
-      <th class="span9"></th>
-      <th class="span2"></th>
+      <th class="span3"></th>
+      <th class="span1"></th>
+      <th class="span3"></th>      
     </tr>
   </thead>
   <tbody>
   {% for item in results %}
     <tr>
-      <td><input type="checkbox"> <a href="#"><i class="icon-star-empty"></i></a></td>
-      <td><strong>{{ item.historysession.userid }}</strong></td>
-      <td>
-		<span class="label label-success pull-right">Correct</span>
-		<span class="label label-important pull-right"> Error </span>      
-      </td>
-      <td><strong>Message body goes here</strong></td>
-      <td><strong>{{ item.historysession.starttime.strftime('%Y-%m-%d') }}</strong></td>
+	    <td>
+  			<button class="btn btn-mini btn-success" 
+  					type="button" 
+  					onClick="location.href='/quiz/results/{{item.historysession.id}}/'">Results</button>
+		</td>		 
+	    <td>
+	    	<strong>
+	    		<i class="icon-calendar"></i> {{ item.historysession.starttime.strftime('%d/%m/%Y %H:%M') }}
+	    	</strong>
+	    </td>   
+	    <td>
+			<strong>
+				<i class="icon-user"></i> by <a href="/user/{{ item.historysession.userid }}">User {{ item.historysession.userid }} Blinkov</a>
+			</strong>	    	
+	    </td>
+   	    <td>
+   	    	<strong>
+   	    		<i class="icon-signal"></i> {{item.correctnum}}/{{quiz.get_number_of_questions()}}
+   	    	</strong>
+	    </td>
+	    <td>
+	    	<strong>
+		    	<div class="progress" style="margin-bottom:0px">
+		    		{% if quiz.get_number_of_questions() != 0 %}
+	  				<div class="bar bar-success" style="width: {{100*item.correctnum/quiz.get_number_of_questions()}}%;"></div>
+	  				<div class="bar bar-danger" style="width: {{100-100*item.correctnum/quiz.get_number_of_questions()}}%;"></div>
+	  				{% endif %}
+				</div>	    		
+	    	</strong>	    
+	    </td>	   
     </tr>
     {% endfor %}
   </tbody>

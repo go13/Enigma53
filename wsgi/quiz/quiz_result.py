@@ -11,6 +11,7 @@ class QuizResult(db.Model):
     sessionid = db.Column('sessionid', Integer, primary_key=True)
     quizid = db.Column('quizid', Integer)
     
+    correctnum = 0
     historysession = None
     questionresults = []
     quiz = None
@@ -26,16 +27,22 @@ class QuizResult(db.Model):
         print results
         if results:
             results.quiz=Quiz.get_quiz_by_id(results.quizid)
-            results.questionresults=QuestionResult.get_question_results_by_id(sessionid)
+            results.questionresults=QuestionResult.get_question_results_by_id(sessionid)            
         return results
     
     @staticmethod
     def get_quiz_results_by_quiz_id(quizid):
         print 'get_quiz_results_by_id', quizid
-        results=QuizResult.query.filter_by(quizid=quizid).all()
+
+        results=QuizResult.query.filter_by(quizid=quizid).all()        
         if results:
             for item in results:                
                 item.historysession=Historysession.get_historysession_by_id(item.sessionid)
+                #item.quiz=Quiz.get_quiz_by_id(item.quizid)
+                item.questionresults=QuestionResult.get_question_results_by_id(item.sessionid)
+                for q in item.questionresults:                     
+                    if q.correct == 1:
+                        item.correctnum += 1
         return results
 
     

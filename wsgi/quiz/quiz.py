@@ -28,7 +28,10 @@ class Quiz(db.Model):
             'description':self.description,
             'questions':[i.serialize for i in self.questions]
            }
-
+        
+    def get_number_of_questions(self):
+        return len(self.questions) 
+    
     @staticmethod
     def get_quiz_by_id(id):
         q  = Quiz.query.filter_by(id=id).first()

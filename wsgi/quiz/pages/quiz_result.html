@@ -5,11 +5,20 @@
 {% block content %}
 
     <div class="container" style="width: 800px;">
-        title - {{ quiz_results.quiz.title }}<br>
-        desc - {{ quiz_results.quiz.description }}<br>
-
+    	
+		<h3>{{ quiz_results.quiz.title }}</h3>
+		<div class="inline">			
+			<inline class="pull-right">
+			<button class="btn btn-primary" type="button" 
+				onclick="window.location.href='/quiz/{{quiz_results.quiz.id}}/'">Try Again</button>
+				
+			<button class="btn btn-info" type="button" 
+				onclick="window.location.href='/quiz/{{quiz_results.quiz.id}}/home/'">Home</button>
+			</inline>
+			<blockquote>{{ quiz_results.quiz.description }}</blockquote>
+		</div>
         {% for item in quiz_results.questionresults %}
-            <br>
+            
             {{ render_question_results(item) }}
             <br>
         {% endfor %}

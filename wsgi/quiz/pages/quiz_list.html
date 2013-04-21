@@ -14,19 +14,23 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th class="span1"></th>
+            <th class="span1"></th>
+            <th class="span5"></th>
+            <th class="span7"></th>
         </tr>
         </thead>
         <tbody class="quiz-list-table">	        	
         {%for item in quizes %}
             <tr name="quiz{{item.id}}" class="quizpage_quiz_listitem">
+            	<td>
+                	<button class="btn btn-info quiz-title-click" type="button">Home</button>
+                </td>
                 <td>
                     <button class="btn btn-primary quiz-list-item-start" type="button">Start</button>
                 </td>
                 <td>
-                    <button class="btn btn-link quiz-title-click" type="button">{{item.title}}</button>
+                	{{item.title}}
                 </td>                
                 <td>
                     <button class="btn btn-link quiz-list-item-edit pull-right" type="button">Edit</button>
