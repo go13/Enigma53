@@ -97,8 +97,6 @@ def signup():
 @login_required
 def reauth():
     if request.method == "POST":
-#        confirm_login()
-        #flash(u"Reauthenticated.")
         return redirect(request.args.get("next") or url_for("index"))
     return render_template("reauth.html")
 
