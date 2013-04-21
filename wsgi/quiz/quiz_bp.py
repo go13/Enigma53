@@ -79,13 +79,10 @@ def jget(quiz_id):
 @quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
 def jdelete(quiz_id):
     print 'deleting the quiz ', quiz_id
-    #Historysession.delete_historysession_by_quiz_id(quiz_id, True)
     QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
     Quiz.delete_quiz_by_id(quiz_id, False)
     
     return jsonify({"status":"OK"})
-    #else:
-    #    return jsonify({"status":"ERROR"})
     
 @quiz_bp.route('/jcreate/', methods=['CREATE'])
 def jcreate():
@@ -97,12 +94,7 @@ def jcreate():
 
 @quiz_bp.route('/<int:quiz_id>/finish/')#, methods=['POST'])
 def finish_session(quiz_id):
-    print 'FINISH'
     qr=QuizResult.finish_session(quiz_id, current_user.id)
-    #Historysession.finish_history_session(current_user.id, quiz_id)
-
-    #result = {'jstaus':'OK'}
-    #return jsonify(result)
     if qr:        
         return redirect("/quiz/results/"+str(qr.sessionid))
     else:
