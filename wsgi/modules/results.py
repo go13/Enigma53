@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
 
 from model import db
+from auth.user import User
 #from quiz.quiz_result import QuizResult
 
 class Historysession(db.Model):
@@ -12,6 +13,8 @@ class Historysession(db.Model):
     userid = db.Column('userid', Integer)
     starttime = db.Column('starttime', TIMESTAMP)
     endtime = db.Column('endtime', TIMESTAMP)
+    
+    user=None
 
     def __init__(self, userid, starttime, endtime):
         self.userid = userid
@@ -50,13 +53,16 @@ class Historysession(db.Model):
         hs=query.first()
 
         if hs and hs.endtime==None:
+            #hs.user=User.get_user_by_id(userid)
             return hs
         else:
             return None
 
     @staticmethod
     def get_historysession_by_id(id):
-        return Historysession.query.filter_by(id=id).first()
+        hs=Historysession.query.filter_by(id=id).first()
+        hs.user=User.get_user_by_id(hs.userid)
+        return hs
     
     @staticmethod
     def get_historysessions_by_userid(userid):

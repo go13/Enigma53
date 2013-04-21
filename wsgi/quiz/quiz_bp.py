@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, jsonify, request
+from flask import Flask, Blueprint, render_template, jsonify, request, redirect
 from sqlalchemy import Table, Column, Integer, String
 from datetime import datetime
 
@@ -40,6 +40,24 @@ def quiz_edit(quiz_id):
     else:
         return render_template('404.html')
 
+@quiz_bp.route('/<int:quiz_id>/settings/', methods=["GET", "POST"])
+def quiz_settings(quiz_id):
+    print 'quiz_settings'
+    quiz=Quiz.get_quiz_by_id(quiz_id)
+    if request.method == "POST":
+        title=request.form["title"]        
+        description=request.form["description"]
+        print title
+        print description
+        if quiz:
+            quiz.title=title
+            quiz.description=description
+            Quiz.update_quiz(quiz)        
+    if quiz:
+        return render_template('quiz_settings.html', quiz=quiz)
+    else:
+        return render_template('404.html')
+
 @quiz_bp.route('/list/')
 def quiz_list():
     quizes=Quiz.get_quiz_by_userid(current_user.id)
@@ -77,25 +95,16 @@ def jcreate():
     quiz=Quiz.create_quiz('description', title, current_user.id)   
     return jsonify({"quizid" : quiz.id})
 
-#@quiz_bp.route('/jstartsession/<int:quiz_id>/')
-#def jstart_session(quiz_id):
-#    print 'jstart_session',quiz_id 
-    #userid = 1
-    #quiz = Quiz.get_quiz_by_id(quiz_id)
-    #if quiz:    
-    #    hs = Historysession.start_history_session(userid, quiz_id)
-    #    QuizResult.add_quiz_result(hs.id, quiz_id)
-    #    result = {'jstaus':'OK'}
-    #else:
-    #    result = {'jstaus':'ERROR', 'messgage':'No such Quiz found'}
-    #print result 
-    #return jsonify(result)
-
-@quiz_bp.route('/jfinishsession/<int:quiz_id>/', methods=['POST'])
+@quiz_bp.route('/<int:quiz_id>/finish/')#, methods=['POST'])
 def finish_session(quiz_id):
     print 'FINISH'
-    QuizResult.finish_session(quiz_id, current_user.id)
+    qr=QuizResult.finish_session(quiz_id, current_user.id)
     #Historysession.finish_history_session(current_user.id, quiz_id)
 
-    result = {'jstaus':'OK'}
-    return jsonify(result)
+    #result = {'jstaus':'OK'}
+    #return jsonify(result)
+    if qr:        
+        return redirect("/quiz/results/"+str(qr.sessionid))
+    else:
+        return render_template('404.html')
+        

@@ -30,7 +30,11 @@ class Quiz(db.Model):
            }
         
     def get_number_of_questions(self):
-        return len(self.questions) 
+        return len(self.questions)
+    
+    @staticmethod
+    def get_number_of_questions_by_id(id=id):
+        return Quiz.query.filter_by(id=id).count()
     
     @staticmethod
     def get_quiz_by_id(id):
@@ -49,6 +53,12 @@ class Quiz(db.Model):
         db.session.add(quiz)
         db.session.commit()
         return quiz
+
+    @staticmethod
+    def update_quiz(quiz):
+        db.session.merge(quiz)
+        db.session.commit()
+        
 
     @staticmethod
     def delete_quiz_by_id(id, batch):

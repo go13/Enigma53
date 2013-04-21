@@ -106,6 +106,8 @@ create table quizresults
 (
    sessionid            integer not null AUTO_INCREMENT,
    quizid               integer,
+   correctqnum          integer,
+   qnum                 integer,
    primary key (sessionid)
 );
 

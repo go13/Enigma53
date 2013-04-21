@@ -31,9 +31,6 @@ steal( 'jquery/controller',
                     	this.model = new Listitem();                    	
                     }
                 },                
-                ".quiz-list-item-start click" : function(){
-                    window.location.href='/quiz/'+this.model.quizid;
-                },
                 ".quiz-list-item-delete click" : function(){
                     var el = this.element;
                     $.ajax({
@@ -50,12 +47,6 @@ steal( 'jquery/controller',
                             alert("There was an error posting the data to the server: " + error.responseText);
                         }
                     });
-                },
-                ".quiz-list-item-edit click" : function(){
-                    window.location.href='/quiz/'+this.model.quizid+'/edit/';
-                },
-    	        ".quiz-title-click click" : function(el){
-    	        	window.location.href='/quiz/'+this.model.quizid+'/home/';
-            	}
+                }
             });
     });

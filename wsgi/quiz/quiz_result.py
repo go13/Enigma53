@@ -10,15 +10,18 @@ class QuizResult(db.Model):
 
     sessionid = db.Column('sessionid', Integer, primary_key=True)
     quizid = db.Column('quizid', Integer)
+    correctqnum = db.Column('correctqnum', Integer)
+    qnum = db.Column('qnum', Integer)
     
-    correctnum = 0
     historysession = None
     questionresults = []
     quiz = None
 
-    def __init__(self, sessionid, quizid):
+    def __init__(self, sessionid, quizid, qnum, correctqnum):
         self.sessionid = sessionid
         self.quizid = quizid
+        self.correctqnum = correctqnum
+        self.qnum = qnum
 
     @staticmethod
     def get_quiz_results_by_id(sessionid):
@@ -40,9 +43,6 @@ class QuizResult(db.Model):
                 item.historysession=Historysession.get_historysession_by_id(item.sessionid)
                 #item.quiz=Quiz.get_quiz_by_id(item.quizid)
                 item.questionresults=QuestionResult.get_question_results_by_id(item.sessionid)
-                for q in item.questionresults:                     
-                    if q.correct == 1:
-                        item.correctnum += 1
         return results
 
     
@@ -53,16 +53,7 @@ class QuizResult(db.Model):
         for item in results:
             item.quiz=Quiz.get_quiz_by_id(item.quizid)
             item.questionresults=QuestionResult.get_question_results(item.sessionid)
-        return results
-
-    @staticmethod
-    def add_quiz_result(sessionid, quizid):
-        qr = QuizResult.query.filter_by(sessionid=sessionid).first()
-        if not qr:
-            qr = QuizResult(sessionid, quizid)
-            db.session.add(qr)
-            db.session.commit()        
-        return qr
+        return results    
     
     @staticmethod
     def start_session(quizid, userid):
@@ -70,7 +61,8 @@ class QuizResult(db.Model):
         #if not hs.userid==userid:
         qr=QuizResult.query.filter_by(sessionid=hs.id).first()
         if not qr:
-            qr=QuizResult(hs.id, quizid)
+            qnum=Quiz.get_number_of_questions_by_id(quizid)
+            qr=QuizResult(hs.id, quizid, qnum, None)
             db.session.add(qr)
             db.session.commit()
         qr.historysession=hs        
@@ -78,8 +70,17 @@ class QuizResult(db.Model):
     
     @staticmethod
     def finish_session(quizid, userid):
+        qr=None
         hs=Historysession.finish_history_session(userid)
-        qr=QuizResult.query.filter_by(sessionid=hs.id).first()
+        if hs:
+            qr=QuizResult.query.filter_by(sessionid=hs.id).first()
+            qr.questionresults=QuestionResult.get_question_results_by_id(hs.id)
+            qr.correctqnum=0
+            for q in qr.questionresults:
+                if q.correct==1:
+                    qr.correctqnum+=1
+            db.session.merge(qr)
+            db.session.commit()            
         return qr            
         
     @staticmethod

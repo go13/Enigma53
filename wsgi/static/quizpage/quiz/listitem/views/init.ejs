@@ -1,13 +1,13 @@
 <td>
-	<button class="btn btn-info quiz-title-click" type="button">Home</button>
+	<a href="/quiz/<%= quizid%>/home/" class="btn btn-link">Home</a>
 </td>
 <td>
-    <button class="btn btn-primary quiz-list-item-start" type="button">Start</button>
+    <a href="/quiz/<%= quizid%>/" class="btn btn-primary">Start</a>
 </td>
 <td>
     <%= title%>
 </td>                
 <td>
-    <button class="btn btn-link quiz-list-item-edit pull-right" type="button">Edit</button>
-    <button class="btn btn-link quiz-list-item-delete pull-right" type="button">Delete</button>
+    <a href="/quiz/<%= quizid%>/edit/" class="btn btn-link pull-right">Edit</a>
+	<button class="btn btn-link quiz-list-item-delete pull-right" type="button">Delete</button>
 </td>

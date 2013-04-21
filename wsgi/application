@@ -119,7 +119,7 @@ def logout():
 def index():
 #    u = User.query.filter_by(id=1).first()
 #    print u
-    return render_template('index.html', pages=pages)
+    return redirect("/quiz/list/") #render_template('index.html', pages=pages)
 
 @application.route('/<path:path>/')
 def page(path):

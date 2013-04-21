@@ -112,7 +112,7 @@ steal( 'jquery/controller',
                 },
                 ".question-back click" : function(){
                     Quizpage.Quiz.Navigator.to_prev_tab();
-                },
+                }/*,
                 ".quiz-finish-btn click" : function(){
                     var quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
                     $.ajax({
@@ -128,6 +128,6 @@ steal( 'jquery/controller',
                             alert("There was an error posting the data to the server: " + error.responseText);
                         }
                     });
-                }
+                }*/
             });
     });

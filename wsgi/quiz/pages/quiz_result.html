@@ -1,27 +1,29 @@
 {% from "question_result.html" import render_question_results %}
 
-{% extends "base.html" %}
-
-{% block content %}
-
-    <div class="container" style="width: 800px;">
-    	
-		<h3>{{ quiz_results.quiz.title }}</h3>
-		<div class="inline">			
-			<inline class="pull-right">
-			<button class="btn btn-primary" type="button" 
-				onclick="window.location.href='/quiz/{{quiz_results.quiz.id}}/'">Try Again</button>
-				
-			<button class="btn btn-info" type="button" 
-				onclick="window.location.href='/quiz/{{quiz_results.quiz.id}}/home/'">Home</button>
-			</inline>
-			<blockquote>{{ quiz_results.quiz.description }}</blockquote>
-		</div>
-        {% for item in quiz_results.questionresults %}
-            
+{% extends "quiz_base.html" %}
+{% block body %}
+    <div id="legend">
+      <legend>Results - {{ quiz.title }}</legend>
+    </div>
+    
+    <div class="container pull-left" style="width: 800px">
+			
+		<blockquote>{{ quiz_results.quiz.description }}</blockquote>
+		
+        {% for item in quiz_results.questionresults %}            
             {{ render_question_results(item) }}
             <br>
         {% endfor %}
     </div>
 
-{% endblock content %}
+{% endblock body %}
+
+
+{% block quiz_menu %}	
+<a class="btn btn-primary" style="width:145px; margin-bottom:40px" href="/quiz/{{quiz.id}}/">Try Again</a>
+<ul class="nav nav-pills nav-stacked">
+	<li><a href="/quiz/{{quiz.id}}/home/">Home</a></li>
+	<li><a href="/quiz/{{quiz.id}}/edit/">Edit</a></li>
+	<li><a href="/quiz/{{quiz.id}}/settings/">Settings</a></li>   
+</ul>
+{% endblock quiz_menu %}

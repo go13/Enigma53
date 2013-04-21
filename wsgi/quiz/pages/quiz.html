@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "quiz_base.html" %}
 
-{% block content %}
+{% block body %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 
 <div class="container" style="width: 800px;">
@@ -34,4 +34,8 @@
     </div>
 </div>
 
-{% endblock content %}
+{% endblock body %}
+
+{% block quiz_menu %}	
+<a class="btn btn-primary" style="width:145px; margin-bottom:40px" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a>
+{% endblock quiz_menu %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block quiz_header %}
+{% endblock quiz_header %}
+
+<div class="row">
+	<div class="span2 bs-docs-sidebar affix" style="margin-top:60px">
+		{% block quiz_menu %}
+		{% endblock quiz_menu %}	
+	</div>
+	<div class="span9 offset2">
+		{% block body %}
+		{% endblock body %}
+	</div>
+</div>
+{% endblock content %}

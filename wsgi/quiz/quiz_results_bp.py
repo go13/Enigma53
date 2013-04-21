@@ -12,6 +12,6 @@ def quiz_results(session_id):# TODO: add permission verification
     print 'quiz_results ', session_id
     qres=QuizResult.get_quiz_results_by_id(session_id)        
     if qres:
-        return render_template('quiz_result.html', quiz_results=qres) #hs.quizresult)
+        return render_template('quiz_result.html', quiz_results=qres, quiz=qres.quiz) #hs.quizresult)
     else:
         return render_template('404.html')
