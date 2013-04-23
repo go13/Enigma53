@@ -1,6 +1,8 @@
 from flask import Flask, Blueprint, render_template, jsonify, request, redirect
 from sqlalchemy import Table, Column, Integer, String
 from datetime import datetime
+from jsonschema import validate, Draft4Validator
+import logging
 
 from model import db
 from quiz import Quiz
@@ -89,22 +91,49 @@ def jdelete(quiz_id):
     
 @quiz_bp.route('/jcreate/', methods=['CREATE'])
 def jcreate():
-    print 'creating a quiz ' 
-    title=request.json['title']
-    print title
-    quiz=Quiz.create_quiz('description', title, current_user.id)   
-    return jsonify({"quizid" : quiz.id})
+    quiz_bp.logger.debug('jcreate. Received a json request to create a quiz.')
+    
+    schema = {
+        "type" : "object",
+        "properties" : {            
+            "title" : {"type" : "string", "pattern" : "^[A-Za-z0-9\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
+            },
+        "required" : ["title"]
+        }
+        
+    v = Draft4Validator(schema)
+    errors = sorted(v.iter_errors(request.json), key=lambda e: e.path)
+        
+    if len(errors)>0:
+        msg = 'Error creating a quiz. Received json is not valid'
+        
+        quiz_bp.logger.error(msg)
+        
+        for error in errors:
+            quiz_bp.logger.error(error.message)            
+            
+        return jsonify({"status" : "ERROR", "message" : msg})
+    else:        
+        title = request.json['title']
+        
+        quiz_bp.logger.debug('Creating a quiz. Title - ' + title)
+        
+        quiz=Quiz.create_quiz('description', title, current_user.id)   
+        
+        return jsonify({"quizid" : quiz.id})
 
 @quiz_bp.route('/<int:quiz_id>/finish/')#, methods=['POST'])
 def finish_session(quiz_id):
-    print 'FINISH'
-    qr=QuizResult.finish_session(quiz_id, current_user.id)
-    #Historysession.finish_history_session(current_user.id, quiz_id)
+    quiz_bp.logger.debug('finish_session. Received a request to finish quiz session')
 
-    #result = {'jstaus':'OK'}
-    #return jsonify(result)
-    if qr:        
+    qr=QuizResult.finish_session(quiz_id, current_user.id)
+
+    if qr:
+        quiz_bp.logger.debug('Finishing the session')
+        
         return redirect("/quiz/results/"+str(qr.sessionid))
     else:
+        quiz_bp.logger.debug('No such quiz found')
+        
         return render_template('404.html')
         
