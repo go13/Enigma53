@@ -4,7 +4,6 @@ from datetime import datetime
 
 from model import db
 from question.question import Question
-#from quiz_results import QuizResult
 
 class Quiz(db.Model):
     __tablename__ = 'quizes'
@@ -59,7 +58,6 @@ class Quiz(db.Model):
         db.session.merge(quiz)
         db.session.commit()
         
-
     @staticmethod
     def delete_quiz_by_id(id, batch):
         print 'delete_quiz_by_id ',id 

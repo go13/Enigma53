@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template, jsonify, request
 from model import db
 from flask_login import login_required, current_user
 from auth.user import User

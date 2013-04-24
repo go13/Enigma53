@@ -3,7 +3,6 @@ from sqlalchemy import Table, Column, Integer, String
 
 from model import db
 from modules.answer import Answer
-#from modules.results import Historysession
 
 class Question(db.Model):
     __tablename__ = 'questions'

@@ -4,7 +4,6 @@ from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
 
 from model import db
 from auth.user import User
-#from quiz.quiz_result import QuizResult
 
 class Historysession(db.Model):
     __tablename__ = 'historysessions'

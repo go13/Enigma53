@@ -52,7 +52,7 @@ class QuizResult(db.Model):
         results=QuizResult.query.filter_by(userid=userid).all()
         for item in results:
             item.quiz=Quiz.get_quiz_by_id(item.quizid)
-            item.questionresults=QuestionResult.get_question_results(item.sessionid)
+            item.questionresults = QuestionResult.get_question_results(item.sessionid)
         return results    
     
     @staticmethod
