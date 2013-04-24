@@ -10,10 +10,9 @@ from answer_result import AnswerResult
 from modules.results import Historysession
 from flask_login import login_required, current_user
 
-question_bp = Blueprint('question_bp', __name__, template_folder='pages')
+question_bp = Blueprint('question_bp', __name__, template_folder = 'pages')
 
 @question_bp.route('/<int:question_id>/')
-@login_required
 def question(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -32,6 +31,7 @@ def question_edit(question_id):
 
 
 @question_bp.route('/edit_question_submit/', methods=['POST'])
+@login_required
 def edit_question_submit():
     # validate
     #for item in request.json:
@@ -68,6 +68,7 @@ def edit_question_submit():
         return jsonify(status='Error')
 
 @question_bp.route('/jget/<int:question_id>/')
+@login_required
 def jget(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -78,6 +79,7 @@ def jget(question_id):
         return jsonify({"status":"ERROR"})
 
 @question_bp.route('/jget_for_edit/<int:question_id>/')
+@login_required
 def jget_for_edit(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -89,6 +91,7 @@ def jget_for_edit(question_id):
 
 
 @question_bp.route('/jupd/<int:question_id>/',methods=['POST'])
+@login_required
 def jupd(question_id):
     question=Question.get_question_by_id(question_id)
     if question:
@@ -119,6 +122,7 @@ def jupd(question_id):
 
 
 @question_bp.route('/jcreate/',methods=['POST'])
+@login_required
 def jcreate():
     print 'got a question to create'
     print 'qtext ', request.json['qtext']
@@ -150,6 +154,7 @@ def jcreate():
 
 
 @question_bp.route('/jdelete/<int:question_id>/',methods=['POST'])
+@login_required
 def jdelete(question_id):
     print 'deleting a question ', question_id
 

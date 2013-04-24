@@ -7,7 +7,7 @@ virtenv = os.environ['APPDIR'] + '/virtenv/'
 os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python-2.6/site-packages')
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
-    execfile(virtualenv, dict(__file__=virtualenv))
+    execfile(virtualenv, dict(__file__ = virtualenv))
 except IOError:
     pass
 
@@ -30,17 +30,17 @@ DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 TRAP_BAD_REQUEST_ERRORS = True
 FLATPAGES_EXTENSION = '.md'
-SECRET_KEY = "development key"
+#SECRET_KEY = "development key"
  
 application = Flask(__name__)
 application.config.from_object(__name__)
 pages = FlatPages(application)
 
 
-application.register_blueprint(question_bp, url_prefix='/question')
-application.register_blueprint(quiz_bp, url_prefix='/quiz')
-application.register_blueprint(quiz_results_bp, url_prefix='/quiz/results')
-application.register_blueprint(user_bp, url_prefix='/user')
+application.register_blueprint(question_bp, url_prefix = '/question')
+application.register_blueprint(quiz_bp, url_prefix = '/quiz')
+application.register_blueprint(quiz_results_bp, url_prefix = '/quiz/results')
+application.register_blueprint(user_bp, url_prefix = '/user')
 
 login_manager = LoginManager()
 
@@ -55,7 +55,7 @@ def load_user(id):
 
 login_manager.setup_app(application)
 
-@application.route("/login", methods=["GET", "POST"])
+@application.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "POST" and "email" in request.form:
         email = request.form["email"]
@@ -71,7 +71,7 @@ def login():
             flash(u"Invalid username.")
     return render_template("login.html")
 
-@application.route("/signup", methods=["GET", "POST"])
+@application.route("/signup", methods = ["GET", "POST"])
 def signup():
     if request.method == "POST" and "email" in request.form:
         fullname = request.form["fullname"]        
@@ -93,7 +93,7 @@ def signup():
     return render_template("signup.html")
 
 
-@application.route("/reauth", methods=["GET", "POST"])
+@application.route("/reauth", methods = ["GET", "POST"])
 @login_required
 def reauth():
     if request.method == "POST":

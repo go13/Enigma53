@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, redirect, current_app
+from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash
 from modules.jsonschema import validate, Draft4Validator
 
 from model import db
@@ -8,7 +8,7 @@ from quiz_result import QuizResult
 from modules.results import Historysession
 from flask_login import login_required, current_user
 
-quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
+quiz_bp = Blueprint('quiz_bp', __name__, template_folder = 'pages')
 
 @quiz_bp.route('/<int:quiz_id>/')
 def quiz(quiz_id):
@@ -44,7 +44,7 @@ def quiz_edit(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:        
-        return render_template('quiz_edit.html', quiz=quiz)
+        return render_template('quiz_edit.html', quiz = quiz)
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
@@ -60,19 +60,41 @@ def quiz_settings(quiz_id):
     if quiz:
         if request.method == "POST":            
             
-            title = request.form["title"] 
+            title = request.form["title"]
             description = request.form["description"]
-        
-            if len(title) > 128:
-                current_app.logger.warning("Error posting quiz details. Title is too long - " + str(len(title)))
+            
+            if not title:
+                msg = u"Error posting quiz details. No title field passed in the form" 
+                current_app.logger.warning(msg)
+                flash(msg, "error")
+            elif not description:
+                msg = u"Error posting quiz details. No description field passed in the form"
+                current_app.logger.warning(msg)
+                flash(msg, "error")
+            elif len(title) > 128:
+                msg = u"Error posting quiz details. Title is too long - " + str(len(title).decode("UTF-8"))
+                current_app.logger.warning(msg)
+                flash(msg, "error")
             elif len(description) > 32768:
-                current_app.logger.warning("Error posting quiz details. Description is too long " + str(len(description)))
+                msg = u"Error posting quiz details. Description is too long " + str(len(description).decode("UTF-8")) 
+                current_app.logger.warning(msg)
+                flash(msg, "error")
             else:                
-                quiz.title = title
-                quiz.description = description
+                if isinstance(title, str):
+                    quiz.title = title.decode('UTF-8')
+                else:
+                    quiz.title = title
+                    
+                if isinstance(title, str):
+                    quiz.description = description.decode('UTF-8')
+                else:
+                    quiz.description = description
+                                    
                 Quiz.update_quiz(quiz)
-
-                current_app.logger.debug("Updated the quiz" )
+                
+                msg = u"Updated the quiz"
+                current_app.logger.debug(msg)
+                flash(msg, "success")
                 
         return render_template('quiz_settings.html', quiz = quiz)
     else:
@@ -85,10 +107,10 @@ def quiz_settings(quiz_id):
 def quiz_list():
     current_app.logger.debug("quiz_list")
     
-    quizes=Quiz.get_quiz_by_userid(current_user.id)
+    quizes = Quiz.get_quiz_by_userid(current_user.id)
     
     if quizes:
-        return render_template('quiz_list.html', quizes=quizes)
+        return render_template('quiz_list.html', quizes = quizes)
     else:
         current_app.logger.warning("No quizes found")
         
@@ -101,27 +123,36 @@ def jget(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:
-        result = {'status':'OK'}
+        result = {'status' : 'OK'}
         result.update(quiz.serialize)
        
         return jsonify(result)
     else:
-        current_app.logger.warning("Quiz not found")
-        return jsonify({"status":"ERROR"})
+        msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
 
-@quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
+@quiz_bp.route('/jdelete/<int:quiz_id>/', methods = ['DELETE'])
 @login_required
 def jdelete(quiz_id):
     current_app.logger.debug("jdelete. quiz_id - " + str(quiz_id))
-
-    QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
-    Quiz.delete_quiz_by_id(quiz_id, False)
     
-    current_app.logger.debug("Quiz deleted")
+    quiz = Quiz.get_quiz_by_id(quiz_id)
     
-    return jsonify({"status":"OK"})
+    if quiz:        
+        QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
+        Quiz.delete_quiz_by_id(quiz_id, False)
     
-@quiz_bp.route('/jcreate/', methods=['CREATE'])
+        current_app.logger.debug("Quiz deleted")
+    
+        return jsonify({"status":"OK"})
+        
+    else:
+        msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
+        current_app.logger.warning(msg)        
+        return jsonify({"status" : "ERROR", "message" : msg})
+    
+@quiz_bp.route('/jcreate/', methods = ['CREATE'])
 @login_required
 def jcreate():
     current_app.logger.debug("jcreate")
@@ -129,24 +160,24 @@ def jcreate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "title" : {"type" : "string", "maxLength" : 128 } # "pattern" : "^[A-Za-z0-9\?\%\)\(\&\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
-            },
-        "required" : ["title"]
+            "title" : {"type" : "string", "maxLength" : 128, "optional" : False} # "pattern" : "^[A-Za-z0-9\?\%\)\(\&\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
+            }#,
+        #"required" : ["title"]
         }
         
     v = Draft4Validator(schema)
     errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
         
     if len(errors) > 0:
-        message = 'Error creating a quiz. Received json is not valid'
+        msg = 'Error creating a quiz. Received json is not valid'
         
-        current_app.logger.error(message)
+        current_app.logger.error(msg)
         
         #causes = []
         #for error in errors:            
         #    causes.append(error.message)     
         
-        result = {"status" : "ERROR", "message" : message} # "causes" : causes }
+        result = {"status" : "ERROR", "message" : msg} # "causes" : causes }
         
         current_app.logger.error(result)
                     
@@ -165,13 +196,13 @@ def jcreate():
 def finish_session(quiz_id):
     current_app.logger.debug('finish_session')
 
-    qr=QuizResult.finish_session(quiz_id, current_user.id)
+    qr = QuizResult.finish_session(quiz_id, current_user.id)
 
     if qr:
         current_app.logger.debug('Finishing the session')
         
         return redirect("/quiz/results/" + str(qr.sessionid))
     else:
-        current_app.logger.debug("No such quiz found")        
+        current_app.logger.warning("No such quiz found")        
         return render_template('404.html')
         

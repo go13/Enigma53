@@ -14,9 +14,10 @@ steal( 'jquery/controller',
 	        	var c = this;
 	        	var qlist = this.element.find(".quiz-list-table");
 	        	Quizpage.Quiz.Listitem.create(this.quiztitle, function(model, el){
-	        		qlist.prepend(el);	
-	        		quiztitle = "";
-	        		$(".input-quiz-list").attr("value", quiztitle);
+	        		//qlist.prepend(el);
+	        		//quiztitle = "";
+	        		//$(".input-quiz-list").attr("value", quiztitle);
+                    window.location.ref = "/quiz/"+ model.quizid +"/edit/";
 	        	});	        	
 	        },
 	        ".input-quiz-list keyup" : function(el){

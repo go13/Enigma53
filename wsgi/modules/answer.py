@@ -1,13 +1,13 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, Unicode
 
 from model import db
 
 class Answer(db.Model):
     __tablename__ = 'answers'
 
-    id = db.Column('id', Integer, primary_key=True)
+    id = db.Column('id', Integer, primary_key = True)
     questionid = db.Column('questionid', Integer)
-    atext = db.Column('atext', String)
+    atext = db.Column('atext', Unicode)
     correct = db.Column('correct', String)
 
     def __init__(self, questionid=questionid, atext=atext, correct=correct):

@@ -1,5 +1,5 @@
 from flask import Flask
-from sqlalchemy import Table, Column, Integer, String, Unicode
+from sqlalchemy import Table, Column, Integer, Unicode
 from datetime import datetime
 
 from model import db
@@ -8,13 +8,13 @@ from question.question import Question
 class Quiz(db.Model):
     __tablename__ = 'quizes'
 
-    id = db.Column('id', Integer, primary_key=True)
+    id = db.Column('id', Integer, primary_key = True)
     title = db.Column('title', Unicode)
     description = db.Column('description', Unicode)
     userid = db.Column('userid', Integer)
     questions = []
 
-    def __init__(self, description=description, title=title, userid=userid):
+    def __init__(self, description = description, title = title, userid = userid):
         self.description = description
         self.title = title
         self.userid = userid
@@ -22,10 +22,10 @@ class Quiz(db.Model):
     @property
     def serialize(self):
         return {
-            'id':self.id,
-            'title':self.title,
-            'description':self.description,
-            'questions':[i.serialize for i in self.questions]
+            'id' : self.id,
+            'title' : self.title,
+            'description' : self.description,
+            'questions' : [i.serialize for i in self.questions]
            }
         
     def get_number_of_questions(self):
@@ -37,7 +37,7 @@ class Quiz(db.Model):
     
     @staticmethod
     def get_quiz_by_id(id):
-        q  = Quiz.query.filter_by(id=id).first()
+        q  = Quiz.query.filter_by(id = id).first()
         if q:
             q.questions = Question.get_all_questions_by_quiz_id(id)
         return q
@@ -60,13 +60,11 @@ class Quiz(db.Model):
         
     @staticmethod
     def delete_quiz_by_id(id, batch):
-        print 'delete_quiz_by_id ',id 
         
-        quiz = Quiz.query.filter_by(id=id).first()
-        print 'Quiz found ', quiz.id
+        quiz = Quiz.query.filter_by(id = id).first()
+        
         if quiz:
             Question.delete_questions_by_quiz_id(id, False)
             db.session.delete(quiz)
         if not batch:
             db.session.commit()
-            print 'Commit'

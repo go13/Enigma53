@@ -1,5 +1,5 @@
 from flask import Flask
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Table, Column, Integer, Unicode
 
 from model import db
 from modules.answer import Answer
@@ -7,10 +7,10 @@ from modules.answer import Answer
 class Question(db.Model):
     __tablename__ = 'questions'
 
-    id = db.Column('id', Integer, primary_key=True)
+    id = db.Column('id', Integer, primary_key = True)
     quizid = db.Column('quizid', Integer)
     nextquestionid = db.Column('nextquestionid', Integer)
-    qtext = db.Column('qtext', String)
+    qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
     answers = []
 
@@ -43,33 +43,33 @@ class Question(db.Model):
 
     @staticmethod
     def get_next_question(id):
-        q  = Question.query.filter_by(id=id).first()
-        q  = Question.query.filter_by(id=q.nextquestionid).first()
+        q = Question.query.filter_by(id = id).first()
+        q = Question.query.filter_by(id = q.nextquestionid).first()
         if q is not None:
-            q.questionList=Answer.get_answer_by_question_id(q.id)
+            q.questionList = Answer.get_answer_by_question_id(q.id)
             return q
         return None
 
     @staticmethod
     def get_question_by_id(id):
-        q  = Question.query.filter_by(id=id).first()
+        q  = Question.query.filter_by(id = id).first()
         if q is not None:
-            q.answers=Answer.get_answer_by_question_id(q.id) #[{"atext":}]
+            q.answers = Answer.get_answer_by_question_id(q.id)
             return q
         return None
 
     @staticmethod
     def get_questions_by_quiz_id(quiz_id):
         print 'get_questions_by_quiz_id('+str(quiz_id)+')'
-        q  = Question.query.filter_by(quizid=quiz_id).first()
+        q  = Question.query.filter_by(quizid = quiz_id).first()
         if q is not None:
-            q.answers=Answer.get_answer_by_question_id(id)
+            q.answers = Answer.get_answer_by_question_id(id)
         return q
 
     @staticmethod
     def get_all_questions_by_quiz_id(quiz_id):
-        print 'get_all_questions_by_quiz_id('+str(quiz_id)+')'
-        qlist  = Question.query.filter_by(quizid=quiz_id).all()
+        print 'get_all_questions_by_quiz_id(' + str(quiz_id) + ')'
+        qlist = Question.query.filter_by(quizid = quiz_id).all()
         #if qlist is not None:
         #    q.answers=Answer.get_answer_by_question_id(id)
         return qlist
@@ -82,7 +82,7 @@ class Question(db.Model):
                 
     @staticmethod
     def update_question_by_id(questionid, dict, to_commit):
-        Question.query.filter_by(id=questionid).update(dict)
+        Question.query.filter_by(id = questionid).update(dict)
         if to_commit:
             db.session.commit()
              
