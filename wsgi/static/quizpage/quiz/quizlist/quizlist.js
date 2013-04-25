@@ -17,7 +17,7 @@ steal( 'jquery/controller',
 	        		//qlist.prepend(el);
 	        		//quiztitle = "";
 	        		//$(".input-quiz-list").attr("value", quiztitle);
-                    window.location.ref = "/quiz/"+ model.quizid +"/edit/";
+	        		document.location.href = "/quiz/"+ model.quizid +"/edit/";
 	        	});	        	
 	        },
 	        ".input-quiz-list keyup" : function(el){

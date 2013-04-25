@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Unicode
+from sqlalchemy import Integer, Unicode, String
 
 from model import db
 

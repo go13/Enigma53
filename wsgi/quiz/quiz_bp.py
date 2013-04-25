@@ -171,15 +171,13 @@ def jcreate():
     if len(errors) > 0:
         msg = 'Error creating a quiz. Received json is not valid'
         
-        current_app.logger.error(msg)
-        
         #causes = []
         #for error in errors:            
         #    causes.append(error.message)     
         
         result = {"status" : "ERROR", "message" : msg} # "causes" : causes }
         
-        current_app.logger.error(result)
+        current_app.logger.warning(result)
                     
         return jsonify(result) #, "causes" : causes })
     else:        
@@ -187,7 +185,7 @@ def jcreate():
         
         quiz = Quiz.create_quiz('description', title, current_user.id)
         
-        current_app.logger.debug('Quiz created. Title - ' + title + ', id - ' + quiz.id)   
+        current_app.logger.debug('Quiz created. quiz.id - ' + str(id))   
         
         return jsonify({"status" : "OK", "quizid" : quiz.id})
 

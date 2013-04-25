@@ -42,24 +42,24 @@
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li class="active"><a href="{{ url_for('index')}}">Articles</a></li>
-                        <li><a href="/quiz/list"><i class="icon-th-list"></i> Quizes</a></li>
+                        <li><a href="{{ url_for('quiz_bp.quiz_list')}}"><i class="icon-th-list"></i> Quizes</a></li>
                     </ul>
 					<ul class="nav pull-right">
 						{% if current_user.is_authenticated() %}		
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, {{ current_user.name }} <b class="caret"></b></a>
 	                        <ul class="dropdown-menu">
-	                            <li><a href="/user/profile"><i class="icon-cog"></i> Profile</a></li>
+	                            <li><a href="{{ url_for('user_bp.profile') }}"><i class="icon-cog"></i> Profile</a></li>
 	                            <li><a href="/help/support"><i class="icon-envelope"></i> Contact Support</a></li>
 	                            <li class="divider"></li>
-	                            <li><a href="{{ url_for('logout') }}"><i class="icon-off"></i> Logout</a></li>
+	                            <li><a href="{{ url_for('auth_bp.logout') }}"><i class="icon-off"></i> Logout</a></li>
 	                        </ul>
                     	</li>
 						{% else %}           	
-                    	<li><a href="/signup">Sign Up</a></li>
+                    	<li><a href="{{ url_for('auth_bp.signup') }}">Sign Up</a></li>
                         <li class="dropdown">
 							<a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
 							<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-								<form method="post" action="{{ url_for('login') }}" accept-charset="UTF-8">
+								<form method="post" action="{{ url_for('auth_bp.login') }}" accept-charset="UTF-8">
 									<input style="margin-bottom: 15px;" type="text" placeholder="Email" id="email" name="email">
 									<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">
 									<input style="float: left; margin-right: 10px;" type="checkbox" name="remember" id="remember" value="yes">

@@ -1,33 +1,53 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template, jsonify, request, current_app, flash
+from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from model import db
 from flask_login import login_required, current_user
 from auth.user import User
 from modules.jsonschema import Draft4Validator
 
+
 user_bp = Blueprint('user_bp', __name__, template_folder = 'pages')
 
-@user_bp.route('/profile/') #, methods = ["GET", "POST"])
+class ProfileForm(Form):
+    username = TextField('Username', [
+        validators.Length(min = 4, max = 25),
+        validators.Required(),
+        validators.Regexp('^[A-Za-z1-9\ ]+$', message = u'Username should contain only characters or numbers')
+        ])
+    email = TextField('Email', [
+        validators.Length(min = 6, max = 25),
+        validators.Email(message = u'Invalid email address')        
+        ])
+    password = PasswordField('Password', [
+        validators.Required(),
+        validators.Length(min = 6, max = 25),
+        validators.EqualTo('confirm', message = u'Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+
+@user_bp.route('/profile/', methods = ["GET", "POST"])
 @login_required
 def profile():
-    current_app.logger.debug(request.method + "User profile. user_id - " + str(current_user.id))
+    current_app.logger.debug(request.method + " User profile. user_id - " + str(current_user.id))
+        
+    if request.method == "POST":
+        form = ProfileForm(request.form)
+        if form.validate():                    
+            current_user.name = form.username.data
+            current_user.email = form.email.data
+            current_user.password = form.password.data
+            
+            User.update_user(current_user)
+            
+            current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))    
     
-    #if request.method == "POST":# and "email" in request.form:
-
-    #    username=request.form["username"]        
-    #    email=request.form["email"]
-    #    password=request.form["password"]
+            flash("Success")
+    else:
+        form = ProfileForm()
+        form.username.data = current_user.name
+        form.email.data = current_user.email
         
-    #    current_user.name = username
-    #    current_user.email = email
-    #    current_user.password = password
-        
-    #    User.update_user(current_user)
-        
-    #    current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))    
-        
-    #    return render_template('profile.html', user = current_user)
-    #else:
-    render_template('profile.html', user = current_user)
+    return render_template("profile.html", form = form)
                 
 @user_bp.route('/jupdate/', methods = ["UPDATE"])
 @login_required
@@ -37,9 +57,9 @@ def jupdate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "username" : {"type" : "string", "minLength" : 4, "maxLength" : 18, "pattern" : "^[A-Za-z1-9\ ]*$"} ,
-            "email" : {"type" : "string", "optional" : False, "format" : "email"},
-            "password" : {"type" : "string", "optional" : False, "minLength" : 6, "maxLength" : 12}
+            "username" : {"type" : "string", "minLength" : 4, "maxLength" : 25, "pattern" : "^[A-Za-z1-9]+$"} ,
+            "email" : {"type" : "string", "optional" : False, "format" : "email", "maxLength" : 25},
+            "password" : {"type" : "string", "optional" : False, "minLength" : 6, "maxLength" : 25}
             }
         }
         
