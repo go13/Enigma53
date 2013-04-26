@@ -3,27 +3,12 @@ from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from model import db
 from flask_login import login_required, current_user
 from auth.user import User
+from auth.auth_bp import ProfileForm
+
 from modules.jsonschema import Draft4Validator
 
 
 user_bp = Blueprint('user_bp', __name__, template_folder = 'pages')
-
-class ProfileForm(Form):
-    username = TextField('Username', [
-        validators.Length(min = 4, max = 25),
-        validators.Required(),
-        validators.Regexp('^[A-Za-z1-9\ ]+$', message = u'Username should contain only characters or numbers')
-        ])
-    email = TextField('Email', [
-        validators.Length(min = 6, max = 25),
-        validators.Email(message = u'Invalid email address')        
-        ])
-    password = PasswordField('Password', [
-        validators.Required(),
-        validators.Length(min = 6, max = 25),
-        validators.EqualTo('confirm', message = u'Passwords must match')
-    ])
-    confirm = PasswordField('Repeat Password')
 
 @user_bp.route('/profile/', methods = ["GET", "POST"])
 @login_required
