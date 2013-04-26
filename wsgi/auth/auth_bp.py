@@ -73,14 +73,11 @@ def login():
                     return redirect(request.args.get("next") or url_for("index"))
                 else:
                     msg = u"Sorry, but you could not log in"
-                    flash(msg, "error")
-                    current_app.logger.debug(msg)
-                    return render_template("login.html", form = form)
             else:
                 msg = u"Invalid username or password"
-                flash(msg, "error")
-                current_app.logger.debug(msg)
-                return render_template("login.html", form = form)
+            flash(msg, "error")
+            current_app.logger.debug(msg)
+            return render_template("login.html", form = form)
     else:
         form = LoginForm()  
         current_app.logger.debug("returnrning the form")  

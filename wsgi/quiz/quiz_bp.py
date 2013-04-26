@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash
+from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash, url_for
 from modules.jsonschema import validate, Draft4Validator
+from wtforms import Form, TextField, validators
 
 from model import db
 from quiz import Quiz
@@ -48,6 +49,43 @@ def quiz_edit(quiz_id):
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
+
+class CreateForm(Form):
+    title = TextField('Title', [
+        validators.Length(min = 1, max = 128),
+        validators.Required()
+        ])
+        
+    description = TextField('Description', [
+        validators.Length(max = 32768),
+        validators.Optional()
+        ])
+
+
+@quiz_bp.route('/create/', methods = ['POST'])
+@login_required
+def create():
+    current_app.logger.debug(request.method + " create")
+    
+    form = CreateForm(request.form)    
+    
+    if form.validate():
+        current_app.logger.debug("login validation successful")
+                
+        title = form.title.data
+        description = form.description.data   
+        
+        quiz = Quiz.create_quiz(description, title, current_user.id)
+        if quiz:
+            msg = u"Quiz created" 
+            current_app.logger.debug(msg)        
+            flash(msg, "success")
+        else:
+            msg = u"Could not create a quiz"            
+            current_app.logger.debug(msg)        
+            flash(msg, "error")
+            
+    return redirect(url_for("quiz_edit"))
 
 # TODO - check ho to convert form strings to unicode
 @quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
@@ -152,7 +190,7 @@ def jdelete(quiz_id):
         current_app.logger.warning(msg)        
         return jsonify({"status" : "ERROR", "message" : msg})
     
-@quiz_bp.route('/jcreate/', methods = ['CREATE'])
+@quiz_bp.route('/jcreate/', methods = ['POST'])
 @login_required
 def jcreate():
     current_app.logger.debug("jcreate")
