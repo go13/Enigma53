@@ -1,37 +1,44 @@
+{% from "messaging.html" import render_errors %}
+
 {% extends "base.html" %}
 
 {% block content %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
 
 <div class="container quiz-list-container" style="width: 800px;">
-    <div style="height: 50px;" class="page-message"></div>   
-	
-    <a href="#createModal" role="button" class="btn btn-success" data-toggle="modal">Create</a>
-    <!-- Modal -->
-    <div id="createModal" class="modal hide" tabindex="-1" role="dialog" 
+    <div style="height: 50px;" class="page-message"></div>
+		
+	<a data-toggle="modal" class="btn btn-success pull-right" 
+		data-target="#createModal"><div class="icon-plus icon-white"></div> Create
+	</a>
+		
+	<div id="createModal" class="modal hide" tabindex="-1" role="dialog" 
                             aria-labelledby="createModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h3 id="createModalLabel">Create a Quiz</h3>
-        </div>
-        <div class="modal-body">
-            <p>put fields here</p>
-            <form method="POST" action="{{ url_for('quiz_bp.create')}}" accept-charset="UTF-8">
-    			{{ form.title(class_ = 'span4', placeholder = 'Title') }}
-				{{ form.description(class_ = 'span4', placeholder = 'Description') }}
-				<button type="submit" name="submit" value="Login" class="btn btn-primary">Sign Up</button>
-			</form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button class="btn btn-primary">Create</button>
-        </div>
+                            
+		<form method="POST" action="{{ url_for('quiz_bp.quiz_list')}}" accept-charset="UTF-8">
+			<fieldset>         
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		            <h3 id="createModalLabel">Create a Quiz</h3>
+		        </div>
+		        {{ render_errors(form) }}
+        
+		       	<div class="modal-body">		    		    
+					{% include 'quiz_create.html' %}
+		        </div>
+		        <div class="modal-footer">
+		            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		            <button type="submit" name="submit" value="Login" class="btn btn-primary">Create</button>
+		        </div>		
+	        </fieldset>
+		</form>
     </div>
-
-	<div class="input-append">
-  		<input class="input-quiz-list" style="width:720px" type="text">        
-  		<button class="btn btn-success quiz-list-create" type="button">Create</button>
-	</div>
+    
+   {% if form.errors %} 
+	  <script type="text/javascript">
+	  $('#createModal').modal('show');
+	  </script> 
+   {% endif %}
 	      
     <table class="table table-striped">
         <thead>

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash, url_for
 from modules.jsonschema import validate, Draft4Validator
-from wtforms import Form, TextField, validators
+from wtforms import Form, TextField, validators, TextAreaField
 
 from model import db
 from quiz import Quiz
@@ -51,41 +51,52 @@ def quiz_edit(quiz_id):
         return render_template('404.html')
 
 class CreateForm(Form):
-    title = TextField('Title', [
+    title = TextField('Quiz title', [
         validators.Length(min = 1, max = 128),
         validators.Required()
         ])
-        
-    description = TextField('Description', [
+    description = TextAreaField('Quiz description', [
         validators.Length(max = 32768),
         validators.Optional()
-        ])
+        ])        
 
-
-@quiz_bp.route('/create/', methods = ['POST'])
+@quiz_bp.route('/list/',  methods = ['GET', 'POST'])
 @login_required
-def create():
-    current_app.logger.debug(request.method + " create")
-    
-    form = CreateForm(request.form)    
-    
-    if form.validate():
-        current_app.logger.debug("login validation successful")
-                
-        title = form.title.data
-        description = form.description.data   
+def quiz_list():
+    current_app.logger.debug("quiz_list")
+
+    if request.method == "POST":
+        current_app.logger.debug(request.method + " create")
         
-        quiz = Quiz.create_quiz(description, title, current_user.id)
-        if quiz:
-            msg = u"Quiz created" 
-            current_app.logger.debug(msg)        
-            flash(msg, "success")
-        else:
-            msg = u"Could not create a quiz"            
-            current_app.logger.debug(msg)        
-            flash(msg, "error")
+        form = CreateForm(request.form)
+        
+        if form.validate():
+            current_app.logger.debug("login validation successful")
+                    
+            title = form.title.data
+            description = form.description.data   
             
-    return redirect(url_for("quiz_edit"))
+            quiz = Quiz.create_quiz(description, title, current_user.id)
+            if quiz:
+                msg = u"Quiz created" 
+                current_app.logger.debug(msg)        
+                flash(msg, "success")
+            else:
+                msg = u"Could not create a quiz"            
+                current_app.logger.debug(msg)        
+                flash(msg, "error")
+            current_app.logger.debug("login validation successful" + str(quiz.id))
+            return redirect(url_for('quiz_bp.quiz_edit', quiz_id = quiz.id))
+        else:
+            quizes = Quiz.get_quiz_by_userid(current_user.id)
+            current_app.logger.debug("validation failed")
+            return render_template('quiz_list.html', quizes = quizes, form = form)
+
+    else:
+        quizes = Quiz.get_quiz_by_userid(current_user.id)
+        form = CreateForm(request.form)
+                    
+        return render_template('quiz_list.html', quizes = quizes, form = form)
 
 # TODO - check ho to convert form strings to unicode
 @quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
@@ -139,21 +150,7 @@ def quiz_settings(quiz_id):
         current_app.logger.warning("No quiz found")
         
         return render_template('404.html')
-
-@quiz_bp.route('/list/')
-@login_required
-def quiz_list():
-    current_app.logger.debug("quiz_list")
     
-    quizes = Quiz.get_quiz_by_userid(current_user.id)
-    
-    if quizes:
-        return render_template('quiz_list.html', quizes = quizes)
-    else:
-        current_app.logger.warning("No quizes found")
-        
-        return render_template('404.html')
-
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
     current_app.logger.debug("jget. quiz_id - " + str(quiz_id))
