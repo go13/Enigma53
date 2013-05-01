@@ -10,7 +10,7 @@ class Answer(db.Model):
     atext = db.Column('atext', Unicode)
     correct = db.Column('correct', String)
 
-    def __init__(self, questionid=questionid, atext=atext, correct=correct):
+    def __init__(self, questionid = questionid, atext=atext, correct=correct):
         self.atext = atext
         self.questionid = questionid
         self.correct = correct

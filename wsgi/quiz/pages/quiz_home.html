@@ -1,9 +1,9 @@
 {% extends "quiz_base.html" %}
 
 {% block body %}
-    <div id="legend">
-      <legend>Quiz Home - {{ quiz.title }}</legend>
-    </div>
+<div id="legend">
+  <legend>Quiz Home - {{ quiz.title }}</legend>
+</div>
 <div class="container pull-left" style="width: 800px"> 
 	<blockquote>{{ quiz.description }}</blockquote>	
 <!-- 	<a href="/quiz/{{quiz.id}}/home/" class="btn btn-link">Home</a>
@@ -11,71 +11,59 @@
 	<a href="/quiz/{{quiz.id}}" style="margin-right:175px" class="btn btn-primary pull-right">Start Quiz</a>
  -->
   <table class="table table-condensed">
-  <thead>
-    <tr>
-      <th class="span1"></th>
-      <th class="span3"></th>
-      <th class="span2"></th>
-      <th class="span1"></th>
-      <th class="span3"></th>      
-    </tr>
-  </thead>
-  <tbody>
-  {% for item in results %}
-    <tr>
-	    <td>
-	    	<a href="/quiz/results/{{item.historysession.id}}/" class="btn btn-mini btn-success">Results</a>  			
-		</td>		 
-	    <td>
-	    	<strong>
-	    		<i class="icon-calendar"></i> {{ item.historysession.starttime.strftime('%d/%m/%Y %H:%M') }}
-	    	</strong>
-	    </td>   
-	    <td>
-			<strong>
-				<i class="icon-user"></i> by <a href="/user/{{ item.historysession.userid }}">{{ item.historysession.user.name }}</a>
-			</strong>	    	
-	    </td>
-   	    <td>
-   	    	<strong>
-   	    		<i class="icon-signal"></i> {{item.correctqnum}}/{{item.qnum}}
-   	    	</strong>
-	    </td>
-	    <td>
-	    	<strong>
-		    	<div class="progress" style="margin-bottom:0px">
-		    		{% if item.correctqnum and item.qnum != 0 %}
-	  				<div class="bar bar-success" style="width: {{100*item.correctqnum/item.qnum}}%;"></div>
-	  				<div class="bar bar-danger" style="width: {{100-100*item.correctqnum/item.qnum}}%;"></div>
-	  				{% endif %}
-				</div>	    		
-	    	</strong>	    
-	    </td>	   
-    </tr>
-    {% endfor %}
-  </tbody>
- 
-</table><!-- 
-<div class="pagination pagination-centered">
-<ul>
-    <li><a href="#">Prev</a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">Next</a></li>
-  </ul>
-	</div> -->    
+	  <thead>
+	    <tr>
+	      <th class="span1"></th>
+	      <th class="span3"></th>
+	      <th class="span2"></th>
+	      <th class="span1"></th>
+	      <th class="span3"></th>      
+	    </tr>
+	  </thead>
+	  <tbody>
+	  {% for item in results %}
+	    <tr>
+		    <td>
+		    	<a href="/quiz/results/{{item.historysession.id}}/" class="btn btn-mini btn-success">Results</a>  			
+			</td>		 
+		    <td>
+		    	<strong>
+		    		<i class="icon-calendar"></i> {{ item.historysession.starttime.strftime('%d/%m/%Y %H:%M') }}
+		    	</strong>
+		    </td>   
+		    <td>
+				<strong>
+					<i class="icon-user"></i> by <a href="/user/{{ item.historysession.userid }}">{{ item.historysession.user.name }}</a>
+				</strong>	    	
+		    </td>
+	   	    <td>
+	   	    	<strong>
+	   	    		<i class="icon-signal"></i> {{item.correctqnum}}/{{item.qnum}}
+	   	    	</strong>
+		    </td>
+		    <td>
+		    	<strong>
+			    	<div class="progress" style="margin-bottom:0px">
+			    		{% if item.correctqnum and item.qnum != 0 %}
+		  				<div class="bar bar-success" style="width: {{100*item.correctqnum/item.qnum}}%;"></div>
+		  				<div class="bar bar-danger" style="width: {{100-100*item.correctqnum/item.qnum}}%;"></div>
+		  				{% endif %}
+					</div>	    		
+		    	</strong>	    
+		    </td>	   
+	    </tr>
+	    {% endfor %}
+	  </tbody> 
+	</table>  
 </div>
  
 {% endblock body %}
 
 {% block quiz_menu %}	
-<a class="btn btn-primary" style="margin-bottom:40px" href="/quiz/{{quiz.id}}/">Start Quiz</a>
+<a class="btn btn-primary" style="margin-bottom:40px" href="/quiz/{{quiz.id}}/map/">Start Quiz</a>
 <ul class="nav nav-pills nav-stacked"  align="left">
 	<li class="active"><a href="/quiz/{{quiz.id}}/home/">Home</a></li>
-	<li><a href="/quiz/{{quiz.id}}/edit/">Edit</a></li> 	
+	<li><a href="/quiz/{{quiz.id}}/map/edit/">Edit</a></li> 	
 	<li><a href="/quiz/{{quiz.id}}/settings/">Settings</a></li>
 </ul>
 {% endblock quiz_menu %}

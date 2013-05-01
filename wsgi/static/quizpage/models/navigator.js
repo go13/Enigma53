@@ -15,7 +15,17 @@ steal('jquery/model', function(){
             add_question : function (question){
                 this.questions.push(question);
             },
-            remove_question_by_id : function (qid){
+            get_question_by_id : function(qid){
+            	var res = null;
+            	for(var i = 0; i <= this.questions.length; i++){
+            		if(qid === this.questions[i].qid){
+            			res = this.questions[i];
+            			break;
+            		}
+            	} 
+            	return res;
+            },
+            remove_question_by_id : function(qid){
                 if(this.questions.length === 0){
                    return false;
                 }else{
@@ -72,7 +82,7 @@ steal('jquery/model', function(){
                         this.current_question_num = 0;
                     }else{
                         if(this.current_question_num + 1 < this.questions.length){
-                            this.current_question_num++;
+                            this.current_question_num ++;
                             this.current_question = this.questions[this.current_question_num];
                         }
                     }

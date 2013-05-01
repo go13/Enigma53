@@ -2,16 +2,6 @@
     <%= qtext %>
 </textarea>
 
-<div class="input-prepend input-append">
-    <a class="add-checked btn btn-success">
-        <i class="icon-ok icon-white"></i>
-    </a>
-    <input type="text" class="add-input input-xxlarge" placeholder="Type your answer here...">
-    <a style="width: 53px" class="qanswer-add btn btn-success">
-        <i class="icon-plus icon-white"></i> Add
-    </a>
-</div>
-
 <div class="answers">
     <% for(var i=0; i< answers.length; i++){ %>
 
@@ -23,7 +13,7 @@
             <i class="icon-ban-circle icon-white"></i>
             <%}%>
         </a>
-        <input type="text" class="qanswer-input input-xxlarge" value="<%= answers[i].atext %>">
+        <input type="text" class="qanswer-input input-xxlarge" placeholder="Type your answer here..." value="<%= answers[i].atext %>">
         <div class="btn-group">
             <a class="qanswer-move btn btn-primary">
                 <span class="icon-move icon-white"></span>
@@ -35,7 +25,9 @@
     </div>
     <%} %>
 	</div>
-	
+	<a class="qanswer-add btn btn-success pull-left">
+		<i class="icon-plus icon-white"></i>
+	</a>
 	<div class="pull-left" style="width:40%; margin-left:30%">
 	<button class="question-back btn" type="button">Back</button>    
 	<button class="question-<% if(!isNew){ %>save<% }else{ %>create<% } %>  btn btn-success" type="button"><% if(!isNew){ %> Save <% }else{ %> Create <% } %> </button>

@@ -12,22 +12,28 @@ class Question(db.Model):
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
+    lat = db.Column('lat', Unicode)
+    lon = db.Column('lon', Unicode)
     answers = []
 
-    def __init__(self, quizid, nextquestionid, qtext, type, answers):
+    def __init__(self, quizid, nextquestionid, qtext, type, answers, lat = lat, lon = lon):
         self.quizid = quizid
         self.nextquestionid = nextquestionid
         self.qtext = qtext
         self.type = type
+        self.lat = lat
+        self.lon = lon
         self.answers = answers
 
     @property
     def serialize(self):
         return {
-            'quizid':self.quizid,
-            'nextquestionid':self.nextquestionid,
-            'qtext':self.qtext,
-            'id':self.id,
+            'quizid' : self.quizid,
+            'nextquestionid' : self.nextquestionid,
+            'qtext' : self.qtext,
+            'id' : self.id,
+            'lat': self.lat,
+            'lon': self.lon,
             'answers':[i.serialize for i in self.answers]
            }
 
@@ -38,6 +44,8 @@ class Question(db.Model):
             'nextquestionid':self.nextquestionid,
             'qtext':self.qtext,
             'id':self.id,
+            'lat': self.lat,
+            'lon': self.lon,
             'answers':[i.serialize_for_edit for i in self.answers]
            }
 

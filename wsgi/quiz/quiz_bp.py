@@ -23,6 +23,45 @@ def quiz(quiz_id):
     else:
         current_app.logger.warning("No quiz found")
         return render_template('404.html')
+    
+@quiz_bp.route('/<int:quiz_id>/map/')
+def quiz_map(quiz_id):
+    current_app.logger.debug("quiz map. quiz_id - " + str(quiz_id))
+    
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    if quiz:    
+        QuizResult.start_session(quiz_id, current_user.id)
+        
+        return render_template('quiz_map.html', quiz = quiz)
+    else:
+        current_app.logger.warning("No quiz found")
+        return render_template('404.html')
+
+@quiz_bp.route('/<int:quiz_id>/edit/')
+#@login_required
+def quiz_edit(quiz_id):
+    current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
+    
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    
+    if quiz:        
+        return render_template('quiz_edit.html', quiz = quiz)
+    else:
+        current_app.logger.warning("No quiz found")        
+        return render_template('404.html')
+
+@quiz_bp.route('/<int:quiz_id>/map/edit/')
+#@login_required
+def quiz_map_edit(quiz_id):
+    current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
+    
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    
+    if quiz:        
+        return render_template('quiz_map_edit.html', quiz = quiz)
+    else:
+        current_app.logger.warning("No quiz found")        
+        return render_template('404.html')
         
 @quiz_bp.route('/<int:quiz_id>/home/')
 def quiz_home(quiz_id):
@@ -33,19 +72,6 @@ def quiz_home(quiz_id):
     if quiz:        
         results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)        
         return render_template('quiz_home.html', quiz = quiz, results = results)
-    else:
-        current_app.logger.warning("No quiz found")        
-        return render_template('404.html')
-
-@quiz_bp.route('/<int:quiz_id>/edit/')
-@login_required
-def quiz_edit(quiz_id):
-    current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    
-    if quiz:        
-        return render_template('quiz_edit.html', quiz = quiz)
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
@@ -86,7 +112,7 @@ def quiz_list():
                 current_app.logger.debug(msg)        
                 flash(msg, "error")
             current_app.logger.debug("login validation successful" + str(quiz.id))
-            return redirect(url_for('quiz_bp.quiz_edit', quiz_id = quiz.id))
+            return redirect(url_for('quiz_bp.quiz_map_edit', quiz_id = quiz.id))
         else:
             quizes = Quiz.get_quiz_by_userid(current_user.id)
             current_app.logger.debug("validation failed")
@@ -195,7 +221,11 @@ def jcreate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "title" : {"type" : "string", "maxLength" : 128, "optional" : False} # "pattern" : "^[A-Za-z0-9\?\%\)\(\&\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
+            "title" : {"type" : "string", "maxLength" : 128, "optional" : False},
+            "lat" : {"type" : "string", "optional" : False},
+            "lon" : {"type" : "string", "optional" : False},
+             
+             # "pattern" : "^[A-Za-z0-9\?\%\)\(\&\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
             }#,
         #"required" : ["title"]
         }
@@ -217,8 +247,10 @@ def jcreate():
         return jsonify(result) #, "causes" : causes })
     else:        
         title = request.json['title']
+        lat = request.json['lat']
+        lon = request.json['lon']
         
-        quiz = Quiz.create_quiz('description', title, current_user.id)
+        quiz = Quiz.create_quiz('description', title, current_user.id, lat, lon)
         
         current_app.logger.debug('Quiz created. quiz.id - ' + str(id))   
         
@@ -238,4 +270,5 @@ def finish_session(quiz_id):
     else:
         current_app.logger.warning("No such quiz found")        
         return render_template('404.html')
+    
         

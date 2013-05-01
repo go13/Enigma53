@@ -8,21 +8,26 @@ $.Model('Questionedit',
         nextquestionid : 0,
         quizid : 0,
         qtext : "" ,
+        lat : "",
+        lon : "",
         answers : [],
 
-        atext : "Type your answer here...",
+        atext : "",
         correct : 'T',
-        isNew : false
+        isNew : false,
+        gmarker : null
     },
     findAll: "/questions.json",
     findOne : "/question/jget_for_edit/{id}/"
 },{
-    to_object : function(obj){
+    to_object : function(){
         var obj = new Object();
         obj.qid = this.qid;
         obj.quizid = this.quizid;
         obj.qtext = this.qtext;
         obj.answers = this.answers;
+        obj.lat = this.lat;
+        obj.lon = this.lon;
         return obj;
     },
     set_question : function(question){
@@ -31,6 +36,8 @@ $.Model('Questionedit',
         this.quizid = question.quizid;
         this.qtext = question.qtext;
         this.answers = question.answers;
+        this.lon = question.lon;
+        this.lat = question.lat;
     },
     get_answer_by_id : function(id){
         var result = null;
@@ -66,7 +73,9 @@ $.Model('Questionedit',
             }
         });
     },
+    
     destroy : function(success, error){
+
             // TODO refactor answers so they don't have unnecessary fields
             $.ajax({
                 type: "POST",
@@ -96,9 +105,22 @@ $.Model('Questionedit',
             }
         });
     },
+    clean : function(){
+        this.qid = -1;
+        this.qtext = "";
+        this.lat = "";
+        this.lon = "";
+
+        this.atext = "";
+        this.gmarker = null;
+    	
+    	this.answers = [];
+    },
     submit_question : function(success, error){
         var obj = new Object();
         obj.qid = this.qid;
+        obj.lat = this.lat;
+        obj.lon = this.lon;
         obj.answers = new Array();
 
         for(var i=0; i<this.answers.length; i++ ){

@@ -2,7 +2,7 @@ steal( 'jquery/controller',
     'jquery/view/ejs',
     'jquery/controller/view',
     'questionpage/models')
-    .then('./views/init.ejs',function($){
+    .then('./views/init.ejs', function($){
 
         $.Controller('Questionpage.Question.Edit',
             {
@@ -10,17 +10,18 @@ steal( 'jquery/controller',
                 model : null,
 
                 init : function(){
+               	
                     var type = this.options.type;
                     if(type === "new"){
                         this.model = new Questionedit();
                         this.model.isNew = true;
-                        this.model.quizid = this.options.quizid;
+                        this.model.quizid = this.options.quizid;                        
                         //this.set_question(this.options.question);
                         this.element.html(this.view('init', this.model));
                     }else if(type === "add"){
                         this.model = new Questionedit();
                         this.model.set_question(this.options.question);
-                        this.element.html(this.view('init',this.model));
+                        this.element.html(this.view('init', this.model));
                     }else{
                         var question_name = this.element.attr("name");
                         this.model = new Questionedit();
@@ -28,7 +29,7 @@ steal( 'jquery/controller',
 
                         this.model.isNew = false;
                         var id = parseInt(question_name.split("question")[1]);
-                        this.element.html(this.view('init',Questionedit.findOne({id:id}, function(data){
+                        this.element.html(this.view('init', Questionedit.findOne({id:id}, function(data){
                             question.qid = data.id;
                             question.nextquestionid = data.id;
                             question.quizid = data.quizid;
@@ -49,6 +50,13 @@ steal( 'jquery/controller',
                     this.model.quizid = question.quizid;
                     this.model.qtext = question.qtext;
                     this.model.answers = question.answers;
+                },
+                clean : function(){
+                	this.element.find(".qanswer").each(function(){
+                		this.remove();
+                	});
+                	this.model.clean();
+                	this.element.find(".qtext").attr("value", this.model.qtext);
                 },
                 ".add-checked click" : function(el){
                     var correct = this.model.correct;
@@ -104,7 +112,7 @@ steal( 'jquery/controller',
                     var atext = this.model.atext;
 
                     if(!atext || /^\s*$/.test(atext)){
-                        answer.atext = "Type your answer here...";
+                        answer.atext = "";
                     }else{
                         answer.atext = atext;
                     }
@@ -133,17 +141,32 @@ steal( 'jquery/controller',
                         Pagemessage.Message.Item.show_message("Success", "Saved");
                     });
                 },
-                ".question-create click" : function(data){
-                    var question = this.model;//jQuery.extend(true, {}, this.model);;
-                    question.create( function(data){
-                        var newQuestion = question.to_object();
-                        newQuestion.qid = data.qid;
+                ".question-create-old click" : function(data){                	
+                    var question = this.model;  //jQuery.extend(true, {}, this.model);;
 
-                        Quizpage.Quiz.Navigator.add_question_edit(newQuestion);
-                        Pagemessage.Message.Item.show_message("Success", "Created");
-                    });
+       			    var pos = window.currentLocation;
+       			    
+       			    if(pos != null){
+	                	
+	                	question.lat = pos.jb.toString();
+	                	question.lon = pos.kb.toString();
+	                	
+	                	question.marker = window.currentMapMarker;
+	                	
+	                    question.create( function(data){
+	                        var newQuestion = question.to_object();
+	                        newQuestion.qid = data.qid;
+	
+	                        Quizpage.Quiz.Navigator.add_question_edit(newQuestion);
+	                        Pagemessage.Message.Item.show_message("Success", "Created");
+	                    });
+	                    
+	                    window.currentLocation = null;
+       			    }else{
+       			    	alert("Please select a location for this question on the map");
+       			    }
                 },
-                ".question-delete-btn click" : function(){
+                ".question-delete-btn-old click" : function(){
                     var question = this.model;
                     question.destroy(function(data){
                         Quizpage.Quiz.Navigator.remove_question_by_id(question.qid);
@@ -155,6 +178,12 @@ steal( 'jquery/controller',
                 },
                 ".qtext keyup" : function(el){
                     this.model.qtext = el.attr("value") ;
+                },
+                onQuestionEnter : function(){
+                	
+                },
+                onQuestionLeave : function(){
+                	
                 }
             });
     });

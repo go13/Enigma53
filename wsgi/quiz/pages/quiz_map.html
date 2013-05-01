@@ -1,0 +1,69 @@
+{% extends "quiz_map_template.html" %}
+
+{% block left %}
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+<script type="text/javascript">
+	var map;
+	
+	function initialize() {
+	  var mapOptions = {
+	    zoom: 8,
+	    center: new google.maps.LatLng(-34.397, 150.644),
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  };
+	  map = new google.maps.Map(document.getElementById('map-canvas'),
+	      mapOptions);
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<div id="map-canvas" style="height: 750px; width:100%; margin-top: -20px; margin-bottom: 15px"></div>
+
+{% endblock left %}
+
+{% block body %}
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
+
+<a class="btn btn-primary" style="margin-bottom:10px" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a>
+
+<!-- <div class="container" style="width: 800px;"> -->
+ 	
+<div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
+    <ul id="tabs" class="nav nav-tabs">
+        {%for item in quiz.questions %}
+        {% if loop.first %}
+        <li id="tab-question{{item.id}}" class="active question-tab">
+            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+        </li>
+        {% else %}
+        <li id="tab-question{{item.id}}" class="question-tab">
+            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <div id="tabs-container" class="tab-content">
+        {%for item in quiz.questions %}
+        {% if loop.first %}
+        <div class="tab-pane active" id="tab-question-page{{item.id}}">
+            <div class='question-item' name='question{{item.id}}'></div>
+        </div>
+        {% else %}
+        <div class="tab-pane" id="tab-question-page{{item.id}}">
+            <div class='question-item' name='question{{item.id}}'></div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock body %}
+
+{% block quiz_menu %}	
+
+
+{% endblock quiz_menu %}

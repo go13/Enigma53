@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
  
     <!-- Le styles -->
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
@@ -77,15 +76,16 @@
             </div>
         </div>
     </div>
- 
-    <div class="container">
+ {% block header %}
+ {% endblock header %}
+    <!-- <div class="container">
         <div class="row">
-            <div class="span12">
+            <div class="span12"> -->
                 {% block content %}
                 {% endblock content %}
-            </div>
+            <!-- </div>
         </div> 
-    </div> <!-- /container -->
+    </div>  --><!-- /container -->
 
 </body>
 </html>

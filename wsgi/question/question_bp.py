@@ -128,12 +128,16 @@ def jcreate():
     print 'qtext ', request.json['qtext']
     print 'quizid ', request.json['quizid']
     print 'answers ', request.json['answers']
+    print 'lat ', request.json['lat']
+    print 'lon ', request.json['lon']
 
     qtext = request.json['qtext']
     quizid = request.json['quizid']
     answers = request.json['answers']
+    lat = request.json['lat']
+    lon = request.json['lon']
 
-    newQuestion=Question(quizid=quizid, nextquestionid=2, qtext=qtext, type=1, answers=answers)
+    newQuestion = Question(quizid = quizid, nextquestionid = 2, qtext = qtext, type = 1, answers = answers, lat = lat, lon = lon)
     db.session.add(newQuestion)
     db.session.commit()
 
