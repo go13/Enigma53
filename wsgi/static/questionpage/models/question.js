@@ -7,7 +7,7 @@ $.Model('Question',
         qid : 0,
         nextquestionid : 0,
         quizid : 0,
-        qtext : " " ,
+        qtext : "" ,
         answers : []
     },
     findAll: "/questions.json",

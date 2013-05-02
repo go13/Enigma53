@@ -50,7 +50,7 @@ steal('jquery/model', function(){
                 }
             },
             set_current_question_by_id : function(qid){
-                if(qid === null || isNaN(qid) || this.questions.length === 0){
+                if(qid == null || isNaN(qid) || this.questions.length === 0){
                     this.current_question = null;
                     this.current_question_num = -1;
                     return this.current_question_num;
@@ -77,7 +77,7 @@ steal('jquery/model', function(){
                     this.current_question_num = -1;
                     return null;
                 }else{
-                    if(this.current_question === null){
+                    if(this.current_question == null){
                         this.current_question = this.questions[0];
                         this.current_question_num = 0;
                     }else{
@@ -95,7 +95,7 @@ steal('jquery/model', function(){
                     this.current_question_num = -1;
                     return null;
                 }else{
-                    if(this.current_question === null){
+                    if(this.current_question == null){
                         this.current_question = this.questions[this.questions.length-1];
                         this.current_question_num = this.questions.length-1;
                     }else{

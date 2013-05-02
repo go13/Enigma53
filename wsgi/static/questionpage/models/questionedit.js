@@ -72,10 +72,8 @@ $.Model('Questionedit',
                 alert("There was an error posting the data to the server: " + error.responseText);
             }
         });
-    },
-    
+    },    
     destroy : function(success, error){
-
             // TODO refactor answers so they don't have unnecessary fields
             $.ajax({
                 type: "POST",

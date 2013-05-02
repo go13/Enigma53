@@ -16,8 +16,7 @@ steal( 'jquery/controller',
                 create_question : function(question){
 
                 },
-                add_question_edit : function(question){                	
-                	
+                add_question_edit : function(question){                	                	
                     Quizpage.Quiz.Navigator.instance.element.find("#tabs")
                         .append("<li id='tab-question" + question.qid + "' class='question-tab tab-question-edit'>" +
                             "<a href='#tab-question-page" + question.qid + "' data-toggle='tab'>Question " + question.qid + "</a>" +
@@ -28,9 +27,9 @@ steal( 'jquery/controller',
                             "</div>");
                     var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page" + question.qid)
                         .children(".question-edit :first");
-
-                    el.questionpage_question_edit({type:"add", question:question});
-                    Quizpage.Quiz.Navigator.instance.model.add_question(question);
+                    var mc = new Questionpage.Question.Edit($(el), {type:"add", question : question});
+                    //var mquestion = el.questionpage_question_edit({type:"add", question : question});
+                    Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
                 },
                 load_question_item : function(el){
                     var qc = new Questionpage.Question.Item($(el));
@@ -38,6 +37,7 @@ steal( 'jquery/controller',
                 },
                 load_question_edit : function(el){
                     var qc = new Questionpage.Question.Edit($(el));
+                    window.addPoint({ latLng : new google.maps.LatLng(qc.model.lat, qc.model.lon)});
                     Quizpage.Quiz.Navigator.instance.model.add_question(qc.model);
                 },
                 load_question_new : function(el){
@@ -166,9 +166,14 @@ steal( 'jquery/controller',
                 },
                 ".question-delete-btn click" : function(){
                 	var question = Quizpage.Quiz.Navigator.get_current_question();
+                	//$(".special_controller").controller().model
+                	var self = this;
                     question.destroy(function(data){
                         Quizpage.Quiz.Navigator.remove_question_by_id(question.qid);
+                        window.onMapClick = self.onMapClick4Create;
                         Pagemessage.Message.Item.show_message("Success", "Deleted");
+                    }, function(){
+                    	Pagemessage.Message.Item.show_message("Error", "Could not delete the question");
                     })
                 },
                 ".tab-question-create click" : function(el){
@@ -186,15 +191,8 @@ steal( 'jquery/controller',
                 	}                	
                 },                
                 onMapClick4Create : function(event, questionmap){
-	                var mk = new google.maps.Marker({
-		           	     position: event.latLng,
-		           	     editable : true,
-		           	     draggable : true,
-		           	     map: questionmap
-	                });
-	               	google.maps.event.addListener(mk, 'click', function() {
-	               		 window.location.href = 'google.com';
-	               	});
+                	var mk = window.addPoint(event);
+                	
 	               	Quizpage.Quiz.Navigator.instance.new_marker = mk;
 	               	window.onMapClick = Quizpage.Quiz.Navigator.instance.onMapClick4Edit;
                 },

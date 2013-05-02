@@ -22,25 +22,67 @@
 </style>
 <div id="question-map" style="height: 750px; margin-top: -20px; margin-bottom: 15px"></div>
 <script type="text/javascript">
-	var questionmap = null;
+	var questionMap = null;
 	
 	var onMapClick = null;
 	var onMarkerSelect = null;
-		
+	
+	var markers = [];
+	var polyLine = null;
+	var polylineArray = new google.maps.MVCArray;
+	
 	function initialize() {
 	  var mapOptions = {
 	    zoom: 8,
-	    center: new google.maps.LatLng(-34.397, 150.644),
+	    center: new google.maps.LatLng(37.4419, -122.1419),//new google.maps.LatLng(-34.397, 150.644),
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
 	  
-	  questionmap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
+	  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
 
-	  google.maps.event.addListener(questionmap, 'click', function(event) {
-		    if(onMapClick !== null){
-		    	onMapClick(event, questionmap);		    	
+	  google.maps.event.addListener(questionMap, 'click', function(event) {
+		    if(onMapClick != null){
+		    	onMapClick(event, questionMap);		    	
 		    }
 	  });
+	  
+	  polyLine = new google.maps.Polyline({
+          path: [],
+          strokeColor: "#FFFFFF",
+          strokeWeight: 3
+      });
+	  
+	  polyLine.setMap(questionMap);
+	  polyLine.setPath(new google.maps.MVCArray([polylineArray]));
+	}
+	
+	
+	function addPoint(event) {
+		polylineArray.insertAt(polylineArray.length, event.latLng);
+
+	    var marker = new google.maps.Marker({
+	      position: event.latLng,
+	      map: questionMap,
+	      draggable: true
+	    });
+	    
+	    markers.push(marker);
+	    marker.setTitle("#" + polylineArray.length);
+
+	    google.maps.event.addListener(marker, 'click', function() {
+			marker.setMap(null);
+			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
+				markers.splice(i, 1);
+				polylineArray.removeAt(i);
+			}
+	    );
+
+	    google.maps.event.addListener(marker, 'dragend', function() {
+			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
+				polylineArray.setAt(i, marker.getPosition());
+			}
+	    );
+	    return marker;
 	}
 	
 	google.maps.event.addDomListener(window, 'load', initialize);
