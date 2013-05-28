@@ -3,9 +3,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
 
 <div class="container quiz-list-container" style="width: 800px;">
+<div id="legend">
+  <legend>List of your quizes</legend>
+</div>
+
     <div style="height: 50px;" class="page-message"></div>
 		
 	<a data-toggle="modal" class="btn btn-success pull-right" 
@@ -53,7 +59,7 @@
         {%for item in quizes %}
             <tr name="quiz{{item.id}}" class="quizpage_quiz_listitem">
             	<td>
-            		<a href="/quiz/{{item.id}}/home/" class="btn btn-link">Home</a>
+            		<a href="/quiz/{{item.id}}/info/" class="btn btn-link">Info</a>
                 </td>
                 <td>
                 	<a href="/quiz/{{item.id}}/map/" class="btn btn-primary">Start</a>

@@ -63,15 +63,15 @@ def quiz_map_edit(quiz_id):
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
         
-@quiz_bp.route('/<int:quiz_id>/home/')
-def quiz_home(quiz_id):
-    current_app.logger.debug("quiz_home. quiz_id - " + str(quiz_id))
+@quiz_bp.route('/<int:quiz_id>/info/')
+def quiz_info(quiz_id):
+    current_app.logger.debug("quiz_info. quiz_id - " + str(quiz_id))
     
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:        
         results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)        
-        return render_template('quiz_home.html', quiz = quiz, results = results)
+        return render_template('quiz_info.html', quiz = quiz, results = results)
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')

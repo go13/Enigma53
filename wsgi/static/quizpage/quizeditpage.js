@@ -11,11 +11,13 @@ steal(
     function(){					// configure your application
         $("#quiz-navigator").quizpage_quiz_navigator();
         
-        Quizpage.Quiz.Navigator.load_question_new($(".question-new"));
+        //Quizpage.Quiz.Navigator.load_question_new($(".question-new"));
         
         $(".question-edit").each(function(){
             Quizpage.Quiz.Navigator.load_question_edit(this);
         });
         
         $(".page-message").pagemessage_message_item();
+        
+        //window.initialize();
     })

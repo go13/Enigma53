@@ -11,7 +11,7 @@
     <!-- <h3>{{ quiz.title }}</h3>
     <blockquote>{{ quiz.description }}</blockquote>
      -->    		
-<!-- 		<a href="/quiz/{{quiz.id}}/home/" class="btn btn-link">Home</a>
+<!-- 		<a href="/quiz/{{quiz.id}}/info/" class="btn btn-link">Home</a>
 		<a href="/quiz/{{quiz.id}}/edit/" class="btn btn-link">Edit</a>
 		<a href="/quiz/{{quiz.id}}" style="margin-right:175px" class="btn btn-primary pull-right">Start Quiz</a>					
  -->
@@ -29,14 +29,14 @@
             {% endfor %}
         </ul>
         <div id="tabs-container" class="tab-content">
-            <div id="tab-question-page-new" class="tab-pane active">
-                <div class='question-new' name='question-new'></div>
-            </div>
             {%for item in quiz.questions %}
             <div id="tab-question-page{{item.id}}" class="tab-pane">
                 <div class='question-edit' name='question{{item.id}}'></div>
             </div>
             {% endfor %}
+            <div id="tab-question-page-new" class="tab-pane active">
+                <div class='question-new' name='question-new'></div>
+            </div>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@
 {% block quiz_menu %}	
 <a class="btn btn-primary" style="margin-bottom:40px" href="/quiz/{{quiz.id}}/">Start Quiz</a>
 <ul class="nav nav-pills nav-stacked" align="left">
-	<li><a href="/quiz/{{quiz.id}}/home/">Home</a></li>   	
+	<li><a href="/quiz/{{quiz.id}}/info/">Info</a></li>   	
 	<li class="active"><a href="/quiz/{{quiz.id}}/edit/">Edit</a></li>
 	<li><a href="/quiz/{{quiz.id}}/settings/">Settings</a></li>
 </ul>

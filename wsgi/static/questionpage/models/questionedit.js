@@ -4,7 +4,7 @@ $.Model('Questionedit',
 /* @Static */
 {
     defaults : {
-        qid : 0,
+        qid : -1,
         nextquestionid : 0,
         quizid : 0,
         qtext : "" ,
@@ -27,7 +27,7 @@ $.Model('Questionedit',
         obj.qtext = this.qtext;
         obj.answers = this.answers;
         obj.lat = this.lat;
-        obj.lon = this.lon;
+        obj.lon = this.lon; 
         return obj;
     },
     set_question : function(question){
@@ -63,7 +63,7 @@ $.Model('Questionedit',
         // TODO refactor answers so they dont have unnecessary fields
         $.ajax({
             type: "POST",
-            url: "/question/jupd/"+this.qid+"/",
+            url: "/question/jupd/" + this.qid + "/",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
@@ -88,6 +88,7 @@ $.Model('Questionedit',
             });
     },
     create : function(success, error){
+    	var self = this;
         var obj = this.to_object();
 
         // TODO refactor answers so they don't have unnecessary fields
@@ -97,7 +98,12 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
-            success : success,
+            success : function(data){
+            	self.qid = data.qid;
+            	if(success){
+            		success();            		
+            	}            	
+            },
             error: function (error){
                 alert("There was an error posting the data to the server: " + error.responseText);
             }

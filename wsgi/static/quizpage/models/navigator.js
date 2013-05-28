@@ -25,6 +25,16 @@ steal('jquery/model', function(){
             	} 
             	return res;
             },
+            get_question_by_mk : function(mk){
+            	var res = null;
+            	for(var i = 0; i <= this.questions.length; i++){
+            		if(mk === this.questions[i].gmarker){
+            			res = this.questions[i];
+            			break;
+            		}
+            	} 
+            	return res;
+            },
             remove_question_by_id : function(qid){
                 if(this.questions.length === 0){
                    return false;

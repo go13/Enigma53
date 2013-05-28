@@ -1,12 +1,82 @@
-{% extends "quiz_map_template.html" %}
+{% extends "base.html" %}
 
-{% block header %}
+{% block content %} 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
-{% endblock header %}	
 
+<script type="text/javascript">
+	var questionMap = null;	
 
-{% block left %}
+	var markers = [];
+	var polyLine = null;
+	var polylineArray = new google.maps.MVCArray;
+
+	var onMapClick = null;
+	
+	var onMarkerClick = null;
+	
+	var onMarkerMove = null;
+	
+	function onMarkerRightClick(marker){
+		//questionMap.setCenter(marker.getPoint())
+		questionMap.panTo(marker.position);
+	};
+		
+	function remPoint(mk){
+		
+	};
+
+	function addPoint(latlng) {
+		polylineArray.insertAt(polylineArray.length, latlng);
+
+	    var marker = new google.maps.Marker({
+	      position: latlng,
+	      map: questionMap,
+	      draggable: true
+	    });
+	    
+	    markers.push(marker);
+	    marker.setTitle("#"+(polylineArray.length).toString());
+	    
+	    google.maps.event.addListener(marker, 'click', function() {
+	    	if(onMarkerClick){
+	    		onMarkerClick(marker);
+	    	}			
+	    });
+	    
+	    google.maps.event.addListener(marker, 'rightclick', function() {
+	    	if(onMarkerRightClick){
+	    		onMarkerRightClick(marker);
+	    	}
+	    });
+	    
+	    google.maps.event.addListener(marker, 'dragend', function() {
+	    	if(onMarkerMove){
+	    		onMarkerMove(marker);
+	    	}
+	    });
+
+	    return marker;
+	}
+		
+	google.maps.event.addDomListener(window, 'load', function initialize(){
+		  var mapOptions = {
+		    zoom: 8,
+		    disableDefaultUI: true,
+		    center: new google.maps.LatLng(37.4419, -122.1419),
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		  };
+		  
+		  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
+		  
+		  google.maps.event.addListener(questionMap, 'rightclick', function(event) {
+			    if(onMapClick != null){
+			    	onMapClick(event, questionMap);		    	
+			    }
+		  });
+	});		
+</script>
+
 <style>
 	#question-map img {
 	  max-width: none;
@@ -17,114 +87,97 @@
 	}
 	
 	#question-map label { 
-	  width: auto; display:inline; 
-	} 
+	  width: auto; display : inline; 
+	}
+	
+	#question-map{
+	   position: absolute;
+	   top: 40px;
+	   left:0;
+	   right:0;
+	   bottom:0px;
+	}
+	
+	#content-on-map{
+	   position: absolute;
+	   top: 40px;
+	   right:0; 
+	   bottom:0px;
+	   padding: 25px;
+	   width: 60%;  
+	   background-color: #ffffff; 
+	   opacity: 0.9; 
+	   filter: alpha(opacity=90);
+	}
+	
 </style>
-<div id="question-map" style="height: 750px; margin-top: -20px; margin-bottom: 15px"></div>
-<script type="text/javascript">
-	var questionMap = null;
-	
-	var onMapClick = null;
-	var onMarkerSelect = null;
-	
-	var markers = [];
-	var polyLine = null;
-	var polylineArray = new google.maps.MVCArray;
-	
-	function initialize() {
-	  var mapOptions = {
-	    zoom: 8,
-	    center: new google.maps.LatLng(37.4419, -122.1419),//new google.maps.LatLng(-34.397, 150.644),
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  };
-	  
-	  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
 
-	  google.maps.event.addListener(questionMap, 'click', function(event) {
-		    if(onMapClick != null){
-		    	onMapClick(event, questionMap);		    	
-		    }
-	  });
-	  
-	  polyLine = new google.maps.Polyline({
-          path: [],
-          strokeColor: "#FFFFFF",
-          strokeWeight: 3
-      });
-	  
-	  polyLine.setMap(questionMap);
-	  polyLine.setPath(new google.maps.MVCArray([polylineArray]));
-	}
-	
-	
-	function addPoint(event) {
-		polylineArray.insertAt(polylineArray.length, event.latLng);
+<div id="question-map"></div>
 
-	    var marker = new google.maps.Marker({
-	      position: event.latLng,
-	      map: questionMap,
-	      draggable: true
-	    });
-	    
-	    markers.push(marker);
-	    marker.setTitle("#" + polylineArray.length);
-
-	    google.maps.event.addListener(marker, 'click', function() {
-			marker.setMap(null);
-			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
-				markers.splice(i, 1);
-				polylineArray.removeAt(i);
-			}
-	    );
-
-	    google.maps.event.addListener(marker, 'dragend', function() {
-			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
-				polylineArray.setAt(i, marker.getPosition());
-			}
-	    );
-	    return marker;
-	}
-	
-	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
- 
-{% endblock left %}
-
-{% block body %} 
-	
-	<h3>Edit {{ quiz.title }}</h3>
-	<blockquote>{{ quiz.description }}</blockquote>
-         		
-<!-- 	<a href="/quiz/{{quiz.id}}/home/" class="btn btn-link">Home</a>
-		<a href="/quiz/{{quiz.id}}/edit/" class="btn btn-link">Edit</a>
-		<a href="/quiz/{{quiz.id}}" style="margin-right:175px" class="btn btn-primary pull-right">Start Quiz</a>					
- -->
-		
-<div style="height: 50px; margin-top: 5px" class="page-message"></div>
-	
-<div id="quiz-navigator" style="margin-top : 8px" name="quiz{{quiz.id}}" class="tabbable tabs-right">      
-	<ul id="tabs" class="nav nav-tabs">
-	    <li id="tab-question-new" class="active question-tab tab-question-create">
-	        <a href="#tab-question-page-new" data-toggle="tab">Add Question</a>
-	    </li>
-	    {%for item in quiz.questions %}
-	    <li id="tab-question{{item.id}}" class="question-tab tab-question-edit">
-	        <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
-	    </li>
-	    {% endfor %}
-	</ul>
-	
-	<div id="tabs-container" class="tab-content">        	
-	    <div id="tab-question-page-new" class="tab-pane active">
-	        <div class='question-new' name='question-new'></div>
-	    </div>
-	    {%for item in quiz.questions %}
-	    <div id="tab-question-page{{item.id}}" class="tab-pane">
-	        <div class='question-edit' name='question{{item.id}}'></div>
-	    </div>
-	    {% endfor %}
+<div id="content-on-map">
+	<div id="legend">
+	  <legend>Quiz - {{ quiz.title }}</legend>
 	</div>
-
+<div class="tabbable"> 
+	<div class="tabbable" style="margin-right:140px">
+	  <ul class="nav nav-pills">
+		  <li><a href="#tab1" data-toggle="tab">Info</a></li>
+		  <li class="active"><a href="#tab2" data-toggle="tab">Edit</a></li>
+		  <li><a href="#tab3" data-toggle="tab">Settings</a></li>
+		  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/map/">Start Quiz</a></li>
+	  </ul>
+	</div>
+  <div class="tab-content">
+    <div class="tab-pane" id="tab1">
+      <p>I'm in Section 1.</p>
+    </div>
+    <div class="tab-pane active" id="tab2">
+      <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right" >      
+		<ul id="tabs" class="nav nav-tabs">
+		    {%for item in quiz.questions %}
+		    <li id="tab-question{{item.id}}" class="question-tab tab-question-edit {% if loop.first %}active{% endif %}">
+		        <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+		    </li>
+		    {% endfor %}
+		</ul>	
+		<div id="tabs-container" class="tab-content">        	
+		    {%for item in quiz.questions %}
+		    <div id="tab-question-page{{item.id}}" class="tab-pane {% if loop.first %}active{% endif %}" style="margin-right:20px">
+		        <div class='question-edit' name='question{{item.id}}'></div>
+		    </div>
+		    {% endfor %}
+		</div>	
+	  </div>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <form class="form-horizontal" style="margin-left:-60px" action="/quiz/2/settings/" method="POST" >
+		  <fieldset>    
+		    <div class="control-group">
+		      <!-- Title -->
+		      <label class="control-label" for="title">Title</label>
+		      <div class="controls" >
+		        <input type="text" id="title" value="2" name="title" placeholder="" class="input-xlarge" >
+		        <p class="help-block">Title can contain any letters or numbers</p>
+		      </div>
+		    </div>
+		    <div class="control-group">
+		      <!-- Description -->
+		      <label class="control-label" for="description">Description</label>
+		      <div class="controls" style="padding-right:60px">
+		        <textarea type="text" id="description" name="description" rows="5" placeholder="" class="input-block-level"></textarea>
+		        <p class="help-block">Please provide your Description of the Quiz</p>
+		      </div>
+		    </div> 
+		    <div class="control-group">
+		      <!-- Button -->
+		      <div class="controls">
+		        <button type="submit" class="btn btn-success">Save</button>
+		      </div>
+		    </div>
+		  </fieldset>
+		</form>
+    </div>
+  </div>
+</div>	
 </div>
-
-{% endblock body %}
+{% endblock content %}

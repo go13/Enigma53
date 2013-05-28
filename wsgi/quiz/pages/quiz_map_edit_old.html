@@ -1,0 +1,146 @@
+{% extends "quiz_map_template.html" %}
+
+{% block header %}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
+{% endblock header %}	
+
+
+{% block left %}
+<style>
+	#question-map img {
+	  max-width: none;
+	}
+	
+	#question-map img { 
+	  max-width: none;
+	}
+	
+	#question-map label { 
+	  width: auto; display:inline; 
+	} 
+</style>
+<div id="question-map" style="height: 750px; margin-top: -20px; margin-bottom: 15px"></div>
+<script type="text/javascript">
+	var questionMap = null;
+	
+	var onMapClick = null;
+	var onMarkerSelect = null;
+	
+	var markers = [];
+	var polyLine = null;
+	var polylineArray = new google.maps.MVCArray;
+	//var latlngbounds = new google.maps.LatLngBounds();
+	
+	function setMapCenter(mk){
+		questionMap.setCenter(mk.getPosition()); 
+	}	
+	
+	function addPoint(event) {
+		polylineArray.insertAt(polylineArray.length, event.latLng);
+
+	    var marker = new google.maps.Marker({
+	      position: event.latLng,
+	      map: questionMap,
+	      draggable: true
+	    });
+	    
+	    markers.push(marker);
+	    marker.setTitle("#" + polylineArray.length);
+	    //latlngbounds.extend(event.latLng);	    
+
+	    google.maps.event.addListener(marker, 'click', function() {
+			marker.setMap(null);
+			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
+				markers.splice(i, 1);
+				polylineArray.removeAt(i);
+			}
+	    );
+
+	    google.maps.event.addListener(marker, 'dragend', function() {
+			for (var i = 0, I = markers.length; i < I && markers[i] != marker; ++i);
+				polylineArray.setAt(i, marker.getPosition());
+			}
+	    );
+	    return marker;
+	}
+	
+	function initialize() {
+		//questionMap.fitBounds(latlngbounds);
+		//if(markers.length > 0){
+			//setMapCenter(markers[0]);	
+		//}		
+		//alert('ok');
+	}
+	
+	function initialize4Map() {
+		  var mapOptions = {
+		    zoom: 8,
+		    center: new google.maps.LatLng(37.4419, -122.1419),//new google.maps.LatLng(-34.397, 150.644),
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		  };
+		  
+		  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
+
+		  google.maps.event.addListener(questionMap, 'click', function(event) {
+			    if(onMapClick != null){
+			    	onMapClick(event, questionMap);		    	
+			    }
+		  });
+		  
+		  polyLine = new google.maps.Polyline({
+	          path: [],
+	          strokeColor: "#FFFFFF",
+	          strokeWeight: 3
+	      });
+		  
+		  polyLine.setMap(questionMap);
+		  polyLine.setPath(new google.maps.MVCArray([polylineArray]));
+		  
+		  //setMapCenter(marker);
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize4Map);
+		
+</script>
+ 
+{% endblock left %}
+
+{% block body %} 
+	
+	<h3>Edit {{ quiz.title }}</h3>
+	<blockquote>{{ quiz.description }}</blockquote>
+         		
+<!-- 	<a href="/quiz/{{quiz.id}}/info/" class="btn btn-link">Info</a>
+		<a href="/quiz/{{quiz.id}}/edit/" class="btn btn-link">Edit</a>
+		<a href="/quiz/{{quiz.id}}" style="margin-right:175px" class="btn btn-primary pull-right">Start Quiz</a>					
+ -->
+		
+<div style="height: 50px; margin-top: 5px" class="page-message"></div>
+	
+<div id="quiz-navigator" style="margin-top : 8px" name="quiz{{quiz.id}}" class="tabbable tabs-right">      
+	<ul id="tabs" class="nav nav-tabs">
+	    <li id="tab-question-new" class="active question-tab tab-question-create">
+	        <a href="#tab-question-page-new" data-toggle="tab">Add Question</a>
+	    </li>
+	    {%for item in quiz.questions %}
+	    <li id="tab-question{{item.id}}" class="question-tab tab-question-edit">
+	        <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+	    </li>
+	    {% endfor %}
+	</ul>
+	
+	<div id="tabs-container" class="tab-content">        	
+	    <div id="tab-question-page-new" class="tab-pane active">
+	        <div class='question-new' name='question-new'></div>
+	    </div>
+	    {%for item in quiz.questions %}
+	    <div id="tab-question-page{{item.id}}" class="tab-pane">
+	        <div class='question-edit' name='question{{item.id}}'></div>
+	    </div>
+	    {% endfor %}
+	</div>
+
+</div>
+
+{% endblock body %}

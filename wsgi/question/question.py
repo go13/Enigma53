@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, current_app
 from sqlalchemy import Table, Column, Integer, Unicode
 
 from model import db
@@ -60,6 +60,7 @@ class Question(db.Model):
 
     @staticmethod
     def get_question_by_id(id):
+        current_app.logger.debug("get_question_by_id - " + str(id))
         q  = Question.query.filter_by(id = id).first()
         if q is not None:
             q.answers = Answer.get_answer_by_question_id(q.id)
@@ -68,7 +69,7 @@ class Question(db.Model):
 
     @staticmethod
     def get_questions_by_quiz_id(quiz_id):
-        print 'get_questions_by_quiz_id('+str(quiz_id)+')'
+        current_app.logger.debug("get_questions_by_quiz_id - " + str(quiz_id))
         q  = Question.query.filter_by(quizid = quiz_id).first()
         if q is not None:
             q.answers = Answer.get_answer_by_question_id(id)

@@ -12,6 +12,8 @@ steal( 'jquery/controller',
                 init : function(){
                	
                     var type = this.options.type;
+                    var onSuccess = this.options.onSuccess;
+                    
                     if(type === "new"){
                         this.model = new Questionedit();
                         this.model.isNew = true;
@@ -19,8 +21,8 @@ steal( 'jquery/controller',
                         //this.set_question(this.options.question);
                         this.element.html(this.view('init', this.model));
                     }else if(type === "add"){
-                        this.model = new Questionedit();
-                        this.model.set_question(this.options.question);
+                        this.model = this.options.question;//new Questionedit();
+                        //this.model.set_question(this.options.question);
                         this.element.html(this.view('init', this.model));
                     }else{
                         var question_name = this.element.attr("name");
@@ -29,12 +31,19 @@ steal( 'jquery/controller',
 
                         this.model.isNew = false;
                         var id = parseInt(question_name.split("question")[1]);
+                        
                         this.element.html(this.view('init', Questionedit.findOne({id:id}, function(data){
                             question.qid = data.id;
                             question.nextquestionid = data.id;
                             question.quizid = data.quizid;
                             question.qtext = data.qtext;
                             question.answers = data.answers;
+                            question.lon = parseFloat(data.lon);
+                            question.lat = parseFloat(data.lat);
+                            
+                            if(onSuccess != null){
+                            	onSuccess(question);
+                            }
 
                             console.log( "received a question:" );
                             console.log( "id - " + data.id );
@@ -119,7 +128,7 @@ steal( 'jquery/controller',
 
                     this.model.answers.push(answer);
 
-                    this.element.find(".answers").prepend(this.view('answer', {answer: answer}));
+                    this.element.find(".answers").append(this.view('answer', {answer: answer}));
                     this.element.find(".add-input").attr("value", "");
                     this.model.atext = "";
                     
