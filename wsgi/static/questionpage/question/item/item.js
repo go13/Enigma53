@@ -15,6 +15,7 @@ steal(
                     this.model = new Question();
                     var id = parseInt(this.element.attr("name").split("question")[1]);
                     var question = this.model;
+                    var onSuccess = this.options.onSuccess;
                                                         // Change to this.model
                     this.element.html(this.view('init', Question.findOne({id:id}, function(data){
                         question.qid = data.id;
@@ -22,6 +23,9 @@ steal(
                         question.quizid = data.quizid;
                         question.qtext = data.qtext;
                         question.answers = data.answers;
+                        question.lon = parseFloat(data.lon);
+                        question.lat = parseFloat(data.lat);
+                        
                         console.log( "received a question:" );
                         console.log( "id - " + data.id );
                         console.log( "quizid - " + data.quizid );
@@ -30,6 +34,9 @@ steal(
                         for(var i=0; i<question.answers.length; i++){
                             question.answers[i].value = 'F';
                             console.log( "answer:"+i+" - "+ question.answers[i].value );
+                        }
+                        if(onSuccess != null){
+                        	onSuccess(question);
                         }
 
                     })));

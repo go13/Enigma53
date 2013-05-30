@@ -6,18 +6,18 @@ steal(
     'questionpage/question/edit',
 
     'pagemessage/message/item',
-    'questionmap/questionmap/cquestionmap',
+    //'questionmap/questionmap/cquestionmap',
     
     function(){					// configure your application
         $("#quiz-navigator").quizpage_quiz_navigator();
         
-        //Quizpage.Quiz.Navigator.load_question_new($(".question-new"));
-        
-        $(".question-edit").each(function(){
-            Quizpage.Quiz.Navigator.load_question_edit(this);
+        $(".question-edit").each(function(i){
+        		Quizpage.Quiz.Navigator.load_question_edit(this, function(qst){
+        			if(i === 0){
+                    	Quizpage.Quiz.Navigator.to_tab_by_id(qst.qid);	
+                    }	
+        		});        		
         });
         
         $(".page-message").pagemessage_message_item();
-        
-        //window.initialize();
     })

@@ -38,24 +38,28 @@ steal( 'jquery/controller',
                         .children(".question-edit :first");
                     
                     var mc = new Questionpage.Question.Edit($(el), {type:"add", question : question, onSuccess : function(qst){
-                    	//window.addPoint({ latLng : new google.maps.LatLng(qst.lat, qst.lon)});
                     	Quizpage.Quiz.Navigator.instance.model.add_question(qst);
                     }});
-                    //var mquestion = el.questionpage_question_edit({type:"add", question : question});
                     Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
                     return mc.model; // returns question with id
                 },
                 
                 load_question_item : function(el){
-                    var qc = new Questionpage.Question.Item($(el));
-                    Quizpage.Quiz.Navigator.instance.model.add_question(qc.model);
+                    var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
+	                    Quizpage.Quiz.Navigator.instance.model.add_question(qc.model);
+	                    qst.gmarker = window.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
+	                	qst.gmarker.question = qst;
+                    }});
                 },
                 
-                load_question_edit : function(el){                	
+                load_question_edit : function(el, success){                	
                     var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){                    	
                     	Quizpage.Quiz.Navigator.instance.model.add_question(qst);             
                     	qst.gmarker = window.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
                     	qst.gmarker.question = qst;
+                    	if(success){
+                    		success(qst);                    		
+                    	}
                     }});
                 },
                 
@@ -74,9 +78,6 @@ steal( 'jquery/controller',
                 	};                	
                     el.remove();
                     Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page"+qid).remove();
-                	
-                    //Quizpage.Quiz.Navigator.instance.element.find("#tab-question-new").addClass("active");
-                    //Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page-new").addClass("active");
 
                     Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qid);
                 },
@@ -96,7 +97,16 @@ steal( 'jquery/controller',
                         var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
                         navigator.model.set_current_question_by_id(qid);
                         return true;
-                    }else{
+                    }/*else{
+                    	el = navigator.element.find("#tabs > .question-tab");
+                    	if(el){
+                    		el.addClass("active");
+                            var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
+                            navigator.model.set_current_question_by_id(qid);                    		
+                    	}else{
+                    		return false;	
+                    	}*/
+                    else{
                     	return false;
                     }                    
                 },
@@ -122,23 +132,25 @@ steal( 'jquery/controller',
                 },
                 to_tab_by_id : function(qid){
                     var navel = Quizpage.Quiz.Navigator.instance.element;
-                    var el = navel.find("#tabs > .question-tab.active");
+                    var el = navel.find("#tabs > .question-tab");
                     if(el){
-                        var tab_id_string = el.attr("id").split("tab-question")[1];
-                        if(tab_id_string != qid){
-                            el.removeClass("active");
+                    	var ela = navel.find("#tabs > .question-tab.active");
+                    	if(ela.length > 0){
+                            var tab_id_string = ela.attr("id").split("tab-question-page")[1];
+                            if(tab_id_string != qid){
+                                ela.removeClass("active");
+                            }                    		
+                    	}
+                        el = navel.find("#tabs > #tab-question" + qid);
+                        el.addClass("active");
 
-                            el = navel.find("#tabs > #tab-question"+qid);
-                            el.addClass("active");
+                        el = navel.find("#tabs-container > .tab-pane.active");
+                        el.removeClass("active");
 
-                            el = navel.find("#tabs-container > .tab-pane.active");
-                            el.removeClass("active");
-
-                            el = navel.find("#tabs-container > #tab-question-page"+qid);
-                            el.addClass("active");
-                            var qid_num = parseInt(qid);
-                            Quizpage.Quiz.Navigator.instance.model.set_current_question_by_id(qid_num);
-                        }
+                        el = navel.find("#tabs-container > #tab-question-page"+qid);
+                        el.addClass("active");
+                        var qid_num = parseInt(qid);
+                        Quizpage.Quiz.Navigator.instance.model.set_current_question_by_id(qid_num);
                     }
                 },
                 get_current_question_id : function(){

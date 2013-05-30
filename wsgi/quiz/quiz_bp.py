@@ -37,7 +37,7 @@ def quiz_map(quiz_id):
         current_app.logger.warning("No quiz found")
         return render_template('404.html')
 
-@quiz_bp.route('/<int:quiz_id>/edit/')
+@quiz_bp.route('/<int:quiz_id>/editold/')
 #@login_required
 def quiz_edit(quiz_id):
     current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
@@ -50,7 +50,7 @@ def quiz_edit(quiz_id):
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
 
-@quiz_bp.route('/<int:quiz_id>/map/edit/')
+@quiz_bp.route('/<int:quiz_id>/edit/')
 #@login_required
 def quiz_map_edit(quiz_id):
     current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))

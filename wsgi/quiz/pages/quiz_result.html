@@ -1,13 +1,20 @@
 {% from "question_result.html" import render_question_results %}
 
 {% extends "quiz_base.html" %}
-{% block body %}
-    <div id="legend">
+{% block body %}    
+
+    <div class="container" style="width: 800px">
+			<div id="legend">
       <legend>Results - {{ quiz.title }}</legend>
     </div>
-    
-    <div class="container pull-left" style="width: 800px">
-			
+	<div class="tabbable">
+	  <ul class="nav nav-pills">
+		  <li class="active"><a href=".">Result</a></li>
+		  <li><a href="/quiz/{{quiz.id}}/edit/#tab2">Edit</a></li>
+		  <li><a href="/quiz/{{quiz.id}}/edit/#tab3">Settings</a></li>		  
+		  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/">Try Again</a></li>
+	  </ul>
+	</div>
 		<blockquote>{{ quiz_results.quiz.description }}</blockquote>
 		
         {% for item in quiz_results.questionresults %}            
@@ -17,13 +24,3 @@
     </div>
 
 {% endblock body %}
-
-
-{% block quiz_menu %}	
-<a class="btn btn-primary" style="margin-bottom:40px" href="/quiz/{{quiz.id}}/">Try Again</a>
-<ul class="nav nav-pills nav-stacked"  align="left">
-	<li><a href="/quiz/{{quiz.id}}/info/">Info</a></li>
-	<li><a href="/quiz/{{quiz.id}}/edit/">Edit</a></li>
-	<li><a href="/quiz/{{quiz.id}}/settings/">Settings</a></li>   
-</ul>
-{% endblock quiz_menu %}

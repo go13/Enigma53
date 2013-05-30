@@ -59,16 +59,15 @@
         {%for item in quizes %}
             <tr name="quiz{{item.id}}" class="quizpage_quiz_listitem">
             	<td>
-            		<a href="/quiz/{{item.id}}/info/" class="btn btn-link">Info</a>
+            		<a href="/quiz/{{item.id}}/edit/" class="btn btn-link">Edit</a>
                 </td>
                 <td>
-                	<a href="/quiz/{{item.id}}/map/" class="btn btn-primary">Start</a>
+                	<a href="/quiz/{{item.id}}/" class="btn btn-primary">Start</a>
                 </td>
                 <td>
                 	{{item.title}}
                 </td>                
                 <td>
-                	<a href="/quiz/{{item.id}}/map/edit/" class="btn btn-link pull-right">Edit</a>
                     <button class="btn btn-link quiz-list-item-delete pull-right" type="button">Delete</button>
                 </td>
             </tr>

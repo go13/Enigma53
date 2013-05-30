@@ -1,41 +1,145 @@
-{% extends "quiz_base.html" %}
+{% extends "base.html" %}
 
-{% block body %}
+{% block content %} 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 
-<div class="container" style="width: 800px;">
-    <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
-        <ul id="tabs" class="nav nav-tabs">
-            {%for item in quiz.questions %}
-            {% if loop.first %}
-            <li id="tab-question{{item.id}}" class="active question-tab">
-                <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
-            </li>
-            {% else %}
-            <li id="tab-question{{item.id}}" class="question-tab">
-                <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        <div id="tabs-container" class="tab-content">
-            {%for item in quiz.questions %}
-            {% if loop.first %}
-            <div class="tab-pane active" id="tab-question-page{{item.id}}">
-                <div class='question-item' name='question{{item.id}}'></div>
-            </div>
-            {% else %}
-            <div class="tab-pane" id="tab-question-page{{item.id}}">
-                <div class='question-item' name='question{{item.id}}'></div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+<script type="text/javascript">
+	var questionMap = null;	
+
+	var markers = [];
+	var polyLine = null;
+	var polylineArray = new google.maps.MVCArray;
+
+	var onMapClick = null;
+	
+	var onMarkerClick = null;
+	
+	var onMarkerMove = null;
+	
+	function onMarkerRightClick(marker){
+		questionMap.panTo(marker.position);
+	};
+		
+	function remPoint(mk){
+		
+	};
+
+	function addPoint(latlng) {
+		polylineArray.insertAt(polylineArray.length, latlng);
+
+	    var marker = new google.maps.Marker({
+	      position: latlng,
+	      map: questionMap,
+	      draggable: false
+	    });
+	    
+	    markers.push(marker);
+	    marker.setTitle("#"+(polylineArray.length).toString());
+	    
+	    google.maps.event.addListener(marker, 'click', function() {
+	    	if(onMarkerClick){
+	    		onMarkerClick(marker);
+	    	}			
+	    });
+	    
+	    google.maps.event.addListener(marker, 'rightclick', function() {
+	    	if(onMarkerRightClick){
+	    		onMarkerRightClick(marker);
+	    	}
+	    });
+
+	    return marker;
+	}
+		
+	google.maps.event.addDomListener(window, 'load', function initialize(){
+		  var mapOptions = {
+		    zoom: 8,
+		    //disableDefaultUI: true,
+		    center: new google.maps.LatLng(37.4419, -122.1419),
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		  };
+		  
+		  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
+	});		
+</script>
+
+<style>
+	#question-map img {
+	  max-width: none;
+	}
+	
+	#question-map img { 
+	  max-width: none;
+	}
+	
+	#question-map label { 
+	  width: auto; display : inline; 
+	}
+	
+	#question-map{
+	   position: absolute;
+	   top: 40px;
+	   left:0;
+	   right:0;
+	   bottom:0px;
+	}
+	
+	#content-on-map{
+	   position: absolute;
+	   top: 40px;
+	   right:0; 
+	   bottom:0px;
+	   padding: 25px;
+	   width: 60%;  
+	   background-color: #ffffff; 
+	   opacity: 0.9; 
+	   filter: alpha(opacity=90);
+	}
+	
+</style>
+
+<div id="question-map"></div>
+
+<div id="content-on-map">
+	<div id="legend">
+	  <legend>Quiz - {{ quiz.title }}</legend>
+	</div>
+	<!-- TODO: change to normal buttons!!! -->
+	<div class="tabbable"> 
+		<div class="tabbable" style="margin-right:140px">
+		  <ul class="nav nav-pills">
+			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a></li>
+		  </ul>
+		</div>
+	</div>	
+	<div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
+	    <ul id="tabs" class="nav nav-tabs">
+	        {%for item in quiz.questions %}
+	        {% if loop.first %}
+	        <li id="tab-question{{item.id}}" class="active question-tab">
+	            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+	        </li>
+	        {% else %}
+	        <li id="tab-question{{item.id}}" class="question-tab">
+	            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+	        </li>
+	        {% endif %}
+	        {% endfor %}
+	    </ul>
+	    <div id="tabs-container" class="tab-content">
+	        {%for item in quiz.questions %}
+	        {% if loop.first %}
+	        <div class="tab-pane active" id="tab-question-page{{item.id}}">
+	            <div class='question-item' name='question{{item.id}}'></div>
+	        </div>
+	        {% else %}
+	        <div class="tab-pane" id="tab-question-page{{item.id}}">
+	            <div class='question-item' name='question{{item.id}}'></div>
+	        </div>
+	        {% endif %}
+	        {% endfor %}
+	    </div>
+	</div>
 </div>
-
-{% endblock body %}
-
-{% block quiz_menu %}	
-<a class="btn btn-primary" style="width:145px; margin-bottom:40px" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a>
-{% endblock quiz_menu %}
+{% endblock content %}

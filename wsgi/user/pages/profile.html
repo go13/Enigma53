@@ -3,9 +3,9 @@
 {% extends "base.html" %}
  
 {% block content %}
-
+<div class="container">
 <div id="legend">
-  <legend>Save</legend>
+  <legend>Your Profile</legend>
 </div>
 
 {{ render_errors(form) }}
@@ -39,15 +39,15 @@
       </div>
     </div>
  
-    <div class="control-group">
-      <!-- Password -->
-      {{ form.confirm.label(class_='control-label') }}
+    <!-- <div class="control-group">
+      Password
+       form.confirm.label(class_='control-label') 
       <div class="controls">
-      	{{ form.confirm(class_='input-xlarge') }}
+      	 form.confirm(class_='input-xlarge') 
         <p class="help-block">Please confirm password</p>
       </div>
     </div>
- 
+  -->
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
@@ -56,4 +56,5 @@
     </div>
   </fieldset>
 </form>
+</div>
 {% endblock %}

@@ -44,10 +44,10 @@ class ProfileForm(Form):
     email = get_email_field()
     password = PasswordField('Password', [
         validators.Required(),
-        validators.Length(min = 6, max = 25),
-        validators.EqualTo('confirm', message = u'Passwords must match')
+        validators.Length(min = 6, max = 25)
+        #validators.EqualTo('confirm', message = u'Passwords must match')
     ])
-    confirm = PasswordField('Repeat Password')
+    #confirm = PasswordField('Repeat Password')
 
 @auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
