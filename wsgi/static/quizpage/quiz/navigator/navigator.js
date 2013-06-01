@@ -19,7 +19,7 @@ steal( 'jquery/controller',
                     qm.gmarker = mk;
                     qm.create(function(){
                     	Quizpage.Quiz.Navigator.add_question_edit(qm);
-                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid);
+                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, true);
                         mk.question = qm;
                         Pagemessage.Message.Item.show_message("Success", "Created");
                     });                    
@@ -42,16 +42,14 @@ steal( 'jquery/controller',
                     }});
                     Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
                     return mc.model; // returns question with id
-                },
-                
+                },                
                 load_question_item : function(el){
                     var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
 	                    Quizpage.Quiz.Navigator.instance.model.add_question(qc.model);
 	                    qst.gmarker = window.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
 	                	qst.gmarker.question = qst;
                     }});
-                },
-                
+                },                
                 load_question_edit : function(el, success){                	
                     var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){                    	
                     	Quizpage.Quiz.Navigator.instance.model.add_question(qst);             
@@ -62,7 +60,6 @@ steal( 'jquery/controller',
                     	}
                     }});
                 },
-                
                 load_question_new : function(el){
                 	var quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
                     var qc = new Questionpage.Question.Edit($(el), {type : "new", quizid : quizid});
@@ -96,17 +93,10 @@ steal( 'jquery/controller',
 
                         var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
                         navigator.model.set_current_question_by_id(qid);
+                        var qst = navigator.model.get_question_by_id(qid);
+                        window.offsetCenter(qst.gmarker.position);
                         return true;
-                    }/*else{
-                    	el = navigator.element.find("#tabs > .question-tab");
-                    	if(el){
-                    		el.addClass("active");
-                            var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
-                            navigator.model.set_current_question_by_id(qid);                    		
-                    	}else{
-                    		return false;	
-                    	}*/
-                    else{
+                    }else{
                     	return false;
                     }                    
                 },
@@ -125,13 +115,16 @@ steal( 'jquery/controller',
 
                         var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
                         navigator.model.set_current_question_by_id(qid);
+                        var qst = navigator.model.get_question_by_id(qid);
+                        window.offsetCenter(qst.gmarker.position);
                         return true;
                     }else{
                     	return false;
                     }   
                 },
-                to_tab_by_id : function(qid){
+                to_tab_by_id : function(qid, do_focus){
                     var navel = Quizpage.Quiz.Navigator.instance.element;
+                    var navigator = Quizpage.Quiz.Navigator.instance;
                     var el = navel.find("#tabs > .question-tab");
                     if(el){
                     	var ela = navel.find("#tabs > .question-tab.active");
@@ -150,7 +143,11 @@ steal( 'jquery/controller',
                         el = navel.find("#tabs-container > #tab-question-page"+qid);
                         el.addClass("active");
                         var qid_num = parseInt(qid);
-                        Quizpage.Quiz.Navigator.instance.model.set_current_question_by_id(qid_num);
+                        if(do_focus){
+	                        var qst = navigator.model.get_question_by_id(qid);
+	                        window.offsetCenter(qst.gmarker.position);
+                        }
+                        navigator.model.set_current_question_by_id(qid_num);
                     }
                 },
                 get_current_question_id : function(){
@@ -167,7 +164,7 @@ steal( 'jquery/controller',
                     	question = Quizpage.Quiz.Navigator.instance.model.get_question_by_id(qid); 
                     }
                     return question;
-               },               
+               },
                onMapClick4Create : function(event, questionmap){
                	 var qm = new Questionedit();
                     qm.quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
@@ -177,12 +174,12 @@ steal( 'jquery/controller',
                     qm.lon = event.latLng.kb;
                     qm.create(function(){
                     	Quizpage.Quiz.Navigator.add_question_edit(qm);
-                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid);
+                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, false);
                         Pagemessage.Message.Item.show_message("Success", "Created");
                     });                    
                },
                onMarkerClick : function(mk){
-               		Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid);
+               		Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid, false);
                },
                onMapClick4Edit : function(event, questionmap){
 	               	 //alert('add handler!');                	
@@ -190,7 +187,7 @@ steal( 'jquery/controller',
                onMarkerMove : function(mk){
             	   mk.question.lat = mk.position.jb;
             	   mk.question.lon = mk.position.kb;
-               	   Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid);
+               	   Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid, false);
                }
             },{
                 init : function(){
@@ -208,73 +205,28 @@ steal( 'jquery/controller',
                 ".question-back click" : function(){
                     Quizpage.Quiz.Navigator.to_prev_tab();
                 },
-                ".question-create click" : function(data){
-					
-					//question.marker = window.currentMapMarker;
-                	
-					//if(this.new_marker != null){
-						
-						//this.mnew_question.lat = this.new_marker.position.jb;
-						//this.mnew_question.lon = this.new_marker.position.kb;
-					/*	var self = this;
-						
-	                	this.mnew_question.create(function(data){
-						    var newQuestion = Quizpage.Quiz.Navigator.instance.mnew_question.to_object();
-						    newQuestion.qid = data.qid;
-						    self.cnew_question.clean();
-						    
-						    Quizpage.Quiz.Navigator.add_question_edit(newQuestion);						    
-						    
-						    Pagemessage.Message.Item.show_message("Success", "Created");
-						});
-	                	this.new_marker = null;*/
-	                	//window.onMapClick = this.onMapClick4Create;
-					//}else{
-					//	Pagemessage.Message.Item.show_message("Error", "Please select a location for this question on the map");
-					//}
-                },
                 ".question-delete-btn click" : function(){
                 	var qst = Quizpage.Quiz.Navigator.get_current_question();
                 	var qid = qst.qid;                	
                 	var self = this;
                 	qst.destroy(function(data){
                         Quizpage.Quiz.Navigator.remove_question_by_id(qid);
-                        qst.gmarker.setMap(null);
+                        window.remPoint(qst.gmarker);
                         Pagemessage.Message.Item.show_message("Success", "Deleted");
                     }, function(){
                     	Pagemessage.Message.Item.show_message("Error", "Could not delete the question");
                     })
-                },
-                ".tab-question-create click" : function(el){
-                	if(!el.hasClass("active")){
-                		if(this.new_marker === null){
-//                			window.onMapClick = this.onMapClick4Create;
-                		} else {
-//                			window.onMapClick = this.onMapClick4Edit;
-                		}
-                	}                	
                 },
                 ".tab-question-edit click" : function(el){
                 	if(!el.hasClass("active")){
                 		//window.onMapClick = this.onMapClick4Edit;
                 	}                	
                 },
-                /*,
-                ".quiz-finish-btn click" : function(){
-                    var quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
-                    $.ajax({
-                        type: "POST",
-                        url: "/quiz/jfinishsession/"+quizid+"/",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify("finish-session"),
-                        success :  function(){
-                            document.location.href = '/quiz/'+quizid+'/info/';
-                        },
-                        error: function (error){
-                            alert("There was an error posting the data to the server: " + error.responseText);
-                        }
-                    });
-                }*/
+                ".tab-question-edit click" : function(el){
+                	var qid = parseInt(el.attr("id").split("tab-question")[1]);
+                    this.model.set_current_question_by_id(qid);
+                    var qst = this.model.get_question_by_id(qid);
+                    window.offsetCenter(qst.gmarker.position);
+                }
             });
     });

@@ -14,7 +14,7 @@ steal(
         $(".question-edit").each(function(i){
         		Quizpage.Quiz.Navigator.load_question_edit(this, function(qst){
         			if(i === 0){
-                    	Quizpage.Quiz.Navigator.to_tab_by_id(qst.qid);	
+                    	Quizpage.Quiz.Navigator.to_tab_by_id(qst.qid, true);
                     }	
         		});        		
         });

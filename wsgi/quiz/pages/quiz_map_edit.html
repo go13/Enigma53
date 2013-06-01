@@ -9,7 +9,7 @@
 
 	var markers = [];
 	var polyLine = null;
-	var polylineArray = new google.maps.MVCArray;
+	var polyLineArrows = [];
 
 	var onMapClick = null;
 	
@@ -17,26 +17,63 @@
 	
 	var onMarkerMove = null;
 	
-	function onMarkerRightClick(marker){
-		//questionMap.setCenter(marker.getPoint())
-		questionMap.panTo(marker.position);
+	function offsetCenter(latlng) {
+		
+		var offsetx = $("#content-on-map").offset().left / 2 - $(window).width() / 2;
+		var offsety = 0;
+
+		// latlng is the apparent centre-point
+		// offsetx is the distance you want that point to move to the right, in pixels
+		// offsety is the distance you want that point to move upwards, in pixels
+		// offset can be negative
+		// offsetx and offsety are both optional
+
+		var scale = Math.pow(2, questionMap.getZoom());
+		var nw = new google.maps.LatLng(
+			questionMap.getBounds().getNorthEast().lat(),
+			questionMap.getBounds().getSouthWest().lng()
+		);
+
+		var worldCoordinateCenter = questionMap.getProjection().fromLatLngToPoint(latlng);
+		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+		var worldCoordinateNewCenter = new google.maps.Point(
+		    worldCoordinateCenter.x - pixelOffset.x,
+		    worldCoordinateCenter.y + pixelOffset.y
+		);
+
+		var newCenter = questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+		questionMap.setCenter(newCenter);
+
 	};
 		
-	function remPoint(mk){
+	function onMarkerRightClick(marker){
+		offsetCenter(marker.position);
+	};
 		
+	function remPoint(marker){
+    	for(var i = 0; i < markers.length; i++){
+    		if(markers[i] === marker){
+    			polyLine.getPath().removeAt(i);
+    			markers.splice(i, 1);
+    			marker.setMap(null); 
+    			break;
+    		}
+    	}			
 	};
 
 	function addPoint(latlng) {
-		polylineArray.insertAt(polylineArray.length, latlng);
-
 	    var marker = new google.maps.Marker({
 	      position: latlng,
 	      map: questionMap,
 	      draggable: true
 	    });
 	    
+		polyLine.getPath().push(latlng);
+	    
 	    markers.push(marker);
-	    marker.setTitle("#"+(polylineArray.length).toString());
+	    marker.setTitle("#"+(polyLine.getPath().getLength()).toString());
 	    
 	    google.maps.event.addListener(marker, 'click', function() {
 	    	if(onMarkerClick){
@@ -51,6 +88,12 @@
 	    });
 	    
 	    google.maps.event.addListener(marker, 'dragend', function() {
+	    	for(var i = 0; i < markers.length; i++){
+	    		if(markers[i] === marker){
+	    			polyLine.getPath().setAt(i, marker.position);
+	    			break;
+	    		}
+	    	}	    	
 	    	if(onMarkerMove){
 	    		onMarkerMove(marker);
 	    	}
@@ -58,16 +101,37 @@
 
 	    return marker;
 	}
-		
+			
 	google.maps.event.addDomListener(window, 'load', function initialize(){
 		  var mapOptions = {
-		    zoom: 8,
-		    disableDefaultUI: true,
+		    zoom: 8,		    
 		    center: new google.maps.LatLng(37.4419, -122.1419),
+		    panControl: true, 
+		    streetViewControl: false,
+		    mapTypeControl: false,
+		    overviewMapControl: true,
 		    mapTypeId: google.maps.MapTypeId.ROADMAP
 		  };
 		  
 		  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
+		  
+		  var lineSymbol = {
+				    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+				  };
+		  
+		  var polyOptions = {
+				  icons: [{
+				      icon: lineSymbol,
+				      offset: '100%',
+				      repeat:'100px'
+				    }],
+				    strokeColor: 'rgb(255, 255, 255)',
+				    strokeOpacity: 1.0,
+				    strokeWeight: 3
+		  };		  
+		  
+		  polyLine = new google.maps.Polyline(polyOptions);
+		  polyLine.setMap(questionMap);
 		  
 		  google.maps.event.addListener(questionMap, 'rightclick', function(event) {
 			    if(onMapClick != null){
@@ -164,14 +228,6 @@
 		        <p class="help-block">Title can contain any letters or numbers</p>
 		      </div>
 		    </div>
-		    <div class="control-group">
-		      <!-- Description -->
-		      <label class="control-label" for="description">Description</label>
-		      <div class="controls" style="padding-right:60px">
-		        <textarea type="text" id="description" name="description" rows="5" placeholder="" class="input-block-level"></textarea>
-		        <p class="help-block">Please provide your Description of the Quiz</p>
-		      </div>
-		    </div> 
 		    <div class="control-group">
 		      <!-- Button -->
 		      <div class="controls">
