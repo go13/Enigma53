@@ -6,7 +6,8 @@ steal(
     'questionpage/question/edit',
 
     'pagemessage/message/item',
-    //'questionmap/questionmap/cquestionmap',
+    
+    'quizpage/quiz/cquizedit',
     
     function(){					// configure your application
         $("#quiz-navigator").quizpage_quiz_navigator();
@@ -19,5 +20,7 @@ steal(
         		});        		
         });
         
-        $(".page-message").pagemessage_message_item();
+        $(".page-message").pagemessage_message_item();        
+        
+        $("#content-on-map").quizpage_quiz_cquizedit();        
     })

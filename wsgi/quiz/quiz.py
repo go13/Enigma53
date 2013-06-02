@@ -14,8 +14,7 @@ class Quiz(db.Model):
     userid = db.Column('userid', Integer)
     questions = []
 
-    def __init__(self, description = description, title = title, userid = userid):
-        self.description = description
+    def __init__(self, title = title, userid = userid):
         self.title = title
         self.userid = userid
 
@@ -24,7 +23,6 @@ class Quiz(db.Model):
         return {
             'id' : self.id,
             'title' : self.title,
-            'description' : self.description,
             'questions' : [i.serialize for i in self.questions]
            }
         
@@ -32,8 +30,8 @@ class Quiz(db.Model):
         return len(self.questions)
     
     @staticmethod
-    def get_number_of_questions_by_id(id=id):
-        return Quiz.query.filter_by(id=id).count()
+    def get_number_of_questions_by_id(id = id):
+        return Quiz.query.filter_by(id = id).count()
     
     @staticmethod
     def get_quiz_by_id(id):
@@ -47,8 +45,8 @@ class Quiz(db.Model):
         return Quiz.query.filter_by(userid = userid).all()
     
     @staticmethod
-    def create_quiz(description, title, userid):
-        quiz = Quiz(description = description, title = title, userid = userid)
+    def create_quiz(title, userid):
+        quiz = Quiz(title = title, userid = userid)
         db.session.add(quiz)
         db.session.commit()
         return quiz
@@ -57,6 +55,12 @@ class Quiz(db.Model):
     def update_quiz(quiz):
         db.session.merge(quiz)
         db.session.commit()
+        
+    @staticmethod
+    def update_quiz_by_id(quizid, dict, to_commit):
+        Quiz.query.filter_by(id = quizid).update(dict)
+        if to_commit:
+            db.session.commit()
         
     @staticmethod
     def delete_quiz_by_id(id, batch):

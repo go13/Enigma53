@@ -19,7 +19,7 @@
 	
 	function offsetCenter(latlng) {
 		
-		var offsetx = $("#content-on-map").offset().left / 2 - $(window).width() / 2;
+		var offsetx = - $(window).width() * 0.3;
 		var offsety = 0;
 
 		// latlng is the apparent centre-point
@@ -180,7 +180,7 @@
 
 <div id="content-on-map">
 	<div id="legend">
-	  <legend>Quiz - {{ quiz.title }}</legend>
+	  <legend id="quiz-title-legend">Quiz - {{ quiz.title }}</legend>
 	</div>
 <div class="tabbable"> 
 	<div class="tabbable" style="margin-right:140px">
@@ -218,24 +218,10 @@
 	  </div>
     </div>
     <div class="tab-pane" id="tab3">
-      <form class="form-horizontal" style="margin-left:-60px" action="/quiz/2/settings/" method="POST" >
-		  <fieldset>    
-		    <div class="control-group">
-		      <!-- Title -->
-		      <label class="control-label" for="title">Title</label>
-		      <div class="controls" >
-		        <input type="text" id="title" value="2" name="title" placeholder="" class="input-xlarge" >
-		        <p class="help-block">Title can contain any letters or numbers</p>
-		      </div>
-		    </div>
-		    <div class="control-group">
-		      <!-- Button -->
-		      <div class="controls">
-		        <button type="submit" class="btn btn-success">Save</button>
-		      </div>
-		    </div>
-		  </fieldset>
-		</form>
+		<label style="float:left; margin-right:15px">Title</label>
+		<input id="quiz-title-input" type="text" value="{{ quiz.title }}" class="input-xlarge" >
+		<p style="margin-left:40px">Title can contain any letters or numbers</p>
+		<button id="settings-save-btn" class="btn btn-success">Save</button>
     </div>
   </div>
 </div>	

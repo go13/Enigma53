@@ -1,12 +1,10 @@
 from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash, url_for
 from modules.jsonschema import validate, Draft4Validator
-from wtforms import Form, TextField, validators, TextAreaField
+from wtforms import Form, TextField, validators
 
 from model import db
 from quiz import Quiz
-from question.question import Question
 from quiz_result import QuizResult
-from modules.results import Historysession
 from flask_login import login_required, current_user
 
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder = 'pages')
@@ -23,32 +21,6 @@ def quiz(quiz_id):
     else:
         current_app.logger.warning("No quiz found")
         return render_template('404.html')
-    
-@quiz_bp.route('/<int:quiz_id>/map/')
-def quiz_map(quiz_id):
-    current_app.logger.debug("quiz map. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    if quiz:    
-        QuizResult.start_session(quiz_id, current_user.id)
-        
-        return render_template('quiz_map.html', quiz = quiz)
-    else:
-        current_app.logger.warning("No quiz found")
-        return render_template('404.html')
-
-@quiz_bp.route('/<int:quiz_id>/editold/')
-#@login_required
-def quiz_edit(quiz_id):
-    current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    
-    if quiz:        
-        return render_template('quiz_edit.html', quiz = quiz)
-    else:
-        current_app.logger.warning("No quiz found")        
-        return render_template('404.html')
 
 @quiz_bp.route('/<int:quiz_id>/edit/')
 #@login_required
@@ -62,29 +34,16 @@ def quiz_map_edit(quiz_id):
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
-        
-@quiz_bp.route('/<int:quiz_id>/info/')
-def quiz_info(quiz_id):
-    current_app.logger.debug("quiz_info. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    
-    if quiz:        
-        results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)        
-        return render_template('quiz_info.html', quiz = quiz, results = results)
-    else:
-        current_app.logger.warning("No quiz found")        
-        return render_template('404.html')
 
 class CreateForm(Form):
     title = TextField('Quiz title', [
         validators.Length(min = 1, max = 128),
         validators.Required()
         ])
-    description = TextAreaField('Quiz description', [
-        validators.Length(max = 32768),
-        validators.Optional()
-        ])        
+    #description = TextAreaField('Quiz description', [
+    #    validators.Length(max = 32768),
+    #    validators.Optional()
+    #    ])        
 
 @quiz_bp.route('/list/',  methods = ['GET', 'POST'])
 @login_required
@@ -99,10 +58,9 @@ def quiz_list():
         if form.validate():
             current_app.logger.debug("login validation successful")
                     
-            title = form.title.data
-            description = form.description.data   
+            title = form.title.data   
             
-            quiz = Quiz.create_quiz(description, title, current_user.id)
+            quiz = Quiz.create_quiz(title, current_user.id)
             if quiz:
                 msg = u"Quiz created" 
                 current_app.logger.debug(msg)        
@@ -124,7 +82,6 @@ def quiz_list():
                     
         return render_template('quiz_list.html', quizes = quizes, form = form)
 
-# TODO - check ho to convert form strings to unicode
 @quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
 @login_required
 def quiz_settings(quiz_id):
@@ -136,34 +93,34 @@ def quiz_settings(quiz_id):
         if request.method == "POST":            
             
             title = request.form["title"]
-            description = request.form["description"]
+            #description = request.form["description"]
             
             if not title:
                 msg = u"Error posting quiz details. No title field passed in the form" 
                 current_app.logger.warning(msg)
                 flash(msg, "error")
-            elif not description:
-                msg = u"Error posting quiz details. No description field passed in the form"
-                current_app.logger.warning(msg)
-                flash(msg, "error")
+            #elif not description:
+            #    msg = u"Error posting quiz details. No description field passed in the form"
+            #    current_app.logger.warning(msg)
+            #    flash(msg, "error")
             elif len(title) > 128:
                 msg = u"Error posting quiz details. Title is too long - " + str(len(title).decode("UTF-8"))
                 current_app.logger.warning(msg)
                 flash(msg, "error")
-            elif len(description) > 32768:
-                msg = u"Error posting quiz details. Description is too long " + str(len(description).decode("UTF-8")) 
-                current_app.logger.warning(msg)
-                flash(msg, "error")
+            #elif len(description) > 32768:
+            #    msg = u"Error posting quiz details. Description is too long " + str(len(description).decode("UTF-8")) 
+            #    current_app.logger.warning(msg)
+            #    flash(msg, "error")
             else:                
                 if isinstance(title, str):
                     quiz.title = title.decode('UTF-8')
                 else:
                     quiz.title = title
                     
-                if isinstance(title, str):
-                    quiz.description = description.decode('UTF-8')
-                else:
-                    quiz.description = description
+                #if isinstance(description, str):
+                #    quiz.description = description.decode('UTF-8')
+                #else:
+                #    quiz.description = description
                                     
                 Quiz.update_quiz(quiz)
                 
@@ -176,6 +133,47 @@ def quiz_settings(quiz_id):
         current_app.logger.warning("No quiz found")
         
         return render_template('404.html')
+
+@quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
+def jupdate(quiz_id):
+    current_app.logger.debug("jupdate. quiz_id - " + str(quiz_id))
+    
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    
+    if quiz:
+        schema = {
+            "type" : "object",
+            "properties" : {            
+                "title" : {"type" : "string", "maxLength" : 128, "optional" : False},
+                }
+            }
+        
+        v = Draft4Validator(schema)
+        errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
+        
+        if len(errors) > 0:
+            msg = 'Error updating the quiz. Received json is not valid'             
+            result = {"status" : "ERROR", "message" : msg}
+            current_app.logger.warning(result)
+            
+        elif len(request.json['title']) < 5:
+            msg = 'Error updating the quiz. Title length should be greater than 4 symbols'             
+            result = {"status" : "ERROR", "message" : msg}
+            current_app.logger.warning(result)
+                        
+            return jsonify(result)
+        else:        
+            title = request.json['title']
+            
+            quiz = Quiz.update_quiz_by_id(quiz_id, {'title' : title}, False)
+            
+            current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)   
+            
+            return jsonify({"status" : "OK", "quizid" : quiz_id})
+    else:
+        msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
     
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
@@ -224,10 +222,7 @@ def jcreate():
             "title" : {"type" : "string", "maxLength" : 128, "optional" : False},
             "lat" : {"type" : "string", "optional" : False},
             "lon" : {"type" : "string", "optional" : False},
-             
-             # "pattern" : "^[A-Za-z0-9\?\%\)\(\&\*\!\=\+\-\,\.\t\ ]*$", "maxLength" : 128}
-            }#,
-        #"required" : ["title"]
+            }
         }
         
     v = Draft4Validator(schema)
@@ -256,7 +251,7 @@ def jcreate():
         
         return jsonify({"status" : "OK", "quizid" : quiz.id})
 
-@quiz_bp.route('/<int:quiz_id>/finish/') #, methods=['POST'])
+@quiz_bp.route('/<int:quiz_id>/finish/')
 @login_required
 def finish_session(quiz_id):
     current_app.logger.debug('finish_session')

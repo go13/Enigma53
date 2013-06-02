@@ -77,18 +77,9 @@ class Question(db.Model):
 
     @staticmethod
     def get_all_questions_by_quiz_id(quiz_id):
-        print 'get_all_questions_by_quiz_id(' + str(quiz_id) + ')'
-        qlist = Question.query.filter_by(quizid = quiz_id).all()
-        #if qlist is not None:
-        #    q.answers=Answer.get_answer_by_question_id(id)
-        return qlist
+        current_app.logger.debug("get_all_questions_by_quiz_id. quiz_id - " + str(quiz_id))
+        return Question.query.filter_by(quizid = quiz_id).all()
 
-    @staticmethod
-    def add_answer_result_by_question_id(questionid, sessionid, answer_id, value, to_commit):
-        question = Question.get_question_by_id(questionid)
-        #if question:
-        #    AnswerResult.add_answer_history(id, answer_id, historysessionid, value, to_commit) # TODO: add userid
-                
     @staticmethod
     def update_question_by_id(questionid, dict, to_commit):
         Question.query.filter_by(id = questionid).update(dict)
@@ -98,7 +89,7 @@ class Question(db.Model):
 
     @staticmethod
     def delete_questions_by_quiz_id(quizid, batch):
-        print 'delete_questions_by_quiz_id ', quizid
+        current_app.logger.debug("delete_questions_by_quiz_id - " + str(quizid))
         questions = Question.query.filter_by(quizid = quizid).all()
         if questions:
             for item in questions:
