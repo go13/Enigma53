@@ -34,6 +34,21 @@ def quiz_map_edit(quiz_id):
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
+    
+@quiz_bp.route('/<int:quiz_id>/results/')
+@login_required
+def quiz_results_tsv(quiz_id):
+    current_app.logger.debug("quiz_results_tsv. quiz_id - " + str(quiz_id))
+    
+    quiz = Quiz.get_quiz_by_id(quiz_id)
+    
+    if quiz:        
+        results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)        
+        return render_template('quiz_results.html', quiz = quiz, results = results)
+
+    else:
+        current_app.logger.warning("No quiz found")        
+        return render_template('404.html')
 
 class CreateForm(Form):
     title = TextField('Quiz title', [

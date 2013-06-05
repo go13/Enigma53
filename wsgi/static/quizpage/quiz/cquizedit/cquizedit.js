@@ -25,7 +25,11 @@ steal('jquery/controller').then(function($){
 	        "#settings-save-btn click" : function(){
 	        	var val = $('#quiz-title-input').attr("value"); 
 	        	Quizpage.Quiz.Cquizedit.quiz_update(val, function(data){
-	        		$('#quiz-title-legend').text("Quiz - " + val);
+	        		if(data.status === "OK"){
+	        			$('#quiz-title-legend').text("Quiz - " + val);	
+	        		}else{
+	        			// ERROR
+	        		}	        		
 	        	});	        	
 	        }
         });        

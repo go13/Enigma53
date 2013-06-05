@@ -1,145 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %} 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
-
-<script type="text/javascript">
-	var questionMap = null;	
-
-	var markers = [];
-	var polyLine = null;
-	var polyLineArrows = [];
-
-	var onMapClick = null;
-	
-	var onMarkerClick = null;
-	
-	var onMarkerMove = null;
-	
-	function offsetCenter(latlng) {
-		
-		var offsetx = - $(window).width() * 0.3;
-		var offsety = 0;
-
-		// latlng is the apparent centre-point
-		// offsetx is the distance you want that point to move to the right, in pixels
-		// offsety is the distance you want that point to move upwards, in pixels
-		// offset can be negative
-		// offsetx and offsety are both optional
-
-		var scale = Math.pow(2, questionMap.getZoom());
-		var nw = new google.maps.LatLng(
-			questionMap.getBounds().getNorthEast().lat(),
-			questionMap.getBounds().getSouthWest().lng()
-		);
-
-		var worldCoordinateCenter = questionMap.getProjection().fromLatLngToPoint(latlng);
-		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
-
-		var worldCoordinateNewCenter = new google.maps.Point(
-		    worldCoordinateCenter.x - pixelOffset.x,
-		    worldCoordinateCenter.y + pixelOffset.y
-		);
-
-		var newCenter = questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-
-		questionMap.setCenter(newCenter);
-
-	};
-		
-	function onMarkerRightClick(marker){
-		offsetCenter(marker.position);
-	};
-		
-	function remPoint(marker){
-    	for(var i = 0; i < markers.length; i++){
-    		if(markers[i] === marker){
-    			polyLine.getPath().removeAt(i);
-    			markers.splice(i, 1);
-    			marker.setMap(null); 
-    			break;
-    		}
-    	}			
-	};
-
-	function addPoint(latlng) {
-	    var marker = new google.maps.Marker({
-	      position: latlng,
-	      map: questionMap,
-	      draggable: true
-	    });
-	    
-		polyLine.getPath().push(latlng);
-	    
-	    markers.push(marker);
-	    marker.setTitle("#"+(polyLine.getPath().getLength()).toString());
-	    
-	    google.maps.event.addListener(marker, 'click', function() {
-	    	if(onMarkerClick){
-	    		onMarkerClick(marker);
-	    	}			
-	    });
-	    
-	    google.maps.event.addListener(marker, 'rightclick', function() {
-	    	if(onMarkerRightClick){
-	    		onMarkerRightClick(marker);
-	    	}
-	    });
-	    
-	    google.maps.event.addListener(marker, 'dragend', function() {
-	    	for(var i = 0; i < markers.length; i++){
-	    		if(markers[i] === marker){
-	    			polyLine.getPath().setAt(i, marker.position);
-	    			break;
-	    		}
-	    	}	    	
-	    	if(onMarkerMove){
-	    		onMarkerMove(marker);
-	    	}
-	    });
-
-	    return marker;
-	}
-			
-	google.maps.event.addDomListener(window, 'load', function initialize(){
-		  var mapOptions = {
-		    zoom: 8,		    
-		    center: new google.maps.LatLng(37.4419, -122.1419),
-		    panControl: true, 
-		    streetViewControl: false,
-		    mapTypeControl: false,
-		    overviewMapControl: true,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP
-		  };
-		  
-		  questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions);
-		  
-		  var lineSymbol = {
-				    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-				  };
-		  
-		  var polyOptions = {
-				  icons: [{
-				      icon: lineSymbol,
-				      offset: '100%',
-				      repeat:'100px'
-				    }],
-				    strokeColor: 'rgb(255, 255, 255)',
-				    strokeOpacity: 1.0,
-				    strokeWeight: 3
-		  };		  
-		  
-		  polyLine = new google.maps.Polyline(polyOptions);
-		  polyLine.setMap(questionMap);
-		  
-		  google.maps.event.addListener(questionMap, 'rightclick', function(event) {
-			    if(onMapClick != null){
-			    	onMapClick(event, questionMap);		    	
-			    }
-		  });
-	});		
-</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 <style>
 	#question-map img {
@@ -174,11 +37,30 @@
 	   filter: alpha(opacity=90);
 	}
 	
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+	
+	.bar-rect{
+	  fill: steelblue;
+	  cursor: pointer;
+	}
+	
+	.bar-text{
+	  cursor: pointer;
+	}
+	
+	.x.axis path {
+	  display: none;
+	}
 </style>
 
-<div id="question-map"></div>
+<div id="question-map"></div> 
 
-<div id="content-on-map">
+<div id="content-on-map" title="{{ quiz.id }}">
 	<div id="legend">
 	  <legend id="quiz-title-legend">Quiz - {{ quiz.title }}</legend>
 	</div>
@@ -186,20 +68,17 @@
 	<div class="tabbable" style="margin-right:140px">
 	  <ul class="nav nav-pills">
 		  <!-- <li><a href="#tab1" data-toggle="tab">Info</a></li> -->
-		  <li><a href="#tab4" data-toggle="tab">All Results</a></li>
+		  <li><a href="#tab4" data-toggle="tab">Results</a></li>
 		  <li class="active"><a href="#tab2" data-toggle="tab">Edit</a></li>		  
 		  <li><a href="#tab3" data-toggle="tab">Settings</a></li>
 		  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/">Start Quiz</a></li>
 	  </ul>
 	</div>
   <div class="tab-content">
-    <div class="tab-pane" id="tab1">
-      <p>I'm in Section 1.</p>
+    <div class="tab-pane active" id="tab4">
+      <div id="results-chart"></div>
     </div>
-    <div class="tab-pane" id="tab4">
-      <p>I'm in Section 1.</p>
-    </div>
-    <div class="tab-pane active" id="tab2">
+    <div class="tab-pane" id="tab2">
       <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right" >      
 		<ul id="tabs" class="nav nav-tabs">
 		    {%for item in quiz.questions %}
@@ -220,10 +99,15 @@
     <div class="tab-pane" id="tab3">
 		<label style="float:left; margin-right:15px">Title</label>
 		<input id="quiz-title-input" type="text" value="{{ quiz.title }}" class="input-xlarge" >
-		<p style="margin-left:40px">Title can contain any letters or numbers</p>
+		<p style="margin-left:40px">Quiz title can contain any letters or numbers</p>
 		<button id="settings-save-btn" class="btn btn-success">Save</button>
     </div>
   </div>
 </div>	
 </div>
+
+<script type="text/javascript">
+//loadQuestionMap();
+</script>
+
 {% endblock content %}

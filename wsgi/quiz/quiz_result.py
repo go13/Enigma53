@@ -1,7 +1,7 @@
 from flask import current_app
 from question.question_result import QuestionResult
 from quiz import Quiz
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP
+from sqlalchemy import Integer
 
 from model import db
 from modules.results import Historysession
@@ -56,7 +56,7 @@ class QuizResult(db.Model):
     
     @staticmethod
     def start_session(quizid, userid):
-        current_app.logger.debug("start_session(" + str(quizid) + ", " + str(userid) + ")")
+        current_app.logger.debug("start_session(" + str(quizid) + ", " + str(userid) + ")")        
         hs = Historysession.start_history_session(userid)
         
         qr = QuizResult.query.filter_by(sessionid = hs.id).first()
@@ -65,6 +65,7 @@ class QuizResult(db.Model):
             qr = QuizResult(hs.id, quizid, qnum, None)
             db.session.add(qr)
             db.session.commit()
+            current_app.logger.debug("committed. qnum = " +str(qnum))
         qr.historysession = hs        
         return qr
     
@@ -78,7 +79,7 @@ class QuizResult(db.Model):
             qr.correctqnum=0
             for q in qr.questionresults:
                 if q.correct == 1:
-                    qr.correctqnum += 1
+                    qr.correctqnum += 1                
             db.session.merge(qr)
             db.session.commit()            
         return qr            

@@ -31,7 +31,7 @@ class Quiz(db.Model):
     
     @staticmethod
     def get_number_of_questions_by_id(id = id):
-        return Quiz.query.filter_by(id = id).count()
+        return Question.query.filter_by(quizid = id).count()
     
     @staticmethod
     def get_quiz_by_id(id):

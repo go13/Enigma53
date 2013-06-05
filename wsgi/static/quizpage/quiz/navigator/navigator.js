@@ -43,11 +43,14 @@ steal( 'jquery/controller',
                     Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
                     return mc.model; // returns question with id
                 },                
-                load_question_item : function(el){
+                load_question_item : function(el, success){
                     var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
 	                    Quizpage.Quiz.Navigator.instance.model.add_question(qc.model);
 	                    qst.gmarker = window.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
 	                	qst.gmarker.question = qst;
+	                	if(success){
+                    		success(qst);                    		
+                    	}
                     }});
                 },                
                 load_question_edit : function(el, success){                	
@@ -198,6 +201,10 @@ steal( 'jquery/controller',
                     window.onMapClick = Quizpage.Quiz.Navigator.onMapClick4Create;
                     window.onMarkerClick = Quizpage.Quiz.Navigator.onMarkerClick;
                     window.onMarkerMove = Quizpage.Quiz.Navigator.onMarkerMove;
+                    var onSuccess = this.options.onSuccess;
+                    if(onSuccess){
+                    	onSuccess(quizid);
+                    }
                 },
                 ".question-next click" : function(){
                     Quizpage.Quiz.Navigator.to_next_tab();
