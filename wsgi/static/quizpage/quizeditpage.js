@@ -9,18 +9,15 @@ steal(
     
     'quizpage/quiz/cquizedit',
     
-    'libs/lib.js',
+    //'libs/lib.js',
     
     'libs/d3.v3.min.js',
     
     //'libs/jquery.timeago.js',
     
     function(){					// configure your application
-    	//loadQuestionMap();
     	
-        $("#quiz-navigator").quizpage_quiz_navigator({onSuccess : function(quizid){            
-        	loadProgressChart(quizid, "#results-chart");        	
-        }});
+        $("#quiz-navigator").quizpage_quiz_navigator();
         
         $(".question-edit").each(function(i){
         		Quizpage.Quiz.Navigator.load_question_edit(this, function(qst){
@@ -30,8 +27,7 @@ steal(
         		});        		
         });
         
-        $(".page-message").pagemessage_message_item();        
-        
         $("#content-on-map").quizpage_quiz_cquizedit();
         
+        $(".page-message").pagemessage_message_item();        
     })
