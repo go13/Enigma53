@@ -1,2 +1,2 @@
 date	correct	total	rate	id{% for item in results[-20:] %}
-{{ item.historysession.starttime.strftime('%d-%b-%y %H:%M:%S')|e }}	{{item.correctqnum|e}}	{{item.qnum|e}}	{% if item.qnum > 0 %}{{(item.correctqnum/item.qnum)|e}}{% else %}{{item.qnum|e}}{% endif %}	{{item.sessionid|e}}{% endfor %}
+{% if item.qnum != none and item.correctqnum != none %}{{ item.historysession.starttime.strftime('%d-%b-%y %H:%M:%S')|e }}	{{item.correctqnum|e}}	{{item.qnum|e}}	{% if item.qnum > 0 %}{{(item.correctqnum/item.qnum)|e}}{% else %}{{item.qnum|e}}{% endif %}	{{item.sessionid|e}}{% endif %}{% endfor %}

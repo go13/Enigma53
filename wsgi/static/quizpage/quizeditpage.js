@@ -19,6 +19,8 @@ steal(
     	
         $("#quiz-navigator").quizpage_quiz_navigator();
         
+        $("#content-on-map").quizpage_quiz_cquizedit();
+        
         $(".question-edit").each(function(i){
         		Quizpage.Quiz.Navigator.load_question_edit(this, function(qst){
         			if(i === 0){
@@ -26,8 +28,6 @@ steal(
                     }	
         		});        		
         });
-        
-        $("#content-on-map").quizpage_quiz_cquizedit();
         
         $(".page-message").pagemessage_message_item();        
     })

@@ -29,7 +29,7 @@ steal( 'jquery/controller',
                     qm.gmarker = mk;
                     qm.create(function(){
                     	Quizpage.Quiz.Navigator.add_question_edit(qm);
-                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, true);
+                        Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, false);
                         mk.question = qm;
                         Pagemessage.Message.Item.show_message("Success", "Created");
                     });                    
@@ -57,7 +57,7 @@ steal( 'jquery/controller',
                     var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
                     	var nav = Quizpage.Quiz.Navigator.instance;
 	                    nav.model.add_question(qc.model);
-	                    qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
+	                    qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
 	                	qst.gmarker.question = qst;
 	                	if(success){
                     		success(qst);                    		
@@ -68,7 +68,7 @@ steal( 'jquery/controller',
                     var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){
                     	var nav = Quizpage.Quiz.Navigator.instance;
                     	nav.model.add_question(qst);             
-                    	qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon));
+                    	qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
                     	qst.gmarker.question = qst;
                     	if(success){
                     		success(qst);                    		
@@ -184,7 +184,7 @@ steal( 'jquery/controller',
                	    var qm = new Questionedit();
                	    var nav = Quizpage.Quiz.Navigator.instance;
                     qm.quizid = nav.model.quizid;
-                    qm.gmarker = nav.addPoint(event.latLng);
+                    qm.gmarker = nav.addPoint(event.latLng, false);
                     qm.gmarker.question = qm;
                     qm.lat = event.latLng.jb;
                     qm.lon = event.latLng.kb;
@@ -235,7 +235,7 @@ steal( 'jquery/controller',
                 		}
                 	}			
             	},
-            	addPoint : function(latlng) {
+            	addPoint : function(latlng, lazy) {
             		var self = this;
             	    var marker = new google.maps.Marker({
             	      position: latlng,
@@ -275,34 +275,34 @@ steal( 'jquery/controller',
             	    return marker;
             	},
             	offsetCenter : function(latlng) {
-            		
-            		var offsetx = - $(window).width() * 0.3;
-            		var offsety = 0;
-
-            		// latlng is the apparent centre-point
-            		// offsetx is the distance you want that point to move to the right, in pixels
-            		// offsety is the distance you want that point to move upwards, in pixels
-            		// offset can be negative
-            		// offsetx and offsety are both optional
-
-            		var scale = Math.pow(2, this.questionMap.getZoom());
-            		var nw = new google.maps.LatLng(
-            				this.questionMap.getBounds().getNorthEast().lat(),
-            				this.questionMap.getBounds().getSouthWest().lng()
-            		);
-
-            		var worldCoordinateCenter = this.questionMap.getProjection().fromLatLngToPoint(latlng);
-            		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
-
-            		var worldCoordinateNewCenter = new google.maps.Point(
-            		    worldCoordinateCenter.x - pixelOffset.x,
-            		    worldCoordinateCenter.y + pixelOffset.y
-            		);
-
-            		var newCenter = this.questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-
-            		this.questionMap.setCenter(newCenter);
-
+            		if(this.markers.length > 0){
+	            		var offsetx = - $(window).width() * 0.3;
+	            		var offsety = 0;
+	
+	            		// latlng is the apparent centre-point
+	            		// offsetx is the distance you want that point to move to the right, in pixels
+	            		// offsety is the distance you want that point to move upwards, in pixels
+	            		// offset can be negative
+	            		// offsetx and offsety are both optional
+	
+	            		var scale = Math.pow(2, this.questionMap.getZoom());
+	            		var nw = new google.maps.LatLng(
+	            				this.questionMap.getBounds().getNorthEast().lat(),
+	            				this.questionMap.getBounds().getSouthWest().lng()
+	            		);
+	
+	            		var worldCoordinateCenter = this.questionMap.getProjection().fromLatLngToPoint(latlng);
+	            		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+	
+	            		var worldCoordinateNewCenter = new google.maps.Point(
+	            		    worldCoordinateCenter.x - pixelOffset.x,
+	            		    worldCoordinateCenter.y + pixelOffset.y
+	            		);
+	
+	            		var newCenter = this.questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+	
+	            		this.questionMap.setCenter(newCenter);
+            		}
             	},
                 load_map : function(){                   
              	   var mapOptions = {

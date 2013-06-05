@@ -17,7 +17,7 @@ steal('jquery/model', function(){
             },
             get_question_by_id : function(qid){
             	var res = null;
-            	for(var i = 0; i <= this.questions.length; i++){
+            	for(var i = 0; i < this.questions.length; i++){
             		if(qid === this.questions[i].qid){
             			res = this.questions[i];
             			break;
@@ -27,7 +27,7 @@ steal('jquery/model', function(){
             },
             get_question_by_mk : function(mk){
             	var res = null;
-            	for(var i = 0; i <= this.questions.length; i++){
+            	for(var i = 0; i < this.questions.length; i++){
             		if(mk === this.questions[i].gmarker){
             			res = this.questions[i];
             			break;
