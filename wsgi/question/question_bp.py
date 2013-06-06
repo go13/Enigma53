@@ -1,5 +1,5 @@
-from flask import Flask, Blueprint, render_template, request, jsonify, current_app
-from sqlalchemy import Table, Column, Integer, String
+from flask import Blueprint, render_template, request, jsonify, current_app
+from modules.jsonschema import validate, Draft4Validator
 
 from model import db
 from question import Question
@@ -28,44 +28,6 @@ def question_edit(question_id):
         return render_template('question_edit.html', question=question)
     else:
         return render_template('404.html')
-
-
-@question_bp.route('/edit_question_submit/', methods=['POST'])
-@login_required
-def edit_question_submit():
-    # validate
-    #for item in request.json:
-
-    print 'got a post ', request.json
-
-    questionid = request.json['qid']
-    print 'submitting a question ', questionid
-
-    question = Question.get_question_by_id(questionid)
-    print 'got a question from DB ', questionid
-
-    if question:
-        answers = request.json['answers']
-        qtext = request.json['qtext']
-
-        question.qtext = qtext
-
-        Question.update_question_by_id(questionid, {'qtext':qtext}, False)
-
-        Answer.delete_answer_by_question_id(questionid, False)
-
-        for answer in answers:
-            atext = answer['atext']
-            if answer['correct']=='T':
-                correct = 'T'
-            else:
-                correct = 'F';
-            Answer.create_answer(questionid, atext, correct, False)
-        db.session.commit()
-
-        return jsonify(status='OK', redirect='/question/'+questionid)
-    else:
-        return jsonify(status='Error')
 
 @question_bp.route('/jget/<int:question_id>/')
 @login_required
@@ -97,15 +59,36 @@ def jget_for_edit(question_id):
 @question_bp.route('/jupd/<int:question_id>/',methods=['POST'])
 @login_required
 def jupd(question_id):
-    # TODO: validate!
-    question = Question.get_question_by_id(question_id)
-    if question:
-        print 'got a question from DB, id = ', question_id
-        print 'qid ', request.json['qid']
-        print 'qtext ', request.json['qtext']
-        print 'answers ', request.json['answers']
-        print 'lat ', request.json['lat']
-        print 'lon ', request.json['lon']
+    current_app.logger.debug("question.jupd. - " + str(question_id))    
+        
+    schema = {
+            "type" : "object",
+            "properties" : {            
+                "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
+                "answers" : {"type" : "array", "items" : {
+                                                          "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                                                          "correct" : { "type" : "string", "enum" : ["T", "F"]},
+                                                          "atext" : {"type" : "string", "maxLength" : 1024, "optional" : False} 
+                                                          }, "maxItems" : 12, "optional" : False},
+                "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                }
+            }
+        
+    v = Draft4Validator(schema)
+    errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
+    
+    question = Question.get_question_by_id(question_id)    
+    
+    if question and len(errors) == 0:
+        current_app.logger.debug("got a question from DB, id = " + str(question_id))
+        current_app.logger.debug("qid = " + str(request.json['qid']))
+        current_app.logger.debug("qtext = '" + request.json['qtext'] + "'")
+        current_app.logger.debug("answers = " + str(request.json['answers']))
+        current_app.logger.debug("lat = " + str(request.json['lat']))
+        current_app.logger.debug("lon = " + str(request.json['lon']))
 
         qid = request.json['qid']
         qtext = request.json['qtext']
@@ -114,7 +97,7 @@ def jupd(question_id):
         lon = request.json['lon']
         
         
-        Question.update_question_by_id(question_id, {'qtext':qtext, 'lat':lat, 'lon':lon}, False)
+        Question.update_question_by_id(question_id, {'qtext' : qtext, 'lat' : lat, 'lon' : lon}, False)
         Answer.delete_answers_by_question_id(question_id, True)
 
         for answer in answers:
@@ -124,16 +107,20 @@ def jupd(question_id):
                 correct = 'T'
             Answer.create_answer(question_id, atext, correct, True)
         db.session.commit()
-
+        
+        current_app.logger.debug("Status - OK")
+        
         result = {'jstaus':'OK'}
         return jsonify(result)
     else:
+        current_app.logger.debug("Status - ERROR")
         return jsonify({"status":"ERROR"})
-
 
 @question_bp.route('/jcreate/',methods=['POST'])
 @login_required
 def jcreate():
+    # TODO: validate!
+    
     print 'got a question to create'
     print 'qtext ', request.json['qtext']
     print 'quizid ', request.json['quizid']
@@ -172,7 +159,7 @@ def jcreate():
 def jdelete(question_id):
     print 'deleting a question ', question_id
 
-    question=Question.get_question_by_id(question_id)
+    question = Question.get_question_by_id(question_id)
 
     if question:
         for answer in question.answers:
@@ -186,6 +173,7 @@ def jdelete(question_id):
 
 @question_bp.route('/jsubmit/<int:question_id>/', methods=['POST'])
 def jsubmit(question_id):
+    # TODO: validate!
     print 'jsubmit', question_id
     
     hs = Historysession.get_current_historysession_by_userid(current_user.id)
