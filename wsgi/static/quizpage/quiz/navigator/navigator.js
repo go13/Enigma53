@@ -239,13 +239,23 @@ steal( 'jquery/controller',
             		var self = this;
             	    var marker = new google.maps.Marker({
             	      position: latlng,
-            	      map: self.questionMap,
             	      draggable: true
             	    });
             	    
-            	    this.polyLine.getPath().push(latlng);
-            	    
             	    this.markers.push(marker);
+            	    
+            	    if(!lazy){
+            	    	this.showPoint(marker);
+            	    	
+            	    }
+            	    return marker;
+            	},
+            	showPoint : function(marker, success){
+            		var self = this;            		
+            		marker.setMap(self.questionMap); 
+            	    
+            	    this.polyLine.getPath().push(marker.position);
+            	    
             	    marker.setTitle("#"+(this.polyLine.getPath().getLength()).toString());
             	    
             	    google.maps.event.addListener(marker, 'click', function() {
@@ -271,8 +281,21 @@ steal( 'jquery/controller',
             	    		self.onMarkerMove(marker);
             	    	}
             	    });
-
-            	    return marker;
+            	    
+            	    if(success){
+            	    	success();            	    	
+            	    }
+            	},
+            	showAllPoints : function(){
+            		for(var i = 0; i < this.markers.length; i++){
+            			var self = this;
+            			this.showPoint(this.markers[i], function(){
+            				if(i === 0){
+                    			//self.offsetCenter(self.markers[0].question.qid);
+                    			Quizpage.Quiz.Navigator.to_tab_by_id(self.markers[0].question.qid, true);
+                    		};	
+            			});            			
+            		};
             	},
             	offsetCenter : function(latlng) {
             		if(this.markers.length > 0){
@@ -341,6 +364,9 @@ steal( 'jquery/controller',
      				    if(self.onMapClick != null){
      				    	self.onMapClick(event, self.questionMap);		    	
      				    }
+     			  });
+     			  google.maps.event.addListenerOnce(this.questionMap, 'idle', function(){
+     				 self.showAllPoints();
      			  });
                 },
                 ".question-next click" : function(){

@@ -20,7 +20,8 @@ steal('jquery/controller').then(function($){
 			}
         },{        	
         	init : function(){
-        		this.loadProgressChart(8, "#results-chart");
+        		var quizid = this.options.quizid;
+        		this.loadProgressChart(quizid, "#results-chart");
         	},        	
         	loadProgressChart : function(quizid, place){
         		var margin = {top: 40, right: 10, bottom: 20, left: 45},
