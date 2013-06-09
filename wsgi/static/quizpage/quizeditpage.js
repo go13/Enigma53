@@ -4,16 +4,11 @@ steal(
 
     'questionpage/models/models.js',
     'questionpage/question/edit',
-   
+
     'quizpage/quiz/cquizedit',
-    
-    //'libs/lib.js',
-    
-    'jslibs/d3.v3.min.js',
-    
-    'jslibs/messenger.min.js',
-    'jslibs/messenger-theme-future.js',
-    
+
+    'js/d3.v3.min.js',
+
     //'libs/jquery.timeago.js',
     
     function(){					// configure your application
@@ -27,7 +22,7 @@ steal(
         Messenger.options = {
         		extraClasses: 'messenger-fixed messenger-on-bottom',
         		'maxMessages': 3,
-        		theme: 'future',        		
+        		theme: 'air',
         	};
         
     })

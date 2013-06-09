@@ -1,14 +1,16 @@
 {% from "messaging.html" import render_errors %}
 
 {% extends "base.html" %}
- 
+
+{% block header %}
+{% endblock %}
+
 {% block content %}
+
 <div class="container" style="width: 800px;">
 <div id="legend">
   <legend>Your Profile</legend>
 </div>
-
-{{ render_errors(form) }}
 
 <form class="form-horizontal" action='/user/profile/' method="POST">
   <fieldset>
@@ -38,16 +40,7 @@
         <p class="help-block">Password should be at least 4 characters</p>
       </div>
     </div>
- 
-    <!-- <div class="control-group">
-      Password
-       form.confirm.label(class_='control-label') 
-      <div class="controls">
-      	 form.confirm(class_='input-xlarge') 
-        <p class="help-block">Please confirm password</p>
-      </div>
-    </div>
-  -->
+    
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
@@ -57,4 +50,7 @@
   </fieldset>
 </form>
 </div>
+
+{{ render_errors(form) }}
+
 {% endblock %}

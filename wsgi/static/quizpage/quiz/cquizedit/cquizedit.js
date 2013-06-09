@@ -145,6 +145,12 @@ steal('jquery/controller').then(function($){
                     		  message: 'Quiz settings updated',
                     		  showCloseButton: true
                         });
+	        		}else{
+                        Messenger().post({
+                  		  message: data.message,
+                  		  type : 'error',
+                  		  showCloseButton: true
+                      });	        			
 	        		}	        		
 	        	});	        	
 	        }

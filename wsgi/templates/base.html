@@ -10,8 +10,8 @@
     <!-- Le styles -->
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap-responsive.min.css") }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename="csslibs/messenger.css") }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename="csslibs/messenger-theme-future.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="css/messenger.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="css/messenger-theme-air.css") }}" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -22,14 +22,16 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
-    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->        
-    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.min.js") }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.tmpl.min.js") }}"></script>    
+           
+    <script type="text/javascript" src="{{ url_for('static', filename="js/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="js/jquery.tmpl.min.js") }}"></script>    
     <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/bootstrap.min.js") }}"></script>
-    <!-- <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.timeago.js") }}"></script> -->
-    <!-- <script type="text/javascript" src="{{ url_for('static', filename="jslibs/messenger.min.js") }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/messenger-theme-future.js") }}"></script> -->	
+    
+    <script type="text/javascript" src="{{ url_for('static', filename="js/messenger.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="js/messenger-theme-future.js") }}"></script>    
+    
+    {% block header %}
+    {% endblock header %}
 </head>
  
 <body>
@@ -75,20 +77,11 @@
 						</li>
 						{% endif %}       
                     </ul>
-                </div><!--/.nav-collapse -->
+                </div>
             </div>
         </div>
     </div>
- {% block header %}
- {% endblock header %}
-    <!-- <div class="container">
-        <div class="row">
-            <div class="span12"> -->
-                {% block content %}
-                {% endblock content %}
-            <!-- </div>
-        </div> 
-    </div>  --><!-- /container -->
-
+ {% block content %}
+ {% endblock content %}
 </body>
 </html>

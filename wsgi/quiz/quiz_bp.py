@@ -97,8 +97,8 @@ def quiz_list():
                     
         return render_template('quiz_list.html', quizes = quizes, form = form)
 
-@quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
-@login_required
+#@quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
+#@login_required
 def quiz_settings(quiz_id):
     current_app.logger.debug(request.method + " quiz_settings. quiz_id - " + str(quiz_id))
     
@@ -111,14 +111,14 @@ def quiz_settings(quiz_id):
             #description = request.form["description"]
             
             if not title:
-                msg = u"Error posting quiz details. No title field passed in the form" 
+                msg = u"No title field passed to the form" 
                 current_app.logger.warning(msg)
                 flash(msg, "error")
             #elif not description:
             #    msg = u"Error posting quiz details. No description field passed in the form"
             #    current_app.logger.warning(msg)
             #    flash(msg, "error")
-            elif len(title) > 128:
+            elif len(title) > 55:
                 msg = u"Error posting quiz details. Title is too long - " + str(len(title).decode("UTF-8"))
                 current_app.logger.warning(msg)
                 flash(msg, "error")
@@ -159,32 +159,32 @@ def jupdate(quiz_id):
         schema = {
             "type" : "object",
             "properties" : {            
-                "title" : {"type" : "string", "maxLength" : 128, "optional" : False},
+                "title" : {"type" : "string", "maxLength" : 55, "optional" : False},
                 }
             }
-        
-        v = Draft4Validator(schema)
-        errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
-        
-        if len(errors) > 0:
-            msg = 'Error updating the quiz. Received json is not valid'             
-            result = {"status" : "ERROR", "message" : msg}
-            current_app.logger.warning(result)
             
-        elif len(request.json['title']) < 5:
-            msg = 'Error updating the quiz. Title length should be greater than 4 symbols'             
+        if len(request.json['title']) < 5 or len(request.json['title']) > 55:
+            msg = 'Title length should be greater than 4 and less than 55 symbols '             
             result = {"status" : "ERROR", "message" : msg}
             current_app.logger.warning(result)
                         
             return jsonify(result)
-        else:        
-            title = request.json['title']
-            
-            quiz = Quiz.update_quiz_by_id(quiz_id, {'title' : title}, False)
-            
-            current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)   
-            
-            return jsonify({"status" : "OK", "quizid" : quiz_id})
+        else:
+            v = Draft4Validator(schema)
+            errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
+    
+            if len(errors) > 0:
+                    msg = 'Error updating the quiz. Received json is not valid'             
+                    result = {"status" : "ERROR", "message" : msg}
+                    current_app.logger.warning(result)
+            else:
+                title = request.json['title']
+                
+                quiz = Quiz.update_quiz_by_id(quiz_id, {'title' : title}, False)
+                
+                current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)   
+                
+                return jsonify({"status" : "OK", "quizid" : quiz_id})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
@@ -234,7 +234,7 @@ def jcreate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "title" : {"type" : "string", "maxLength" : 128, "optional" : False},
+            "title" : {"type" : "string", "maxLength" : 55, "optional" : False},
             "lat" : {"type" : "string", "optional" : False},
             "lon" : {"type" : "string", "optional" : False},
             }
