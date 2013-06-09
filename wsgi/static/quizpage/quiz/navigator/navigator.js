@@ -30,8 +30,7 @@ steal( 'jquery/controller',
                     qm.create(function(){
                     	Quizpage.Quiz.Navigator.add_question_edit(qm);
                         Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, false);
-                        mk.question = qm;
-                        Pagemessage.Message.Item.show_message("Success", "Created");
+                        mk.question = qm;                   	
                     });                    
                     return qm;
                 },
@@ -191,7 +190,6 @@ steal( 'jquery/controller',
                     qm.create(function(){
                     	Quizpage.Quiz.Navigator.add_question_edit(qm);
                         Quizpage.Quiz.Navigator.to_tab_by_id(qm.qid, false);
-                        Pagemessage.Message.Item.show_message("Success", "Created");
                     });                    
                },
                doMarkerClick : function(mk){
@@ -291,7 +289,6 @@ steal( 'jquery/controller',
             			var self = this;
             			this.showPoint(this.markers[i], function(){
             				if(i === 0){
-                    			//self.offsetCenter(self.markers[0].question.qid);
                     			Quizpage.Quiz.Navigator.to_tab_by_id(self.markers[0].question.qid, true);
                     		};	
             			});            			
@@ -382,15 +379,13 @@ steal( 'jquery/controller',
                 	qst.destroy(function(data){
                         Quizpage.Quiz.Navigator.remove_question_by_id(qid);
                         Quizpage.Quiz.Navigator.instance.remPoint(qst.gmarker);
-                        Pagemessage.Message.Item.show_message("Success", "Deleted");
-                    }, function(){
-                    	Pagemessage.Message.Item.show_message("Error", "Could not delete the question");
-                    })
+                        Messenger().post({
+                    		  message: 'Question deleted',
+                    		  showCloseButton: true
+                    		});
+                    });
                 },
-                ".tab-question-edit click" : function(el){
-                	if(!el.hasClass("active")){
-                		//window.onMapClick = this.onMapClick4Edit;
-                	}                	
+                ".tab-question-edit click" : function(el){                	
                 },
                 ".tab-question-edit click" : function(el){
                 	var qid = parseInt(el.attr("id").split("tab-question")[1]);

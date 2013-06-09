@@ -4,14 +4,15 @@ steal(
 
     'questionpage/models/models.js',
     'questionpage/question/edit',
-
-    'pagemessage/message/item',
-    
+   
     'quizpage/quiz/cquizedit',
     
     //'libs/lib.js',
     
-    'libs/d3.v3.min.js',
+    'jslibs/d3.v3.min.js',
+    
+    'jslibs/messenger.min.js',
+    'jslibs/messenger-theme-future.js',
     
     //'libs/jquery.timeago.js',
     
@@ -23,5 +24,10 @@ steal(
         	$("#content-on-map").quizpage_quiz_cquizedit({ quizid : quizid });
         }});
         
-        $(".page-message").pagemessage_message_item();        
+        Messenger.options = {
+        		extraClasses: 'messenger-fixed messenger-on-bottom',
+        		'maxMessages': 3,
+        		theme: 'future',        		
+        	};
+        
     })

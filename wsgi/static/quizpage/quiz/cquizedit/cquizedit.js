@@ -13,9 +13,16 @@ steal('jquery/controller').then(function($){
 		            contentType: "application/json; charset=utf-8",
 		            data: JSON.stringify(obj),
 		            success :  success,
-		            error: function (error){
-		                alert("There was an error posting the data to the server: " + error.responseText);
-		            }
+		            error:  function (e){
+	                	Messenger().post({
+	                		  message: 'There was an error posting the data to server',
+	                		  type : 'error',
+	                		  showCloseButton: true
+	                		});
+	                  	if(error){
+	                  		error(e);
+	                  	}            	
+	                  }
 		        });
 			}
         },{        	
@@ -133,9 +140,11 @@ steal('jquery/controller').then(function($){
 	        	var val = $('#quiz-title-input').attr("value"); 
 	        	Quizpage.Quiz.Cquizedit.quiz_update(val, function(data){
 	        		if(data.status === "OK"){
-	        			$('#quiz-title-legend').text("Quiz - " + val);	
-	        		}else{
-	        			// ERROR
+	        			$('#quiz-title-legend').text("Quiz - " + val);
+                        Messenger().post({
+                    		  message: 'Quiz settings updated',
+                    		  showCloseButton: true
+                        });
 	        		}	        		
 	        	});	        	
 	        }

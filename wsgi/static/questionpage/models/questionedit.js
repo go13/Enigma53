@@ -68,8 +68,15 @@ $.Model('Questionedit',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
             success : success,
-            error: function (error){
-                alert("There was an error posting the data to the server: " + error.responseText);
+            error: function (e){
+            	Messenger().post({
+          		  message: 'There was an error posting the data to server',
+          		  type : 'error',
+          		  showCloseButton: true
+          		});
+            	if(error){
+            		error(e);
+            	}            	
             }
         });
     },    
@@ -82,9 +89,16 @@ $.Model('Questionedit',
                 contentType: "application/json; charset=utf-8",
                 data: "kill",
                 success : success,
-                error: function (error){
-                    alert("There was an error posting the data to the server: " + error.responseText);
-                }
+                error: function (e){
+                	Messenger().post({
+                		  message: 'There was an error posting the data to server',
+                		  type : 'error',
+                		  showCloseButton: true
+                		});
+                  	if(error){
+                  		error(e);
+                  	}            	
+                  }
             });
     },
     create : function(success, error){
@@ -104,8 +118,15 @@ $.Model('Questionedit',
             		success();            		
             	}            	
             },
-            error: function (error){
-                alert("There was an error posting the data to the server: " + error.responseText);
+            error:  function (e){
+            	Messenger().post({
+          		  message: 'There was an error posting the data to server',
+          		  type : 'error',
+          		  showCloseButton: true
+          		});
+            	if(error){
+            		error(e);
+            	}            	
             }
         });
     },
@@ -142,8 +163,15 @@ $.Model('Questionedit',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
             success : success,
-            error: function (error){
-                alert("There was an error posting the data to the server: " + error.responseText);
+            error:  function (e){
+            	Messenger().post({
+          		  message: 'There was an error posting the data to server',
+          		  type : 'error',
+          		  showCloseButton: true
+          		});
+            	if(error){
+            		error(e);
+            	}            	
             }
         });
     }

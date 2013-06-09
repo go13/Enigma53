@@ -103,35 +103,43 @@ steal( 'jquery/controller',
                 },
                 ".qanswer-add click" : function(el){
                     var answers = this.model.answers;
-                    var maxid = 0;
-                    for(var i=0; i < answers.length; i++){
-                        if( maxid < answers[i].id ){
-                            maxid = answers[i].id;
+                    if(answers.length < 7){
+                        var maxid = 0;
+                        for(var i=0; i < answers.length; i++){
+                            if( maxid < answers[i].id ){
+                                maxid = answers[i].id;
+                            }
                         }
-                    }
-                    maxid++;
+                        maxid++;
 
-                    var answer = {};
-                    answer.id = maxid;
-                    answer.correct = this.model.correct;
+                        var answer = {};
+                        answer.id = maxid;
+                        answer.correct = this.model.correct;
 
-                    var atext = this.model.atext;
+                        var atext = this.model.atext;
 
-                    if(!atext || /^\s*$/.test(atext)){
-                        answer.atext = "";
+                        if(!atext || /^\s*$/.test(atext)){
+                            answer.atext = "";
+                        }else{
+                            answer.atext = atext;
+                        }
+
+                        this.model.answers.push(answer);
+
+                        this.element.find(".answers").append(this.view('answer', {answer: answer}));
+                        this.element.find(".add-input").attr("value", "");
+                        this.model.atext = "";
+                        
+                        if(this.model.correct === "F"){
+                        	this.element.find(".add-checked").find(".icon-ban-circle").removeClass("icon-ban-circle").addClass("icon-ok");
+                        	this.model.correct = "T";
+                        }                    	
                     }else{
-                        answer.atext = atext;
-                    }
-
-                    this.model.answers.push(answer);
-
-                    this.element.find(".answers").append(this.view('answer', {answer: answer}));
-                    this.element.find(".add-input").attr("value", "");
-                    this.model.atext = "";
-                    
-                    if(this.model.correct === "F"){
-                    	this.element.find(".add-checked").find(".icon-ban-circle").removeClass("icon-ban-circle").addClass("icon-ok");
-                    	this.model.correct = "T";
+                    	Messenger().post({
+  	              		  message: "To keep your performance high the number of answers in a question is restricted to 7",
+  	              		  type : 'error',
+  	              		  showCloseButton: true
+  	              		});
                     }
                 },
                 ".add-input keyup" : function(el){
@@ -144,7 +152,16 @@ steal( 'jquery/controller',
                 ".question-save click" : function(data){
                     var question = this.model;
                     question.save( function(){
-                        Pagemessage.Message.Item.show_message("Success", "Saved");
+                        Messenger().post({
+                    		  message: 'Successfully saved',
+                    		  showCloseButton: true
+                    		});
+                    }, function(data){
+	                    Messenger().post({
+	              		  message: 'There was an error while saving the question!',
+	              		  type : 'error',
+	              		  showCloseButton: true
+	              		});	                    
                     });
                 },
                 ".question-view-btn click" : function(el){

@@ -10,6 +10,8 @@
     <!-- Le styles -->
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap-responsive.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="csslibs/messenger.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="csslibs/messenger-theme-future.css") }}" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -21,11 +23,13 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
-    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-    <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/jquery.min.js") }}"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->        
+    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.tmpl.min.js") }}"></script>    
     <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/bootstrap.min.js") }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename="bootstrap/js/jquery.tmpl.min.js") }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename="libs/jquery.timeago.js") }}"></script>	
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename="jslibs/jquery.timeago.js") }}"></script> -->
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename="jslibs/messenger.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="jslibs/messenger-theme-future.js") }}"></script> -->	
 </head>
  
 <body>

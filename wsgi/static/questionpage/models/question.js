@@ -41,9 +41,7 @@ $.Model('Question',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
             success : success,
-            error: function (error){
-                alert("There was an error posting the data to the server: " + error.responseText);
-            }
+            error: error
         });
     }
 },
