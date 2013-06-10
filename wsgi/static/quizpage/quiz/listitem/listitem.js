@@ -41,7 +41,10 @@ steal( 'jquery/controller',
                         data: JSON.stringify("delete-quiz"),
                         success :  function(){
                             el.remove();
-                            //Pagemessage.Message.Item.show_message("Success", "Deleted");
+                            Messenger().post({
+                      		  message: 'Quiz deleted',
+                      		  showCloseButton: true
+                      		});
                         },
                         error: function (error){
                             alert("There was an error posting the data to the server: " + error.responseText);

@@ -1,4 +1,4 @@
-{% from "messaging.html" import render_errors %}
+{% from "messaging.html" import render_flash_messages %}
 
 {% extends "base.html" %}
 
@@ -25,8 +25,7 @@
 		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 		            <h3 id="createModalLabel">Create a Quiz</h3>
 		        </div>
-		        {{ render_errors(form) }}
-        
+		
 		       	<div class="modal-body">		    		    
 					{% include 'quiz_create.html' %}
 		        </div>
@@ -37,7 +36,7 @@
 	        </fieldset>
 		</form>
     </div>
-    
+     
    {% if form.errors %} 
 	  <script type="text/javascript">
 	  $('#createModal').modal('show');
@@ -73,5 +72,7 @@
         </tbody>
     </table>
 </div>
+
+{{ render_flash_messages() }}
 
 {% endblock content %}

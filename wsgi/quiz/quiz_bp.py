@@ -79,7 +79,7 @@ def quiz_list():
             if quiz:
                 msg = u"Quiz created" 
                 current_app.logger.debug(msg)        
-                flash(msg, "success")
+                #flash(msg, "success")
             else:
                 msg = u"Could not create a quiz"            
                 current_app.logger.debug(msg)        

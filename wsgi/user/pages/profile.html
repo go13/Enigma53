@@ -1,4 +1,4 @@
-{% from "messaging.html" import render_errors %}
+{% from "messaging.html" import render_flash_messages %}
 
 {% extends "base.html" %}
 
@@ -37,7 +37,7 @@
       {{ form.password.label(class_='control-label') }}
       <div class="controls">
       	{{ form.password(class_='input-xlarge') }}
-        <p class="help-block">Password should be at least 4 characters</p>
+        <p class="help-block">Password should be at least 6 characters</p>
       </div>
     </div>
     
@@ -51,6 +51,6 @@
 </form>
 </div>
 
-{{ render_errors(form) }}
+{{ render_flash_messages() }}
 
 {% endblock %}

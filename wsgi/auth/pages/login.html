@@ -1,4 +1,4 @@
-{% from "messaging.html" import render_errors %}
+{% from "messaging.html" import render_bootstrap_errors %}
 
 {% extends "base.html" %}
  
@@ -8,7 +8,9 @@
 	<div class="row">
 		<div class="span4 offset4 ">
 			<legend>Please Sign In</legend>
-			{{ render_errors(form) }}
+			
+			{{ render_bootstrap_errors(errors) }}
+			
 			<form method="POST" action="{{ url_for('auth_bp.login') }}" accept-charset="UTF-8">
       			{{ form.email(class_ = 'span4', placeholder = 'Email') }}
       			{{ form.password(class_ = 'span4', placeholder = 'Password') }}

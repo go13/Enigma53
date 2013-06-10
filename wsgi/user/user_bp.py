@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, jsonify, request, current_app, flash
-from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from model import db
 from flask_login import login_required, current_user
 from auth.user import User
@@ -24,9 +23,12 @@ def profile():
             
             User.update_user(current_user)
             
-            current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))    
-    
-            flash("Success")
+            current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))
+            flash("Your profile was successfully updated", "info")
+        else:
+            for field, err in form.errors.items():
+                for error in err:                    
+                    flash(getattr(form, field).label.text + " : " + error, "error")
     else:
         form = ProfileForm()
         form.username.data = current_user.name

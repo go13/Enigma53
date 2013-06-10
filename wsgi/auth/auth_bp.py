@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app, helpers
 from wtforms import Form, TextField, PasswordField, BooleanField, validators
 
-from flask_login import LoginManager, current_user, login_required, \
-                             login_user, logout_user, UserMixin, AnonymousUser, \
-                             confirm_login, fresh_login_required
+from flask_login import login_required, \
+                             login_user, logout_user
 
-from user import User, Anonymous
+from user import User
 
 auth_bp = Blueprint('auth_bp', __name__, template_folder = 'pages')
 
@@ -51,6 +50,7 @@ class ProfileForm(Form):
 
 @auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
+    errors = None
     if request.method == "POST":
         current_app.logger.debug(request.method + " login ")
         form = LoginForm(request.form)
@@ -63,33 +63,38 @@ def login():
             
             user = User.get_user_by_email(email)
             if user and user.password == password:
-                current_app.logger.debug("login and passwords are OK")    
+                current_app.logger.debug("login and passwords are OK for user: " + user.name)    
                             
-                if login_user(user, True): #remember ??
-                    msg = u"Logged in!"                    
-                    flash(msg)
-                    current_app.logger.debug(msg)
+                if login_user(user, remember):
+                    current_app.logger.debug("Logged in!")
                     current_app.logger.debug(request.args.get("next") or url_for("index"))
+                    helpers.get_flashed_messages() # to clean the flash cache
                     return redirect(request.args.get("next") or url_for("index"))
                 else:
-                    msg = u"Sorry, but you could not log in"
+                    error = u"could not log in for some reason"
+                    errors = [error]
+                    current_app.logger.debug(user.name + " " + error)
             else:
-                msg = u"Invalid username or password"
-            flash(msg, "error")
-            current_app.logger.debug(msg)
-            return render_template("login.html", form = form)
+                error = u"Invalid email or password"
+                errors = [error]
+                current_app.logger.debug(error)
+        else:
+            error = u"Invalid email or password"
+            errors = [error]
+            current_app.logger.debug(error)
     else:
-        form = LoginForm()  
-        current_app.logger.debug("returnrning the form")  
-        return render_template("login.html", form = form)
+        form = LoginForm()
+        current_app.logger.debug("Returning the form")  
+    return render_template("login.html", errors = errors, form = form)
 
 @auth_bp.route("/signup", methods = ["GET", "POST"])
 def signup():
+    errors = None
     if request.method == "POST":
-        current_app.logger.debug(request.method + " signup ")
+        current_app.logger.debug(request.method + " Signup")
         
         form = SignupForm(request.form)
-                
+
         if form.validate():
             current_app.logger.debug("login validation successful")
             
@@ -98,27 +103,33 @@ def signup():
             username = form.username.data
             
             user = User.get_user_by_email(email)
-            
+
             if not user:
                 user = User.add_user(username, email, password)           
                 if login_user(user, True):
-                    msg = u"Account created"                    
-                    flash(msg, "success")
-                    current_app.logger.debug(msg)                    
-                else:
-                    msg = u"Sorry, but you could not log in"
-                    flash(msg, "error")
+                    msg = u"Account created for " + username                    
                     current_app.logger.debug(msg)
-                return redirect(url_for("index"))
+                    helpers.get_flashed_messages() # to clean the flash cache
+                    return redirect(url_for("index"))                    
+                else:
+                    errors = []
+                    msg = u"Sorry, but you could not sign up."
+                    current_app.logger.debug(msg)
+                    errors.append(msg)
             else:
-                msg = u"This email already registered. Please login"
-                flash(msg, "error")
+                errors = []
+                msg = u"This email already registered. Please login or use another email."
                 current_app.logger.debug(msg)
-                return redirect(url_for("auth_bp.login"))
+                errors.append(msg)
+        elif form.errors:
+            current_app.logger.debug("login validation failed")
+            errors = []            
+            for field, err in form.errors.items():
+                for error in err:
+                    errors.append(getattr(form, field).label.text + " : " + error)
     else:
         form = SignupForm()
-    return render_template("signup.html", form = form)
-
+    return render_template("signup.html", form = form, errors = errors)
 
 @auth_bp.route("/reauth", methods = ["GET", "POST"])
 @login_required

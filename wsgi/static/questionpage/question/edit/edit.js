@@ -105,7 +105,7 @@ steal( 'jquery/controller',
                     var answers = this.model.answers;
                     if(answers.length < 7){
                         var maxid = 0;
-                        for(var i=0; i < answers.length; i++){
+                        for(var i = 0; i < answers.length; i++){
                             if( maxid < answers[i].id ){
                                 maxid = answers[i].id;
                             }
@@ -136,7 +136,7 @@ steal( 'jquery/controller',
                         }                    	
                     }else{
                     	Messenger().post({
-  	              		  message: "To keep your performance high the number of answers in a question is restricted to 7",
+  	              		  message: "The number of answers is restricted to 7 to keep your performance high",
   	              		  type : 'error',
   	              		  showCloseButton: true
   	              		});

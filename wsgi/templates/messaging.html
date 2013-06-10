@@ -1,24 +1,35 @@
-{% macro render_errors(form) %}
-{% if form and form.errors %}
-<script type="text/javascript">
-	$(document).ready(function() {
-	Messenger.options = {
-			extraClasses: 'messenger-fixed messenger-on-bottom',
-			'maxMessages': 3,
-			theme: 'air',        		
-		};
+{% macro render_flash_messages() %}	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Messenger.options = {
+					extraClasses: 'messenger-fixed messenger-on-bottom',
+					'maxMessages': 3,
+					theme: 'air',        		
+				};		
+	    {% with messages = get_flashed_messages(with_categories = true) %}
+		    {% if messages %}
+		      {% for category, message in messages %}
+			      Messenger().post({
+	        		  message: "{{ message }}",
+	        		  type: "{{category}}",
+	          		  showCloseButton: true
+	              });
+		      {% endfor %}
+		    {% endif %}
+		{% endwith %}
+		});	
+	</script>
+{% endmacro %}
 
-	{% for field_name, field_errors in form.errors | dictsort if field_errors %}
-        {% for error in field_errors %}
- 	   		Messenger().post({
-        		  message: "{{ form[field_name].label.text }} : {{ error }}",
-          		  type : 'error',
-          		  showCloseButton: true
-              });
-        {% endfor %}
-    {% endfor %}
-	
-	});	
-</script>
-{% endif %}
+{% macro render_bootstrap_errors(errors) %}
+	{% if errors %}
+	<div class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	    <ul class="unstyled">
+	       {% for error in errors %}
+               <li>{{ error }}</li>
+	       {% endfor %}
+	    </ul>
+	</div>
+	{% endif %}
 {% endmacro %}
