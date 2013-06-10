@@ -40,6 +40,7 @@ create table questions
 (
    id                   integer not null AUTO_INCREMENT,
    quizid               integer,
+   userid               integer,
    nextquestionid       integer,
    qtext                text,
    type                 integer,

@@ -76,7 +76,8 @@ class QuizResult(db.Model):
         if hs:
             qr = QuizResult.query.filter_by(sessionid = hs.id).first()
             qr.questionresults = QuestionResult.get_question_results_by_id(hs.id)
-            qr.correctqnum=0
+            qr.correctqnum = 0
+            qr.quiz = Quiz.get_quiz_by_id(quizid)
             for q in qr.questionresults:
                 if q.correct == 1:
                     qr.correctqnum += 1                

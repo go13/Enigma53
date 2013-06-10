@@ -1,16 +1,13 @@
 {% from "messaging.html" import render_flash_messages %}
 
-{% extends "base.html" %}
+{% extends "page.html" %}
 
-{% block content %}
+{% block title %}List of your quizes{% endblock title %}
 
-
+{% block body %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
 
-<div class="container quiz-list-container" style="width: 800px;">
-<div id="legend">
-  <legend>List of your quizes</legend>
-</div>
+<div class="quiz-list-container">
 
 	<a data-toggle="modal" class="btn btn-success pull-right" 
 		data-target="#createModal"><div class="icon-plus icon-white"></div> Create
@@ -75,4 +72,4 @@
 
 {{ render_flash_messages() }}
 
-{% endblock content %}
+{% endblock body %}

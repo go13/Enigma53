@@ -41,3 +41,4 @@ class User(db.Model, UserMixin):
     
 class Anonymous(AnonymousUser):
     name = u"Anonymous"
+    id = -1

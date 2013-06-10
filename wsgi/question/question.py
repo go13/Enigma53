@@ -9,15 +9,17 @@ class Question(db.Model):
 
     id = db.Column('id', Integer, primary_key = True)
     quizid = db.Column('quizid', Integer)
+    userid = db.Column('userid', Integer)
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
     lat = db.Column('lat', Unicode)
-    lon = db.Column('lon', Unicode)
-    answers = []
+    lon = db.Column('lon', Unicode)    
+    answers = []    
 
-    def __init__(self, quizid, nextquestionid, qtext, type, answers, lat = lat, lon = lon):
+    def __init__(self, quizid, userid, nextquestionid, qtext, type, answers, lat = lat, lon = lon):
         self.quizid = quizid
+        self.userid = userid
         self.nextquestionid = nextquestionid
         self.qtext = qtext
         self.type = type
@@ -84,8 +86,7 @@ class Question(db.Model):
     def update_question_by_id(questionid, dict, to_commit):
         Question.query.filter_by(id = questionid).update(dict)
         if to_commit:
-            db.session.commit()
-             
+            db.session.commit()             
 
     @staticmethod
     def delete_questions_by_quiz_id(quizid, batch):

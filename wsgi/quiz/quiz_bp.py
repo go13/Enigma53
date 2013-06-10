@@ -8,16 +8,19 @@ from quiz_result import QuizResult
 from flask_login import login_required, current_user
 
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder = 'pages')
+auth_failure_message = u"You don't have permissions to "
 
 @quiz_bp.route('/<int:quiz_id>/')
 def quiz(quiz_id):
     current_app.logger.debug("quiz. quiz_id - " + str(quiz_id))
     
     quiz = Quiz.get_quiz_by_id(quiz_id)
-    if quiz:    
-        QuizResult.start_session(quiz_id, current_user.id)
-        
-        return render_template('quiz.html', quiz = quiz)
+    if quiz:            
+        if current_user.id == quiz.userid:
+            QuizResult.start_session(quiz_id, current_user.id)
+            return render_template('quiz.html', quiz = quiz)
+        else:
+            return render_template('auth_failure.html')            
     else:
         current_app.logger.warning("No quiz found")
         return render_template('404.html')
@@ -29,8 +32,12 @@ def quiz_map_edit(quiz_id):
     
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
-    if quiz:        
-        return render_template('quiz_map_edit.html', quiz = quiz)
+    if quiz:
+        current_app.logger.debug("quiz_edit. current_user.id - " + str(current_user.id) + " userid - " + str(quiz.userid))
+        if current_user.id == quiz.userid:        
+            return render_template('quiz_map_edit.html', quiz = quiz)
+        else:
+            return render_template('auth_failure.html')
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
@@ -43,9 +50,11 @@ def quiz_results_tsv(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:        
-        results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)        
-        return render_template('quiz_results.html', quiz = quiz, results = results)
-
+        if current_user.id == quiz.userid:
+            results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)            
+            return render_template('quiz_results.html', quiz = quiz, results = results)
+        else:
+            return render_template('auth_failure.html')
     else:
         current_app.logger.warning("No quiz found")        
         return render_template('404.html')
@@ -55,10 +64,6 @@ class CreateForm(Form):
         validators.Length(min = 1, max = 128),
         validators.Required()
         ])
-    #description = TextAreaField('Quiz description', [
-    #    validators.Length(max = 32768),
-    #    validators.Optional()
-    #    ])        
 
 @quiz_bp.route('/list/',  methods = ['GET', 'POST'])
 @login_required
@@ -77,9 +82,8 @@ def quiz_list():
             
             quiz = Quiz.create_quiz(title, current_user.id)
             if quiz:
-                msg = u"Quiz created" 
+                msg = u"Quiz created " + str(current_user.id) 
                 current_app.logger.debug(msg)        
-                #flash(msg, "success")
             else:
                 msg = u"Could not create a quiz"            
                 current_app.logger.debug(msg)        
@@ -97,58 +101,6 @@ def quiz_list():
                     
         return render_template('quiz_list.html', quizes = quizes, form = form)
 
-#@quiz_bp.route('/<int:quiz_id>/settings/', methods = ["GET", "POST"])
-#@login_required
-def quiz_settings(quiz_id):
-    current_app.logger.debug(request.method + " quiz_settings. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    
-    if quiz:
-        if request.method == "POST":            
-            
-            title = request.form["title"]
-            #description = request.form["description"]
-            
-            if not title:
-                msg = u"No title field passed to the form" 
-                current_app.logger.warning(msg)
-                flash(msg, "error")
-            #elif not description:
-            #    msg = u"Error posting quiz details. No description field passed in the form"
-            #    current_app.logger.warning(msg)
-            #    flash(msg, "error")
-            elif len(title) > 55:
-                msg = u"Error posting quiz details. Title is too long - " + str(len(title).decode("UTF-8"))
-                current_app.logger.warning(msg)
-                flash(msg, "error")
-            #elif len(description) > 32768:
-            #    msg = u"Error posting quiz details. Description is too long " + str(len(description).decode("UTF-8")) 
-            #    current_app.logger.warning(msg)
-            #    flash(msg, "error")
-            else:                
-                if isinstance(title, str):
-                    quiz.title = title.decode('UTF-8')
-                else:
-                    quiz.title = title
-                    
-                #if isinstance(description, str):
-                #    quiz.description = description.decode('UTF-8')
-                #else:
-                #    quiz.description = description
-                                    
-                Quiz.update_quiz(quiz)
-                
-                msg = u"Updated the quiz"
-                current_app.logger.debug(msg)
-                flash(msg, "success")
-                
-        return render_template('quiz_settings.html', quiz = quiz)
-    else:
-        current_app.logger.warning("No quiz found")
-        
-        return render_template('404.html')
-
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
 def jupdate(quiz_id):
     current_app.logger.debug("jupdate. quiz_id - " + str(quiz_id))
@@ -156,35 +108,39 @@ def jupdate(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:
-        schema = {
-            "type" : "object",
-            "properties" : {            
-                "title" : {"type" : "string", "maxLength" : 55, "optional" : False},
+        if current_user.id == quiz.userid:
+            schema = {
+                "type" : "object",
+                "properties" : {            
+                    "title" : {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional" : False},
+                    }
                 }
-            }
-            
-        if len(request.json['title']) < 5 or len(request.json['title']) > 55:
-            msg = 'Title length should be greater than 4 and less than 55 symbols '             
-            result = {"status" : "ERROR", "message" : msg}
-            current_app.logger.warning(result)
-                        
-            return jsonify(result)
-        else:
+
             v = Draft4Validator(schema)
             errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
     
             if len(errors) > 0:
-                    msg = 'Error updating the quiz. Received json is not valid'             
-                    result = {"status" : "ERROR", "message" : msg}
-                    current_app.logger.warning(result)
+                msg = u"Error : "
+                if len(request.json['title']) < 5 or len(request.json['title']) > 55:
+                    msg = u"Title length should be greater than 4 and less than 55 symbols"                    
+                else:
+                    for e in errors:
+                        msg = msg +e.message.decode("UTF-8")
+                    
+                result = {"status" : "ERROR", "message" : msg}        
+                current_app.logger.warning(result)
+                return jsonify(result)
             else:
                 title = request.json['title']
                 
                 quiz = Quiz.update_quiz_by_id(quiz_id, {'title' : title}, False)
                 
-                current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)   
-                
+                current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)
                 return jsonify({"status" : "OK", "quizid" : quiz_id})
+        else:
+            msg = auth_failure_message + u"update this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
@@ -197,10 +153,15 @@ def jget(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:
-        result = {'status' : 'OK'}
-        result.update(quiz.serialize)
-       
-        return jsonify(result)
+        if current_user.id == quiz.userid:
+            result = {'status' : 'OK'}
+            result.update(quiz.serialize)
+           
+            return jsonify(result)
+        else:
+            msg = auth_failure_message + u"view this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
@@ -213,14 +174,18 @@ def jdelete(quiz_id):
     
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
-    if quiz:        
-        QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
-        Quiz.delete_quiz_by_id(quiz_id, False)
-    
-        current_app.logger.debug("Quiz deleted")
-    
-        return jsonify({"status":"OK"})
+    if quiz:
+        if current_user.id == quiz.userid:
+            QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
+            Quiz.delete_quiz_by_id(quiz_id, False)
         
+            current_app.logger.debug("Quiz deleted")
+        
+            return jsonify({"status":"OK"})
+        else:
+            msg = auth_failure_message + u"delete this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)        
@@ -234,7 +199,7 @@ def jcreate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "title" : {"type" : "string", "maxLength" : 55, "optional" : False},
+            "title" : {"type" : "string", "minLength" : 5,"maxLength" : 55, "optional" : False},
             "lat" : {"type" : "string", "optional" : False},
             "lon" : {"type" : "string", "optional" : False},
             }
@@ -244,17 +209,16 @@ def jcreate():
     errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
         
     if len(errors) > 0:
-        msg = 'Error creating a quiz. Received json is not valid'
-        
-        #causes = []
-        #for error in errors:            
-        #    causes.append(error.message)     
-        
-        result = {"status" : "ERROR", "message" : msg} # "causes" : causes }
-        
+        msg = u"Error : "
+        if len(request.json['title']) < 5 or len(request.json['title']) > 55:
+            msg = u"Title length should be greater than 4 and less than 55 symbols"                    
+        else:
+            for e in errors:
+                msg = msg + e.message.decode("UTF-8")
+            
+        result = {"status" : "ERROR", "message" : msg}
         current_app.logger.warning(result)
-                    
-        return jsonify(result) #, "causes" : causes })
+        return jsonify(result)
     else:        
         title = request.json['title']
         lat = request.json['lat']
@@ -273,12 +237,14 @@ def finish_session(quiz_id):
 
     qr = QuizResult.finish_session(quiz_id, current_user.id)
 
-    if qr:
-        current_app.logger.debug('Finishing the session')
-        
-        return redirect("/quiz/results/" + str(qr.sessionid))
+    if qr:        
+        if current_user.id == qr.quiz.userid:
+            QuizResult.start_session(quiz_id, current_user.id)
+            current_app.logger.debug('Finishing the session')
+            return redirect("/quiz/results/" + str(qr.sessionid))
+        else:
+            return render_template('auth_failure.html')
     else:
         current_app.logger.warning("No such quiz found")        
         return render_template('404.html')
-    
         

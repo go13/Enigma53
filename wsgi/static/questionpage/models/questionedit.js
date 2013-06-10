@@ -67,7 +67,19 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
-            success : success,
+            success : function(data){
+            	if(data.status == "ERROR"){
+                	Messenger().post({
+                		  message: data.message,
+                		  type : 'error',
+                		  showCloseButton: true
+                		});            		
+            	}else{
+	            	if(success){
+	            		success();
+	            	}
+            	}
+            },
             error: function (e){
             	Messenger().post({
           		  message: 'There was an error posting the data to server',

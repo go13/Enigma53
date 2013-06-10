@@ -181,7 +181,6 @@ steal( 'jquery/controller',
                },               
                doMapClick4Create : function(event, questionmap){
                	    var qm = new Questionedit();
-               	    qm.clean();// ???!
                	    var nav = Quizpage.Quiz.Navigator.instance;
                     qm.quizid = nav.model.quizid;
                     qm.gmarker = nav.addPoint(event.latLng, false);

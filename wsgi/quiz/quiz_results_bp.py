@@ -1,5 +1,4 @@
-from flask import Flask, Blueprint, render_template, jsonify, current_app
-from sqlalchemy import Table, Column, Integer, String
+from flask import Blueprint, render_template, current_app
 
 from model import db
 from quiz_result import QuizResult
@@ -13,10 +12,13 @@ quiz_results_bp = Blueprint('quiz_results_bp', __name__, template_folder = 'page
 def quiz_results(session_id):# TODO: add permission verification
     current_app.logger.debug("quiz_results(" + str(session_id) + ")")
     
-    qres = QuizResult.get_quiz_results_by_id(session_id)        
-    
+    qres = QuizResult.get_quiz_results_by_id(session_id)
     if qres:
-        return render_template('quiz_result.html', quiz_results = qres, quiz = qres.quiz)
+        quiz = qres.quiz
+        if current_user.id == quiz.userid:
+            return render_template('quiz_result.html', quiz_results = qres, quiz = quiz)
+        else:
+            return render_template('auth_failure.html')
     else:
         current_app.logger.warning("No such session found")        
         return render_template('404.html')

@@ -1,6 +1,4 @@
-from flask import Flask
-from sqlalchemy import Table, Column, Integer, Unicode
-from datetime import datetime
+from sqlalchemy import Integer, Unicode
 
 from model import db
 from question.question import Question
@@ -34,10 +32,10 @@ class Quiz(db.Model):
         return Question.query.filter_by(quizid = id).count()
     
     @staticmethod
-    def get_quiz_by_id(id):
-        q  = Quiz.query.filter_by(id = id).first()
+    def get_quiz_by_id(qid):
+        q  = Quiz.query.filter_by(id = qid).first()
         if q:
-            q.questions = Question.get_all_questions_by_quiz_id(id)
+            q.questions = Question.get_all_questions_by_quiz_id(qid)
         return q
 
     @staticmethod

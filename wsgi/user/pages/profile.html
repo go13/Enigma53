@@ -1,16 +1,10 @@
 {% from "messaging.html" import render_flash_messages %}
 
-{% extends "base.html" %}
+{% extends "page.html" %}
 
-{% block header %}
-{% endblock %}
+{% block title %}Your Profile{% endblock title %}
 
-{% block content %}
-
-<div class="container" style="width: 800px;">
-<div id="legend">
-  <legend>Your Profile</legend>
-</div>
+{% block body %}
 
 <form class="form-horizontal" action='/user/profile/' method="POST">
   <fieldset>
@@ -49,8 +43,7 @@
     </div>
   </fieldset>
 </form>
-</div>
 
 {{ render_flash_messages() }}
 
-{% endblock %}
+{% endblock body %}
