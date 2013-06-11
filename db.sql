@@ -44,8 +44,8 @@ create table questions
    nextquestionid       integer,
    qtext                text,
    type                 integer,
-   lat 			        text not null,
-   lon 			        text not null,
+   lattitude            text not null,
+   longitude            text not null,
    primary key (id)
 );
 

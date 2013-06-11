@@ -13,8 +13,8 @@ class Question(db.Model):
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
-    lat = db.Column('lat', Unicode)
-    lon = db.Column('lon', Unicode)    
+    lat = db.Column('lattitude', Unicode)
+    lon = db.Column('longitude', Unicode)
     answers = []    
 
     def __init__(self, quizid, userid, nextquestionid, qtext, type, answers, lat = lat, lon = lon):

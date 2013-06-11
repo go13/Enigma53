@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
         self.password = password
         
     @staticmethod
-    def get_user_by_id(id=id):
-        return User.query.filter_by(id = id).first()
+    def get_user_by_id(uid):
+        return User.query.filter_by(id = uid).first()
     
     @staticmethod
     def get_user_by_name(name):
