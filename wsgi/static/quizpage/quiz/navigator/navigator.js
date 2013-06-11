@@ -56,8 +56,10 @@ steal( 'jquery/controller',
                     var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
                     	var nav = Quizpage.Quiz.Navigator.instance;
 	                    nav.model.add_question(qc.model);
-	                    qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
-	                	qst.gmarker.question = qst;
+	                    if(this.questionMap){
+		                    qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
+		                	qst.gmarker.question = qst;
+	                    }
 	                	if(success){
                     		success(qst);                    		
                     	}
@@ -66,9 +68,11 @@ steal( 'jquery/controller',
                 load_question_edit : function(el, success){                	
                     var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){
                     	var nav = Quizpage.Quiz.Navigator.instance;
-                    	nav.model.add_question(qst);             
-                    	qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
-                    	qst.gmarker.question = qst;
+                    	nav.model.add_question(qst);
+                    	if(this.questionMap){
+	                    	qst.gmarker = nav.addPoint(new google.maps.LatLng(qst.lat, qst.lon), true);
+	                    	qst.gmarker.question = qst;
+                    	}
                     	if(success){
                     		success(qst);                    		
                     	}
@@ -215,10 +219,11 @@ steal( 'jquery/controller',
                     this.load_map();
                     
                     this.model = new Navigator({quizid : quizid});
-                    this.onMapClick = Quizpage.Quiz.Navigator.doMapClick4Create;
-                    this.onMarkerClick = Quizpage.Quiz.Navigator.doMarkerClick;
-                    this.onMarkerMove = Quizpage.Quiz.Navigator.doMarkerMove;
-                    
+                    if(this.questionMap){
+	                    this.onMapClick = Quizpage.Quiz.Navigator.doMapClick4Create;
+	                    this.onMarkerClick = Quizpage.Quiz.Navigator.doMarkerClick;
+	                    this.onMarkerMove = Quizpage.Quiz.Navigator.doMarkerMove;
+                    }
                     if(onSuccess){
                     	onSuccess(quizid);
                     }
@@ -244,7 +249,6 @@ steal( 'jquery/controller',
             	    
             	    if(!lazy){
             	    	this.showPoint(marker);
-            	    	
             	    }
             	    return marker;
             	},
@@ -285,86 +289,94 @@ steal( 'jquery/controller',
             	    }
             	},
             	showAllPoints : function(){
-            		for(var i = 0; i < this.markers.length; i++){
-            			var self = this;
-            			this.showPoint(this.markers[i], function(){
-            				if(i === 0){
-                    			Quizpage.Quiz.Navigator.to_tab_by_id(self.markers[0].question.qid, true);
-                    		};	
-            			});            			
-            		};
-            	},
-            	offsetCenter : function(latlng) {
-            		if(this.markers.length > 0){
-	            		var offsetx = - $(window).width() * 0.3;
-	            		var offsety = 0;
-	
-	            		// latlng is the apparent centre-point
-	            		// offsetx is the distance you want that point to move to the right, in pixels
-	            		// offsety is the distance you want that point to move upwards, in pixels
-	            		// offset can be negative
-	            		// offsetx and offsety are both optional
-	
-	            		var scale = Math.pow(2, this.questionMap.getZoom());
-	            		var nw = new google.maps.LatLng(
-	            				this.questionMap.getBounds().getNorthEast().lat(),
-	            				this.questionMap.getBounds().getSouthWest().lng()
-	            		);
-	
-	            		var worldCoordinateCenter = this.questionMap.getProjection().fromLatLngToPoint(latlng);
-	            		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
-	
-	            		var worldCoordinateNewCenter = new google.maps.Point(
-	            		    worldCoordinateCenter.x - pixelOffset.x,
-	            		    worldCoordinateCenter.y + pixelOffset.y
-	            		);
-	
-	            		var newCenter = this.questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
-	
-	            		this.questionMap.setCenter(newCenter);
+            		if(this.questionMap){
+	            		for(var i = 0; i < this.markers.length; i++){
+	            			var self = this;
+	            			this.showPoint(this.markers[i], function(){
+	            				if(i === 0){
+	                    			Quizpage.Quiz.Navigator.to_tab_by_id(self.markers[0].question.qid, true);
+	                    		};	
+	            			});            			
+	            		};
+            		}else{
+            			Quizpage.Quiz.Navigator.to_tab_by_id(this.markers[0].question.qid, false);            			
             		}
             	},
-                load_map : function(){                   
-             	   var mapOptions = {
-             			    zoom: 8,		    
-             			    center: new google.maps.LatLng(37.4419, -122.1419),
-             			    panControl: true, 
-             			    streetViewControl: false,
-             			    mapTypeControl: false,
-             			    overviewMapControl: true,
-             			    mapTypeId: google.maps.MapTypeId.ROADMAP
-             			  };
-     			  
-     			  this.questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions); // td ?
-     			  
-     			  var lineSymbol = {
-     					    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-     					  };
-     			  
-     			  var polyOptions = {
-     					  icons: [{
-     					      icon: lineSymbol,
-     					      offset: '100%',
-     					      repeat:'100px'
-     					    }],
-     					    strokeColor: 'rgb(255, 255, 255)',
-     					    strokeOpacity: 1.0,
-     					    strokeWeight: 3
-     			  };		  
-     			  
-     			  this.polyLine = new google.maps.Polyline(polyOptions);
-     			  this.polyLine.setMap(this.questionMap);
-     			  
-     			  var self = this;
-     			  
-     			  google.maps.event.addListener(this.questionMap, 'rightclick', function(event) {
-     				    if(self.onMapClick != null){
-     				    	self.onMapClick(event, self.questionMap);		    	
-     				    }
-     			  });
-     			  google.maps.event.addListenerOnce(this.questionMap, 'idle', function(){
-     				 self.showAllPoints();
-     			  });
+            	offsetCenter : function(latlng) {
+            		if(this.questionMap){
+	            		if(this.markers.length > 0){
+		            		var offsetx = - $(window).width() * 0.3;
+		            		var offsety = 0;
+		
+		            		// latlng is the apparent centre-point
+		            		// offsetx is the distance you want that point to move to the right, in pixels
+		            		// offsety is the distance you want that point to move upwards, in pixels
+		            		// offset can be negative
+		            		// offsetx and offsety are both optional
+		
+		            		var scale = Math.pow(2, this.questionMap.getZoom());
+		            		var nw = new google.maps.LatLng(
+		            				this.questionMap.getBounds().getNorthEast().lat(),
+		            				this.questionMap.getBounds().getSouthWest().lng()
+		            		);
+		
+		            		var worldCoordinateCenter = this.questionMap.getProjection().fromLatLngToPoint(latlng);
+		            		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+		
+		            		var worldCoordinateNewCenter = new google.maps.Point(
+		            		    worldCoordinateCenter.x - pixelOffset.x,
+		            		    worldCoordinateCenter.y + pixelOffset.y
+		            		);
+		
+		            		var newCenter = this.questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+		
+		            		this.questionMap.setCenter(newCenter);
+	            		}
+            		}
+            	},
+                load_map : function(){
+                	if (typeof google === 'object' && typeof google.maps === 'object'){ 
+	             	   var mapOptions = {
+	             			    zoom: 8,		    
+	             			    center: new google.maps.LatLng(37.4419, -122.1419),
+	             			    panControl: true, 
+	             			    streetViewControl: false,
+	             			    mapTypeControl: false,
+	             			    overviewMapControl: true,
+	             			    mapTypeId: google.maps.MapTypeId.ROADMAP
+	             			  };
+	     			  
+	     			  this.questionMap = new google.maps.Map(document.getElementById('question-map'), mapOptions); // td ?
+	     			  
+	     			  var lineSymbol = {
+	     					    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+	     					  };
+	     			  
+	     			  var polyOptions = {
+	     					  icons: [{
+	     					      icon: lineSymbol,
+	     					      offset: '100%',
+	     					      repeat:'100px'
+	     					    }],
+	     					    strokeColor: 'rgb(255, 255, 255)',
+	     					    strokeOpacity: 1.0,
+	     					    strokeWeight: 3
+	     			  };		  
+	     			  
+	     			  this.polyLine = new google.maps.Polyline(polyOptions);
+	     			  this.polyLine.setMap(this.questionMap);
+	     			  
+	     			  var self = this;
+	     			  
+	     			  google.maps.event.addListener(this.questionMap, 'rightclick', function(event) {
+	     				    if(self.onMapClick != null){
+	     				    	self.onMapClick(event, self.questionMap);		    	
+	     				    }
+	     			  });
+	     			  google.maps.event.addListenerOnce(this.questionMap, 'idle', function(){
+	     				 self.showAllPoints();
+	     			  });
+	                }
                 },
                 ".question-next click" : function(){
                     Quizpage.Quiz.Navigator.to_next_tab();
@@ -391,7 +403,7 @@ steal( 'jquery/controller',
                 	var qid = parseInt(el.attr("id").split("tab-question")[1]);
                     this.model.set_current_question_by_id(qid);
                     var qst = this.model.get_question_by_id(qid);
-                    this.offsetCenter(qst.gmarker.position); 
+                    this.offsetCenter(qst.gmarker.position);
                 }
             });
     });

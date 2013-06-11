@@ -200,8 +200,8 @@ def jcreate():
         "type" : "object",
         "properties" : {            
             "title" : {"type" : "string", "minLength" : 5,"maxLength" : 55, "optional" : False},
-            "lat" : {"type" : "string", "optional" : False},
-            "lon" : {"type" : "string", "optional" : False},
+            #"lat" : {"type" : "string", "optional" : False},
+            #"lon" : {"type" : "string", "optional" : False},
             }
         }
         
@@ -221,10 +221,10 @@ def jcreate():
         return jsonify(result)
     else:        
         title = request.json['title']
-        lat = request.json['lat']
-        lon = request.json['lon']
+        #lat = request.json['lat']
+        #lon = request.json['lon']
         
-        quiz = Quiz.create_quiz('description', title, current_user.id, lat, lon)
+        quiz = Quiz.create_quiz(title, current_user.id)
         
         current_app.logger.debug('Quiz created. quiz.id - ' + str(id))   
         
