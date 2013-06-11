@@ -49,8 +49,8 @@ login_manager.login_message = u"Please log in to access this page."
 login_manager.refresh_view = "auth_bp.reauth"
 
 @login_manager.user_loader
-def load_user(id):
-    return User.get_user_by_id(int(id))
+def load_user(uid):
+    return User.get_user_by_id(int(uid))
 
 login_manager.setup_app(application)
 
@@ -59,7 +59,7 @@ login_manager.setup_app(application)
 @application.route('/')
 @login_required
 def index():
-    return redirect("/quiz/list/") #render_template('index.html', pages=pages)
+    return redirect("/quiz/list/") 
 
 @application.route('/<path:path>/')
 def page(path):
