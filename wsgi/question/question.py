@@ -13,7 +13,7 @@ class Question(db.Model):
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
-    lat = db.Column('lattitude', Unicode)
+    lat = db.Column('latitude', Unicode)
     lon = db.Column('longitude', Unicode)
     answers = []    
 

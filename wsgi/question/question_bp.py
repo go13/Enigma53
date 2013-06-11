@@ -111,10 +111,10 @@ def jupd(question_id):
                 current_app.logger.debug("qid = " + str(qid))
                 current_app.logger.debug("qtext = '" + str(qtext) + "'")
                 current_app.logger.debug("answers = " + str(answers))
-                current_app.logger.debug("lattitude = " + str(lat))
+                current_app.logger.debug("latitude = " + str(lat))
                 current_app.logger.debug("longitude = " + str(lon))                
                 
-                Question.update_question_by_id(question_id, {'qtext' : qtext, 'lattitude' : lat, 'longitude' : lon}, False)
+                Question.update_question_by_id(question_id, {'qtext' : qtext, 'latitude' : lat, 'longitude' : lon}, False)
                 Answer.delete_answers_by_question_id(question_id, True)
         
                 for answer in answers:
