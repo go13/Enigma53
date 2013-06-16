@@ -1,5 +1,5 @@
-from flask import Flask, current_app
-from sqlalchemy import Table, Column, Integer, Unicode
+from flask import current_app
+from sqlalchemy import Integer, Unicode
 
 from model import db
 from modules.answer import Answer
@@ -12,17 +12,17 @@ class Question(db.Model):
     userid = db.Column('userid', Integer)
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
-    type = db.Column('type', Integer)
+    qtype = db.Column('type', Integer)
     latitude = db.Column('latitude', Unicode)
     longitude = db.Column('longitude', Unicode)
     answers = []    
 
-    def __init__(self, quizid, userid, nextquestionid, qtext, type, answers, latitude = latitude, longitude = longitude):
+    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude = latitude, longitude = longitude):
         self.quizid = quizid
         self.userid = userid
         self.nextquestionid = nextquestionid
         self.qtext = qtext
-        self.type = type
+        self.qtype = qtype
         self.latitude = latitude
         self.longitude = longitude
         self.answers = answers
@@ -52,8 +52,8 @@ class Question(db.Model):
            }
 
     @staticmethod
-    def get_next_question(id):
-        q = Question.query.filter_by(id = id).first()
+    def get_next_question(qid):
+        q = Question.query.filter_by(id = qid).first()
         q = Question.query.filter_by(id = q.nextquestionid).first()
         if q is not None:
             q.questionList = Answer.get_answer_by_question_id(q.id)
@@ -61,9 +61,9 @@ class Question(db.Model):
         return None
 
     @staticmethod
-    def get_question_by_id(id):
-        current_app.logger.debug("get_question_by_id - " + str(id))
-        q  = Question.query.filter_by(id = id).first()
+    def get_question_by_id(qid):
+        current_app.logger.debug("get_question_by_id - " + str(qid))
+        q  = Question.query.filter_by(id = qid).first()
         if q is not None:
             q.answers = Answer.get_answer_by_question_id(q.id)
             return q
@@ -83,8 +83,8 @@ class Question(db.Model):
         return Question.query.filter_by(quizid = quiz_id).all()
 
     @staticmethod
-    def update_question_by_id(questionid, dict, to_commit):
-        Question.query.filter_by(id = questionid).update(dict)
+    def update_question_by_id(questionid, qdict, to_commit):
+        Question.query.filter_by(id = questionid).update(qdict)
         if to_commit:
             db.session.commit()             
 

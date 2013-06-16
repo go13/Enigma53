@@ -1,7 +1,7 @@
 from question import Question
 from answer_result import AnswerResult
 
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Integer
 from model import db
 
 class QuestionResult(db.Model):

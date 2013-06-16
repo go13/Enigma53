@@ -1,6 +1,5 @@
-from flask import Flask
 from datetime import datetime
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
+from sqlalchemy import Integer, TIMESTAMP, func
 
 from model import db
 from auth.user import User
@@ -42,12 +41,12 @@ class Historysession(db.Model):
 
     @staticmethod
     def get_current_historysession_by_userid(userid):
-        t=db.session.query(
+        t = db.session.query(
             func.max(Historysession.id).label('max_id')
-        ).filter(Historysession.userid==userid).subquery('t')
+        ).filter(Historysession.userid == userid).subquery('t')
 
         query = db.session.query(Historysession).filter(
-            Historysession.id==t.c.max_id,
+            Historysession.id == t.c.max_id,
         )
         hs=query.first()
 
@@ -58,21 +57,21 @@ class Historysession(db.Model):
             return None
 
     @staticmethod
-    def get_historysession_by_id(id):
-        hs=Historysession.query.filter_by(id=id).first()
-        hs.user=User.get_user_by_id(hs.userid)
+    def get_historysession_by_id(hsid):
+        hs = Historysession.query.filter_by(id = hsid).first()
+        hs.user = User.get_user_by_id(hs.userid)
         return hs
     
     @staticmethod
     def get_historysessions_by_userid(userid):
-        query=db.session.query(Historysession).filter(
-            Historysession.id==db.session.query(Historysession.id).filter(Historysession.userid==userid))
+        query = db.session.query(Historysession).filter(
+            Historysession.id == db.session.query(Historysession.id).filter(Historysession.userid == userid))
         return query.all()
     
     @staticmethod
     def delete_historysession_by_sessionid(sessionid, batch):
         print 'delete_historysession_by_quiz_id ', sessionid        
-        hs=Historysession.query.filter_by(id=sessionid).all()
+        hs = Historysession.query.filter_by(id = sessionid).all()
         for item in hs:   
             db.session.delete(item)        
         if not batch:

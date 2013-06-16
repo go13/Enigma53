@@ -27,7 +27,9 @@ class QuizResult(db.Model):
     @staticmethod
     def get_quiz_results_by_id(sessionid):
         current_app.logger.debug("get_quiz_results_by_id(" + str(sessionid) + ")")
+        
         results = QuizResult.query.filter_by(sessionid = sessionid).first()
+        current_app.logger.debug(str(results.quizid))
         if results:
             results.quiz = Quiz.get_quiz_by_id(results.quizid)
             results.questionresults = QuestionResult.get_question_results_by_id(sessionid)            

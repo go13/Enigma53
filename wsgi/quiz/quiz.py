@@ -28,8 +28,8 @@ class Quiz(db.Model):
         return len(self.questions)
     
     @staticmethod
-    def get_number_of_questions_by_id(id = id):
-        return Question.query.filter_by(quizid = id).count()
+    def get_number_of_questions_by_id(qid):
+        return Question.query.filter_by(quizid = qid).count()
     
     @staticmethod
     def get_quiz_by_id(qid):
@@ -55,18 +55,18 @@ class Quiz(db.Model):
         db.session.commit()
         
     @staticmethod
-    def update_quiz_by_id(quizid, dict, to_commit):
-        Quiz.query.filter_by(id = quizid).update(dict)
+    def update_quiz_by_id(quizid, qdict, to_commit):
+        Quiz.query.filter_by(id = quizid).update(qdict)
         if to_commit:
             db.session.commit()
         
     @staticmethod
-    def delete_quiz_by_id(id, batch):
+    def delete_quiz_by_id(qid, batch):
         
-        quiz = Quiz.query.filter_by(id = id).first()
+        quiz = Quiz.query.filter_by(id = qid).first()
         
         if quiz:
-            Question.delete_questions_by_quiz_id(id, False)
+            Question.delete_questions_by_quiz_id(qid, False)
             db.session.delete(quiz)
         if not batch:
             db.session.commit()

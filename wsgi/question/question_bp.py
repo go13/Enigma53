@@ -176,13 +176,13 @@ def jcreate():
         latitude = request.json['lat']
         longitude = request.json['lon']
     
-        newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, type = 1, answers = answers, latitude = latitude, longitude = longitude)
+        newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
         db.session.add(newQuestion)
         db.session.commit()
     
         for answer in answers:
             atext = answer['atext']
-            id = answer['id']
+            qid = answer['id']
             correct = 'F'
             if answer['correct'] == 1:
                 correct = 'T'
@@ -192,7 +192,7 @@ def jcreate():
     
         db.session.commit()
     
-        result = {'jstaus':'OK', 'qid':newQuestion.id}
+        result = {'jstaus' : 'OK', 'qid' : newQuestion.id}
         return jsonify(result)
     else:
         msg = "You should be logged in to create a question"
@@ -222,52 +222,66 @@ def jdelete(question_id):
             current_app.logger.warning(msg)
             return jsonify({"status" : "ERROR", "message" : msg})
     else:
-        return jsonify({"status":"ERROR"})
+        return jsonify({"status" : "ERROR"})
 
 @question_bp.route('/jsubmit/<int:question_id>/', methods=['POST'])
 def jsubmit(question_id):
-    # TODO: validate!
-    print 'jsubmit', question_id
-    
+
     hs = Historysession.get_current_historysession_by_userid(current_user.id)
-    
     sessionid = hs.id
-    
-    print sessionid
+
+    current_app.logger.debug("jsubmit - " + str(question_id) + ", sessionid - " + str(sessionid))
+    current_app.logger.debug("json in jsubmit - " + str(request.json))
     
     question = Question.get_question_by_id(question_id)
 
     if question:
         if current_user.id == question.userid:
-            qid = request.json['qid']
-            receivedanswers = request.json['answers']
-            correct = True
-    
-            for i in range(0, len(receivedanswers)):
-                item = receivedanswers[i]
-                aid = item['id']
-    
-                value = 'F'
-                if item['value'] == 'T':
-                    value = 'T'
-                
-                print '------------------------', sessionid, ' value - ', value,' aid - ', aid 
-                AnswerResult.add_answer_result(sessionid, aid, value, False)
-    
-                correct = correct and (value == question.answers[i].correct)
-                
-                print i, ' - ', question.answers[i].correct
-                print 'value - ', value, ' answer = ', question.answers[i].correct, ', correct - ', correct
-    
-            QuestionResult.add_question_result(sessionid, qid, correct, False)
-            db.session.commit()
+            schema = {
+                    "type" : "object",
+                    "properties" : {            
+                        "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "answers" : {"type": "array", "items": { "type" : "object", "properties": {
+                                                                  "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                                                                  "value" : {"type" : "string", "enum" : ["T", "F"], "optional" : False} 
+                                                                  }}, "maxItems" : 7, "optional" : True}
+                        }
+                    }
+
+            v = Draft4Validator(schema)
+            errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
             
-            result = {'jstaus':'OK'}
-            return jsonify(result)
+            if len(errors) > 0:
+                msg = u"Error in json format"
+                current_app.logger.warning(msg)
+                return jsonify({"status" : "ERROR", "message" : msg})
+            else:            
+                qid = request.json['qid']
+                receivedanswers = request.json['answers']
+                correct = True
+        
+                for i in range(0, len(receivedanswers)):
+                    item = receivedanswers[i]
+                    aid = item['id']
+                    value = item['value']
+                    
+                    current_app.logger.debug("submitting question answer: sessionid = " + str(sessionid) + ", value = " + str(value) + ", aid = " + str(aid))
+                     
+                    AnswerResult.add_answer_result(sessionid, aid, value, False)
+        
+                    correct = correct and (value == question.answers[i].correct)                    
+                    
+                    current_app.logger.debug("a# = " + str(i) + ", value = " + str(value) + ", answer = " + str(question.answers[i].correct) + ", correct = " + str(correct))
+
+                QuestionResult.add_question_result(sessionid, qid, correct, False)
+                db.session.commit()
+                
+                result = {'jstaus':'OK'}
+                return jsonify(result)
         else:
             msg = auth_failure_message + u"submit this question"
             current_app.logger.warning(msg)
             return jsonify({"status" : "ERROR", "message" : msg})
     else:
-        return jsonify({"status":"ERROR"})
+        return jsonify({"status" : "ERROR"})
 

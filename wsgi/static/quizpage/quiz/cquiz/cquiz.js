@@ -21,7 +21,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
     		
     		var els = this.element.find(".question-item"); 
             $(els).each(function(i){
-            	Quizpage.Quiz.Cquizedit.load_question_item(this , function(qst){
+            	Quizpage.Quiz.Cquiz.load_question_item(this , function(qst){
     				if(i === 0){
     					Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
     				}

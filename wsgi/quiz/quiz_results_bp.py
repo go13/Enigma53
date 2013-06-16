@@ -9,7 +9,7 @@ quiz_results_bp = Blueprint('quiz_results_bp', __name__, template_folder = 'page
 
 @quiz_results_bp.route('/<int:session_id>/')
 @login_required
-def quiz_results(session_id):# TODO: add permission verification
+def quiz_results(session_id):
     current_app.logger.debug("quiz_results(" + str(session_id) + ")")
     
     qres = QuizResult.get_quiz_results_by_id(session_id)
