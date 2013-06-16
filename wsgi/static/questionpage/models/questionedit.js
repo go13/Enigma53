@@ -8,13 +8,12 @@ $.Model('Questionedit',
         nextquestionid : 0,
         quizid : 0,
         qtext : "" ,
-        lat : "",
-        lon : "",
-        answers : [],
+        lat : NaN,
+        lon : NaN,
+        answers : new Array(),
 
         atext : "",
         correct : 'T',
-        isNew : false,
         gmarker : null
     },
     findAll: "/questions.json",
@@ -27,7 +26,7 @@ $.Model('Questionedit',
         obj.qtext = this.qtext;
         obj.answers = this.answers;
         obj.lat = this.lat;
-        obj.lon = this.lon; 
+        obj.lon = this.lon;
         return obj;
     },
     set_question : function(question){
@@ -145,13 +144,12 @@ $.Model('Questionedit',
     clean : function(){
         this.qid = -1;
         this.qtext = "";
-        this.lat = "";
-        this.lon = "";
-
+        this.lat = NaN;
+        this.lon = NaN;
         this.atext = "";
-        this.gmarker = null;
     	
     	this.answers = [];
+    	this.gmarker = null;
     },
     submit_question : function(success, error){
         var obj = new Object();

@@ -9,13 +9,11 @@
 			</a>
 		</div>		
 		<div class="pull-right">
-			<% if(!isNew){ %>
 			<button class="btn question-delete-btn btn-link" type="button">Delete</button>
-			<%}%>
 		</div>
 		<div style="margin:auto; width:180px;">
 			<button class="question-back btn" type="button">Back</button> 
-			<button class="question-<% if(!isNew){ %>save<% }else{ %>create<% } %>  btn btn-success" type="button"><% if(!isNew){ %> Save <% }else{ %> Create <% } %> </button>
+			<button class="question-save  btn btn-success" type="button"> Save </button>
 			<button class="question-next btn" type="button" >Next</button>
 		</div>
 	</div>

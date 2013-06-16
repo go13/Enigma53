@@ -1,34 +1,68 @@
-steal('jquery/controller').then(function($){
-	$.Controller('Quizpage.Quiz.Cquizedit',
-        {
-			quiz_update : function(title, success){
-				var qid = Quizpage.Quiz.Navigator.instance.model.quizid;
-				var obj = {
-					title : title
-				};
-	        	$.ajax({
-		            type: "POST",
-		            url: "/quiz/jupdate/"+qid+"/",
-		            dataType: "json",
-		            contentType: "application/json; charset=utf-8",
-		            data: JSON.stringify(obj),
-		            success :  success,
-		            error:  function (e){
-	                	Messenger().post({
-	                		  message: 'There was an error posting the data to server',
-	                		  type : 'error',
-	                		  showCloseButton: true
-	                		});
-	                  	if(error){
-	                  		error(e);
-	                  	}            	
-	                  }
-		        });
-			}
+steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
+	Quizpage.Quiz.Navigator('Quizpage.Quiz.Cquizedit', {
+            add_question_edit : function(question){
+                Quizpage.Quiz.Navigator.instance.element.find("#tabs")
+                    .append("<li id='tab-question" + question.qid + "' class='question-tab tab-question-item'>" +
+                        "<a href='#tab-question-page" + question.qid + "' data-toggle='tab'>Question " + question.qid + "</a>" +
+                        "</li>");
+                Quizpage.Quiz.Navigator.instance.element.find("#tabs-container")
+                    .append("<div id='tab-question-page" + question.qid + "' class='tab-pane' style='margin-right:20px'>" +
+                        "<div class='question-edit' name='question" + question.qid + "'></div>" +
+                        "</div>");
+                var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page" + question.qid)
+                    .children(".question-edit :first");
+                
+                var mc = new Questionpage.Question.Edit($(el), {type:"add", question : question, onSuccess : function(qst){
+                	Quizpage.Quiz.Navigator.instance.model.add_question(qst);
+                }});
+                Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
+                return mc.model; // returns question with id
+            },
+            load_question_edit : function(el, success){                	
+                var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){
+                	var nav = Quizpage.Quiz.Navigator.instance;
+                	nav.model.add_question(qst);                    	
+                	if(success){
+                		success(qst);
+                	}
+                }});
+            },
+            remove_question : function(qst){
+            	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.qid);
+            	if(el.hasClass("active")){
+            		if(!Quizpage.Quiz.Navigator.to_prev_tab()){
+            			Quizpage.Quiz.Navigator.to_next_tab();
+            		}
+            	};                	
+                el.remove();
+                
+                Quizpage.Quizmap.Cmapedit.remPoint(qst);
+                
+                Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page"+qst.qid).remove();
+
+                Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qst.qid);
+            },
+
         },{        	
         	init : function(){
-        		var quizid = this.options.quizid;
-        		this.loadProgressChart(quizid, "#results-chart");
+        		this._super();
+        		this.loadProgressChart(this.quizid, "#results-chart");
+        		
+        		var onSuccess = this.options.onSuccess;
+        		
+        		var n = 0;
+        		
+        		var els = this.element.find(".question-edit"); 
+                $(els).each(function(i){
+                	Quizpage.Quiz.Cquizedit.load_question_edit(this , function(qst){
+                		n++;
+        				if(els.length === n){
+        	        		if(onSuccess){
+        	        			onSuccess();	
+        	        		}
+        				}
+            		});
+            	});
         	},        	
         	loadProgressChart : function(quizid, place){
         		var margin = {top: 40, right: 10, bottom: 20, left: 45},
@@ -49,8 +83,7 @@ steal('jquery/controller').then(function($){
         		
         		var xAxis = d3.svg.axis()
         		    .scale(x)
-        		    .orient("bottom");//
-        		    //.tickFormat(formatDate)
+        		    .orient("bottom");
         		
         		var yAxis = d3.svg.axis()
         		    .scale(y)
@@ -85,7 +118,7 @@ steal('jquery/controller').then(function($){
         		      .attr("class", "x axis")
         		      .attr("transform", "translate(0," + height + ")")      
         		      .call(xAxis);
-        		 
+
         		  svg.append("g")
         		      .attr("class", "y axis")
         		      .call(yAxis)
@@ -136,23 +169,16 @@ steal('jquery/controller').then(function($){
         		    .on("mousedown", mousedown);
         		});
         	},
-	        "#settings-save-btn click" : function(){
-	        	var val = $('#quiz-title-input').attr("value"); 
-	        	Quizpage.Quiz.Cquizedit.quiz_update(val, function(data){
-	        		if(data.status === "OK"){
-	        			$('#quiz-title-legend').text("Quiz - " + val);
-                        Messenger().post({
-                    		  message: 'Quiz settings updated',
-                    		  showCloseButton: true
-                        });
-	        		}else{
-                        Messenger().post({
-                  		  message: data.message,
-                  		  type : 'error',
-                  		  showCloseButton: true
-                      });	        			
-	        		}	        		
-	        	});	        	
-	        }
+            ".question-delete-btn click" : function(){
+            	var qst = Quizpage.Quiz.Navigator.get_current_question();
+            	qst.destroy(function(data){
+            		Quizpage.Quiz.Cquizedit.remove_question(qst);   
+            		
+                    Messenger().post({
+                		  message: 'Question deleted',
+                		  showCloseButton: true
+                		});
+                });
+            }
         });        
 });

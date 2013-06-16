@@ -1,14 +1,17 @@
 steal(
     'quizpage/models/models.js',		// steals all your models
-    'quizpage/quiz/navigator',
 
     'questionpage/models/models.js',
     'questionpage/question/item',
+    'quizpage/quizmap/cmap',
+    'quizpage/quiz/cquiz',
 
-    function(){					// configure your application    
-    	$("#quiz-navigator").quizpage_quiz_navigator({ onSuccess : function(quizid){
-        	$(".question-item").each(function(i){
-        		Quizpage.Quiz.Navigator.load_question_item(this);        		
-        	});
-        }});        
+    function(){					// configure your application
+    	
+    	$("#question-map").quizpage_quizmap_cmap();
+    	
+    	$("#quiz-navigator").quizpage_quiz_cquiz(({onSuccess : function (){
+    		Quizpage.Quizmap.Cmapedit.loadPoints();    		
+    	}});
+    	
     })

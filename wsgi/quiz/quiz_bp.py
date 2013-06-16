@@ -11,6 +11,7 @@ quiz_bp = Blueprint('quiz_bp', __name__, template_folder = 'pages')
 auth_failure_message = u"You don't have permissions to "
 
 @quiz_bp.route('/<int:quiz_id>/')
+@login_required
 def quiz(quiz_id):
     current_app.logger.debug("quiz. quiz_id - " + str(quiz_id))
     
@@ -34,7 +35,7 @@ def quiz_map_edit(quiz_id):
     
     if quiz:
         current_app.logger.debug("quiz_edit. current_user.id - " + str(current_user.id) + " userid - " + str(quiz.userid))
-        if current_user.id == quiz.userid:        
+        if current_user.id == quiz.userid:
             return render_template('quiz_map_edit.html', quiz = quiz)
         else:
             return render_template('auth_failure.html')
@@ -247,4 +248,3 @@ def finish_session(quiz_id):
     else:
         current_app.logger.warning("No such quiz found")        
         return render_template('404.html')
-        

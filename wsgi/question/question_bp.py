@@ -82,6 +82,8 @@ def jupd(question_id):
     if question:
         if current_user.id == question.userid:
             
+            current_app.logger.warning(request.json)
+
             schema = {
                     "type" : "object",
                     "properties" : {            
@@ -103,18 +105,18 @@ def jupd(question_id):
             qid = request.json['qid']
             qtext = request.json['qtext']
             answers = request.json['answers']
-            lat = request.json['lat']
-            lon = request.json['lon']
+            latitude = request.json['lat']
+            longitude = request.json['lon']
             
             if len(errors) == 0:
                 current_app.logger.debug("got a question from DB, id = " + str(question_id))
                 current_app.logger.debug("qid = " + str(qid))
                 current_app.logger.debug("qtext = '" + str(qtext) + "'")
                 current_app.logger.debug("answers = " + str(answers))
-                current_app.logger.debug("latitude = " + str(lat))
-                current_app.logger.debug("longitude = " + str(lon))                
+                current_app.logger.debug("latitude = " + str(latitude))
+                current_app.logger.debug("longitude = " + str(longitude))                
                 
-                Question.update_question_by_id(question_id, {'qtext' : qtext, 'latitude' : lat, 'longitude' : lon}, False)
+                Question.update_question_by_id(question_id, {'qtext' : qtext, 'latitude' : latitude, 'longitude' : longitude}, False)
                 Answer.delete_answers_by_question_id(question_id, True)
         
                 for answer in answers:
@@ -171,10 +173,10 @@ def jcreate():
         qtext = request.json['qtext']
         quizid = request.json['quizid']
         answers = request.json['answers']
-        lat = request.json['lat']
-        lon = request.json['lon']
+        latitude = request.json['lat']
+        longitude = request.json['lon']
     
-        newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, type = 1, answers = answers, lat = lat, lon = lon)
+        newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, type = 1, answers = answers, latitude = latitude, longitude = longitude)
         db.session.add(newQuestion)
         db.session.commit()
     

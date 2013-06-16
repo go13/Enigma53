@@ -13,18 +13,18 @@ class Question(db.Model):
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
     type = db.Column('type', Integer)
-    lat = db.Column('latitude', Unicode)
-    lon = db.Column('longitude', Unicode)
+    latitude = db.Column('latitude', Unicode)
+    longitude = db.Column('longitude', Unicode)
     answers = []    
 
-    def __init__(self, quizid, userid, nextquestionid, qtext, type, answers, lat = lat, lon = lon):
+    def __init__(self, quizid, userid, nextquestionid, qtext, type, answers, latitude = latitude, longitude = longitude):
         self.quizid = quizid
         self.userid = userid
         self.nextquestionid = nextquestionid
         self.qtext = qtext
         self.type = type
-        self.lat = lat
-        self.lon = lon
+        self.latitude = latitude
+        self.longitude = longitude
         self.answers = answers
 
     @property
@@ -34,8 +34,8 @@ class Question(db.Model):
             'nextquestionid' : self.nextquestionid,
             'qtext' : self.qtext,
             'id' : self.id,
-            'lat': self.lat,
-            'lon': self.lon,
+            'lat': self.latitude,
+            'lon': self.longitude,
             'answers':[i.serialize for i in self.answers]
            }
 
@@ -46,8 +46,8 @@ class Question(db.Model):
             'nextquestionid':self.nextquestionid,
             'qtext':self.qtext,
             'id':self.id,
-            'lat': self.lat,
-            'lon': self.lon,
+            'lat': self.latitude,
+            'lon': self.longitude,
             'answers':[i.serialize_for_edit for i in self.answers]
            }
 

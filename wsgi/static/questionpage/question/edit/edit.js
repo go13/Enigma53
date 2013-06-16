@@ -14,12 +14,7 @@ steal( 'jquery/controller',
                     var type = this.options.type;
                     var onSuccess = this.options.onSuccess;
                     
-                    if(type === "new"){
-                        this.model = new Questionedit();
-                        this.model.isNew = true;
-                        this.model.quizid = this.options.quizid;                        
-                        this.element.html(this.view('init', this.model));
-                    }else if(type === "add"){
+                    if(type === "add"){
                         this.model = this.options.question;
                         this.element.html(this.view('init', this.model));
                     }else{

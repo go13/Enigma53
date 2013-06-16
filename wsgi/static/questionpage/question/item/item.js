@@ -45,9 +45,6 @@ steal(
                     this.model.submit_question();
                     Quizpage.Quiz.Navigator.to_next_tab();
                 },
-/*                ".question-edit-btn click" : function(el){
-                    document.location.href = '/quiz/'+this.model.quizid+'/edit/';
-                },*/
                 ".answer-checkbox click" : function(el){
                     var id = parseInt(el.attr("id").split("answer")[1]);
                     var answer = this.model.get_answer_by_id(id);
