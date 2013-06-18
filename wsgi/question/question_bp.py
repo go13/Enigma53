@@ -1,3 +1,4 @@
+import jinja2, scrubber
 from flask import Blueprint, render_template, request, jsonify, current_app
 from modules.jsonschema import validate, Draft4Validator
 
@@ -102,28 +103,30 @@ def jupd(question_id):
             v = Draft4Validator(schema)
             errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
-            qid = request.json['qid']
-            qtext = request.json['qtext']
-            answers = request.json['answers']
-            latitude = request.json['lat']
-            longitude = request.json['lon']
-            
             if len(errors) == 0:
+                qid = request.json['qid']
+                qtext = request.json['qtext']
+                answers = request.json['answers']
+                latitude = request.json['lat']
+                longitude = request.json['lon']
+                
+                #TODO - allow displaying unallowed tags as non html tags
+                scrubb = scrubber.Scrubber()                
+                qtext = jinja2.Markup(scrubb.scrub(qtext))
+                
                 current_app.logger.debug("got a question from DB, id = " + str(question_id))
                 current_app.logger.debug("qid = " + str(qid))
                 current_app.logger.debug("qtext = '" + str(qtext) + "'")
                 current_app.logger.debug("answers = " + str(answers))
                 current_app.logger.debug("latitude = " + str(latitude))
-                current_app.logger.debug("longitude = " + str(longitude))                
+                current_app.logger.debug("longitude = " + str(longitude))
                 
                 Question.update_question_by_id(question_id, {'qtext' : qtext, 'latitude' : latitude, 'longitude' : longitude}, False)
                 Answer.delete_answers_by_question_id(question_id, True)
         
                 for answer in answers:
                     atext = answer['atext']
-                    correct = 'F'
-                    if answer['correct']=='T':
-                        correct = 'T'
+                    correct = answer['correct']
                     Answer.create_answer(question_id, atext, correct, True)
                 db.session.commit()
                 
@@ -183,9 +186,7 @@ def jcreate():
         for answer in answers:
             atext = answer['atext']
             qid = answer['id']
-            correct = 'F'
-            if answer['correct'] == 1:
-                correct = 'T'
+            correct = answer['correct']
     
             newAnswer = Answer(newQuestion.id, atext, correct)
             db.session.add(newAnswer)

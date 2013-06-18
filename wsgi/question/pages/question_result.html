@@ -1,7 +1,7 @@
 {% macro render_question_results(question_result) %}
 
 <div class="form-actions">
-    {{ question_result.question.qtext }}
+    {{ question_result.question.qtext|sanitize_html }}
 </div>
     {% for item in question_result.answer_results %}
         {% if item.answer.correct != item.value %}
