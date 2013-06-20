@@ -80,7 +80,11 @@ class Question(db.Model):
     @staticmethod
     def get_all_questions_by_quiz_id(quiz_id):
         current_app.logger.debug("get_all_questions_by_quiz_id. quiz_id - " + str(quiz_id))
-        return Question.query.filter_by(quizid = quiz_id).all()
+        questions = Question.query.filter_by(quizid = quiz_id).all()
+        for q in questions:
+            q.answers = Answer.get_answer_by_question_id(q.id)
+            current_app.logger.debug(q.answers)
+        return questions
 
     @staticmethod
     def update_question_by_id(questionid, qdict, to_commit):

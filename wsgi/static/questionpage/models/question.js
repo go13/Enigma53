@@ -6,7 +6,7 @@ steal('jquery/model', function(){
 	        qid : -1,
 	        nextquestionid : 0,
 	        quizid : 0,
-	        qtext : "" ,
+	        qtext : "",
 	        lat : NaN,
 	        lon : NaN,
 	        answers : new Array(),

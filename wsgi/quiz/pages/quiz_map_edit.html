@@ -1,3 +1,5 @@
+{% from "render_question_edit.html" import render_question_edit %}
+
 {% extends "base.html" %}
 
 {% block content %} 
@@ -66,17 +68,17 @@
 	<div class="tabbable"> 
 		<div class="tabbable" style="margin-right:140px">
 		  <ul class="nav nav-pills">
-			  <li class="active"><a href="#tab4" data-toggle="tab">Results</a></li>
-			  <li><a href="#tab2" data-toggle="tab">Edit</a></li>		  
+			  <li><a href="#tab4" data-toggle="tab">Results</a></li>
+			  <li  class="active"><a href="#tab2" data-toggle="tab">Edit</a></li>		  
 			  <li><a href="#tab-settings" data-toggle="tab">Settings</a></li>
 			  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/">Start Quiz</a></li>
 		  </ul>
 		</div>
 	  <div class="tab-content">
-	    <div class="tab-pane active" id="tab4">
+	    <div class="tab-pane" id="tab4">
 	      <div id="results-chart"></div>
 	    </div>
-	    <div class="tab-pane" id="tab2">
+	    <div class="tab-pane active" id="tab2">
 	      <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right" >      
 			<ul id="tabs" class="nav nav-tabs">
 			    {%for item in quiz.questions %}
@@ -88,7 +90,9 @@
 			<div id="tabs-container" class="tab-content">        	
 			    {%for item in quiz.questions %}
 			    <div id="tab-question-page{{item.id}}" class="tab-pane {% if loop.first %}active{% endif %}" style="margin-right:20px">
-			        <div class='question-edit' name='question{{item.id}}'></div>
+			         <!-- <div class='question-edit' name='question{{item.id}}'> -->  
+			         {{render_question_edit(item) }}
+			         <!-- </div> -->
 			    </div>
 			    {% endfor %}
 			</div>	

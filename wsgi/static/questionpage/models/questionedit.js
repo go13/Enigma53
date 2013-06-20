@@ -10,15 +10,16 @@ $.Model('Questionedit',
         qtext : "" ,
         lat : NaN,
         lon : NaN,
-        answers : new Array(),
+        answers : null,
 
-        atext : "",
-        correct : 'T',
         gmarker : null
     },
     findAll: "/questions.json",
     findOne : "/question/jget_for_edit/{id}/"
 },{
+	init : function(){
+		this.answers = new Array();
+	},
     to_object : function(){
         var obj = new Object();
         obj.qid = this.qid;
@@ -99,17 +100,29 @@ $.Model('Questionedit',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: "kill",
-                success : success,
+                success : function(data){
+                	if(data.status == "ERROR"){
+                    	Messenger().post({
+                    		  message: data.message,
+                    		  type : 'error',
+                    		  showCloseButton: true
+                    		});
+                	}else{
+    	            	if(success){
+    	            		success();
+    	            	}
+                	}
+                },
                 error: function (e){
                 	Messenger().post({
-                		  message: 'There was an error posting the data to server',
-                		  type : 'error',
-                		  showCloseButton: true
-                		});
-                  	if(error){
-                  		error(e);
-                  	}            	
-                  }
+              		  message: 'There was an error posting the data to server',
+              		  type : 'error',
+              		  showCloseButton: true
+              		});
+                	if(error){
+                		error(e);
+                	}            	
+                }
             });
     },
     create : function(success, error){
@@ -124,12 +137,20 @@ $.Model('Questionedit',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
             success : function(data){
-            	self.qid = data.qid;
-            	if(success){
-            		success();            		
-            	}            	
+            	if(data.status == "ERROR"){
+                	Messenger().post({
+                		  message: data.message,
+                		  type : 'error',
+                		  showCloseButton: true
+                		});
+            	}else{
+                    self.qid = data.qid;
+	            	if(success){
+	            		success();
+	            	}
+            	}
             },
-            error:  function (e){
+            error: function (e){
             	Messenger().post({
           		  message: 'There was an error posting the data to server',
           		  type : 'error',
@@ -146,7 +167,6 @@ $.Model('Questionedit',
         this.qtext = "";
         this.lat = NaN;
         this.lon = NaN;
-        this.atext = "";
     	
     	this.answers = [];
     	this.gmarker = null;
@@ -172,8 +192,20 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
-            success : success,
-            error:  function (e){
+            success : function(data){
+            	if(data.status == "ERROR"){
+                	Messenger().post({
+                		  message: data.message,
+                		  type : 'error',
+                		  showCloseButton: true
+                		});            		
+            	}else{
+	            	if(success){
+	            		success();
+	            	}
+            	}
+            },
+            error: function (e){
             	Messenger().post({
           		  message: 'There was an error posting the data to server',
           		  type : 'error',

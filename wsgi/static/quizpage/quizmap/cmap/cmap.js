@@ -111,8 +111,10 @@ steal('jquery/controller').then(function($){
 		    		for(var i = 0; i < qlist.length; i++){	    			
 		    			this.addPoint(qlist[i]);
 		    		}
-		    		this.offsetCenter(qlist[0].lat, qlist[0].lon)
-		    		this.pointsLoaded = true;
+		    		if(qlist.length > 0){
+			    		this.offsetCenter(qlist[0].lat, qlist[0].lon)
+			    		this.pointsLoaded = true;
+		    		}
 	    		}
 	    	},
 	    	onMapRightClick : function(event){

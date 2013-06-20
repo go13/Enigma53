@@ -15,14 +15,41 @@ steal( 'jquery/controller',
                     var onSuccess = this.options.onSuccess;
                     
                     if(type === "add"){
-                        this.model = this.options.question;
+                        
+                    	this.model = this.options.question;
                         this.element.html(this.view('init', this.model));
+                        
+                    }else if(type === "parse"){
+                    	                    	
+                    	var question = new Questionedit();                    	
+                    	
+                    	var question_name = this.element.attr("name");
+                    	question.qid = parseInt(question_name.split("question")[1]);
+                    	question.lat = parseFloat(this.element.attr("data-lat"));
+                    	question.lon = parseFloat(this.element.attr("data-lon"));
+                    	question.qtext = this.element.find(".qtext").html();
+                    	
+                    	this.element.find(".qanswer").each(function(i){
+                    		var answer = new Object();
+                    		answer.id = parseInt($(this).attr("id").split("answer")[1]);
+                    		answer.correct = $(this).attr("data-correct");
+                    		answer.atext = $(this).find(".qanswer-input").html();
+                    		
+                    		question.answers.push(answer);
+                    	});
+                    	
+                    	this.model = question;
+                    	
+                        if(onSuccess){
+                        	onSuccess(question);
+                        }
+                    	
                     }else{
+
                         var question_name = this.element.attr("name");
                         this.model = new Questionedit();
                         var question = this.model;
 
-                        this.model.isNew = false;
                         var id = parseInt(question_name.split("question")[1]);
                         
                         this.element.html(this.view('init', Questionedit.findOne({id:id}, function(data){
@@ -34,14 +61,9 @@ steal( 'jquery/controller',
                             question.lon = parseFloat(data.lon);
                             question.lat = parseFloat(data.lat);
                             
-                            if(onSuccess != null){
+                            if(onSuccess){
                             	onSuccess(question);
                             }
-
-                            console.log( "received a question:" );
-                            console.log( "id - " + data.id );
-                            console.log( "quizid - " + data.quizid );
-                            console.log( "qtext - " + data.qtext );
                         })));
                     }
                 },
@@ -109,26 +131,15 @@ steal( 'jquery/controller',
 
                         var answer = {};
                         answer.id = maxid;
-                        answer.correct = this.model.correct;
+                        answer.correct = 'T';
 
-                        var atext = this.model.atext;
 
-                        if(!atext || /^\s*$/.test(atext)){
-                            answer.atext = "";
-                        }else{
-                            answer.atext = atext;
-                        }
+                        answer.atext = "";
 
                         this.model.answers.push(answer);
 
                         this.element.find(".answers").append(this.view('answer', {answer: answer}));
                         this.element.find(".add-input").attr("value", "");
-                        this.model.atext = "";
-                        
-                        if(this.model.correct === "F"){
-                        	this.element.find(".add-checked").find(".icon-ban-circle").removeClass("icon-ban-circle").addClass("icon-ok");
-                        	this.model.correct = "T";
-                        }                    	
                     }else{
                     	Messenger().post({
   	              		  message: "The number of answers is restricted to 7 to keep your performance high",
@@ -136,9 +147,6 @@ steal( 'jquery/controller',
   	              		  showCloseButton: true
   	              		});
                     }
-                },
-                ".add-input keyup" : function(el){
-                    this.model.atext = el.attr("value") ;
                 },
                 ".qanswer-input keyup" : function(el){
                     var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
@@ -150,13 +158,7 @@ steal( 'jquery/controller',
                         Messenger().post({
                     		  message: 'Successfully saved',
                     		  showCloseButton: true
-                    		});
-                    }, function(data){
-	                    Messenger().post({
-	              		  message: 'There was an error while saving the question!',
-	              		  type : 'error',
-	              		  showCloseButton: true
-	              		});	                    
+                    		});                   
                     });
                 },
                 ".question-view-btn click" : function(el){
