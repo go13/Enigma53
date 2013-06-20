@@ -116,7 +116,7 @@ def jupd(question_id):
                 
                 current_app.logger.debug("got a question from DB, id = " + str(question_id))
                 current_app.logger.debug("qid = " + str(qid))
-                current_app.logger.debug("qtext = '" + str(qtext) + "'")
+                current_app.logger.debug("qtext = '" + qtext + "'")
                 current_app.logger.debug("answers = " + str(answers))
                 current_app.logger.debug("latitude = " + str(latitude))
                 current_app.logger.debug("longitude = " + str(longitude))
@@ -132,7 +132,7 @@ def jupd(question_id):
                 
                 current_app.logger.debug("Status - OK")
                 
-                result = {'jstaus':'OK'}
+                result = {'staus':'OK'}
                 return jsonify(result)
             else:
                 if len(qtext) > 4096:
@@ -162,39 +162,56 @@ def jupd(question_id):
 @question_bp.route('/jcreate/',methods=['POST'])
 @login_required
 def jcreate():
-    # TODO: validate!
+    current_app.logger.debug("jcreate. " + str(request.json))
     
     if current_user.id >= 0:
+        
+        schema = {
+                    "type" : "object",
+                    "properties" : {            
+                        "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
+                        "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                                                                  "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False},
+                                                                  "atext" : {"type" : "string", "maxLength" : 128, "optional" : False} 
+                                                                  }}, "maxItems" : 7, "optional" : True},
+                        "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        }
+                    }
+                
+        v = Draft4Validator(schema)
+        errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
-        print 'got a question to create'
-        print 'qtext ', request.json['qtext']
-        print 'quizid ', request.json['quizid']
-        print 'answers ', request.json['answers']
-        print 'lat ', request.json['lat']
-        print 'lon ', request.json['lon']
-    
-        qtext = request.json['qtext']
-        quizid = request.json['quizid']
-        answers = request.json['answers']
-        latitude = request.json['lat']
-        longitude = request.json['lon']
-    
-        newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
-        db.session.add(newQuestion)
-        db.session.commit()
-    
-        for answer in answers:
-            atext = answer['atext']
-            qid = answer['id']
-            correct = answer['correct']
-    
-            newAnswer = Answer(newQuestion.id, atext, correct)
-            db.session.add(newAnswer)
-    
-        db.session.commit()
-    
-        result = {'jstaus' : 'OK', 'qid' : newQuestion.id}
-        return jsonify(result)
+        if len(errors) == 0:        
+        
+            qtext = request.json['qtext']
+            quizid = request.json['quizid']
+            answers = request.json['answers']
+            latitude = request.json['lat']
+            longitude = request.json['lon']
+        
+            newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
+            db.session.add(newQuestion)
+            db.session.commit()
+        
+            for answer in answers:
+                atext = answer['atext']
+                qid = answer['id']
+                correct = answer['correct']
+        
+                newAnswer = Answer(newQuestion.id, atext, correct)
+                db.session.add(newAnswer)
+        
+            db.session.commit()
+        
+            result = {'jstaus' : 'OK', 'qid' : newQuestion.id}
+            return jsonify(result)
+        else:
+            msg = "Error in json"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
     else:
         msg = "You should be logged in to create a question"
         current_app.logger.warning(msg)
