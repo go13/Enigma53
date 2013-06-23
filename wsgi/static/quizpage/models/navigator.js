@@ -15,10 +15,10 @@ steal('jquery/model', function(){
             add_question : function (question){
                 this.questions.push(question);
             },
-            get_question_by_id : function(qid){
+            get_question_by_id : function(id){
             	var res = null;
             	for(var i = 0; i < this.questions.length; i++){
-            		if(qid === this.questions[i].qid){
+            		if(id === this.questions[i].id){
             			res = this.questions[i];
             			break;
             		}
@@ -35,13 +35,13 @@ steal('jquery/model', function(){
             	} 
             	return res;
             },
-            remove_question_by_id : function(qid){
+            remove_question_by_id : function(id){
                 if(this.questions.length === 0){
                    return false;
                 }else{
                     var b = false;
                     for(var i = 0; i < this.questions.length; i++){
-                        if(qid === this.questions[i].qid){
+                        if(id === this.questions[i].id){
                             this.questions.splice(i, 1);
                             b = true;
                             break;
@@ -59,19 +59,19 @@ steal('jquery/model', function(){
                     return b;
                 }
             },
-            set_current_question_by_id : function(qid){
-                if(qid == null || isNaN(qid) || this.questions.length === 0){
+            set_current_question_by_id : function(id){
+                if(id == null || isNaN(id) || this.questions.length === 0){
                     this.current_question = null;
                     this.current_question_num = -1;
                     return this.current_question_num;
                 }else{
-                    if(qid === -1){
+                    if(id === -1){
                         this.current_question = this.questions[0];
                         this.current_question_num = 0;
                         return -1;
                     }else{
                         for(var i = 0; i < this.questions.length; i++){
-                            if(qid === this.questions[i].qid){
+                            if(id === this.questions[i].id){
                                 this.current_question = this.questions[i];
                                 this.current_question_num = i;
                                 break;
@@ -96,7 +96,7 @@ steal('jquery/model', function(){
                             this.current_question = this.questions[this.current_question_num];
                         }
                     }
-                    return this.current_question.qid;
+                    return this.current_question.id;
                 }
             },
             to_prev_question : function(){
@@ -114,7 +114,7 @@ steal('jquery/model', function(){
                             this.current_question = this.questions[this.current_question_num];
                         }
                     }
-                    return this.current_question.qid;
+                    return this.current_question.id;
                 }
             }
         });

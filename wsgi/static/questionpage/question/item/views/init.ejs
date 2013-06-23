@@ -2,14 +2,6 @@
     <%== qtext %>
 </div>
 
-<blockquote style="margin-bottom: 15px">
-    <% for(var i=0; i < answers.length; i++){ %>
-    <label class="checkbox">
-        <input id="answer<%=answers[i].id%>" class="answer-checkbox" type="checkbox"><%= answers[i].atext %>
-    </label>
-    <%}%>
-</blockquote>
-
 <div align="center">
     <button class="question-back btn" type="button">Back</button>
 	<button class="question-submit-btn  btn btn-success" type="button">Submit</button>

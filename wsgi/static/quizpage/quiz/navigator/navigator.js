@@ -23,9 +23,9 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
 
                         el = el.next();
 
-                        var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
-                        navigator.model.set_current_question_by_id(qid);
-                        var qst = navigator.model.get_question_by_id(qid);
+                        var id = parseInt(el.attr("id").split("tab-question-page")[1]);
+                        navigator.model.set_current_question_by_id(id);
+                        var qst = navigator.model.get_question_by_id(id);
 
                         Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                         return true;
@@ -46,9 +46,9 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
 
                         el = el.prev();
 
-                        var qid = parseInt(el.attr("id").split("tab-question-page")[1]);
-                        navigator.model.set_current_question_by_id(qid);
-                        var qst = navigator.model.get_question_by_id(qid);
+                        var id = parseInt(el.attr("id").split("tab-question-page")[1]);
+                        navigator.model.set_current_question_by_id(id);
+                        var qst = navigator.model.get_question_by_id(id);
 
                         Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
 
@@ -57,7 +57,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     	return false;
                     }   
                 },
-                to_tab_by_id : function(qid, do_focus){
+                to_tab_by_id : function(id, do_focus){
                     var navel = Quizpage.Quiz.Navigator.instance.element;
                     var navigator = Quizpage.Quiz.Navigator.instance;
                     var el = navel.find("#tabs > .question-tab");
@@ -65,25 +65,25 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     	var ela = navel.find("#tabs > .question-tab.active");
                     	if(ela.length > 0){
                             var tab_id_string = ela.attr("id").split("tab-question-page")[1];
-                            if(tab_id_string != qid){
+                            if(tab_id_string != id){
                                 ela.removeClass("active");
                             }                    		
                     	}
-                        el = navel.find("#tabs > #tab-question" + qid);
+                        el = navel.find("#tabs > #tab-question" + id);
                         el.addClass("active");
 
                         el = navel.find("#tabs-container > .tab-pane.active");
                         el.removeClass("active");
 
-                        el = navel.find("#tabs-container > #tab-question-page"+qid);
+                        el = navel.find("#tabs-container > #tab-question-page" + id);
                         el.addClass("active");
-                        var qid_num = parseInt(qid);
+                        var id_num = parseInt(id);
                         if(do_focus){
-	                        var qst = navigator.model.get_question_by_id(qid);
+	                        var qst = navigator.model.get_question_by_id(id);
 
 	                        Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                         }
-                        navigator.model.set_current_question_by_id(qid_num);
+                        navigator.model.set_current_question_by_id(id_num);
                     }
                 },
                 get_current_question_id : function(){
@@ -95,9 +95,9 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                 },
                 get_current_question : function(){
                 	var question = null;
-                    var qid = Quizpage.Quiz.Navigator.get_current_question_id();
-                    if(!isNaN(qid)){
-                    	question = Quizpage.Quiz.Navigator.instance.model.get_question_by_id(qid); 
+                    var id = Quizpage.Quiz.Navigator.get_current_question_id();
+                    if(!isNaN(id)){
+                    	question = Quizpage.Quiz.Navigator.instance.model.get_question_by_id(id); 
                     }
                     return question;
                }
@@ -118,9 +118,9 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     Quizpage.Quiz.Navigator.to_prev_tab();
                 },
                 ".tab-question-item click" : function(el){
-                	var qid = parseInt(el.attr("id").split("tab-question")[1]);
-                    this.model.set_current_question_by_id(qid);
-                    var qst = this.model.get_question_by_id(qid);
+                	var id = parseInt(el.attr("id").split("tab-question")[1]);
+                    this.model.set_current_question_by_id(id);
+                    var qst = this.model.get_question_by_id(id);
 
                     Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                 }

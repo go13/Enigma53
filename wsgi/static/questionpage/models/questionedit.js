@@ -4,7 +4,7 @@ $.Model('Questionedit',
 /* @Static */
 {
     defaults : {
-        qid : -1,
+        id : -1,
         quizid : 0,
         qtext : "" ,
         lat : NaN,
@@ -21,7 +21,7 @@ $.Model('Questionedit',
 	},
     to_object : function(){
         var obj = new Object();
-        obj.qid = this.qid;
+        obj.id = this.id;
         obj.quizid = this.quizid;
         obj.qtext = this.qtext;
         obj.answers = this.answers;
@@ -30,7 +30,7 @@ $.Model('Questionedit',
         return obj;
     },
     set_question : function(question){
-        this.qid = question.qid;
+        this.id = question.id;
         this.quizid = question.quizid;
         this.qtext = question.qtext;
         this.answers = question.answers;
@@ -61,7 +61,7 @@ $.Model('Questionedit',
         // TODO refactor answers so they dont have unnecessary fields
         $.ajax({
             type: "POST",
-            url: "/question/jupd/" + this.qid + "/",
+            url: "/question/jupd/" + this.id + "/",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
@@ -94,7 +94,7 @@ $.Model('Questionedit',
             // TODO refactor answers so they don't have unnecessary fields
             $.ajax({
                 type: "POST",
-                url: "/question/jdelete/"+this.qid+"/",
+                url: "/question/jdelete/"+this.id+"/",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: "kill",
@@ -142,7 +142,7 @@ $.Model('Questionedit',
                 		  showCloseButton: true
                 		});
             	}else{
-                    self.qid = data.qid;
+                    self.id = data.id;
 	            	if(success){
 	            		success();
 	            	}
@@ -161,7 +161,7 @@ $.Model('Questionedit',
         });
     },
     clean : function(){
-        this.qid = -1;
+        this.id = -1;
         this.qtext = "";
         this.lat = NaN;
         this.lon = NaN;
@@ -171,7 +171,7 @@ $.Model('Questionedit',
     },
     submit_question : function(success, error){
         var obj = new Object();
-        obj.qid = this.qid;
+        obj.id = this.id;
         obj.lat = this.lat;
         obj.lon = this.lon;
         obj.answers = new Array();
@@ -186,7 +186,7 @@ $.Model('Questionedit',
 
         $.ajax({
             type: "POST",
-            url: "/question/jsubmit/"+this.qid+"/",
+            url: "/question/jsubmit/"+this.id+"/",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),

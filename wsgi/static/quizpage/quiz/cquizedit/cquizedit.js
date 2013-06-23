@@ -5,18 +5,18 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
             	var nav = Quizpage.Quiz.Navigator.instance;
             	
                 nav.element.find("#tabs")
-                    .append("<li id='tab-question" + question.qid + "' class='question-tab tab-question-item'>" +
-                        "<a href='#tab-question-page" + question.qid + "' data-toggle='tab'>Question " + question.qid + "</a>" +
+                    .append("<li id='tab-question" + question.id + "' class='question-tab tab-question-item'>" +
+                        "<a href='#tab-question-page" + question.id + "' data-toggle='tab'>Question " + question.id + "</a>" +
                         "</li>");
                 nav.element.find("#tabs-container")
-                    .append("<div id='tab-question-page" + question.qid + "' class='tab-pane' style='margin-right:20px'>" +
-                        "<div class='question-edit' name='question" + question.qid + "'></div>" +
+                    .append("<div id='tab-question-page" + question.id + "' class='tab-pane' style='margin-right:20px'>" +
+                        "<div class='question-edit' name='question" + question.id + "'></div>" +
                         "</div>");
-                var el = nav.element.find("#tab-question-page" + question.qid)
+                var el = nav.element.find("#tab-question-page" + question.id)
                     .children(".question-edit :first");
                 
                 var mc = new Questionpage.Question.Edit($(el), {
-                	type:"add", 
+                	type : "add", 
                 	question : question, 
                 	onSuccess : function(qst){
                 		nav.model.add_question(qst);
@@ -45,7 +45,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                 });
             },
             remove_question : function(qst){
-            	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.qid);
+            	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.id);
             	if(el.hasClass("active")){
             		if(!Quizpage.Quiz.Navigator.to_prev_tab()){
             			Quizpage.Quiz.Navigator.to_next_tab();
@@ -55,9 +55,9 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                 
                 Quizpage.Quizmap.Cmapedit.remPoint(qst);
                 
-                Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page"+qst.qid).remove();
+                Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page"+qst.id).remove();
 
-                Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qst.qid);
+                Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qst.id);
             }
         },{        	
         	init : function(){

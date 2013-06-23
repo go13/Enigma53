@@ -41,6 +41,7 @@ def jget(question_id):
         if current_user.id == question.userid:
             result = {'jstaus':'OK'}
             result.update(question.serialize)
+            current_app.logger.warning(result)
             return jsonify(result)
         else:
             msg = auth_failure_message + u"view this question"
@@ -88,7 +89,7 @@ def jupd(question_id):
             schema = {
                     "type" : "object",
                     "properties" : {            
-                        "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
@@ -104,7 +105,7 @@ def jupd(question_id):
             errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
             if len(errors) == 0:
-                qid = request.json['qid']
+                qid = request.json['id']
                 qtext = request.json['qtext']
                 answers = request.json['answers']
                 latitude = request.json['lat']
@@ -115,7 +116,7 @@ def jupd(question_id):
                 #qtext = jinja2.Markup(scrubb.scrub(qtext))
                 
                 current_app.logger.debug("got a question from DB, id = " + str(question_id))
-                current_app.logger.debug("qid = " + str(qid))
+                current_app.logger.debug("id = " + str(qid))
                 current_app.logger.debug("qtext = '" + qtext + "'")
                 current_app.logger.debug("answers = " + str(answers))
                 current_app.logger.debug("latitude = " + str(latitude))
@@ -169,7 +170,7 @@ def jcreate():
         schema = {
                     "type" : "object",
                     "properties" : {            
-                        "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
@@ -206,7 +207,7 @@ def jcreate():
         
             db.session.commit()
         
-            result = {'jstaus' : 'OK', 'qid' : newQuestion.id}
+            result = {'jstaus' : 'OK', 'id' : newQuestion.id}
             return jsonify(result)
         else:
             msg = "Error in json"
@@ -258,7 +259,7 @@ def jsubmit(question_id):
             schema = {
                     "type" : "object",
                     "properties" : {            
-                        "qid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {
                                                                   "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                                                                   "value" : {"type" : "string", "enum" : ["T", "F"], "optional" : False} 
@@ -274,7 +275,7 @@ def jsubmit(question_id):
                 current_app.logger.warning(msg)
                 return jsonify({"status" : "ERROR", "message" : msg})
             else:            
-                qid = request.json['qid']
+                qid = request.json['id']
                 receivedanswers = request.json['answers']
                 correct = True
         

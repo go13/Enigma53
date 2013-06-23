@@ -3,7 +3,7 @@ steal('jquery/model', function(){
 	/* @Static */
 	{
 	    defaults : {
-	        qid : -1,
+	        id : -1,
 	        quizid : 0,
 	        qtext : "",
 	        lat : NaN,
@@ -12,7 +12,7 @@ steal('jquery/model', function(){
 	        gmarker : null
 	    },
 	    findAll: "/questions.json",
-	    findOne : "/question/jget/{id}/"
+		findOne : "/question/jget/{id}/"
 	},{
 	    get_answer_by_id : function(id){
 	        var result = null;
@@ -26,9 +26,9 @@ steal('jquery/model', function(){
 	    },
 	    submit_question : function(success, error){
 	        var obj = new Object();
-	        obj.qid = this.qid;
+	        obj.id = this.id;
 	        obj.answers = new Array();
-	        for(var i=0; i<this.answers.length; i++ ){
+	        for(var i = 0; i < this.answers.length; i++ ){
 	            obj.answers.push(new Object());
 	            obj.answers[i].value = this.answers[i].value;
 	            obj.answers[i].id = this.answers[i].id;
@@ -37,7 +37,7 @@ steal('jquery/model', function(){
 	
 	        $.ajax({
 	            type: "POST",
-	            url: "/question/jsubmit/"+this.qid+"/",
+	            url: "/question/jsubmit/"+this.id+"/",
 	            dataType: "json",
 	            contentType: "application/json; charset=utf-8",
 	            data: JSON.stringify(obj),

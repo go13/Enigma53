@@ -123,7 +123,7 @@ steal('jquery/controller').then(function($){
 	    		}
 	    	},
 	        onMarkerClick : function(mk){
-	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid, false);
+	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
 	        	if(this.doMarkerClick){
 	        		this.doMarkerClick(mk);
 	        	}
@@ -140,7 +140,7 @@ steal('jquery/controller').then(function($){
 	        onMarkerMove : function(mk){
 	        	mk.question.lat = mk.position.jb;
 	        	mk.question.lon = mk.position.kb;
-	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid, false);
+	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
 	        	
 	        	if(this.doMarkerMove){
 	        		this.doMarkerMove(mk);

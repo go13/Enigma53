@@ -11,9 +11,10 @@ steal( 'jquery/controller',
         
         },{
                 model : null,
+                editor : null,
 
                 init : function(){
-               	
+                	var self = this;
                     var type = this.options.type;
                     var onSuccess = this.options.onSuccess;
                     var questionControls = this.options.questionControls; 
@@ -23,7 +24,7 @@ steal( 'jquery/controller',
                     	this.model = this.options.question;
                         this.element.html(this.view('init', this.model));
                         
-                        this.model.editor = this.loadPageDownEditor(this.model.qid, questionControls);
+                        this.editor = this.loadPageDownEditor(this.model.id, questionControls);
                         
                     }else if(type === "parse"){
                     	                    	
@@ -31,12 +32,12 @@ steal( 'jquery/controller',
                     	this.model = question;
                     	
                     	var question_name = this.element.attr("name");
-                    	question.qid = parseInt(question_name.split("question")[1]);
+                    	question.id = parseInt(question_name.split("question")[1]);
                     	question.lat = parseFloat(this.element.attr("data-lat"));
                     	question.lon = parseFloat(this.element.attr("data-lon"));
                     	question.qtext = this.element.find(".qtext").html();
                     	
-                		question.editor = this.loadPageDownEditor(question.qid, questionControls);
+                		question.editor = this.loadPageDownEditor(question.id, questionControls);
                     	
                         if(onSuccess){
                         	onSuccess(question);
@@ -45,23 +46,20 @@ steal( 'jquery/controller',
                     }else{
 
                         var question_name = this.element.attr("name");
-                        this.model = new Questionedit();
-                        var question = this.model;
 
                         var id = parseInt(question_name.split("question")[1]);
                         
-                        this.element.html(this.view('init', Questionedit.findOne({id:id}, function(data){
-                            question.qid = data.id;
-                            question.quizid = data.quizid;
-                            question.qtext = data.qtext;
-                            question.answers = data.answers;
+                        Questionedit.findOne({id:id}, function(question){
+                        	self.model = question; 
                             question.lon = parseFloat(data.lon);
                             question.lat = parseFloat(data.lat);
                             
                             if(onSuccess){
                             	onSuccess(question);
                             }
-                        })));
+                        });
+                        
+                        this.element.html(this.view('init', this.model));
                     }
                 },
                 loadPageDownEditor : function(questionid, questionControls){
@@ -69,7 +67,7 @@ steal( 'jquery/controller',
                     var options = {
                         helpButton: { 
                         	handler: function(){
-                        		//self.editorToPreview(self);
+                        		//todo
                         	},
                         	delQuestionHandler: function(){
                         		questionControls.delQuestionHandler(self.model);
@@ -100,19 +98,19 @@ steal( 'jquery/controller',
                     	var natext = atext;
                     	if(!atext || 0 === atext.length){
                     		// #todo: can put only link or plain text
-                    		var natext = "Wrong!"	
+                    		natext = "Wrong!"	
                     	}
                     	if(correct === "T" || correct === "t" ){
                     		self.onNewCheckbox.call(self, 'T', natext);
                     		
                 			return "<input type='checkbox' " +
-            				"onclick='return false' onkeydown='return false' checked='checked'>" + " " + 
+            				"onclick='return false' onkeydown='return false' checked='checked'/>" + " " + 
             				"<span class='label label-important'>"+ natext +"</span>\n";	
                     	}else{
                     		self.onNewCheckbox.call(self, 'F', natext);
                     		
                 			return "<input type='checkbox' " +
-            				"onclick='return false' onkeydown='return false'>" + " " + 
+            				"onclick='return false' onkeydown='return false'/>" + " " + 
             				"<span class='label label-important'>"+ natext +"</span>\n";	
                     	}                        	
                         
@@ -130,7 +128,7 @@ steal( 'jquery/controller',
             		model.answers.push(answer);                	
                 },
                 set_question : function(question){
-                    this.model.qid = question.qid;
+                    this.model.id = question.id;
                     this.model.quizid = question.quizid;
                     this.model.qtext = question.qtext;
                     this.model.answers = question.answers;

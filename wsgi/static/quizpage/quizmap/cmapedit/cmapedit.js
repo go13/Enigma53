@@ -29,14 +29,14 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
             
             qm.create(function(){
             	Quizpage.Quiz.Cquizedit.add_question_edit(qm);
-            	Quizpage.Quiz.Cquizedit.to_tab_by_id(qm.qid, false);
+            	Quizpage.Quiz.Cquizedit.to_tab_by_id(qm.id, false);
             });
         },
         
         onMarkerMove : function(mk){
         	mk.question.lat = mk.position.jb;
         	mk.question.lon = mk.position.kb;
-        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.qid, false);
+        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
         }
         
 	},{
