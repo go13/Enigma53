@@ -2,8 +2,11 @@ steal(
     'jquery/controller',
     'jquery/view/ejs',
     'jquery/controller/view',
-    'questionpage/models')
-    .then('./views/init.ejs', function($){
+    'questionpage/models',
+    
+    'pagedown/Markdown.js'
+    
+    ).then('./views/init.ejs', function($){
         $.Controller('Questionpage.Question.Item',
             {
 
@@ -12,24 +15,24 @@ steal(
                 model : null,
 
                 init : function(){
+                	var self = this;
+                	var onSuccess = self.options.onSuccess;
+                    var questionControls = self.options.questionControls;
+
                     this.model = new Question();
-                    var id = parseInt(this.element.attr("name").split("question")[1]);
-                    var question = this.model;
-                    var onSuccess = this.options.onSuccess;
+                    var id = parseInt(self.element.attr("name").split("question")[1]);
+                    var question = self.model;
                                                         // Change to this.model
+                    
                     this.element.html(this.view('init', Question.findOne({id:id}, function(data){
                         question.qid = data.id;
-                        question.nextquestionid = data.id;
                         question.quizid = data.quizid;
                         question.qtext = data.qtext;
                         question.answers = data.answers;
                         question.lon = parseFloat(data.lon);
                         question.lat = parseFloat(data.lat);
                         
-                        console.log( "received a question:" );
-                        console.log( "id - " + data.id );
-                        console.log( "quizid - " + data.quizid );
-                        console.log( "qtext - " + data.qtext );
+                        //question.editor = self.loadPageDownEditor(question.qid, questionControls);
 
                         for(var i=0; i<question.answers.length; i++){
                             question.answers[i].value = 'F';

@@ -1,3 +1,4 @@
+from flask import current_app
 from sqlalchemy import Integer, Unicode, String
 
 from model import db
@@ -42,9 +43,9 @@ class Answer(db.Model):
 
     @staticmethod
     def get_answer_by_question_id(questionid):
-        list  = Answer.query.filter_by(questionid=questionid).all()
-        if list is not None:
-            return list
+        lst  = Answer.query.filter_by(questionid = questionid).all()
+        if lst is not None:
+            return lst
         return None
     
     @staticmethod
@@ -67,11 +68,11 @@ class Answer(db.Model):
     
     @staticmethod
     def delete_answers_by_question_id(questionid, batch):
-        print 'delete_answers_by_question_id ', questionid
-        answers = Answer.query.filter_by(questionid=questionid).all()
+        current_app.logger.debug("delete_answers_by_question_id = " + str(questionid))
+        answers = Answer.query.filter_by(questionid = questionid).all()
         if answers:
-            for item in answers:       
-                print 'Answer found ', item.id         
+            for item in answers:
+                current_app.logger.debug("Answer found " + str(item.id)) 
                 db.session.delete(item)
         if not batch:
             db.session.commit()

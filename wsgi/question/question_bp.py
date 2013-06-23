@@ -111,8 +111,8 @@ def jupd(question_id):
                 longitude = request.json['lon']
                 
                 #TODO - allow displaying unallowed tags as non html tags
-                scrubb = scrubber.Scrubber()                
-                qtext = jinja2.Markup(scrubb.scrub(qtext))
+                #scrubb = scrubber.Scrubber()                
+                #qtext = jinja2.Markup(scrubb.scrub(qtext))
                 
                 current_app.logger.debug("got a question from DB, id = " + str(question_id))
                 current_app.logger.debug("qid = " + str(qid))

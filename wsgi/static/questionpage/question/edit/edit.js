@@ -1,27 +1,34 @@
 steal( 'jquery/controller',
     'jquery/view/ejs',
     'jquery/controller/view',
-    'questionpage/models')
-    .then('./views/init.ejs', function($){
+    'questionpage/models',
 
-        $.Controller('Questionpage.Question.Edit',
-            {
-            },{
+    'pagedown/Markdown.js'
+    
+    ).then('./views/init.ejs', function($){
+
+        $.Controller('Questionpage.Question.Edit',{
+        
+        },{
                 model : null,
 
                 init : function(){
                	
                     var type = this.options.type;
                     var onSuccess = this.options.onSuccess;
+                    var questionControls = this.options.questionControls; 
                     
                     if(type === "add"){
                         
                     	this.model = this.options.question;
                         this.element.html(this.view('init', this.model));
                         
+                        this.model.editor = this.loadPageDownEditor(this.model.qid, questionControls);
+                        
                     }else if(type === "parse"){
                     	                    	
                     	var question = new Questionedit();                    	
+                    	this.model = question;
                     	
                     	var question_name = this.element.attr("name");
                     	question.qid = parseInt(question_name.split("question")[1]);
@@ -29,16 +36,7 @@ steal( 'jquery/controller',
                     	question.lon = parseFloat(this.element.attr("data-lon"));
                     	question.qtext = this.element.find(".qtext").html();
                     	
-                    	this.element.find(".qanswer").each(function(i){
-                    		var answer = new Object();
-                    		answer.id = parseInt($(this).attr("id").split("answer")[1]);
-                    		answer.correct = $(this).attr("data-correct");
-                    		answer.atext = $(this).find(".qanswer-input").html();
-                    		
-                    		question.answers.push(answer);
-                    	});
-                    	
-                    	this.model = question;
+                		question.editor = this.loadPageDownEditor(question.qid, questionControls);
                     	
                         if(onSuccess){
                         	onSuccess(question);
@@ -54,7 +52,6 @@ steal( 'jquery/controller',
                         
                         this.element.html(this.view('init', Questionedit.findOne({id:id}, function(data){
                             question.qid = data.id;
-                            question.nextquestionid = data.id;
                             question.quizid = data.quizid;
                             question.qtext = data.qtext;
                             question.answers = data.answers;
@@ -67,105 +64,82 @@ steal( 'jquery/controller',
                         })));
                     }
                 },
+                loadPageDownEditor : function(questionid, questionControls){
+                	var self = this;                	
+                    var options = {
+                        helpButton: { 
+                        	handler: function(){
+                        		//self.editorToPreview(self);
+                        	},
+                        	delQuestionHandler: function(){
+                        		questionControls.delQuestionHandler(self.model);
+                        	},
+            				saveQuestionHandler: function(){
+            					questionControls.saveQuestionHandler(self.model);
+            				}
+                        }
+                    };
+                	var converter = Markdown.getSanitizingConverter();
+                	
+                	converter.hooks.chain("postConversion", function (text) {
+                		var res = self.renderCheckbox.call(self, text);
+                		self.model.qtext = text;
+                        return res;
+                    });
+                    
+                	var editor = new Markdown.Editor(converter, "-" + (questionid).toString(), options);
+                	editor.run();
+                	
+                	return editor;
+                },
+                renderCheckbox : function(text){
+                	var self = this;
+                	this.model.answers = [];
+                	
+                	return text.replace(/\?([tTfF])\[(.*?)\]/gm, function (whole, correct, atext) {
+                    	var natext = atext;
+                    	if(!atext || 0 === atext.length){
+                    		// #todo: can put only link or plain text
+                    		var natext = "Wrong!"	
+                    	}
+                    	if(correct === "T" || correct === "t" ){
+                    		self.onNewCheckbox.call(self, 'T', natext);
+                    		
+                			return "<input type='checkbox' " +
+            				"onclick='return false' onkeydown='return false' checked='checked'>" + " " + 
+            				"<span class='label label-important'>"+ natext +"</span>\n";	
+                    	}else{
+                    		self.onNewCheckbox.call(self, 'F', natext);
+                    		
+                			return "<input type='checkbox' " +
+            				"onclick='return false' onkeydown='return false'>" + " " + 
+            				"<span class='label label-important'>"+ natext +"</span>\n";	
+                    	}                        	
+                        
+                    });                	
+                },
+                onNewCheckbox : function(correct, atext){
+                	var model = this.model;
+                	
+                	var answer = new Object();
+                	
+            		answer.id = model.answers.length + 1;
+            		answer.correct = correct;
+            		answer.atext = atext;
+            		
+            		model.answers.push(answer);                	
+                },
                 set_question : function(question){
                     this.model.qid = question.qid;
-                    this.model.nextquestionid = question.nextquestionid;
                     this.model.quizid = question.quizid;
                     this.model.qtext = question.qtext;
                     this.model.answers = question.answers;
                 },
                 clean : function(){
-                	this.element.find(".qanswer").each(function(){
-                		this.remove();
-                	});
                 	this.model.clean();
-                	this.element.find(".qtext").attr("value", this.model.qtext);
-                },
-                ".add-checked click" : function(el){
-                    var correct = this.model.correct;
-                    if( correct === 'F'){
-                        correct = 'T';
-                        el.children("i:first").
-                            removeClass("icon-ban-circle").
-                            addClass("icon-ok");
-                    }else{
-                        correct = 'F';
-                        el.children("i:first").
-                            addClass("icon-ban-circle").
-                            removeClass("icon-ok");
-                    }
-                    this.model.correct = correct;
-                },
-                ".qanswer-check click" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    var answer = this.model.get_answer_by_id(id);
-                    var correct = answer.correct;
-                    if( correct === 'F'){
-                        correct = 'T';
-                        el.children("i:first").
-                            removeClass("icon-ban-circle").
-                            addClass("icon-ok");
-                    }else{
-                        correct = 'F';
-                        el.children("i:first").
-                            addClass("icon-ban-circle").
-                            removeClass("icon-ok");
-                    }
-                    answer.correct = correct;
-                },
-                ".qanswer-delete click" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    this.model.remove_answer_by_id(id);
-                    el.closest(".qanswer").remove();
-                },
-                ".qanswer-add click" : function(el){
-                    var answers = this.model.answers;
-                    if(answers.length < 7){
-                        var maxid = 0;
-                        for(var i = 0; i < answers.length; i++){
-                            if( maxid < answers[i].id ){
-                                maxid = answers[i].id;
-                            }
-                        }
-                        maxid++;
-
-                        var answer = {};
-                        answer.id = maxid;
-                        answer.correct = 'T';
-
-
-                        answer.atext = "";
-
-                        this.model.answers.push(answer);
-
-                        this.element.find(".answers").append(this.view('answer', {answer: answer}));
-                        this.element.find(".add-input").attr("value", "");
-                    }else{
-                    	Messenger().post({
-  	              		  message: "The number of answers is restricted to 7 to keep your performance high",
-  	              		  type : 'error',
-  	              		  showCloseButton: true
-  	              		});
-                    }
-                },
-                ".qanswer-input keyup" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    this.model.get_answer_by_id(id).atext = el.attr("value") ;
-                },
-                ".question-save click" : function(data){
-                    var question = this.model;
-                    question.save( function(){
-                        Messenger().post({
-                    		  message: 'Successfully saved',
-                    		  showCloseButton: true
-                    		});                   
-                    });
-                },
+                },                
                 ".question-view-btn click" : function(el){
                     document.location.href = '/quiz/'+this.model.quizid+'/';
-                },
-                ".qtext keyup" : function(el){
-                    this.model.qtext = el.attr("value") ;
                 },
                 onQuestionEnter : function(){
                 	

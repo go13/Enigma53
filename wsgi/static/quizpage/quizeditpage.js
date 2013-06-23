@@ -9,9 +9,9 @@ steal(
     
     'quizpage/quizmap/cmapedit',
     
-    'quizpage/csettings',
-
-    'js/d3.v3.min.js',
+    'quizpage/csettings',   
+    
+    'js/d3.v3.min.js',    
 
     //'libs/jquery.timeago.js',
     

@@ -200,9 +200,7 @@ def jcreate():
     schema = {
         "type" : "object",
         "properties" : {            
-            "title" : {"type" : "string", "minLength" : 5,"maxLength" : 55, "optional" : False},
-            #"lat" : {"type" : "string", "optional" : False},
-            #"lon" : {"type" : "string", "optional" : False},
+            "title" : {"type" : "string", "minLength" : 5,"maxLength" : 55, "optional" : False}
             }
         }
         

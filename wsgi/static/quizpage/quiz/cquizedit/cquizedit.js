@@ -2,31 +2,47 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
 	Quizpage.Quiz.Navigator('Quizpage.Quiz.Cquizedit', {
 
             add_question_edit : function(question){
-                Quizpage.Quiz.Navigator.instance.element.find("#tabs")
+            	var nav = Quizpage.Quiz.Navigator.instance;
+            	
+                nav.element.find("#tabs")
                     .append("<li id='tab-question" + question.qid + "' class='question-tab tab-question-item'>" +
                         "<a href='#tab-question-page" + question.qid + "' data-toggle='tab'>Question " + question.qid + "</a>" +
                         "</li>");
-                Quizpage.Quiz.Navigator.instance.element.find("#tabs-container")
+                nav.element.find("#tabs-container")
                     .append("<div id='tab-question-page" + question.qid + "' class='tab-pane' style='margin-right:20px'>" +
                         "<div class='question-edit' name='question" + question.qid + "'></div>" +
                         "</div>");
-                var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page" + question.qid)
+                var el = nav.element.find("#tab-question-page" + question.qid)
                     .children(".question-edit :first");
                 
-                var mc = new Questionpage.Question.Edit($(el), {type:"add", question : question, onSuccess : function(qst){
-                	Quizpage.Quiz.Navigator.instance.model.add_question(qst);
-                }});
-                Quizpage.Quiz.Navigator.instance.model.add_question(mc.model);
+                var mc = new Questionpage.Question.Edit($(el), {
+                	type:"add", 
+                	question : question, 
+                	onSuccess : function(qst){
+                		nav.model.add_question(qst);
+                	},
+                	questionControls : {
+        				delQuestionHandler : nav.delQuestionHandler,
+        				saveQuestionHandler : nav.saveQuestionHandler
+        			}
+                });
+                nav.model.add_question(mc.model);
                 return mc.model; // returns question with id
             },
             load_question_edit : function(el, success){
             	var nav = Quizpage.Quiz.Navigator.instance;
-                var qc = new Questionpage.Question.Edit($(el), {onSuccess : function(qst){                	
-                	nav.model.add_question(qst);
-                	if(success){
-                		success(qst);
-                	}
-                }});
+                var qc = new Questionpage.Question.Edit($(el), {
+                	onSuccess : function(qst){                	
+	                	nav.model.add_question(qst);
+	                	if(success){
+	                		success(qst);
+	                	}
+                	},
+        			questionControls : {
+        				delQuestionHandler : nav.delQuestionHandler,
+        				saveQuestionHandler : nav.saveQuestionHandler
+        			} 
+                });
             },
             remove_question : function(qst){
             	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.qid);
@@ -47,20 +63,27 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
         	init : function(){
         		this._super();
         		this.loadProgressChart(this.quizid, "#results-chart");        		
-
-        		this.parse_quiz_edit(this.options.onSuccess);
+        		
+        		this.parse_quiz_edit(this.options.onSuccess);        	
         	},        	
             parse_quiz_edit : function(onSuccess){
             	var self = this;
             	var els = self.element.find(".question-edit");
             	$(els).each(function(i){
             		
-            		$(this).questionpage_question_edit({type : "parse", onSuccess : function(question){
-            			self.model.add_question(question);
-            			if(onSuccess){
-            				onSuccess(question);
-            			}
-            		}});
+            		$(this).questionpage_question_edit({
+            			type : "parse", 
+            			onSuccess : function(question){
+	            			self.model.add_question(question);
+	            			if(onSuccess){
+	            				onSuccess(question);
+	            			}
+            			},
+            			questionControls : {
+            				delQuestionHandler : self.delQuestionHandler,
+            				saveQuestionHandler : self.saveQuestionHandler
+            			}           			
+            		});
             		
             	});
             	
@@ -79,10 +102,20 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
             		});
             	});
             },
-            ".question-delete-btn click" : function(){
-            	var qst = Quizpage.Quiz.Navigator.get_current_question();
-            	qst.destroy(function(data){
-            		Quizpage.Quiz.Cquizedit.remove_question(qst);   
+        	onNewQuestion : function(){
+        		alert('new');
+        	},        	
+        	saveQuestionHandler : function(question){
+                question.save( function(){
+                    Messenger().post({
+                		  message: 'Successfully saved',
+                		  showCloseButton: true
+                		});                   
+                });
+        	},
+        	delQuestionHandler : function(question){
+            	question.destroy(function(data){
+            		Quizpage.Quiz.Cquizedit.remove_question(question);   
             		
                     Messenger().post({
                 		  message: 'Question deleted',
@@ -98,7 +131,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
         		var formatPercent = d3.format(".0%");
         		
         		var parseDate = d3.time.format("%d-%b-%y %H:%M:%S").parse;
-        		
+
         		var formatDate = d3.time.format("%d-%b-%d");
         		
         		var x = d3.scale.ordinal()

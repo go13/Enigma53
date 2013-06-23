@@ -4,7 +4,6 @@ steal('jquery/model', function(){
 	{
 	    defaults : {
 	        qid : -1,
-	        nextquestionid : 0,
 	        quizid : 0,
 	        qtext : "",
 	        lat : NaN,

@@ -5,7 +5,6 @@ $.Model('Questionedit',
 {
     defaults : {
         qid : -1,
-        nextquestionid : 0,
         quizid : 0,
         qtext : "" ,
         lat : NaN,
@@ -32,7 +31,6 @@ $.Model('Questionedit',
     },
     set_question : function(question){
         this.qid = question.qid;
-        this.nextquestionid = question.nextquestionid;
         this.quizid = question.quizid;
         this.qtext = question.qtext;
         this.answers = question.answers;
