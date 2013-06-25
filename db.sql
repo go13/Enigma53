@@ -43,6 +43,7 @@ create table questions
    userid               integer,
    nextquestionid       integer,
    qtext                text,
+   qtextcache           text,
    type                 integer,
    latitude            text not null,
    longitude            text not null,

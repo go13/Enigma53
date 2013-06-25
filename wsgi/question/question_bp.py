@@ -41,7 +41,7 @@ def jget(question_id):
         if current_user.id == question.userid:
             result = {'jstaus':'OK'}
             result.update(question.serialize)
-            current_app.logger.warning(result)
+            current_app.logger.warning("jget result = " + str(result))
             return jsonify(result)
         else:
             msg = auth_failure_message + u"view this question"
@@ -122,14 +122,14 @@ def jupd(question_id):
                 current_app.logger.debug("latitude = " + str(latitude))
                 current_app.logger.debug("longitude = " + str(longitude))
                 
-                Question.update_question_by_id(question_id, {'qtext' : qtext, 'latitude' : latitude, 'longitude' : longitude}, False)
-                Answer.delete_answers_by_question_id(question_id, True)
+                Question.update_question_by_id(question_id, qtext, latitude, longitude, False)
+                #Answer.delete_answers_by_question_id(question_id, True)
         
-                for answer in answers:
-                    atext = answer['atext']
-                    correct = answer['correct']
-                    Answer.create_answer(question_id, atext, correct, True)
-                db.session.commit()
+       #         for answer in answers:
+       #             atext = answer['atext']
+        #            correct = answer['correct']
+        #            Answer.create_answer(question_id, atext, correct, True)
+         #       db.session.commit()
                 
                 current_app.logger.debug("Status - OK")
                 
@@ -172,11 +172,7 @@ def jcreate():
                     "properties" : {            
                         "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
-                        "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
-                        "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
-                                                                  "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False},
-                                                                  "atext" : {"type" : "string", "maxLength" : 128, "optional" : False} 
-                                                                  }}, "maxItems" : 7, "optional" : True},
+                        "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},                        
                         "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
                         "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
                         }
@@ -193,18 +189,8 @@ def jcreate():
             latitude = request.json['lat']
             longitude = request.json['lon']
         
-            newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
+            newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtextcache = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
             db.session.add(newQuestion)
-            db.session.commit()
-        
-            for answer in answers:
-                atext = answer['atext']
-                qid = answer['id']
-                correct = answer['correct']
-        
-                newAnswer = Answer(newQuestion.id, atext, correct)
-                db.session.add(newAnswer)
-        
             db.session.commit()
         
             result = {'jstaus' : 'OK', 'id' : newQuestion.id}

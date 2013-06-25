@@ -35,8 +35,8 @@ class Answer(db.Model):
             'correct':self.correct
            }
     @staticmethod
-    def get_answer_by_id(id):
-        q  = Answer.query.filter_by(id=id).first()
+    def get_answer_by_id(aid):
+        q  = Answer.query.filter_by(id = aid).first()
         if q is not None:
             return q
         return None
@@ -49,12 +49,12 @@ class Answer(db.Model):
         return None
     
     @staticmethod
-    def delete_answer_by_id(id):
-        return Answer.query.filter_by(id=id).delete()
+    def delete_answer_by_id(aid):
+        return Answer.query.filter_by(id = aid).delete()
     
     @staticmethod
-    def update_answer_by_id(id, answer, correct):
-        result = Answer.query.filter_by(id=id).update({'answer':answer, 'correct':correct})                
+    def update_answer_by_id(aid, answer, correct):
+        result = Answer.query.filter_by(id = aid).update({'answer':answer, 'correct':correct})                
         db.session.commit()        
         return result
     
@@ -62,7 +62,7 @@ class Answer(db.Model):
     def create_answer(questionid, answer, correct, batch):
         answer = Answer(questionid, answer, correct)
         db.session.add(answer)                
-        if batch: 
+        if not batch: 
             db.session.commit()        
         return answer.id
     

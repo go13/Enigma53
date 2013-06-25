@@ -16,36 +16,39 @@ steal(
 
                 init : function(){
                 	var self = this;
-                	
-                	self.converter = self.loadPageDownConverter(self.renderCheckbox);
+                	var id = parseInt(self.element.attr("name").split("question")[1]);
                 	
                 	var onSuccess = self.options.onSuccess;
                     var questionControls = self.options.questionControls;
-
-                    var id = parseInt(self.element.attr("name").split("question")[1]);
                     
                     self.element.html(self.view('init', Question.findOne({id : id}, function(question){
-                    	self.model = question;
-                        question.qtext = self.converter.makeHtml(question.qtext);
+                    	self.model = question;                        
                         question.lon = parseFloat(question.lon);
                         question.lat = parseFloat(question.lat);
 
                         for(var i = 0; i < question.answers.length; i++){
-                            question.answers[i].value = 'F';
-                            console.log( "answer:" + i + " - "+ question.answers[i].value );
+                        	console.log( "answer:" + i + " id= " + question.answers[i].id);
+                            question.answers[i].value = 'F';                            
                         }
+                        
+                    	self.converter = self.loadPageDownConverter(id, self.postConversionHandler, function(correct, i){
+                    		return self.model.answers[i];
+                    	});
+                    	
+                    	question.qtext = self.converter.makeHtml(question.qtext);
+                    	
                         if(onSuccess != null){
                         	onSuccess(question);
                         }
 
                     })));
                 },    
-                loadPageDownConverter : function(postConversionHandler){
+                loadPageDownConverter : function(questionid, postConversionHandler, onCheckbox){
                 	var converter = Markdown.getSanitizingConverter();
                 	
                 	converter.hooks.chain("postConversion", function (text){
                 		if(postConversionHandler){
-                			return postConversionHandler(text);	
+                			return postConversionHandler(questionid, text, onCheckbox);	
                 		}else{
                 			return text;
                 		}                        
@@ -53,12 +56,17 @@ steal(
                 	
                     return converter;                	
                 },
-            	renderCheckbox : function(text, onCheckbox) {
-                	return text.replace(/\?([tTfF])\[(.*?)\]/gm, function (whole, correct, atext) {
-                		if(onCheckbox){
-                			onCheckbox('T', natext);
+                postConversionHandler : function(questionid, text, onCheckbox) {
+            		var i = 0;
+                	return text.replace(/\?\[([\+-]?)\]/gm, function (whole, correct) {
+                		var answer;
+                		if(correct === '+'){
+                			 answer = onCheckbox('T', i);                			
+                		}else{
+               			 	answer = onCheckbox('F', i);                			
                 		}
-            			return "<input type='checkbox' class='answer-checkbox'/>\n";	
+						i = i+1;
+						return "<input id='answer-" + questionid + "-" + answer.id + "' type='checkbox' class='answer-checkbox'/>\n";
                     });                	
                 },
                 ".question-submit-btn click" : function(el){
@@ -66,14 +74,18 @@ steal(
                     Quizpage.Quiz.Navigator.to_next_tab();
                 },
                 ".answer-checkbox click" : function(el){
-                    /*var id = parseInt(el.attr("id").split("answer")[1]);
-                    var answer = this.model.get_answer_by_id(id);
-                    if(el.prop('checked')){
-                        answer.value = 'T';
-                    }else{
-                        answer.value = 'F';
-                    }*/
-                	alert('implement');
+                	var self = this;
+                	var id_string = el.attr("id");
+                	id_string.replace(/answer-(\d*)-(\d*)/gm, function(whole, questionid, answerid){
+                		questionid = parseInt(questionid);
+                		answerid = parseInt(answerid);
+                		
+                        if(el.prop('checked')){
+                        	self.model.get_answer_by_id(answerid).value = 'T';
+                        }else{
+                        	self.model.get_answer_by_id(answerid).value = 'F';
+                        }
+                	});
                 }
             });
     });

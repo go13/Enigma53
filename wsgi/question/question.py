@@ -1,3 +1,4 @@
+import re
 from flask import current_app
 from sqlalchemy import Integer, Unicode
 
@@ -12,16 +13,18 @@ class Question(db.Model):
     userid = db.Column('userid', Integer)
     nextquestionid = db.Column('nextquestionid', Integer)
     qtext = db.Column('qtext', Unicode)
+    qtextcache = db.Column('qtextcache', Unicode)
     qtype = db.Column('type', Integer)
     latitude = db.Column('latitude', Unicode)
     longitude = db.Column('longitude', Unicode)
     answers = []    
 
-    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude = latitude, longitude = longitude):
+    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude, longitude, qtextcache):
         self.quizid = quizid
         self.userid = userid
         self.nextquestionid = nextquestionid
         self.qtext = qtext
+        self.qtextcache = qtextcache
         self.qtype = qtype
         self.latitude = latitude
         self.longitude = longitude
@@ -32,7 +35,7 @@ class Question(db.Model):
         return {
             'quizid' : self.quizid,
             'nextquestionid' : self.nextquestionid,
-            'qtext' : self.qtext,
+            'qtext' : self.qtextcache,
             'id' : self.id,
             'lat': self.latitude,
             'lon': self.longitude,
@@ -50,7 +53,7 @@ class Question(db.Model):
             'lon': self.longitude,
             'answers':[i.serialize_for_edit for i in self.answers]
            }
-
+        
     @staticmethod
     def get_next_question(qid):
         q = Question.query.filter_by(id = qid).first()
@@ -87,9 +90,19 @@ class Question(db.Model):
         return questions
 
     @staticmethod
-    def update_question_by_id(questionid, qdict, to_commit):
-        Question.query.filter_by(id = questionid).update(qdict)
-        if to_commit:
+    def update_question_by_id(questionid, qtext, latitude, longitude, batch):
+        Answer.delete_answers_by_question_id(questionid, True)
+        def repl(m):
+            correct = m.group(1)
+            if correct == '+':
+                Answer.create_answer(questionid, 'atexttodo', 'T', True)
+            else:
+                Answer.create_answer(questionid, 'atexttodo', 'F', True)
+            return '?[-]'
+        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext) 
+        print 'qtextcache ' + qtextcache        
+        Question.query.filter_by(id = questionid).update({'qtext' : qtext, 'qtextcache' : qtextcache, 'latitude' : latitude, 'longitude' : longitude})
+        if not batch:
             db.session.commit()             
 
     @staticmethod

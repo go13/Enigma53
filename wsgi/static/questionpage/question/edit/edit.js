@@ -37,7 +37,7 @@ steal( 'jquery/controller',
                     	question.lon = parseFloat(this.element.attr("data-lon"));
                     	question.qtext = this.element.find(".qtext").html();
                     	
-                		question.editor = this.loadPageDownEditor(question.id, questionControls);
+                		this.editor = this.loadPageDownEditor(question.id, questionControls);
                     	
                         if(onSuccess){
                         	onSuccess(question);
@@ -72,14 +72,14 @@ steal( 'jquery/controller',
                         	delQuestionHandler: function(){
                         		questionControls.delQuestionHandler(self.model);
                         	},
-            				saveQuestionHandler: function(){
+            				saveQuestionHandler: function(){           					
             					questionControls.saveQuestionHandler(self.model);
             				}
                         }
                     };
                 	var converter = Markdown.getSanitizingConverter();
                 	
-                	converter.hooks.chain("postConversion", function (text) {
+                	converter.hooks.chain("preBlockGamut", function (text, runBlockGamut) {
                 		var res = self.renderCheckbox.call(self, text);
                 		self.model.qtext = text;
                         return res;
@@ -94,36 +94,27 @@ steal( 'jquery/controller',
                 	var self = this;
                 	this.model.answers = [];
                 	
-                	return text.replace(/\?([tTfF])\[(.*?)\]/gm, function (whole, correct, atext) {
-                    	var natext = atext;
-                    	if(!atext || 0 === atext.length){
-                    		// #todo: can put only link or plain text
-                    		natext = "Wrong!"	
-                    	}
-                    	if(correct === "T" || correct === "t" ){
-                    		self.onNewCheckbox.call(self, 'T', natext);
+                	return text.replace(/\?\[([\+-]?)\]/gm, function (whole, correct) {
+                    	if(correct === "+"){
+                    		self.onNewCheckbox.call(self, 'T');
                     		
-                			return "<input type='checkbox' " +
-            				"onclick='return false' onkeydown='return false' checked='checked'/>" + " " + 
-            				"<span class='label label-important'>"+ natext +"</span>\n";	
+                			return "<input type='checkbox' onclick='return false' onkeydown='return false' checked='checked'/>\n";	
                     	}else{
-                    		self.onNewCheckbox.call(self, 'F', natext);
+                    		self.onNewCheckbox.call(self, 'F');
                     		
-                			return "<input type='checkbox' " +
-            				"onclick='return false' onkeydown='return false'/>" + " " + 
-            				"<span class='label label-important'>"+ natext +"</span>\n";	
+                			return "<input type='checkbox' onclick='return false' onkeydown='return false'/>\n";	
                     	}                        	
                         
                     });                	
                 },
-                onNewCheckbox : function(correct, atext){
+                onNewCheckbox : function(correct){
                 	var model = this.model;
                 	
                 	var answer = new Object();
                 	
             		answer.id = model.answers.length + 1;
             		answer.correct = correct;
-            		answer.atext = atext;
+            		answer.atext = "atext";// TODO ??
             		
             		model.answers.push(answer);                	
                 },
