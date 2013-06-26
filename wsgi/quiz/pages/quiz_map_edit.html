@@ -19,12 +19,16 @@
 	}
 	
 	#question-map{
-	   position : fixed;
 	   top : 40px;
+	   height : 100%; 
+	}
+	
+	.full-stretch{
+	   position : fixed;
+	   top : 0;
 	   left : 0;
 	   right : 0;
-	   bottom : 0px;
-	   height : 100%; 
+	   bottom : 0;
 	}
 	
 	#content-on-map{
@@ -207,11 +211,11 @@ blockquote {
 	font-family: trebuchet MS, helvetica, sans-serif;
 	font-size: 0.8em;
 	font-weight: bold;
-}
+}	
 </style>
 
-<div style="position: fixed; top : 0; bottom : 0; left : 0; right : 0">
-	<div id="question-map"></div> 
+<div class="full-stretch">
+	<div id="question-map" class="full-stretch"></div> 
 </div>
 
 <div id="left-menu">
@@ -262,6 +266,7 @@ blockquote {
 	  </div>
 	</div>
 </div>
+
 
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
 {% endblock content %}

@@ -17,11 +17,16 @@
 	}
 	
 	#question-map{
-	   position: absolute;
-	   top: 40px;
-	   left:0;
-	   right:0;
-	   bottom:0px;
+	   top : 40px;
+	   height : 100%; 
+	}
+	
+	.full-stretch{
+	   position : fixed;
+	   top : 0;
+	   left : 0;
+	   right : 0;
+	   bottom : 0;
 	}
 	
 	#content-on-map{
@@ -41,7 +46,9 @@
 	
 </style>
 
-<div id="question-map"></div>
+<div class="full-stretch">
+	<div id="question-map" class="full-stretch"></div> 
+</div>
 
 <div id="content-on-map">
 	<div id="legend">
