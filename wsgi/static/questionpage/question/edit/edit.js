@@ -79,9 +79,8 @@ steal( 'jquery/controller',
                     };
                 	var converter = Markdown.getSanitizingConverter();
                 	
-                	converter.hooks.chain("preBlockGamut", function (text, runBlockGamut) {
+                	converter.hooks.chain("postConversion", function (text) {
                 		var res = self.renderCheckbox.call(self, text);
-                		self.model.qtext = text;
                         return res;
                     });
                     

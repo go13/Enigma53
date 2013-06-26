@@ -31,7 +31,7 @@ steal(
                             question.answers[i].value = 'F';                            
                         }
                         
-                    	self.converter = self.loadPageDownConverter(id, self.postConversionHandler, function(correct, i){
+                    	self.converter = self.loadPageDownConverter(id, self.renderCheckbox, function(correct, i){
                     		return self.model.answers[i];
                     	});
                     	
@@ -43,12 +43,12 @@ steal(
 
                     })));
                 },    
-                loadPageDownConverter : function(questionid, postConversionHandler, onCheckbox){
+                loadPageDownConverter : function(questionid, renderCheckbox, onCheckbox){
                 	var converter = Markdown.getSanitizingConverter();
                 	
                 	converter.hooks.chain("postConversion", function (text){
-                		if(postConversionHandler){
-                			return postConversionHandler(questionid, text, onCheckbox);	
+                		if(renderCheckbox){
+                			return renderCheckbox(questionid, text, onCheckbox);	
                 		}else{
                 			return text;
                 		}                        
@@ -56,12 +56,12 @@ steal(
                 	
                     return converter;                	
                 },
-                postConversionHandler : function(questionid, text, onCheckbox) {
+                renderCheckbox : function(questionid, text, onCheckbox) {
             		var i = 0;
                 	return text.replace(/\?\[([\+-]?)\]/gm, function (whole, correct) {
                 		var answer;
                 		if(correct === '+'){
-                			 answer = onCheckbox('T', i);                			
+                		    answer = onCheckbox('T', i);                			
                 		}else{
                			 	answer = onCheckbox('F', i);                			
                 		}
