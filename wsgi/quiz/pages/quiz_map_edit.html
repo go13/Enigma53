@@ -15,27 +15,46 @@
 	}
 	
 	#question-map label { 
-	  width: auto; display : inline; 
+	  width : auto; display : inline; 
 	}
 	
 	#question-map{
-	   position: absolute;
-	   top: 40px;
-	   left:0;
-	   right:0;
-	   bottom:0px;
+	   position : fixed;
+	   top : 40px;
+	   left : 0;
+	   right : 0;
+	   bottom : 0px;
+	   height : 100%; 
 	}
 	
 	#content-on-map{
-	   position: absolute;
-	   top: 40px;
-	   right:0; 
-	   bottom:0px;
+	   overflow : auto;
+	   position: fixed;
+	   top : 40px;
+	   right : 0; 
+	   padding: 25px;  
+	   width : 60%;
+	   min-width: 700px;   
+	   bottom : 0; 
+	   background-color : #ffffff; 
+	   opacity : 0.9;
+	   box-sizing: border-box; 	   
+	   filter : alpha(opacity=90);
+	}
+	
+	#left-menu{
+	   display : none; 
+	   overflow : auto;
+	   position : fixed;
 	   padding: 25px;
-	   width: 60%;  
-	   background-color: #ffffff; 
-	   opacity: 0.9; 
-	   filter: alpha(opacity=90);
+	   top : 40px;
+	   left : 0; 	   
+	   width : 40%;
+	   bottom : 0;   
+	   background-color : #ffffff; 
+	   opacity : 0.9; 
+	   box-sizing: border-box;
+	   filter : alpha(opacity=90);
 	}
 	
 	.axis path,
@@ -189,10 +208,15 @@ blockquote {
 	font-size: 0.8em;
 	font-weight: bold;
 }
-	
 </style>
 
-<div id="question-map"></div> 
+<div style="position: fixed; top : 0; bottom : 0; left : 0; right : 0">
+	<div id="question-map"></div> 
+</div>
+
+<div id="left-menu">
+		<div style="height:1024px">sdfsd</div>
+</div>
 
 <div id="content-on-map" title="{{ quiz.id }}">
 	<div id="legend">
