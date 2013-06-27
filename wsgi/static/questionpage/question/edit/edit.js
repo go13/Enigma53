@@ -81,6 +81,7 @@ steal( 'jquery/controller',
                 	
                 	converter.hooks.chain("postConversion", function (text) {
                 		var res = self.renderCheckbox.call(self, text);
+                		self.model.qtext = text;
                         return res;
                     });
                     
@@ -127,7 +128,7 @@ steal( 'jquery/controller',
                 	this.model.clean();
                 },                
                 ".question-view-btn click" : function(el){
-                    document.location.href = '/quiz/'+this.model.quizid+'/';
+                    document.location.href = '/quiz/' + this.model.quizid + '/';
                 },
                 onQuestionEnter : function(){
                 	
