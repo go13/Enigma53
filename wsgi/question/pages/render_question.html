@@ -14,3 +14,12 @@
 	<button class="question-next btn-link pull-right" type="button" >Next question</button>
 </div>
 {% endmacro %}
+
+{% macro render_question_result(question) %}
+<div class='question-result' data-lat="{{question.latitude}}" data-lon="{{question.longitude}}" data-questionid='{{question.id}}'>
+    <div id="wmd-preview-{{ question.id }}" class="wmd-panel wmd-preview form-actions"></div>
+           
+	<button class="question-back btn-link" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button">Next question</button>
+</div>
+{% endmacro %}
