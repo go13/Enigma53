@@ -35,6 +35,7 @@
 </head>
  
 <body>
+
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
@@ -46,8 +47,8 @@
                 <a class="brand" href="{{ url_for('index')}}">Enigma53</a>
                 <div class="nav-collapse">
                     <ul class="nav">
-                        <li class="active"><a href="{{ url_for('index')}}">Articles</a></li>
-                        <li><a href="{{ url_for('quiz_bp.quiz_list')}}"><i class="icon-th-list"></i> Quizes</a></li>
+                        <li id="quizes-menu-item" class="active"><a href="{{ url_for('quiz_bp.quiz_list')}}"><i class="icon-th-list"></i> Quizes</a></li>
+                        <li><a href="{{ url_for('index')}}">Articles</a></li>
                     </ul>
 					<ul class="nav pull-right">
 						{% if current_user.is_authenticated() %}		
@@ -81,7 +82,28 @@
             </div>
         </div>
     </div>
- {% block content %}
- {% endblock content %}
+    
+    <script type="text/javascript">
+		var onQuizesMenuItemClick = null;
+		
+		$("#quizes-menu-item").click(function(){
+			if(onQuizesMenuItemClick){
+				var el = $("#quizes-menu-item"); 
+				el.toggleClass("active");
+				
+				onQuizesMenuItemClick(el.is('.active'));
+				
+				return false;	
+			}else{
+				window.location.href = "/quiz/list/";
+				return true;
+			}
+		});		
+	</script>
+ 
+	 {% block content %}
+	 {% endblock content %}
+	 	
+	
 </body>
 </html>

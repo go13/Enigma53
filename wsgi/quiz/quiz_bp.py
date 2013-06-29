@@ -30,13 +30,15 @@ def quiz(quiz_id):
 @login_required
 def quiz_map_edit(quiz_id):
     current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
-    
+
+    quizes = Quiz.get_quizes_by_userid(current_user.id)
+
     quiz = Quiz.get_quiz_by_id(quiz_id)
-    
+
     if quiz:
         current_app.logger.debug("quiz_edit. current_user.id - " + str(current_user.id) + " userid - " + str(quiz.userid))
         if current_user.id == quiz.userid:
-            return render_template('quiz_map_edit.html', quiz = quiz)
+            return render_template('quiz_map_edit.html', quiz = quiz, quizes = quizes)
         else:
             return render_template('auth_failure.html')
     else:
@@ -52,7 +54,7 @@ def quiz_results_tsv(quiz_id):
     
     if quiz:        
         if current_user.id == quiz.userid:
-            results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)            
+            results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)
             return render_template('quiz_results.html', quiz = quiz, results = results)
         else:
             return render_template('auth_failure.html')
@@ -66,41 +68,14 @@ class CreateForm(Form):
         validators.Required()
         ])
 
-@quiz_bp.route('/list/',  methods = ['GET', 'POST'])
+@quiz_bp.route('/list/')
 @login_required
 def quiz_list():
     current_app.logger.debug("quiz_list")
 
-    if request.method == "POST":
-        current_app.logger.debug(request.method + " create")
-        
-        form = CreateForm(request.form)
-        
-        if form.validate():
-            current_app.logger.debug("login validation successful")
-                    
-            title = form.title.data   
-            
-            quiz = Quiz.create_quiz(title, current_user.id)
-            if quiz:
-                msg = u"Quiz created " + str(current_user.id) 
-                current_app.logger.debug(msg)        
-            else:
-                msg = u"Could not create a quiz"            
-                current_app.logger.debug(msg)        
-                flash(msg, "error")
-            current_app.logger.debug("login validation successful" + str(quiz.id))
-            return redirect(url_for('quiz_bp.quiz_map_edit', quiz_id = quiz.id))
-        else:
-            quizes = Quiz.get_quiz_by_userid(current_user.id)
-            current_app.logger.debug("validation failed")
-            return render_template('quiz_list.html', quizes = quizes, form = form)
+    quizes = Quiz.get_quizes_by_userid(current_user.id)
 
-    else:
-        quizes = Quiz.get_quiz_by_userid(current_user.id)
-        form = CreateForm(request.form)
-                    
-        return render_template('quiz_list.html', quizes = quizes, form = form)
+    return render_template('quiz_list.html', quizes = quizes)
 
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
 def jupdate(quiz_id):
@@ -226,6 +201,18 @@ def jcreate():
         current_app.logger.debug('Quiz created. quiz.id - ' + str(id))   
         
         return jsonify({"status" : "OK", "quizid" : quiz.id})
+
+@quiz_bp.route('/create/')
+@login_required
+def create():
+    current_app.logger.debug("create")
+
+    quiz = Quiz.create_quiz('New Quiz', current_user.id)
+    
+    current_app.logger.debug('Quiz created. quiz.id - ' + str(quiz.id))   
+    
+    return redirect("/quiz/" + str(quiz.id) + "/edit/")
+
 
 @quiz_bp.route('/<int:quiz_id>/finish/')
 @login_required

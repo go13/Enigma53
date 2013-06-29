@@ -11,6 +11,8 @@ class Quiz(db.Model):
     description = db.Column('description', Unicode)
     userid = db.Column('userid', Integer)
     questions = []
+    latitude = None
+    longitude = None
 
     def __init__(self, title = title, userid = userid):
         self.title = title
@@ -21,6 +23,8 @@ class Quiz(db.Model):
         return {
             'id' : self.id,
             'title' : self.title,
+            'latitude' : self.latitude,
+            'longitude' : self.longitude,
             'questions' : [i.serialize for i in self.questions]
            }
         
@@ -39,8 +43,15 @@ class Quiz(db.Model):
         return q
 
     @staticmethod
-    def get_quiz_by_userid(userid):
-        return Quiz.query.filter_by(userid = userid).all()
+    def get_quizes_by_userid(userid):
+        results = Quiz.query.filter_by(userid = userid).all()
+        for item in results:
+            question = Question.query.filter_by(quizid = item.id).order_by(Question.id.asc()).first()
+            if question:
+                print str(question)
+                item.latitude = question.latitude 
+                item.longitude = question.longitude  
+        return results
     
     @staticmethod
     def create_quiz(title, userid):

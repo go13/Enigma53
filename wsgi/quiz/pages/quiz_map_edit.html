@@ -1,4 +1,5 @@
 {% from "render_question_edit.html" import render_question_edit %}
+{% from "quiz_macros.html" import render_left_menu %}
 
 {% extends "base.html" %}
 
@@ -38,7 +39,7 @@
 	   right : 0; 
 	   padding: 25px;  
 	   width : 60%;
-	   min-width: 700px;   
+	   min-width: 500px;   
 	   bottom : 0; 
 	   background-color : #ffffff; 
 	   opacity : 0.9;
@@ -47,7 +48,7 @@
 	}
 	
 	#left-menu{
-	   display : none; 
+	   /* display : none; */ 
 	   overflow : auto;
 	   position : fixed;
 	   padding: 25px;
@@ -212,15 +213,19 @@ blockquote {
 	font-size: 0.8em;
 	font-weight: bold;
 }	
+
+.nolink, .nolink:hover{
+	color: #000; 
+	text-decoration: none;
+	border: 0;
+}
 </style>
 
 <div class="full-stretch">
 	<div id="question-map" class="full-stretch"></div> 
 </div>
 
-<div id="left-menu">
-		<div style="height:1024px">sdfsd</div>
-</div>
+{{ render_left_menu(quizes) }}
 
 <div id="content-on-map" title="{{ quiz.id }}">
 	<div id="legend">
@@ -262,6 +267,7 @@ blockquote {
 			<input id="quiz-title-input" type="text" value="{{ quiz.title }}" class="input-xlarge" >
 			<p style="margin-left:40px">Quiz title can contain any letters or numbers</p>
 			<button id="settings-save-btn" class="btn btn-success">Save</button>
+			<button id="settings-delete-btn" class="btn-link">Delete</button>
 	    </div>
 	  </div>
 	</div>
