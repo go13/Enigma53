@@ -219,6 +219,14 @@ blockquote {
 	text-decoration: none;
 	border: 0;
 }
+
+.close-edit{
+	float:left;
+	margin-right: 15px;
+	margin-left: 5px;
+	margin-top: 10px;	
+}
+
 </style>
 
 <div class="full-stretch">
@@ -229,7 +237,10 @@ blockquote {
 
 <div id="content-on-map" title="{{ quiz.id }}">
 	<div id="legend">
-	  <legend id="quiz-title-legend">Quiz - {{ quiz.title }}</legend>
+	  <legend id="quiz-title-legend">
+	  Quiz - {{ quiz.title }}
+	  <button class="close close-edit" onClick="window.location.href='/quiz/list'">&times;</button>
+	  </legend>
 	</div>
 	<div class="tabbable"> 
 		<div class="tabbable" style="margin-right:140px">
