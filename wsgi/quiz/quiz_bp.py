@@ -38,7 +38,7 @@ def quiz_map_edit(quiz_id):
     if quiz:
         current_app.logger.debug("quiz_edit. current_user.id - " + str(current_user.id) + " userid - " + str(quiz.userid))
         if current_user.id == quiz.userid:
-            return render_template('quiz_map_edit.html', quiz = quiz, quizes = quizes)
+            return render_template('quiz_map_edit.html', quiz = quiz, quizes = quizes, active_page = "quiz_edit")
         else:
             return render_template('auth_failure.html')
     else:
@@ -75,7 +75,7 @@ def quiz_list():
 
     quizes = Quiz.get_quizes_by_userid(current_user.id)
 
-    return render_template('quiz_list.html', quizes = quizes)
+    return render_template('quiz_list.html', quizes = quizes, active_page = "quiz_list")
 
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
 def jupdate(quiz_id):
