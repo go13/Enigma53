@@ -57,12 +57,13 @@ steal('jquery/controller',
             		var s = "";
             		if(answer.correct === answer.value){
 	            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-							"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " />" + 
+							"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+							"<span class='label label-important'>Error</span>" +
 							"\n";	
             		}else{
 	            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-							"' type='checkbox' class='answer-checkbox' onclick='return false'" + ch + " /> " +
-							"<span class='label label-important'>Error</span>" +
+							"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+							"<span class='label label-success'> ok </span>" +
 	            			"\n";
             		}					
 					i = i + 1;
