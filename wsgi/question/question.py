@@ -37,21 +37,31 @@ class Question(db.Model):
             'nextquestionid' : self.nextquestionid,
             'qtext' : self.qtextcache,
             'id' : self.id,
-            'lat': self.latitude,
-            'lon': self.longitude,
-            'answers':[i.serialize for i in self.answers]
+            'lat' : self.latitude,
+            'lon' : self.longitude,
+            'answers' : [i.serialize for i in self.answers]
            }
 
     @property
     def serialize_for_edit(self):
         return {
-            'quizid':self.quizid,
-            'nextquestionid':self.nextquestionid,
-            'qtext':self.qtext,
-            'id':self.id,
-            'lat': self.latitude,
-            'lon': self.longitude,
-            'answers':[i.serialize_for_edit for i in self.answers]
+            'quizid' : self.quizid,
+            'nextquestionid' : self.nextquestionid,
+            'qtext' : self.qtext,
+            'id' : self.id,
+            'lat' : self.latitude,
+            'lon' : self.longitude,
+            'answers' : [i.serialize_for_edit for i in self.answers]
+           }
+        
+    @property
+    def serialize_for_result(self):
+        return {
+            'nextquestionid' : self.nextquestionid,
+            'qtext' : self.qtextcache,
+            'id' : self.id,
+            'lat' : self.latitude,
+            'lon' : self.longitude
            }
         
     @staticmethod
@@ -71,6 +81,11 @@ class Question(db.Model):
             q.answers = Answer.get_answer_by_question_id(q.id)
             return q
         return None
+    
+    @staticmethod
+    def get_question_only_by_id(qid):
+        current_app.logger.debug("get_question_only_by_id - " + str(qid))
+        return Question.query.filter_by(id = qid).first()
 
     @staticmethod
     def get_questions_by_quiz_id(quiz_id):

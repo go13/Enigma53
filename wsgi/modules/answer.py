@@ -34,6 +34,14 @@ class Answer(db.Model):
             'atext':self.atext,
             'correct':self.correct
            }
+        
+    @property
+    def serialize_for_result(self):
+        return {
+            'id':self.id,
+            'atext':self.atext
+           }
+
     @staticmethod
     def get_answer_by_id(aid):
         q  = Answer.query.filter_by(id = aid).first()

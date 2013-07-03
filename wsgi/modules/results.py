@@ -12,7 +12,7 @@ class Historysession(db.Model):
     starttime = db.Column('starttime', TIMESTAMP)
     endtime = db.Column('endtime', TIMESTAMP)
     
-    user=None
+    user = None
 
     def __init__(self, userid, starttime, endtime):
         self.userid = userid

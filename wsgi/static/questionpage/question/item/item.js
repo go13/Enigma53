@@ -4,9 +4,8 @@ steal(
     'jquery/controller/view',
     'questionpage/models',
     
-    'pagedown/Markdown.js'
-    
-    ).then('./views/init.ejs', function($){
+    'pagedown/Markdown.js').then('./views/init.ejs', function($){
+    	
         $.Controller('Questionpage.Question.Item',
             {
                

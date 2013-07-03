@@ -1,3 +1,4 @@
+from flask import current_app
 from question import Question
 from answer_result import AnswerResult
 
@@ -13,18 +14,27 @@ class QuestionResult(db.Model):
     
     question = None
     answer_results = []
-    
+
 
     def __init__(self, sessionid = sessionid, questionid = questionid, correct = correct):
         self.sessionid = sessionid
         self.questionid = questionid
         self.correct = correct
+        
+    @property
+    def serialize_for_result(self):
+        return {
+            'questionid' : self.questionid,
+            'correct' : self.correct,
+            'answer_results' : [i.serialize_for_result for i in self.answer_results],
+            'question' : self.question.serialize_for_result
+           }
 
     @staticmethod
     def get_question_results_by_id(sessionid):
-        results = QuestionResult.query.filter_by(sessionid=sessionid).all()
+        results = QuestionResult.query.filter_by(sessionid = sessionid).all()
         for item in results:
-            item.question = Question.get_question_by_id(item.questionid)
+            item.question = Question.get_question_only_by_id(item.questionid)
             item.answer_results = AnswerResult.get_answer_results(sessionid, item.questionid)
         return results
         
@@ -37,7 +47,7 @@ class QuestionResult(db.Model):
 
     @staticmethod
     def delete_questionresults_by_sessionid(sessionid, batch):
-        print 'delete_questionresults_by_sessionid ', sessionid
+        current_app.logger.debug("delete_questionresults_by_sessionid(" + str(sessionid) + ")")
         AnswerResult.delete_answerresults_by_session_id(sessionid, False)
         
         results=QuestionResult.query.filter_by(sessionid = sessionid).all()

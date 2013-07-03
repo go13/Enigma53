@@ -1,5 +1,4 @@
-steal(
-    'questionpage/models/models.js',		// steals all your models
+steal('questionpage/models/models.js',		// steals all your models
 
     'questionpage/question/item',
 

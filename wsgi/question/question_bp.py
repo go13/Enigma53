@@ -1,4 +1,4 @@
-import jinja2, scrubber
+import scrubber
 from flask import Blueprint, render_template, request, jsonify, current_app
 from modules.jsonschema import validate, Draft4Validator
 
@@ -19,7 +19,7 @@ auth_failure_message = u"You don't have permissions to "
 def question(question_id):
     question = Question.get_question_by_id(question_id)
     if question:
-        return render_template('question.html', question=question)
+        return render_template('question.html', question = question)
     else:
         return render_template('404.html')
 
@@ -28,7 +28,7 @@ def question(question_id):
 def question_edit(question_id):
     question = Question.get_question_by_id(question_id)
     if question:
-        return render_template('question_edit.html', question=question)
+        return render_template('question_edit.html', question = question)
     else:
         return render_template('404.html')
 

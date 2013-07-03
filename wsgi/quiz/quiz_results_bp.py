@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template, current_app, jsonify
 
 from model import db
 from quiz_result import QuizResult
@@ -12,11 +12,14 @@ quiz_results_bp = Blueprint('quiz_results_bp', __name__, template_folder = 'page
 def quiz_results(session_id):
     current_app.logger.debug("quiz_results(" + str(session_id) + ")")
     
-    qres = QuizResult.get_quiz_results_by_id(session_id)
-    if qres:
-        quiz = qres.quiz
+    result = QuizResult.get_quiz_result_by_id(session_id)
+    
+    if result:
+        quiz = result.quiz
         if current_user.id == quiz.userid:
-            return render_template('quiz_result.html', quiz_results = qres, quiz = quiz)
+            jsdata = result.serialize_for_result
+            current_app.logger.debug("jsdata - " + str(jsdata))
+            return render_template('quiz_result.html', result = result, quiz = quiz, jsdata = jsdata)
         else:
             return render_template('auth_failure.html')
     else:

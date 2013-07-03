@@ -110,8 +110,8 @@ create table quizresults
 (
    sessionid            integer not null AUTO_INCREMENT,
    quizid               integer,
-   correctqnum          integer,
-   qnum                 integer,
+   ncorrect             integer,
+   nquestion            integer,   
    primary key (sessionid)
 );
 

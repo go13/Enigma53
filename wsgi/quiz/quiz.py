@@ -10,6 +10,7 @@ class Quiz(db.Model):
     title = db.Column('title', Unicode)
     description = db.Column('description', Unicode)
     userid = db.Column('userid', Integer)
+    
     questions = []
     latitude = None
     longitude = None
@@ -27,20 +28,33 @@ class Quiz(db.Model):
             'longitude' : self.longitude,
             'questions' : [i.serialize for i in self.questions]
            }
-        
+
+    @property
+    def serialize_for_result(self):
+        return {
+            'id' : self.id,
+            'title' : self.title,
+            'latitude' : self.latitude,
+            'longitude' : self.longitude
+           }
+
     def get_number_of_questions(self):
         return len(self.questions)
     
     @staticmethod
     def get_number_of_questions_by_id(qid):
         return Question.query.filter_by(quizid = qid).count()
-    
+
     @staticmethod
     def get_quiz_by_id(qid):
         q  = Quiz.query.filter_by(id = qid).first()
         if q:
             q.questions = Question.get_all_questions_by_quiz_id(qid)
         return q
+
+    @staticmethod
+    def get_quiz_only_by_id(qid):
+        return Quiz.query.filter_by(id = qid).first()
 
     @staticmethod
     def get_quizes_by_userid(userid):

@@ -122,6 +122,28 @@ def jupdate(quiz_id):
         current_app.logger.warning(msg)
         return jsonify({"status" : "ERROR", "message" : msg})
     
+#@quiz_bp.route('/jresult/<int:session_id>/')
+def jresult(session_id):
+    current_app.logger.debug("jresult. session_id - " + str(session_id))
+    
+    quiz_result = QuizResult.get_quiz_result_by_id(session_id)
+    
+    if quiz_result:
+        if current_user.id == quiz_result.quiz.userid:
+            result = {'status' : 'OK'}
+            result.update(quiz_result.serialize)
+
+            return jsonify(result)
+        else:
+            msg = auth_failure_message + u"view this results(id = " + str(session_id).decode("UTF-8")+")"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
+    else:
+        msg = u"No results found with such session_id" + str(session_id).decode("UTF-8")
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
+
+    
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
     current_app.logger.debug("jget. quiz_id - " + str(quiz_id))
