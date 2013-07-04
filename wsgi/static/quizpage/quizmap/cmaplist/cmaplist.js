@@ -173,10 +173,13 @@ steal('jquery/controller').then(function($){
 	 			Quizpage.Quizmap.Cmaplist.markers = new Array();
 
 	 			Quizpage.Quizmap.Cmaplist.instance = self;
+	 			
+	 			var lat = parseFloat(window.jsdata.latitude);
+	 			var lon = parseFloat(window.jsdata.longitude);
 
         		var mapOptions = {
-         			    zoom: 8,		    
-         			    center: new google.maps.LatLng(37.4419, -122.1419),
+         			    zoom: 7,		    
+         			    center: new google.maps.LatLng(lat, lon),
          			    panControl: true,
          			    streetViewControl: false,
          			    mapTypeControl: false,

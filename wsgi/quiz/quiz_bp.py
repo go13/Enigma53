@@ -74,8 +74,20 @@ def quiz_list():
     current_app.logger.debug("quiz_list")
 
     quizes = Quiz.get_quizes_by_userid(current_user.id)
+    
+    lat = 37.4419
+    lon = -122.1419
+    
+    if len(quizes) > 0:
+        lat = quizes[0].latitude
+        lon = quizes[0].longitude
+    
+    jsdata = {
+              "latitude" : lat,
+              "longitude" : lon 
+              }
 
-    return render_template('quiz_list.html', quizes = quizes, active_page = "quiz_list")
+    return render_template('quiz_list.html', quizes = quizes, jsdata = jsdata, active_page = "quiz_list")
 
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
 def jupdate(quiz_id):
