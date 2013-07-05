@@ -1,4 +1,4 @@
-import scrubber
+from datetime import datetime
 from flask import Blueprint, render_template, request, jsonify, current_app
 from modules.jsonschema import validate, Draft4Validator
 
@@ -122,7 +122,7 @@ def jupd(question_id):
                 current_app.logger.debug("latitude = " + str(latitude))
                 current_app.logger.debug("longitude = " + str(longitude))
                 
-                Question.update_question_by_id(question_id, qtext, latitude, longitude, False)
+                Question.update_question_by_id(question_id, qtext, latitude, longitude)
                 #Answer.delete_answers_by_question_id(question_id, True)
         
        #         for answer in answers:
@@ -188,11 +188,28 @@ def jcreate():
             answers = request.json['answers']
             latitude = request.json['lat']
             longitude = request.json['lon']
-        
-            newQuestion = Question(quizid = quizid, userid = current_user.id, nextquestionid = 2, qtext = qtext, qtextcache = qtext, qtype = 1, answers = answers, latitude = latitude, longitude = longitude)
-            db.session.add(newQuestion)
+            
+            newQuestion = Question(quizid = quizid, 
+                                   userid = current_user.id, 
+                                   nextquestionid = 2, 
+                                   qtext = qtext, 
+                                   qtextcache = qtext, 
+                                   qtype = 1, 
+                                   answers = answers, 
+                                   latitude = latitude, 
+                                   longitude = longitude,
+                                   changetime = datetime.now(),
+                                   parentid = -1)
+            
+            db.session.add(newQuestion)            
             db.session.commit()
-        
+            
+            oldQuestion = newQuestion.clone_question
+            oldQuestion.parentid = newQuestion.id
+                        
+            db.session.add(oldQuestion)
+            db.session.commit()
+                    
             result = {'jstaus' : 'OK', 'id' : newQuestion.id}
             return jsonify(result)
         else:
@@ -214,14 +231,15 @@ def jdelete(question_id):
 
     if question:
         if current_user.id == question.userid:
+
             for answer in question.answers:
                 db.session.delete(answer)
-    
+
             db.session.delete(question)
             db.session.commit()
     
             result = {'jstaus':'OK'}
-            return jsonify(result)        
+            return jsonify(result)
         else:
             msg = auth_failure_message + u"delete this page"
             current_app.logger.warning(msg)
@@ -264,21 +282,31 @@ def jsubmit(question_id):
                 qid = request.json['id']
                 receivedanswers = request.json['answers']
                 correct = True
-        
+                old_question = Question.get_latest_version_by_parentid(qid)
+                
                 for i in range(0, len(receivedanswers)):
                     item = receivedanswers[i]
                     aid = item['id']
                     value = item['value']
                     
                     current_app.logger.debug("submitting question answer: sessionid = " + str(sessionid) + ", value = " + str(value) + ", aid = " + str(aid))
+                    
+                    old_answer = None
+                    for a in old_question.answers:
+                        if a.parentid == aid:
+                            old_answer = a
+                            break
                      
-                    AnswerResult.add_answer_result(sessionid, aid, value, False)
+                    AnswerResult.add_answer_result(sessionid, old_answer.id, value, False)
         
                     correct = correct and (value == question.answers[i].correct)                    
                     
                     current_app.logger.debug("a# = " + str(i) + ", value = " + str(value) + ", answer = " + str(question.answers[i].correct) + ", correct = " + str(correct))
-
-                QuestionResult.add_question_result(sessionid, qid, correct, False)
+                                
+                
+                current_app.logger.debug("old_question id = " + str(old_question.id))
+                
+                QuestionResult.add_question_result(sessionid, old_question.id, correct, False)
                 db.session.commit()
                 
                 result = {'jstaus':'OK'}

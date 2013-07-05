@@ -8,16 +8,18 @@ class Answer(db.Model):
 
     id = db.Column('id', Integer, primary_key = True)
     questionid = db.Column('questionid', Integer)
+    parentid = db.Column('parentid', Integer)
     atext = db.Column('atext', Unicode)
     correct = db.Column('correct', String)
 
-    def __init__(self, questionid = questionid, atext=atext, correct=correct):
+    def __init__(self, questionid = questionid, atext = atext, correct = correct, parentid = parentid):
         self.atext = atext
         self.questionid = questionid
         self.correct = correct
+        self.parentid = parentid
 
     def __repr__(self):
-        return '<Answer %s>' % (self.atext)
+        return '<Answer %s>' % (self.parentid)
 
     @property
     def serialize(self):
@@ -58,7 +60,8 @@ class Answer(db.Model):
     
     @staticmethod
     def delete_answer_by_id(aid):
-        return Answer.query.filter_by(id = aid).delete()
+        Answer.query.filter_by(id = aid).delete()
+        Answer.query.filter_by(parentid = aid).delete()
     
     @staticmethod
     def update_answer_by_id(aid, answer, correct):
@@ -67,8 +70,16 @@ class Answer(db.Model):
         return result
     
     @staticmethod
+    def clone_answers_by_questionid(old_questionid, new_questionid, batch):
+        answers = Answer.query.filter_by(questionid = old_questionid).all()
+        for item in answers:
+            db.session.add(Answer(new_questionid, item.atext, item.correct, item.id))
+        if not batch:                
+            db.session.commit()
+    
+    @staticmethod
     def create_answer(questionid, answer, correct, batch):
-        answer = Answer(questionid, answer, correct)
+        answer = Answer(questionid, answer, correct, -1)
         db.session.add(answer)                
         if not batch: 
             db.session.commit()        

@@ -170,7 +170,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
         		    d.i = i;
         		  });
         		
-        		  x.domain(data.map(function(d) { return "#" + d.id; }));
+        		  x.domain(data.map(function(d) { return "" + d.correct + "/" + d.total; }));
         		  y.domain([0, d3.max(data, function(d) { return d.rate; })]);
         		
         		   svg.append("g")
@@ -211,7 +211,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
         			.attr("dx", ".7em")	
         		    .attr("transform", function(d) { return "translate(" + x.rangeBand()/2 + ","+ height +")rotate(-90)"; })
         		    .attr("text-anchor", "start")
-        		    .text(function(d) { return  formatDate(d.date) + " ("+d.correct+"/"+d.total+")"; })
+        		    .text(function(d) { return  formatDate(d.date); })
         		    .on("mousedown", mousedown);
         		  
         		

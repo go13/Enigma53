@@ -43,7 +43,7 @@ class Quiz(db.Model):
     
     @staticmethod
     def get_number_of_questions_by_id(qid):
-        return Question.query.filter_by(quizid = qid).count()
+        return Question.query.filter_by(quizid = qid).filter(Question.parentid < 0).count()
 
     @staticmethod
     def get_quiz_by_id(qid):

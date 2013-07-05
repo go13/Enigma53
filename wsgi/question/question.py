@@ -1,6 +1,7 @@
 import re
+from datetime import datetime
 from flask import current_app
-from sqlalchemy import Integer, Unicode
+from sqlalchemy import Integer, Unicode, TIMESTAMP
 
 from model import db
 from modules.answer import Answer
@@ -9,6 +10,7 @@ class Question(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column('id', Integer, primary_key = True)
+    parentid = db.Column('parentid', Integer)      
     quizid = db.Column('quizid', Integer)
     userid = db.Column('userid', Integer)
     nextquestionid = db.Column('nextquestionid', Integer)
@@ -17,9 +19,10 @@ class Question(db.Model):
     qtype = db.Column('type', Integer)
     latitude = db.Column('latitude', Unicode)
     longitude = db.Column('longitude', Unicode)
+    changetime = db.Column('changetime', TIMESTAMP)
     answers = []    
 
-    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude, longitude, qtextcache):
+    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude, longitude, qtextcache, changetime, parentid):
         self.quizid = quizid
         self.userid = userid
         self.nextquestionid = nextquestionid
@@ -29,6 +32,22 @@ class Question(db.Model):
         self.latitude = latitude
         self.longitude = longitude
         self.answers = answers
+        self.changetime = changetime
+        self.parentid = parentid
+    
+    @property
+    def clone_question(self):
+        return Question(self.quizid, 
+                        self.userid, 
+                        self.nextquestionid, 
+                        self.qtext, 
+                        self.qtype, 
+                        None, 
+                        self.latitude, 
+                        self.longitude, 
+                        self.qtextcache, 
+                        datetime.now(), 
+                        -1)    
 
     @property
     def serialize(self):
@@ -76,21 +95,40 @@ class Question(db.Model):
     @staticmethod
     def get_question_by_id(qid):
         current_app.logger.debug("get_question_by_id - " + str(qid))
-        q  = Question.query.filter_by(id = qid).first()
+        q  = Question.query.filter_by(id = qid).filter(Question.parentid < 0).first()
         if q is not None:
             q.answers = Answer.get_answer_by_question_id(q.id)
             return q
         return None
+
+    @staticmethod
+    def get_question_variant_by_id(qid):
+        current_app.logger.debug("get_question_variant_by_id - " + str(qid))
+        result  = Question.query.filter_by(id = qid).first()
+        if result:
+            result.answers = Answer.get_answer_by_question_id(qid)
+            for a in result.answers:
+                current_app.logger.debug("answ: " + str(a.id))
+        return result
+    
+    
+    @staticmethod
+    def get_all_questions_with_variants_by_id(qid):
+        current_app.logger.debug("get_question_by_id - " + str(qid))
+        results  = Question.query.filter_by(parentid = qid).all()
+        for item in results:
+            item.answers = Answer.get_answer_by_question_id(item.id)
+        return results
     
     @staticmethod
     def get_question_only_by_id(qid):
         current_app.logger.debug("get_question_only_by_id - " + str(qid))
-        return Question.query.filter_by(id = qid).first()
+        return Question.query.filter_by(id = qid).filter(Question.parentid < 0).first()
 
     @staticmethod
     def get_questions_by_quiz_id(quiz_id):
         current_app.logger.debug("get_questions_by_quiz_id - " + str(quiz_id))
-        q  = Question.query.filter_by(quizid = quiz_id).first()
+        q  = Question.query.filter_by(quizid = quiz_id).filter(Question.parentid < 0).first()
         if q is not None:
             q.answers = Answer.get_answer_by_question_id(id)
         return q
@@ -98,27 +136,53 @@ class Question(db.Model):
     @staticmethod
     def get_all_questions_by_quiz_id(quiz_id):
         current_app.logger.debug("get_all_questions_by_quiz_id. quiz_id - " + str(quiz_id))
-        questions = Question.query.filter_by(quizid = quiz_id).all()
+        questions = Question.query.filter_by(quizid = quiz_id).filter(Question.parentid < 0).all()
         for q in questions:
             q.answers = Answer.get_answer_by_question_id(q.id)
             current_app.logger.debug(q.answers)
         return questions
-
+    
     @staticmethod
-    def update_question_by_id(questionid, qtext, latitude, longitude, batch):
+    def get_latest_version_by_parentid(parentid):
+        
+        current_app.logger.debug("get_latest_version_by_id(" + str(parentid) +")")
+                
+        result = Question.query.filter_by(parentid = parentid).order_by(Question.changetime.desc()).first()
+        result.answers = Answer.get_answer_by_question_id(result.id)
+
+        return result
+        
+    @staticmethod
+    def update_question_by_id(questionid, qtext, latitude, longitude):
+        current_app.logger.debug("update_question_by_id")
+        
+        question = Question.query.filter_by(id = questionid).filter(Question.parentid < 0).first()        
+
         Answer.delete_answers_by_question_id(questionid, True)
+
         def repl(m):
             correct = m.group(1)
             if correct == '+':
-                Answer.create_answer(questionid, 'atexttodo', 'T', True)
+                Answer.create_answer(questionid, 'todo', 'T', True)
             else:
-                Answer.create_answer(questionid, 'atexttodo', 'F', True)
+                Answer.create_answer(questionid, 'todo', 'F', True)
             return '?[-]'
+        
         qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext) 
-        print 'qtextcache ' + qtextcache        
-        Question.query.filter_by(id = questionid).update({'qtext' : qtext, 'qtextcache' : qtextcache, 'latitude' : latitude, 'longitude' : longitude})
-        if not batch:
-            db.session.commit()             
+               
+        question.qtext = qtext
+        question.qtextcache = qtextcache
+        question.latitude = latitude
+        question.longitude = longitude
+        
+        previousq = question.clone_question
+        previousq.parentid = questionid   
+        db.session.add(previousq)
+        
+        db.session.merge(question)
+        db.session.commit()
+        
+        Answer.clone_answers_by_questionid(questionid, previousq.id, False)        
 
     @staticmethod
     def delete_questions_by_quiz_id(quizid, batch):
@@ -128,5 +192,12 @@ class Question(db.Model):
             for item in questions:
                 Answer.delete_answers_by_question_id(item.id, True)
                 db.session.delete(item)
+                
+        questions = Question.query.filter_by(parentid = quizid).all()
+        if questions:
+            for item in questions:
+                Answer.delete_answers_by_question_id(item.id, True)
+                db.session.delete(item)
+                
         if not batch:
             db.session.commit()

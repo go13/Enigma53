@@ -32,15 +32,17 @@ class QuestionResult(db.Model):
 
     @staticmethod
     def get_question_results_by_id(sessionid):
+        current_app.logger.debug("get_question_results_by_id(" + str(sessionid) + ")")
         results = QuestionResult.query.filter_by(sessionid = sessionid).all()
         for item in results:
-            item.question = Question.get_question_only_by_id(item.questionid)
-            item.answer_results = AnswerResult.get_answer_results(sessionid, item.questionid)
+            current_app.logger.debug("trying to get get_question_variant_by_id(" + str(item.questionid) + ")")
+            item.question = Question.get_question_variant_by_id(item.questionid)
+            item.answer_results = AnswerResult.get_answer_results(sessionid, item.question.id)
         return results
         
     @staticmethod
-    def add_question_result(sessionid, questionid, correct, batch):
-        result = QuestionResult(sessionid, questionid, correct)
+    def add_question_result(sessionid, parentid, correct, batch):        
+        result = QuestionResult(sessionid, parentid, correct)
         db.session.merge(result)
         if not batch:
             db.session.commit()
@@ -50,7 +52,7 @@ class QuestionResult(db.Model):
         current_app.logger.debug("delete_questionresults_by_sessionid(" + str(sessionid) + ")")
         AnswerResult.delete_answerresults_by_session_id(sessionid, False)
         
-        results=QuestionResult.query.filter_by(sessionid = sessionid).all()
+        results = QuestionResult.query.filter_by(sessionid = sessionid).all()
         if results:
             for item in results:    
                 print 'QuestionResult found ', item.sessionid            

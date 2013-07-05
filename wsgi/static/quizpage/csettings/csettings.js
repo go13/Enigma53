@@ -23,6 +23,27 @@ steal('jquery/controller').then(function($){
 	                  	}            	
 	                  }
 		        });
+			},
+			quiz_delete : function(success){
+				var qid = Quizpage.Quiz.Navigator.instance.quizid;
+				$.ajax({
+		            type: "DELETE",
+		            url: "/quiz/jdelete/"+qid+"/",
+		            dataType: "json",
+		            contentType: "application/json; charset=utf-8",
+		            data: JSON.stringify(new Object()),
+		            success :  success,
+		            error:  function (e){
+	                	Messenger().post({
+	                		  message: 'There was an error posting the data to server',
+	                		  type : 'error',
+	                		  showCloseButton: true
+	                		});
+	                  	if(error){
+	                  		error(e);
+	                  	}            	
+	                  }
+		        });
 			}
         },{        	
 	        "#settings-save-btn click" : function(){
@@ -34,6 +55,20 @@ steal('jquery/controller').then(function($){
                     		  message: 'Quiz settings updated',
                     		  showCloseButton: true
                         });
+	        		}else{
+                        Messenger().post({
+                  		  message: data.message,
+                  		  type : 'error',
+                  		  showCloseButton: true
+                      });	        			
+	        		}	        		
+	        	});	        	
+	        },
+	        "#settings-delete-btn click" : function(){
+	        	console.log('Trying to delete the question!');	
+	        	Quizpage.Csettings.quiz_delete(function(data){
+	        		if(data.status === "OK"){
+	        			window.location.href = "/quiz/list/";
 	        		}else{
                         Messenger().post({
                   		  message: data.message,

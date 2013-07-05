@@ -38,37 +38,37 @@ steal('jquery/controller',
             	
             	this.model.answers = question_result.answer_results;
             	
-            	this.model.gmarker = Resultpage.Map.Cresultmap.addPoint(this.model);
-            	
-            	//var self = Resultpage.Question.Cquestionresult;            	
+            	this.model.gmarker = Resultpage.Map.Cresultmap.addPoint(this.model);            	
             	            
         		var qtext = self.converter.makeHtml(this.model.qtext);
         		this.element.find("#question-text-" + id).html(qtext);
         	},
         	renderCheckbox : function(text, id) {
         		var self = this;
-            	var i = 0;
+        		var i = 0;            	
             	return text.replace(/(\?\[[\+-]?\])/gm, function (whole, checkbox) {
-            		var answer = self.model.answers[i];
-            		var ch = "checked";
-            		if(answer.value !== 'T'){
-            			ch = "";
-            		}
             		var s = "";
-            		if(answer.correct === answer.value){
-	            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-							"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
-							"<span class='label label-important'>Error</span>" +
-							"\n";	
-            		}else{
-	            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-							"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
-							"<span class='label label-success'> ok </span>" +
-	            			"\n";
-            		}					
+            		if(i < self.model.answers.length){
+	            		var answer = self.model.answers[i];
+	            		var ch = "checked";
+	            		if(answer.value !== 'T'){
+	            			ch = "";
+	            		}
+	            		if(answer.correct !== answer.value){
+		            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
+								"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+								"<span class='label label-important'>Error</span>" +
+								"\n";	
+	            		}else{
+		            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
+								"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+								"<span class='label label-success'> ok </span>" +
+		            			"\n";
+	            		}
+            		}
 					i = i + 1;
 					return s;
-                });            	
+                });
             }   
         });
 });

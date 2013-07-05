@@ -48,10 +48,9 @@ class Historysession(db.Model):
         query = db.session.query(Historysession).filter(
             Historysession.id == t.c.max_id,
         )
-        hs=query.first()
+        hs = query.first()
 
-        if hs and hs.endtime==None:
-            #hs.user=User.get_user_by_id(userid)
+        if hs and hs.endtime == None:
             return hs
         else:
             return None

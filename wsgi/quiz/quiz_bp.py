@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, redirect, current_app, flash, url_for
+from flask import Blueprint, render_template, jsonify, request, redirect, current_app
 from modules.jsonschema import validate, Draft4Validator
 from wtforms import Form, TextField, validators
 
@@ -186,11 +186,12 @@ def jdelete(quiz_id):
     
     if quiz:
         if current_user.id == quiz.userid:
+
             QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
             Quiz.delete_quiz_by_id(quiz_id, False)
-        
+
             current_app.logger.debug("Quiz deleted")
-        
+
             return jsonify({"status":"OK"})
         else:
             msg = auth_failure_message + u"delete this quiz(id = " + str(quiz_id).decode("UTF-8")+")"

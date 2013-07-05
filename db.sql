@@ -28,6 +28,7 @@ create table answers
 (
    id                   integer not null AUTO_INCREMENT,
    questionid           integer,
+   parentid             integer,
    atext                text,
    correct              text not null,
    primary key (id)
@@ -39,14 +40,16 @@ create table answers
 create table questions
 (
    id                   integer not null AUTO_INCREMENT,
+   parentid             integer,
    quizid               integer,
    userid               integer,
    nextquestionid       integer,
    qtext                text,
    qtextcache           text,
    type                 integer,
-   latitude            text not null,
+   latitude             text not null,
    longitude            text not null,
+   changetime           timestamp not null,
    primary key (id)
 );
 

@@ -28,6 +28,7 @@ class AnswerResult(db.Model):
 
     @staticmethod
     def get_answer_results(sessionid, questionid):
+        print "get_answer_results", sessionid, questionid
         results = []
 
         answers = Answer.get_answer_by_question_id(questionid)
