@@ -104,13 +104,13 @@ def jupd(question_id):
             v = Draft4Validator(schema)
             errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
+            qid = request.json['id']
+            qtext = request.json['qtext']
+            answers = request.json['answers']
+            latitude = request.json['lat']
+            longitude = request.json['lon']
+
             if len(errors) == 0:
-                qid = request.json['id']
-                qtext = request.json['qtext']
-                answers = request.json['answers']
-                latitude = request.json['lat']
-                longitude = request.json['lon']
-                
                 #TODO - allow displaying unallowed tags as non html tags
                 #scrubb = scrubber.Scrubber()                
                 #qtext = jinja2.Markup(scrubb.scrub(qtext))
@@ -121,16 +121,16 @@ def jupd(question_id):
                 current_app.logger.debug("answers = " + str(answers))
                 current_app.logger.debug("latitude = " + str(latitude))
                 current_app.logger.debug("longitude = " + str(longitude))
-                
-                Question.update_question_by_id(question_id, qtext, latitude, longitude)
-                #Answer.delete_answers_by_question_id(question_id, True)
-        
-       #         for answer in answers:
-       #             atext = answer['atext']
-        #            correct = answer['correct']
-        #            Answer.create_answer(question_id, atext, correct, True)
-         #       db.session.commit()
-                
+
+
+                question = Question.update_question_by_id(question_id, qtext, latitude, longitude)
+                newest_question_results = QuestionResult.get_latest_results_by_question_id(question_id)
+
+                if len(newest_question_results) > 0:
+                    question.create_revision(False)
+                else:
+                    question.syncronise_with_latest_revision(False)
+
                 current_app.logger.debug("Status - OK")
                 
                 result = {'staus':'OK'}
@@ -202,11 +202,11 @@ def jcreate():
                                    parentid = -1)
             
             db.session.add(newQuestion)            
-            db.session.commit()
+            db.session.flush()
             
-            oldQuestion = newQuestion.clone_question
+            oldQuestion = newQuestion.clone_question()
             oldQuestion.parentid = newQuestion.id
-                        
+
             db.session.add(oldQuestion)
             db.session.commit()
                     
@@ -281,16 +281,15 @@ def jsubmit(question_id):
             else:            
                 qid = request.json['id']
                 receivedanswers = request.json['answers']
+
                 correct = True
-                old_question = Question.get_latest_version_by_parentid(qid)
+                old_question = Question.get_latest_version_by_parent_id(qid)
                 
                 for i in range(0, len(receivedanswers)):
                     item = receivedanswers[i]
                     aid = item['id']
                     value = item['value']
-                    
-                    current_app.logger.debug("submitting question answer: sessionid = " + str(sessionid) + ", value = " + str(value) + ", aid = " + str(aid))
-                    
+
                     old_answer = None
                     for a in old_question.answers:
                         if a.parentid == aid:
@@ -317,4 +316,3 @@ def jsubmit(question_id):
             return jsonify({"status" : "ERROR", "message" : msg})
     else:
         return jsonify({"status" : "ERROR"})
-

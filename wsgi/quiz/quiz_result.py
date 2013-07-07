@@ -33,6 +33,20 @@ class QuizResult(db.Model):
             'question_results' : [i.serialize_for_result for i in self.question_results],
             'quiz' : self.quiz.serialize_for_result
            }
+    def finish_session(self):
+        current_app.logger.debug("finish_session sessionid = " + str(self.sessionid))
+
+        self.question_results = QuestionResult.get_question_results_by_id(self.sessionid)
+        self.ncorrect = 0
+        self.quiz = Quiz.get_quiz_only_by_id(self.quizid)
+
+        for q in self.question_results:
+            if q.correct == 1:
+                self.ncorrect += 1
+
+        db.session.merge(self)
+        db.session.commit()
+        current_app.logger.debug("correct num = " + str(self.ncorrect) + "out of " + str(self.nquestion))
 
     @staticmethod
     def get_quiz_result_by_id(sessionid):
@@ -46,7 +60,7 @@ class QuizResult(db.Model):
             result.question_results = QuestionResult.get_question_results_by_id(sessionid)
             print 'result.question_results' + str(result.question_results)             
         return result
-    
+
     @staticmethod
     def get_quiz_results_by_quiz_id(quizid):
         current_app.logger.debug("get_quiz_results_by_id(" + str(quizid) + ")")
@@ -59,12 +73,22 @@ class QuizResult(db.Model):
         return results
 
     @staticmethod
+    def get_quiz_result_by_quiz_id_user_id(quizid, userid):
+        current_app.logger.debug("get_quiz_results_by_id(" + str(quizid) + "," + str(userid) + ")")
+        hs = Historysession.get_current_historysession_by_userid(userid)
+        qr = QuizResult.query.filter_by(sessionid = hs.id).first()
+        if qr:
+            qr.quiz = Quiz.get_quiz_only_by_id(qr.quizid)
+        return qr
+
+
+    @staticmethod
     def start_session(quizid, userid):
         current_app.logger.debug("start_session(" + str(quizid) + ", " + str(userid) + ")")        
         
         hs = Historysession.start_history_session(userid)
         
-        qr = QuizResult.query.filter_by(sessionid = hs.id).first()
+        qr = QuizResult.query.filter_by(sessionid = hs.id).first()        
         if not qr:
             nquestion = Quiz.get_number_of_questions_by_id(quizid)
             
@@ -72,8 +96,8 @@ class QuizResult(db.Model):
             db.session.add(qr)
             db.session.commit()
             
-            current_app.logger.debug("committed. nquestion = " + str(nquestion))
-        qr.historysession = hs        
+            current_app.logger.debug("committed")
+        qr.historysession = hs
         return qr
     
     @staticmethod
@@ -87,10 +111,12 @@ class QuizResult(db.Model):
             qr.ncorrect = 0
             qr.quiz = Quiz.get_quiz_only_by_id(quizid)
             for q in qr.question_results:
-                if q.correct == 1:
+                current_app.logger.debug("answ corr " + str(q.correct))
+                if q.correct == 1: #TODO
                     qr.ncorrect += 1
             db.session.merge(qr)
-            db.session.commit()            
+            db.session.commit()
+            current_app.logger.debug("correct num = " + str(qr.ncorrect))            
         return qr            
         
     @staticmethod

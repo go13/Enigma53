@@ -52,11 +52,8 @@ class Answer(db.Model):
         return None
 
     @staticmethod
-    def get_answer_by_question_id(questionid):
-        lst  = Answer.query.filter_by(questionid = questionid).all()
-        if lst is not None:
-            return lst
-        return None
+    def get_answers_by_question_id(questionid):
+        return Answer.query.filter_by(questionid = questionid).all()
     
     @staticmethod
     def delete_answer_by_id(aid):
@@ -70,12 +67,18 @@ class Answer(db.Model):
         return result
     
     @staticmethod
-    def clone_answers_by_questionid(old_questionid, new_questionid, batch):
+    def clone_answers_by_question_id(old_questionid, new_questionid, batch):
+        current_app.logger.debug("clone_answers_by_question_id")
         answers = Answer.query.filter_by(questionid = old_questionid).all()
         for item in answers:
             db.session.add(Answer(new_questionid, item.atext, item.correct, item.id))
         if not batch:                
             db.session.commit()
+
+    @staticmethod
+    def synchronise_answers_by_question_id(old_questionid, new_questionid, batch):
+        Answer.delete_answers_by_question_id(new_questionid, True)
+        Answer.clone_answers_by_question_id(old_questionid, new_questionid, batch)
     
     @staticmethod
     def create_answer(questionid, answer, correct, batch):
@@ -88,11 +91,7 @@ class Answer(db.Model):
     @staticmethod
     def delete_answers_by_question_id(questionid, batch):
         current_app.logger.debug("delete_answers_by_question_id = " + str(questionid))
-        answers = Answer.query.filter_by(questionid = questionid).all()
-        if answers:
-            for item in answers:
-                current_app.logger.debug("Answer found " + str(item.id)) 
-                db.session.delete(item)
+        Answer.query.filter_by(questionid = questionid).delete()
         if not batch:
             db.session.commit()
 

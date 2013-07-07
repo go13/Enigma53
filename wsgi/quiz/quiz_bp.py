@@ -248,18 +248,15 @@ def create():
     
     return redirect("/quiz/" + str(quiz.id) + "/edit/")
 
-
 @quiz_bp.route('/<int:quiz_id>/finish/')
 @login_required
 def finish_session(quiz_id):
     current_app.logger.debug('finish_session')
-
-    qr = QuizResult.finish_session(quiz_id, current_user.id)
+    qr = QuizResult.get_quiz_result_by_quiz_id_user_id(quiz_id, current_user.id)
 
     if qr:        
         if current_user.id == qr.quiz.userid:
-            QuizResult.start_session(quiz_id, current_user.id)
-            current_app.logger.debug('Finishing the session')
+            qr.finish_session(quiz_id, current_user.id)
             return redirect("/quiz/results/" + str(qr.sessionid))
         else:
             return render_template('auth_failure.html')

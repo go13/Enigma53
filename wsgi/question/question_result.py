@@ -31,12 +31,18 @@ class QuestionResult(db.Model):
            }
 
     @staticmethod
+    def get_latest_results_by_question_id(questionid):
+        current_app.logger.debug("get_question_results_by_revision_id(" + str(questionid) + ")")
+        result = Question.query.filter_by(parentid = questionid).order_by(Question.changetime.desc()).first()
+        return QuestionResult.query.filter_by(questionid = result.id).all()
+
+    @staticmethod
     def get_question_results_by_id(sessionid):
         current_app.logger.debug("get_question_results_by_id(" + str(sessionid) + ")")
         results = QuestionResult.query.filter_by(sessionid = sessionid).all()
         for item in results:
-            current_app.logger.debug("trying to get get_question_variant_by_id(" + str(item.questionid) + ")")
-            item.question = Question.get_question_variant_by_id(item.questionid)
+            current_app.logger.debug("trying to get get_revision_by_id(" + str(item.questionid) + ")")
+            item.question = Question.get_revision_by_id(item.questionid)
             item.answer_results = AnswerResult.get_answer_results(sessionid, item.question.id)
         return results
         

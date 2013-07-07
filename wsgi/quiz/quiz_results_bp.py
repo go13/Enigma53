@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, current_app, jsonify
 
+from quiz import Quiz
 from model import db
 from quiz_result import QuizResult
 from modules.results import Historysession
@@ -15,11 +16,10 @@ def quiz_results(session_id):
     result = QuizResult.get_quiz_result_by_id(session_id)
     
     if result:
-        quiz = result.quiz
-        if current_user.id == quiz.userid:
+        if current_user.id == result.quiz.userid:
             jsdata = result.serialize_for_result
             current_app.logger.debug("jsdata - " + str(jsdata))
-            return render_template('quiz_result.html', result = result, quiz = quiz, jsdata = jsdata)
+            return render_template('quiz_result.html', result = result, quiz = result.quiz, jsdata = jsdata)
         else:
             return render_template('auth_failure.html')
     else:

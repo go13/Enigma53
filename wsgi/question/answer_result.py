@@ -31,7 +31,7 @@ class AnswerResult(db.Model):
         print "get_answer_results", sessionid, questionid
         results = []
 
-        answers = Answer.get_answer_by_question_id(questionid)
+        answers = Answer.get_answers_by_question_id(questionid)
 
         for item in answers:
             r = AnswerResult.query.filter_by(sessionid = sessionid, answerid = item.id).first()
