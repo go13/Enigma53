@@ -237,7 +237,7 @@ blockquote {
 	<div id="result-map" class="full-stretch"></div> 
 </div>
 
-<div id="content-on-map" title="{{ quiz.id }}">
+<div id="content-on-map" title="{{ quiz.qid }}">
 	<div id="legend">
 	  <legend id="quiz-title-legend">
 	  You results- {{ quiz.title }}
@@ -245,21 +245,21 @@ blockquote {
 	</div>
 		
 	<ul class="nav nav-pills">
-		<li><a href="/quiz/{{quiz.id}}/edit/#results">Results</a></li>
-		<li><a href="/quiz/{{quiz.id}}/edit/">Edit</a></li>		  
-		<li><a href="/quiz/{{quiz.id}}/edit/#settings">Settings</a></li>
+		<li><a href="/quiz/{{quiz.qid}}/edit/#results">Results</a></li>
+		<li><a href="/quiz/{{quiz.qid}}/edit/">Edit</a></li>
+		<li><a href="/quiz/{{quiz.qid}}/edit/#settings">Settings</a></li>
 		<li class="pull-right">
-			<a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/">Try again</a>
+			<a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.qid}}/">Try again</a>
 		</li>
 	</ul>
     <div id="quiz-results">
     
-	{%for item in result.question_results %}
+	{%for qr in result.question_results %}
 
-	     {{render_question_result(item) }}
+	     {{render_question_result(qr) }}
 
 	{% endfor %}
-		
+
 	</div>
 </div>
 {% endblock content %}

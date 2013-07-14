@@ -2,220 +2,186 @@ import re
 from datetime import datetime
 from flask import current_app
 from sqlalchemy import Integer, Unicode, TIMESTAMP
+from question_revision import QuestionRevision
 
 from model import db
-from modules.answer import Answer
+from answer.answer import Answer
 
 class Question(db.Model):
     __tablename__ = 'questions'
 
-    id = db.Column('id', Integer, primary_key = True)
-    parentid = db.Column('parentid', Integer)      
-    quizid = db.Column('quizid', Integer)
-    userid = db.Column('userid', Integer)
-    nextquestionid = db.Column('nextquestionid', Integer)
-    qtext = db.Column('qtext', Unicode)
-    qtextcache = db.Column('qtextcache', Unicode)
-    qtype = db.Column('type', Integer)
-    latitude = db.Column('latitude', Unicode)
-    longitude = db.Column('longitude', Unicode)
-    changetime = db.Column('changetime', TIMESTAMP)
-    answers = []    
+    qid = db.Column('id', Integer, primary_key=True)
+    quiz_id = db.Column('quizid', Integer)
+    revision_id = db.Column('revisionid', Integer)
+    user_id = db.Column('userid', Integer)
+    active = db.Column('active', Integer)
 
-    def __init__(self, quizid, userid, nextquestionid, qtext, qtype, answers, latitude, longitude, qtextcache, changetime, parentid):
-        self.quizid = quizid
-        self.userid = userid
-        self.nextquestionid = nextquestionid
-        self.qtext = qtext
-        self.qtextcache = qtextcache
-        self.qtype = qtype
-        self.latitude = latitude
-        self.longitude = longitude
-        self.answers = answers
-        self.changetime = changetime
-        self.parentid = parentid
-
-    def clone_question(self):
-        return Question(self.quizid, 
-                        self.userid, 
-                        self.nextquestionid, 
-                        self.qtext, 
-                        self.qtype, 
-                        None, 
-                        self.latitude, 
-                        self.longitude, 
-                        self.qtextcache, 
-                        datetime.now(), 
-                        -1)    
-
-    def synchronise_with_question(self, question):
-        self.qtext = question.qtext
-        self.qtextcache = question.qtextcache
-        self.latitude = question.latitude
-        self.longitude = question.longitude
-
-    def create_revision(self, batch):
-        previousq = self.clone_question()
-        previousq.parentid = self.id
-        db.session.add(previousq)
-        db.session.flush()
-        Answer.clone_answers_by_question_id(self.id, previousq.id, True)
-        if not batch:
-            db.session.commit()
-
-    def syncronise_with_latest_revision(self, batch):
-        newest_revision = Question.query.filter_by(parentid = self.id).first()
-        newest_revision.synchronise_with_question(self)
-        Answer.synchronise_answers_by_question_id(self.id, newest_revision.id, batch)
+    def __init__(self, quiz_id, revision_id, user_id):
+        self.quiz_id = quiz_id
+        self.user_id = user_id
+        self.revision_id = revision_id
+        self.active = 1
+        self.question_revision = None
+        self.answers = []
 
     @property
     def serialize(self):
         return {
-            'quizid' : self.quizid,
-            'nextquestionid' : self.nextquestionid,
-            'qtext' : self.qtextcache,
-            'id' : self.id,
-            'lat' : self.latitude,
-            'lon' : self.longitude,
+            'quizid' : self.quiz_id,
+            'nextquestionid' : -1,
+            'qtext' : self.question_revision.qtextcache,
+            'id' : self.qid,
+            'lat' : self.question_revision.latitude,
+            'lon' : self.question_revision.longitude,
             'answers' : [i.serialize for i in self.answers]
            }
 
     @property
     def serialize_for_edit(self):
         return {
-            'quizid' : self.quizid,
-            'nextquestionid' : self.nextquestionid,
-            'qtext' : self.qtext,
-            'id' : self.id,
-            'lat' : self.latitude,
-            'lon' : self.longitude,
+            'quizid' : self.quiz_id,
+            'nextquestionid' : self.question_revision.nextquestionid,
+            'qtext' : self.question_revision.qtext,
+            'id' : self.qid,
+            'lat' : self.question_revision.latitude,
+            'lon' : self.question_revision.longitude,
             'answers' : [i.serialize_for_edit for i in self.answers]
            }
-        
+
     @property
     def serialize_for_result(self):
         return {
-            'nextquestionid' : self.nextquestionid,
-            'qtext' : self.qtextcache,
-            'id' : self.id,
-            'lat' : self.latitude,
-            'lon' : self.longitude
+            'qtext' : self.question_revision.qtextcache,
+            'id' : self.qid,
+            'lat' : self.question_revision.latitude,
+            'lon' : self.question_revision.longitude
            }
-        
+
+    def delete_question(self):
+        self.active = 0
+        db.session.merge(self)
+
+    @staticmethod
+    def create_question(quiz_id, user_id, qtext, qtextcache, latitude, longitude):
+        q = Question(quiz_id, -1, user_id)
+        db.session.add(q)
+        db.session.flush()
+
+        qr = QuestionRevision.create_question_revision(q.qid, qtext, qtextcache, latitude, longitude)
+
+        q.question_revision = qr
+        q.revision_id = qr.qrid
+
+        db.session.merge(q)
+        db.session.flush()
+
+        return q
+
     @staticmethod
     def get_next_question(qid):
-        q = Question.query.filter_by(id = qid).first()
-        q = Question.query.filter_by(id = q.nextquestionid).first()
+        q = Question.query.filter_by(id=qid).first()
+        q = Question.query.filter_by(id=q.nextquestionid).first()
         if q is not None:
             q.questionList = Answer.get_answers_by_question_id(q.id)
             return q
         return None
 
     @staticmethod
-    def get_question_by_id(qid):
-        current_app.logger.debug("get_question_by_id - " + str(qid))
-        q = Question.query.filter_by(id = qid).filter(Question.parentid < 0).first()
+    def get_active_question_by_id(qid):
+        current_app.logger.debug("get_active_question_by_id - " + str(qid))
+        q = Question.query.filter_by(qid=qid, active=1).first()
+        q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
         if q is not None:
-            q.answers = Answer.get_answers_by_question_id(q.id)
+            q.answers = Answer.get_answers_by_question_id(q.qid)
             return q
         return None
 
     @staticmethod
-    def get_revision_by_id(qid):
-        current_app.logger.debug("get_revision_by_id - " + str(qid))
-        result = Question.query.filter_by(id = qid).first()
-        if result:
-            result.answers = Answer.get_answers_by_question_id(qid)
-            for a in result.answers:
-                current_app.logger.debug("answ: " + str(a.id))
-        return result
-    
-    @staticmethod
-    def get_all_questions_with_variants_by_id(qid):
-        current_app.logger.debug("get_question_by_id - " + str(qid))
-        results = Question.query.filter_by(parentid = qid).order_by(Question.id.asc()).all()
-        for item in results:
-            item.answers = Answer.get_answers_by_question_id(item.id)
-        return results
-    
-    @staticmethod
-    def get_question_only_by_id(qid):
-        current_app.logger.debug("get_question_only_by_id - " + str(qid))
-        return Question.query.filter_by(id = qid).filter(Question.parentid < 0).first()
-
-    @staticmethod
-    def get_questions_by_quiz_id(quiz_id):
-        current_app.logger.debug("get_questions_by_quiz_id - " + str(quiz_id))
-        q  = Question.query.filter_by(quizid = quiz_id).filter(Question.parentid < 0).first()
-        if q is not None:
-            q.answers = Answer.get_answers_by_question_id(id)
+    def get_question_by_revision_id(revision_id):
+        qr = QuestionRevision.get_question_revision_by_id(revision_id)
+        if qr:
+            q = Question.query.filter_by(qid=qr.question_id).first()
+            q.answers = Answer.get_answers_by_question_id(q.qid)
+            q.question_revision = qr
         return q
 
     @staticmethod
-    def get_all_questions_by_quiz_id(quiz_id):
-        current_app.logger.debug("get_all_questions_by_quiz_id. quiz_id - " + str(quiz_id))
-        questions = Question.query.filter_by(quizid = quiz_id).filter(Question.parentid < 0).order_by(Question.id.asc()).all()
+    def get_active_questions_with_revisions_by_quiz_id(quiz_id):
+        question_lst = Question.query.filter_by(quiz_id=quiz_id, active=1).order_by(Question.qid.asc()).all()
+        for q in question_lst:
+            q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
+        return question_lst
+
+    @staticmethod
+    def get_question_only_by_id(qid):
+        current_app.logger.debug("get_question_only_by_id - " + str(qid))
+        return Question.query.filter_by(qid = qid).first()
+
+    @staticmethod
+    def get_all_active_questions_by_quiz_id(quiz_id):
+        questions = Question.query.filter_by(quiz_id=quiz_id, active=1).order_by(Question.qid.asc()).all()
         for q in questions:
-            q.answers = Answer.get_answers_by_question_id(q.id)
+            q.answers = Answer.get_answers_by_question_id(q.qid)
+            q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
             current_app.logger.debug(q.answers)
         return questions
-    
-    @staticmethod
-    def get_latest_version_by_parent_id(parentid):
-        current_app.logger.debug("get_latest_version_by_id(" + str(parentid) +")")
-                
-        result = Question.query.filter_by(parentid = parentid).order_by(Question.changetime.desc()).first()
-        if result:
-            result.answers = Answer.get_answers_by_question_id(result.id)
-        return result
-
-    #@staticmethod
-    #def syncronise_with_latest_revision_by_id(questionid):
-    #    q = Question.query.filter_by(id = questionid)
-    #    q.syncronise_with_latest_revision(True)
 
     @staticmethod
-    def update_question_by_id(questionid, qtext, latitude, longitude):
-        current_app.logger.debug("update_question_by_id")
-        
-        question = Question.query.filter_by(id = questionid).filter(Question.parentid < 0).first()        
+    def update_question_by_id_and_create_revision(question_id, qtext, latitude, longitude):
+        current_app.logger.debug("update_question_by_id_and_create_revision")
 
-        Answer.delete_answers_by_question_id(questionid, True)
+        question = Question.get_active_question_by_id(question_id)
 
         def repl(m):
             correct = m.group(1)
             if correct == '+':
-                Answer.create_answer(questionid, 'todo', 'T', True)
+                Answer.create_answer(question_id, question.revision_id, 'T')
             else:
-                Answer.create_answer(questionid, 'todo', 'F', True)
+                Answer.create_answer(question_id, question.revision_id, 'F')
             return '?[-]'
-        
-        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext) 
-               
-        question.qtext = qtext
-        question.qtextcache = qtextcache
-        question.latitude = latitude
-        question.longitude = longitude
+
+        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext)
+
+        qr = QuestionRevision.create_question_revision(question.qid, qtext, qtextcache, latitude, longitude)
+        question.revision_id = qr.qrid
+        question.question_revision = qr
 
         db.session.merge(question)
-        db.session.commit()
+        db.session.flush()
 
         return question
 
     @staticmethod
-    def delete_questions_by_quiz_id(quizid, batch):
-        current_app.logger.debug("delete_questions_by_quiz_id - " + str(quizid))
-        questions = Question.query.filter_by(quizid = quizid).all()
-        if questions:
-            for item in questions:
-                Answer.delete_answers_by_question_id(item.id, True)
-                db.session.delete(item)
-                
-        questions = Question.query.filter_by(parentid = quizid).all()
-        if questions:
-            for item in questions:
-                Answer.delete_answers_by_question_id(item.id, True)
-                db.session.delete(item)
-                
-        if not batch:
-            db.session.commit()
+    def update_question_by_id(question_id, qtext, latitude, longitude):
+        current_app.logger.debug("update_question_by_id")
+
+        question = Question.get_active_question_by_id(question_id)
+
+        def repl(m):
+            correct = m.group(1)
+            if correct == '+':
+                Answer.create_answer(question_id, question.revision_id, 'T')
+            else:
+                Answer.create_answer(question_id, question.revision_id, 'F')
+            return '?[-]'
+
+        Answer.delete_answers_by_question_id_revision_id(question_id, question.revision_id)
+
+        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext)
+
+        QuestionRevision.update_question_revision_by_id(question.revision_id, qtext, qtextcache, latitude, longitude)
+
+        db.session.merge(question)
+        db.session.flush()
+
+        return question
+
+    @staticmethod
+    def full_delete_questions_by_quiz_id(quiz_id):
+        questions = Question.query.filter_by(quiz_id=quiz_id).all()
+        for q in questions:
+            Answer.delete_answers_by_question_id(q.qid)
+            QuestionRevision.delete_question_revisions_by_question_id(q.qid)
+            db.session.delete(q)
+
+

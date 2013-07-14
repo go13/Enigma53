@@ -1,11 +1,11 @@
-from sqlalchemy import Table, Column, Integer, Unicode, TIMESTAMP
+from sqlalchemy import Integer, Unicode, func
 from model import db
 
 from flask_login import AnonymousUser, UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = db.Column('id', Integer, primary_key = True)
+    id = db.Column('id', Integer, primary_key=True)
     name = db.Column('username', Unicode)
     email = db.Column('email', Unicode)
     password = db.Column('password', Unicode)
@@ -17,15 +17,15 @@ class User(db.Model, UserMixin):
         
     @staticmethod
     def get_user_by_id(uid):
-        return User.query.filter_by(id = uid).first()
+        return User.query.filter_by(id=uid).first()
     
     @staticmethod
     def get_user_by_name(name):
-        return User.query.filter_by(name = name).first()
+        return User.query.filter_by(name=name).first()
     
     @staticmethod
     def get_user_by_email(email):
-        return User.query.filter_by(email = email).first()
+        return User.query.filter(func.lower(email)==func.lower(email)).first()
 
     @staticmethod
     def update_user(user):

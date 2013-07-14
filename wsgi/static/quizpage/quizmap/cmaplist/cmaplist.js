@@ -145,7 +145,6 @@ steal('jquery/controller').then(function($){
 	    		}
 	    	},
 	        onMarkerClick : function(mk){
-	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
 	        	if(this.doMarkerClick){
 	        		this.doMarkerClick(mk);
 	        	}

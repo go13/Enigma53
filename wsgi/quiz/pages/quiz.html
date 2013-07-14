@@ -58,20 +58,20 @@
 	<div class="tabbable"> 
 		<div class="tabbable" style="margin-right:140px">
 		  <ul class="nav nav-pills">
-			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a></li>
+			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
 		  </ul>
 		</div>
 	</div>	
-	<div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
+	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
 	    <ul id="tabs" class="nav nav-tabs">
 	        {%for item in quiz.questions %}
 	        {% if loop.first %}
-	        <li id="tab-question{{item.id}}" class="active question-tab tab-question-item">
-	            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+	        <li id="tab-question{{item.qid}}" class="active question-tab tab-question-item">
+	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
 	        </li>
 	        {% else %}
-	        <li id="tab-question{{item.id}}" class="question-tab tab-question-item">
-	            <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+	        <li id="tab-question{{item.qid}}" class="question-tab tab-question-item">
+	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
 	        </li>
 	        {% endif %}
 	        {% endfor %}
@@ -79,12 +79,12 @@
 	    <div id="tabs-container" class="tab-content">
 	        {%for item in quiz.questions %}
 	        {% if loop.first %}
-	        <div class="tab-pane active" id="tab-question-page{{item.id}}">
-	            <div class='question-item' name='question{{item.id}}'></div>
+	        <div class="tab-pane active" id="tab-question-page{{item.qid}}">
+	            <div class='question-item' name='question{{item.qid}}'></div>
 	        </div>
 	        {% else %}
-	        <div class="tab-pane" id="tab-question-page{{item.id}}">
-	            <div class='question-item' name='question{{item.id}}'></div>
+	        <div class="tab-pane" id="tab-question-page{{item.qid}}">
+	            <div class='question-item' name='question{{item.qid}}'></div>
 	        </div>
 	        {% endif %}
 	        {% endfor %}

@@ -3,12 +3,13 @@ from flask import Blueprint, render_template, request, jsonify, current_app
 from modules.jsonschema import validate, Draft4Validator
 
 from model import db
+from quiz.quiz import Quiz
 from question import Question
-from modules.answer import Answer
-from quiz.quiz_result import QuizResult
+from answer.answer import Answer
+from question_revision import QuestionRevision
 from question_result import QuestionResult
 from answer_result import AnswerResult
-from modules.results import Historysession
+from results.historysession import Historysession
 from flask_login import login_required, current_user
 
 question_bp = Blueprint('question_bp', __name__, template_folder = 'pages')
@@ -17,7 +18,7 @@ auth_failure_message = u"You don't have permissions to "
 
 #@question_bp.route('/<int:question_id>/')
 def question(question_id):
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
         return render_template('question.html', question = question)
     else:
@@ -26,7 +27,7 @@ def question(question_id):
 #@question_bp.route('/<int:question_id>/edit/')
 #@login_required
 def question_edit(question_id):
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
         return render_template('question_edit.html', question = question)
     else:
@@ -36,9 +37,9 @@ def question_edit(question_id):
 @login_required
 def jget(question_id):
     current_app.logger.debug("jget - " + str(question_id))
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
-        if current_user.id == question.userid:
+        if current_user.id == question.user_id:
             result = {'jstaus':'OK'}
             result.update(question.serialize)
             current_app.logger.warning("jget result = " + str(result))
@@ -56,7 +57,7 @@ def jget(question_id):
 @login_required
 def jget_for_edit(question_id):
     current_app.logger.debug("jget_for_edit - " + str(question_id))
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
         if current_user.id == question.userid:
             result = {'jstaus':'OK'}
@@ -79,10 +80,10 @@ def jget_for_edit(question_id):
 def jupd(question_id):
     current_app.logger.debug("question.jupd. - " + str(question_id))    
     
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     
     if question:
-        if current_user.id == question.userid:
+        if current_user.id == question.user_id:
             
             current_app.logger.warning(request.json)
 
@@ -122,14 +123,14 @@ def jupd(question_id):
                 current_app.logger.debug("latitude = " + str(latitude))
                 current_app.logger.debug("longitude = " + str(longitude))
 
+                results = QuestionResult.get_question_results_by_revision_id(question.revision_id)
 
-                question = Question.update_question_by_id(question_id, qtext, latitude, longitude)
-                newest_question_results = QuestionResult.get_latest_results_by_question_id(question_id)
-
-                if len(newest_question_results) > 0:
-                    question.create_revision(False)
+                if len(results) > 0:
+                    Question.update_question_by_id_and_create_revision(question_id, qtext, latitude, longitude)
                 else:
-                    question.syncronise_with_latest_revision(False)
+                    Question.update_question_by_id(question_id, qtext, latitude, longitude)
+
+                db.session.commit()
 
                 current_app.logger.debug("Status - OK")
                 
@@ -160,6 +161,7 @@ def jupd(question_id):
         current_app.logger.warning(msg)
         return jsonify({"status" : "ERROR", "message" : msg})
 
+#TODO - add adding a quiz revizion
 @question_bp.route('/jcreate/',methods=['POST'])
 @login_required
 def jcreate():
@@ -184,33 +186,19 @@ def jcreate():
         if len(errors) == 0:        
         
             qtext = request.json['qtext']
-            quizid = request.json['quizid']
+            quiz_id = request.json['quizid']
             answers = request.json['answers']
             latitude = request.json['lat']
             longitude = request.json['lon']
-            
-            newQuestion = Question(quizid = quizid, 
-                                   userid = current_user.id, 
-                                   nextquestionid = 2, 
-                                   qtext = qtext, 
-                                   qtextcache = qtext, 
-                                   qtype = 1, 
-                                   answers = answers, 
-                                   latitude = latitude, 
-                                   longitude = longitude,
-                                   changetime = datetime.now(),
-                                   parentid = -1)
-            
-            db.session.add(newQuestion)            
-            db.session.flush()
-            
-            oldQuestion = newQuestion.clone_question()
-            oldQuestion.parentid = newQuestion.id
 
-            db.session.add(oldQuestion)
+            quiz = Quiz.get_quiz_only_by_id(quiz_id)
+
+            new_question = Question.create_question(quiz_id, current_user.id,\
+                                                   qtext, qtext, latitude, longitude)
+
             db.session.commit()
                     
-            result = {'jstaus' : 'OK', 'id' : newQuestion.id}
+            result = {'jstaus' : 'OK', 'id' : new_question.qid}
             return jsonify(result)
         else:
             msg = "Error in json"
@@ -221,21 +209,19 @@ def jcreate():
         current_app.logger.warning(msg)
         return jsonify({"status" : "ERROR", "message" : msg})
 
-
+#TODO - add adding a quiz revizion
 @question_bp.route('/jdelete/<int:question_id>/',methods=['POST'])
 @login_required
 def jdelete(question_id):
-    print 'deleting a question ', question_id
+    current_app.logger.debug("jdelete. " + str(question_id))
 
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_question_only_by_id(question_id)
 
     if question:
-        if current_user.id == question.userid:
+        if current_user.id == question.user_id:
 
-            for answer in question.answers:
-                db.session.delete(answer)
+            question.delete_question()
 
-            db.session.delete(question)
             db.session.commit()
     
             result = {'jstaus':'OK'}
@@ -250,16 +236,16 @@ def jdelete(question_id):
 @question_bp.route('/jsubmit/<int:question_id>/', methods=['POST'])
 def jsubmit(question_id):
 
-    hs = Historysession.get_current_historysession_by_userid(current_user.id)
-    sessionid = hs.id
+    hs = Historysession.get_current_history_session_by_user_id_quiz_id(current_user.id)
+    session_id = hs.hsid
 
-    current_app.logger.debug("jsubmit - " + str(question_id) + ", sessionid - " + str(sessionid))
+    current_app.logger.debug("jsubmit - " + str(question_id) + ", session_id - " + str(session_id))
     current_app.logger.debug("json in jsubmit - " + str(request.json))
     
-    question = Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
 
     if question:
-        if current_user.id == question.userid:
+        if current_user.id == question.user_id:
             schema = {
                     "type" : "object",
                     "properties" : {            
@@ -280,32 +266,21 @@ def jsubmit(question_id):
                 return jsonify({"status" : "ERROR", "message" : msg})
             else:            
                 qid = request.json['id']
-                receivedanswers = request.json['answers']
+                received_answers = request.json['answers']
 
                 correct = True
-                old_question = Question.get_latest_version_by_parent_id(qid)
-                
-                for i in range(0, len(receivedanswers)):
-                    item = receivedanswers[i]
+                for i in range(0, len(received_answers)):
+                    item = received_answers[i]
                     aid = item['id']
                     value = item['value']
 
-                    old_answer = None
-                    for a in old_question.answers:
-                        if a.parentid == aid:
-                            old_answer = a
-                            break
-                     
-                    AnswerResult.add_answer_result(sessionid, old_answer.id, value, False)
+                    AnswerResult.add_answer_result(session_id, aid, question.revision_id, value)
         
                     correct = correct and (value == question.answers[i].correct)                    
                     
                     current_app.logger.debug("a# = " + str(i) + ", value = " + str(value) + ", answer = " + str(question.answers[i].correct) + ", correct = " + str(correct))
-                                
-                
-                current_app.logger.debug("old_question id = " + str(old_question.id))
-                
-                QuestionResult.add_question_result(sessionid, old_question.id, correct, False)
+
+                QuestionResult.add_question_result(session_id, question.qid, question.revision_id, correct)
                 db.session.commit()
                 
                 result = {'jstaus':'OK'}

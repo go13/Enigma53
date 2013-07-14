@@ -236,11 +236,11 @@ blockquote {
 
 {{ render_left_menu(quizes) }}
 
-<div id="content-on-map" title="{{ quiz.id }}">
+<div id="content-on-map" title="{{ quiz.qid }}">
 	<div id="legend">
 	  <legend id="quiz-title-legend">
 	  Quiz - {{ quiz.title }}
-	  <button class="close close-edit" onClick="window.location.href='/quiz/list'">&times;</button>
+	  <button class="close close-edit" onClick="window.location.href='/quiz/list/'">&times;</button>
 	  </legend>
 	</div>
 	<div class="tabbable"> 
@@ -249,7 +249,7 @@ blockquote {
 			  <li><a href="#tab4" data-toggle="tab">Results</a></li>
 			  <li  class="active"><a href="#tab2" data-toggle="tab">Edit</a></li>		  
 			  <li><a href="#tab-settings" data-toggle="tab">Settings</a></li>
-			  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.id}}/">Start Quiz</a></li>
+			  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.qid}}/">Start Quiz</a></li>
 		  </ul>
 		</div>
 	  <div class="tab-content">
@@ -257,17 +257,17 @@ blockquote {
 	      <div id="results-chart"></div>
 	    </div>
 	    <div class="tab-pane active" id="tab2">
-	      <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right" >      
+	      <div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right" >
 			<ul id="tabs" class="nav nav-tabs">
 			    {%for item in quiz.questions %}
-			    <li id="tab-question{{item.id}}" class="question-tab tab-question-item {% if loop.first %}active{% endif %}">
-			        <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
+			    <li id="tab-question{{item.qid}}" class="question-tab tab-question-item {% if loop.first %}active{% endif %}">
+			        <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
 			    </li>
 			    {% endfor %}
 			</ul>	
 			<div id="tabs-container" class="tab-content">        	
 			    {%for item in quiz.questions %}
-			    <div id="tab-question-page{{item.id}}" class="tab-pane {% if loop.first %}active{% endif %}" style="margin-right:20px"> 
+			    <div id="tab-question-page{{item.qid}}" class="tab-pane {% if loop.first %}active{% endif %}" style="margin-right:20px">
 			         {{render_question_edit(item) }}
 			    </div>
 			    {% endfor %}
@@ -296,6 +296,9 @@ blockquote {
 			$("#left-menu").hide();
 		}		
 	};
+</script>
+<script id="jsdata" type="text/javascript">
+	var jsdata = {{ jsdata|tojson|safe }};
 </script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
 {% endblock bottom %}

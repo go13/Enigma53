@@ -1,97 +1,92 @@
-from sqlalchemy import Integer, Unicode
+from sqlalchemy.orm import join
+from sqlalchemy import Integer, Unicode, TIMESTAMP
 
 from model import db
+from datetime import datetime
 from question.question import Question
+
 
 class Quiz(db.Model):
     __tablename__ = 'quizes'
 
-    id = db.Column('id', Integer, primary_key = True)
+    qid = db.Column('id', Integer, primary_key=True)
+    user_id = db.Column('userid', Integer)
     title = db.Column('title', Unicode)
     description = db.Column('description', Unicode)
-    userid = db.Column('userid', Integer)
-    
-    questions = []
+
     latitude = None
     longitude = None
+    questions = []
 
-    def __init__(self, title = title, userid = userid):
+    def __init__(self, user_id, title, description):
+        self.user_id = user_id
         self.title = title
-        self.userid = userid
+        self.description = description
 
     @property
     def serialize(self):
         return {
-            'id' : self.id,
-            'title' : self.title,
-            'latitude' : self.latitude,
-            'longitude' : self.longitude,
-            'questions' : [i.serialize for i in self.questions]
-           }
+            'id': self.qid,
+            'title': self.title,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'questions': [i.serialize for i in self.questions]
+        }
 
     @property
     def serialize_for_result(self):
         return {
-            'id' : self.id,
-            'title' : self.title,
-            'latitude' : self.latitude,
-            'longitude' : self.longitude
-           }
+            'id': self.qid,
+            'title': self.title
+        }
 
-    def get_number_of_questions(self):
-        return len(self.questions)
-    
     @staticmethod
-    def get_number_of_questions_by_id(qid):
-        return Question.query.filter_by(quizid = qid).filter(Question.parentid < 0).count()
+    def create_quiz(user_id):
+        quiz = Quiz(user_id, 'New Quiz', '')
+        db.session.add(quiz)
+        db.session.flush()
+
+        return quiz
+
+    @staticmethod
+    def get_number_of_active_questions_by_id(qid):
+        return Question.query.filter_by(quiz_id=qid, active=1).count()
 
     @staticmethod
     def get_quiz_by_id(qid):
-        q  = Quiz.query.filter_by(id = qid).first()
+        q = Quiz.query.filter_by(qid=qid).first()
         if q:
-            q.questions = Question.get_all_questions_by_quiz_id(qid)
+            q.questions = Question.get_all_active_questions_by_quiz_id(q.qid)
         return q
 
     @staticmethod
     def get_quiz_only_by_id(qid):
-        return Quiz.query.filter_by(id = qid).first()
+        return Quiz.query.filter_by(qid=qid).first()
 
     @staticmethod
-    def get_quizes_by_userid(userid):
-        results = Quiz.query.filter_by(userid = userid).all()
-        for item in results:
-            question = Question.query.filter_by(quizid = item.id).order_by(Question.id.asc()).first()
-            if question:
-                print str(question)
-                item.latitude = question.latitude 
-                item.longitude = question.longitude  
-        return results
-    
-    @staticmethod
-    def create_quiz(title, userid):
-        quiz = Quiz(title = title, userid = userid)
-        db.session.add(quiz)
-        db.session.commit()
-        return quiz
+    def get_quizes_by_user_id(user_id):
+        quiz_list = Quiz.query.filter_by(user_id=user_id).all()
+        for quiz in quiz_list:
+            questions = Question.get_active_questions_with_revisions_by_quiz_id(quiz.qid)
+            if questions and len(questions) > 0:
+                quiz.latitude = questions[0].question_revision.latitude
+                quiz.longitude = questions[0].question_revision.longitude
+            quiz.questions = questions
+        return quiz_list
 
     @staticmethod
-    def update_quiz(quiz):
-        db.session.merge(quiz)
-        db.session.commit()
-        
+    def update_quiz_by_id(quiz_id, title, description):
+        qdict = {}
+        if title:
+            qdict.update({'title':title})
+        if description:
+            qdict.update({'description':description})
+
+        Quiz.query.filter_by(qid=quiz_id).update(qdict)
+
     @staticmethod
-    def update_quiz_by_id(quizid, qdict, to_commit):
-        Quiz.query.filter_by(id = quizid).update(qdict)
-        if to_commit:
-            db.session.commit()
-        
-    @staticmethod
-    def delete_quiz_by_id(qid, batch):
-        
-        quiz = Quiz.query.filter_by(id = qid).first()
-        
+    def delete_quiz_by_id(qid):
+        quiz = Quiz.query.filter_by(qid=qid).first()
         if quiz:
-            Question.delete_questions_by_quiz_id(qid, False)
+            Question.full_delete_questions_by_quiz_id(qid)
             db.session.delete(quiz)
-        if not batch:
-            db.session.commit()

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, redirect, current_app
 from modules.jsonschema import validate, Draft4Validator
-from wtforms import Form, TextField, validators
 
+from datetime import datetime
 from model import db
 from quiz import Quiz
 from quiz_result import QuizResult
@@ -17,9 +17,10 @@ def quiz(quiz_id):
     
     quiz = Quiz.get_quiz_by_id(quiz_id)
     if quiz:            
-        if current_user.id == quiz.userid:
+        if current_user.id == quiz.user_id:
             QuizResult.start_session(quiz_id, current_user.id)
-            return render_template('quiz.html', quiz = quiz)
+            db.session.commit()
+            return render_template('quiz.html', quiz=quiz)
         else:
             return render_template('auth_failure.html')            
     else:
@@ -31,50 +32,32 @@ def quiz(quiz_id):
 def quiz_map_edit(quiz_id):
     current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
 
-    quizes = Quiz.get_quizes_by_userid(current_user.id)
+    quizes = Quiz.get_quizes_by_user_id(current_user.id)
 
     quiz = Quiz.get_quiz_by_id(quiz_id)
+
+    quiz_results = QuizResult.get_quiz_results_only_by_quiz_id(quiz_id)
+
+    jsdata = {
+              "quiz_results": [i.serialize_for_statistics for i in quiz_results]
+              }
 
     if quiz:
-        current_app.logger.debug("quiz_edit. current_user.id - " + str(current_user.id) + " userid - " + str(quiz.userid))
-        if current_user.id == quiz.userid:
-            return render_template('quiz_map_edit.html', quiz = quiz, quizes = quizes, active_page = "quiz_edit")
+        if current_user.id == quiz.user_id:
+            return render_template("quiz_map_edit.html", quiz=quiz, quizes=quizes, active_page="quiz_edit", jsdata=jsdata)
         else:
-            return render_template('auth_failure.html')
+            return render_template("auth_failure.html")
     else:
         current_app.logger.warning("No quiz found")        
-        return render_template('404.html')
-
-@quiz_bp.route('/<int:quiz_id>/results/')
-@login_required
-def quiz_results_tsv(quiz_id):
-    current_app.logger.debug("quiz_results_tsv. quiz_id - " + str(quiz_id))
-    
-    quiz = Quiz.get_quiz_by_id(quiz_id)
-    
-    if quiz:        
-        if current_user.id == quiz.userid:
-            results = QuizResult.get_quiz_results_by_quiz_id(quiz_id)
-            return render_template('quiz_results.html', quiz = quiz, results = results)
-        else:
-            return render_template('auth_failure.html')
-    else:
-        current_app.logger.warning("No quiz found")        
-        return render_template('404.html')
-
-class CreateForm(Form):
-    title = TextField('Quiz title', [
-        validators.Length(min = 1, max = 128),
-        validators.Required()
-        ])
+        return render_template("404.html")
 
 @quiz_bp.route('/list/')
 @login_required
 def quiz_list():
     current_app.logger.debug("quiz_list")
 
-    quizes = Quiz.get_quizes_by_userid(current_user.id)
-    
+    quizes = Quiz.get_quizes_by_user_id(current_user.id)
+
     lat = 37.4419
     lon = -122.1419
     
@@ -83,11 +66,11 @@ def quiz_list():
         lon = quizes[0].longitude
     
     jsdata = {
-              "latitude" : lat,
-              "longitude" : lon 
+              "latitude": lat,
+              "longitude": lon
               }
 
-    return render_template('quiz_list.html', quizes = quizes, jsdata = jsdata, active_page = "quiz_list")
+    return render_template("quiz_list.html", quizes=quizes, jsdata=jsdata, active_page="quiz_list")
 
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
 def jupdate(quiz_id):
@@ -96,7 +79,7 @@ def jupdate(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     
     if quiz:
-        if current_user.id == quiz.userid:
+        if current_user.id == quiz.user_id:
             schema = {
                 "type" : "object",
                 "properties" : {            
@@ -120,8 +103,10 @@ def jupdate(quiz_id):
                 return jsonify(result)
             else:
                 title = request.json['title']
-                
-                quiz = Quiz.update_quiz_by_id(quiz_id, {'title' : title}, False)
+
+                Quiz.update_quiz_by_id(quiz_id, title, None)
+
+                db.session.commit()
                 
                 current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)
                 return jsonify({"status" : "OK", "quizid" : quiz_id})
@@ -133,29 +118,7 @@ def jupdate(quiz_id):
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
         return jsonify({"status" : "ERROR", "message" : msg})
-    
-#@quiz_bp.route('/jresult/<int:session_id>/')
-def jresult(session_id):
-    current_app.logger.debug("jresult. session_id - " + str(session_id))
-    
-    quiz_result = QuizResult.get_quiz_result_by_id(session_id)
-    
-    if quiz_result:
-        if current_user.id == quiz_result.quiz.userid:
-            result = {'status' : 'OK'}
-            result.update(quiz_result.serialize)
 
-            return jsonify(result)
-        else:
-            msg = auth_failure_message + u"view this results(id = " + str(session_id).decode("UTF-8")+")"
-            current_app.logger.warning(msg)
-            return jsonify({"status" : "ERROR", "message" : msg})
-    else:
-        msg = u"No results found with such session_id" + str(session_id).decode("UTF-8")
-        current_app.logger.warning(msg)
-        return jsonify({"status" : "ERROR", "message" : msg})
-
-    
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
     current_app.logger.debug("jget. quiz_id - " + str(quiz_id))
@@ -182,14 +145,15 @@ def jget(quiz_id):
 def jdelete(quiz_id):
     current_app.logger.debug("jdelete. quiz_id - " + str(quiz_id))
     
-    quiz = Quiz.get_quiz_by_id(quiz_id)
+    quiz = Quiz.get_quiz_only_by_id(quiz_id)
     
     if quiz:
-        if current_user.id == quiz.userid:
+        if current_user.id == quiz.user_id:
 
-            QuizResult.delete_quizresults_by_quiz_id(quiz_id, True)
-            Quiz.delete_quiz_by_id(quiz_id, False)
+            QuizResult.delete_quiz_results_by_quiz_id(quiz_id)
+            Quiz.delete_quiz_by_id(quiz_id)
 
+            db.session.commit()
             current_app.logger.debug("Quiz deleted")
 
             return jsonify({"status":"OK"})
@@ -202,8 +166,8 @@ def jdelete(quiz_id):
         current_app.logger.warning(msg)        
         return jsonify({"status" : "ERROR", "message" : msg})
     
-@quiz_bp.route('/jcreate/', methods = ['POST'])
-@login_required
+#@quiz_bp.route('/jcreate/', methods = ['POST'])
+#@login_required
 def jcreate():
     current_app.logger.debug("jcreate")
     
@@ -242,11 +206,12 @@ def jcreate():
 def create():
     current_app.logger.debug("create")
 
-    quiz = Quiz.create_quiz('New Quiz', current_user.id)
-    
-    current_app.logger.debug('Quiz created. quiz.id - ' + str(quiz.id))   
-    
-    return redirect("/quiz/" + str(quiz.id) + "/edit/")
+    quiz = Quiz.create_quiz(current_user.id)
+    db.session.commit()
+
+    current_app.logger.debug('Quiz created. quiz.id - ' + str(quiz.qid))
+
+    return redirect("/quiz/" + str(quiz.qid) + "/edit/")
 
 @quiz_bp.route('/<int:quiz_id>/finish/')
 @login_required
@@ -255,9 +220,10 @@ def finish_session(quiz_id):
     qr = QuizResult.get_quiz_result_by_quiz_id_user_id(quiz_id, current_user.id)
 
     if qr:        
-        if current_user.id == qr.quiz.userid:
-            qr.finish_session(quiz_id, current_user.id)
-            return redirect("/quiz/results/" + str(qr.sessionid))
+        if current_user.id == qr.quiz.user_id:
+            qr.finish_session()
+            db.session.commit()
+            return redirect("/quiz/results/" + str(qr.session_id))
         else:
             return render_template('auth_failure.html')
     else:

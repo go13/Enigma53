@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import os, jinja2, scrubber
 
-virtenv = os.environ['APPDIR'] + '/virtenv/'
+#virtenv = os.environ['APPDIR'] + '/virtenv/'
 
-#virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
+virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
 os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python-2.6/site-packages')
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
@@ -14,7 +14,7 @@ except IOError:
 from flask import Flask, render_template, redirect
 from flask_flatpages import FlatPages
 
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, current_user
 #from flask_openid import OpenID
 
 from question.question_bp import question_bp
@@ -67,9 +67,11 @@ login_manager.setup_app(application)
 #-------routings-------
 
 @application.route('/')
-@login_required
 def index():
-    return redirect("/quiz/list/") 
+    if current_user.id > 0:
+        return redirect('/quiz/list/')
+    else:
+        return render_template('test.html')
 
 @application.route('/<path:path>/')
 def page(path):
@@ -77,4 +79,4 @@ def page(path):
     return render_template('page.html', page=page)
 
 if __name__ == '__main__':
-    application.run()    
+    application.run()

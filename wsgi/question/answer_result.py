@@ -1,61 +1,53 @@
-from modules.answer import Answer
+from answer.answer import Answer
+from flask import current_app
 from sqlalchemy import Integer, String
 
 from model import db
-from modules.results import Historysession
+from results.historysession import Historysession
 
 class AnswerResult(db.Model):
     __tablename__ = 'answerresults'
 
-    sessionid = db.Column('sessionid', Integer, primary_key = True)
-    answerid = db.Column('answerid', Integer, primary_key = True)
+    session_id = db.Column('sessionid', Integer, primary_key = True)
+    answer_id = db.Column('answerid', Integer, primary_key = True)
+    revision_id = db.Column('revisionid', Integer)
     value = db.Column('value', String)
-
     answer = None
 
-    def __init__(self, sessionid, answerid, value):
-        self.sessionid = sessionid
-        self.answerid = answerid
+    def __init__(self, session_id, answer_id, revision_id, value):
+        self.session_id = session_id
+        self.answer_id = answer_id
+        self.revision_id = revision_id
         self.value = value
         
     @property
     def serialize_for_result(self):
         return {
-            'answerid' : self.answer.id,
+            'answerid' : self.answer_id,
             'correct' : self.answer.correct,
             'value' : self.value
            }
 
     @staticmethod
-    def get_answer_results(sessionid, questionid):
-        print "get_answer_results", sessionid, questionid
+    def get_answer_results_by_session_id_question_id(session_id, question_id):
         results = []
 
-        answers = Answer.get_answers_by_question_id(questionid)
+        answers = Answer.get_answers_by_question_id(question_id)
 
-        for item in answers:
-            r = AnswerResult.query.filter_by(sessionid = sessionid, answerid = item.id).first()
+        for a in answers:
+            r = AnswerResult.query.filter_by(session_id=session_id, answer_id=a.aid).first()
             if r:
                 results.append(r)
-                r.answer = item
+                r.answer = a
 
         return results
 
     @staticmethod
-    def add_answer_result(sessionid, answerid, value, batch):
-        ar = AnswerResult(sessionid, answerid, value)
+    def add_answer_result(session_id, answer_id, revision_id, value):
+        ar = AnswerResult(session_id, answer_id, revision_id, value)
         db.session.merge(ar)
-        if not batch:
-            db.session.commit()
+        return ar
 
     @staticmethod
-    def delete_answerresults_by_session_id(sessionid, batch):
-        print 'delete_answerresults_by_session_id ', sessionid        
-        Historysession.delete_historysession_by_sessionid(sessionid, True)        
-        answers = AnswerResult.query.filter_by(sessionid = sessionid).all()
-        if answers:
-            for item in answers:                
-                print 'AnswerResult found ', item.answerid
-                db.session.delete(item)
-        if not batch:
-            db.session.commit()
+    def delete_answer_results_by_session_id(session_id):
+        AnswerResult.query.filter_by(session_id=session_id).delete()

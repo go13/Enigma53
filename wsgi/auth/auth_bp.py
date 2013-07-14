@@ -57,8 +57,8 @@ def login():
         if form.validate():
             current_app.logger.debug("login validation successful")
                     
-            email = form.email.data
-            password = form.password.data            
+            email = form.email.data.decode("UTF-8")
+            password = form.password.data.decode("UTF-8")
             remember = form.remember.data
             
             user = User.get_user_by_email(email)
