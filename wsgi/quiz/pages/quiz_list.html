@@ -1,45 +1,86 @@
+{% from "quiz_macros.html" import render_left_menu %}
+
 {% extends "base.html" %}
 
-{% block content %}
-<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
-
-<div class="container quiz-list-container" style="width: 800px;">
-    <div style="height: 50px;" class="page-message"></div>   
+{% block style %}
+	#question-map img {
+	  max-width: none;
+	}
 	
-	<div class="input-append">
-  		<input class="input-quiz-list" style="width:720px" type="text">
-  		<button class="btn btn-success quiz-list-create" type="button">Create</button>
-	</div>
-	      
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th class="span1"></th>
-            <th class="span1"></th>
-            <th class="span5"></th>
-            <th class="span7"></th>
-        </tr>
-        </thead>
-        <tbody class="quiz-list-table">	        	
-        {%for item in quizes %}
-            <tr name="quiz{{item.id}}" class="quizpage_quiz_listitem">
-            	<td>
-            		<a href="/quiz/{{item.id}}/home/" class="btn btn-link">Home</a>
-                </td>
-                <td>
-                	<a href="/quiz/{{item.id}}/" class="btn btn-primary">Start</a>
-                </td>
-                <td>
-                	{{item.title}}
-                </td>                
-                <td>
-                	<a href="/quiz/{{item.id}}/edit/" class="btn btn-link pull-right">Edit</a>
-                    <button class="btn btn-link quiz-list-item-delete pull-right" type="button">Delete</button>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	#question-map img { 
+	  max-width: none;
+	}
+	
+	#question-map label { 
+	  width : auto; display : inline; 
+	}
+	
+	#left-menu{
+	   /* display : none; */ 
+	   overflow : auto;
+	   position : fixed;
+	   padding: 25px;
+	   top : 40px;
+	   left : 0; 	   
+	   width : 40%;
+	   bottom : 0;   
+	   background-color : #ffffff; 
+	   opacity : 0.9; 
+	   box-sizing: border-box;
+	   filter : alpha(opacity=90);
+	}
+
+	#question-map{
+	   top : 40px;
+	   height : 100%; 
+	}	
+
+	.nolink, .nolink:hover{
+		color: #000; 
+		text-decoration: none;
+		border: 0;
+	}
+	
+	.full-stretch{
+	   position : fixed;
+	   top : 0;
+	   left : 0;
+	   right : 0;
+	   bottom : 0;
+	}
+{% endblock style %}
+
+{% block header %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+{% endblock header %}
+
+{% block content %}
+
+<div class="full-stretch">
+
+	<div id="question-map" class="full-stretch"></div>
+
 </div>
 
+{{ render_left_menu(quizes) }}
+
 {% endblock content %}
+
+{% block bottom %}
+
+<script>
+	onQuizesMenuItemClick = function(visible){
+		if(visible){
+			$("#left-menu").show();	
+		}else{
+			$("#left-menu").hide();
+		}		
+	};
+</script>
+
+<script id="jsdata" type="text/javascript">
+	var jsdata = {{ jsdata|tojson|safe }};
+</script>
+
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
+{% endblock bottom %}

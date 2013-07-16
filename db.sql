@@ -7,6 +7,8 @@ drop table if exists answers;
 
 drop table if exists questions;
 
+drop table if exists questionrevisions;
+
 drop table if exists quizes;
 
 drop table if exists answerhistory;
@@ -26,11 +28,11 @@ drop table if exists questionresults;
 /*==============================================================*/
 create table answers
 (
-   id                   integer not null AUTO_INCREMENT,
-   questionid           integer,
-   atext                text,
-   correct              text not null,
-   primary key (id)
+  id                   integer not null AUTO_INCREMENT,
+  questionid           integer not null,
+  revisionid          integer not null,
+  correct              text not null,
+  PRIMARY KEY (id)
 );
 
 /*==============================================================*/
@@ -40,10 +42,24 @@ create table questions
 (
    id                   integer not null AUTO_INCREMENT,
    quizid               integer,
-   nextquestionid       integer,
-   qtext                text,
-   type                 integer,
-   primary key (id)
+   revisionid           integer,
+   userid               integer,
+   active               integer default 0,
+   PRIMARY KEY (id)
+);
+
+/*==============================================================*/
+/* Table: questions                                             */
+/*==============================================================*/
+create table questionrevisions
+(
+   id                   integer not null AUTO_INCREMENT,
+   questionid          integer not null,
+   qtext               text,
+   qtextcache          text,
+   latitude            text not null,
+   longitude           text not null,
+   PRIMARY KEY (id)
 );
 
 /*==============================================================*/
@@ -55,34 +71,33 @@ create table quizes
    title                text,
    description          text,
    userid               integer not null,
-   primary key (id)
+   PRIMARY KEY (id)
 );
-
 
 /*==============================================================*/
 /* Table: quizes                                                */
 /*==============================================================*/
 create table answerhistory
 (
-   id                   integer not null AUTO_INCREMENT,
-   historysessionid     integer not null,
-   questionid           integer not null,
-   answerid             integer not null,
-   value                text not null,
-   primary key (id)
+  id                   integer not null AUTO_INCREMENT,
+  revisionid           integer,
+  historysessionid     integer not null,
+  questionid           integer not null,
+  answerid             integer not null,
+  value                text not null,
+  PRIMARY KEY (id)
 );
-
 
 /*==============================================================*/
 /* Table: historysessions                                                */
 /*==============================================================*/
 create table historysessions
 (
-   id                   integer not null AUTO_INCREMENT,
-   userid               integer not null,
-   starttime            timestamp not null,
-   endtime              timestamp NULL,
-   primary key (id)
+  id                   integer not null AUTO_INCREMENT,
+  userid               integer not null,
+  starttime            timestamp not null,
+  endtime              timestamp NULL,
+  PRIMARY KEY (id)
 );
 
 
@@ -95,9 +110,9 @@ create table users
    username             text    not null,
    email                text    not null,
    password             text    not null,
-   primary key (id)
+   PRIMARY KEY (id)
 );
-
+insert into users values (1, 'Dmitriy', '1@gmail.com', '1234567');
 
 /*==============================================================*/
 /* Table: quizresults                                               */
@@ -105,10 +120,10 @@ create table users
 create table quizresults
 (
    sessionid            integer not null AUTO_INCREMENT,
-   quizid               integer,
-   correctqnum          integer,
-   qnum                 integer,
-   primary key (sessionid)
+   quizid               integer not null,
+   ncorrect             integer,
+   nquestion            integer,   
+   PRIMARY KEY (sessionid)
 );
 
 
@@ -119,8 +134,9 @@ create table questionresults
 (
    sessionid            integer,
    questionid           integer,
+   revisionid           integer,
    correct              integer default 0,
-   primary key (sessionid, questionid)
+   PRIMARY KEY (sessionid, questionid)
 );
 
 /*==============================================================*/
@@ -130,6 +146,7 @@ create table answerresults
 (
    sessionid            integer,
    answerid             integer,
+   revisionid           integer,
    value                text,
-   primary key (sessionid, answerid)
+   PRIMARY KEY (sessionid, answerid)
 );

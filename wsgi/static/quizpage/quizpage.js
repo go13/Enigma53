@@ -1,16 +1,23 @@
 steal(
     'quizpage/models/models.js',		// steals all your models
-    'quizpage/quiz/navigator',
 
     'questionpage/models/models.js',
     'questionpage/question/item',
+    'quizpage/quizmap/cmap',
+    'quizpage/quiz/cquiz',
 
-    'pagemessage/message/item',
     function(){					// configure your application
-        $("#quiz-navigator").quizpage_quiz_navigator();
+    	
+    	$("#question-map").quizpage_quizmap_cmap();
+    	
+    	$("#quiz-navigator").quizpage_quiz_cquiz({onSuccess : function (){
+    		Quizpage.Quizmap.Cmap.loadPoints();    		
+    	}});
 
-        $(".question-item").each(function(){
-            Quizpage.Quiz.Navigator.load_question_item(this);
-        });
-        $(".page-message").pagemessage_message_item();
+    	Messenger.options = {
+         		extraClasses: 'messenger-fixed messenger-on-bottom',
+         		'maxMessages': 3,
+         		theme: 'air',
+        };
+
     })

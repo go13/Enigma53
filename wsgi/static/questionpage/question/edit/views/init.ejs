@@ -1,48 +1,13 @@
-<textarea class="qtext" rows="7" style="width: 650px; margin-top: 5px" placeholder="Type your question...">
-    <%= qtext %>
-</textarea>
-
-<div class="input-prepend input-append">
-    <a class="add-checked btn btn-success">
-        <i class="icon-ok icon-white"></i>
-    </a>
-    <input type="text" class="add-input input-xxlarge" placeholder="Type your answer here...">
-    <a style="width: 53px" class="qanswer-add btn btn-success">
-        <i class="icon-plus icon-white"></i> Add
-    </a>
-</div>
-
-<div class="answers">
-    <% for(var i=0; i< answers.length; i++){ %>
-
-    <div id="answer<%= answers[i].id %>" class="qanswer input-prepend input-append">
-        <a class="qanswer-check btn btn-primary">
-            <% if(answers[i].correct === 'T'){ %>
-            <i class="icon-ok icon-white"></i>
-            <% }else{ %>
-            <i class="icon-ban-circle icon-white"></i>
-            <%}%>
-        </a>
-        <input type="text" class="qanswer-input input-xxlarge" value="<%= answers[i].atext %>">
-        <div class="btn-group">
-            <a class="qanswer-move btn btn-primary">
-                <span class="icon-move icon-white"></span>
-            </a>
-            <a class="qanswer-delete btn btn-primary">
-                <span class="icon-trash icon-white" ></span>
-            </a>
-        </div>
+<div class="bs-docs-grid" style="width: 100%;">
+	<div  id="wmd-panel-<%= id %>" class="wmd-panel">
+            <div id="wmd-button-bar-<%= id %>"></div>
+            <textarea id="wmd-input-<%= id %>" class="qtext wmd-input" rows="7" style="width:100%" placeholder="Type your question..."><%=qtext%></textarea>
     </div>
-    <%} %>
-	</div>
+    <button class="question-back btn-link pull-left" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button" >Next question</button>
 	
-	<div class="pull-left" style="width:40%; margin-left:30%">
-	<button class="question-back btn" type="button">Back</button>    
-	<button class="question-<% if(!isNew){ %>save<% }else{ %>create<% } %>  btn btn-success" type="button"><% if(!isNew){ %> Save <% }else{ %> Create <% } %> </button>
-	<button class="question-next btn" type="button" >Next</button>
-	</div>
-	<% if(!isNew){ %>
-	<button style="margin-right:10px; width:77px" class="btn question-delete-btn btn-link pull-right" type="button">Delete</button>
-	<%}%>
-			
-</div>
+    <div id="wmd-preview-<%= id %>" class="wmd-panel wmd-preview form-actions" style="margin-top:40px"></div>
+    
+	<button class="question-back btn-link pull-left" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button" >Next question</button>
+</div>			

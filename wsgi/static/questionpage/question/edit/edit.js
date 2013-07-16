@@ -1,160 +1,140 @@
 steal( 'jquery/controller',
     'jquery/view/ejs',
     'jquery/controller/view',
-    'questionpage/models')
-    .then('./views/init.ejs',function($){
+    'questionpage/models',
 
-        $.Controller('Questionpage.Question.Edit',
-            {
-            },{
+    'pagedown/Markdown.js'
+    
+    ).then('./views/init.ejs', function($){
+
+        $.Controller('Questionpage.Question.Edit',{
+        
+        },{
                 model : null,
+                editor : null,
 
                 init : function(){
+                	var self = this;
                     var type = this.options.type;
-                    if(type === "new"){
-                        this.model = new Questionedit();
-                        this.model.isNew = true;
-                        this.model.quizid = this.options.quizid;
-                        //this.set_question(this.options.question);
+                    var onSuccess = this.options.onSuccess;
+                    var questionControls = this.options.questionControls; 
+                    
+                    if(type === "add"){
+                        
+                    	this.model = this.options.question;
                         this.element.html(this.view('init', this.model));
-                    }else if(type === "add"){
-                        this.model = new Questionedit();
-                        this.model.set_question(this.options.question);
-                        this.element.html(this.view('init',this.model));
+                        
+                        this.editor = this.loadPageDownEditor(this.model.id, questionControls);
+                        
+                    }else if(type === "parse"){
+                    	                    	
+                    	var question = new Questionedit();                    	
+                    	this.model = question;
+                    	
+                    	var question_name = this.element.attr("name");
+                    	question.id = parseInt(question_name.split("question")[1]);
+                    	question.lat = parseFloat(this.element.attr("data-lat"));
+                    	question.lon = parseFloat(this.element.attr("data-lon"));
+                    	question.qtext = this.element.find(".qtext").html();
+                    	
+                		this.editor = this.loadPageDownEditor(question.id, questionControls);
+                    	
+                        if(onSuccess){
+                        	onSuccess(question);
+                        }
+                    	
                     }else{
+
                         var question_name = this.element.attr("name");
-                        this.model = new Questionedit();
-                        var question = this.model;
 
-                        this.model.isNew = false;
                         var id = parseInt(question_name.split("question")[1]);
-                        this.element.html(this.view('init',Questionedit.findOne({id:id}, function(data){
-                            question.qid = data.id;
-                            question.nextquestionid = data.id;
-                            question.quizid = data.quizid;
-                            question.qtext = data.qtext;
-                            question.answers = data.answers;
-
-                            console.log( "received a question:" );
-                            console.log( "id - " + data.id );
-                            console.log( "quizid - " + data.quizid );
-                            console.log( "qtext - " + data.qtext );
-                            console.log( "nextquestionid - " + data.nextquestionid );
-                        })));
+                        
+                        Questionedit.findOne({id:id}, function(question){
+                        	self.model = question; 
+                            question.lon = parseFloat(data.lon);
+                            question.lat = parseFloat(data.lat);
+                            
+                            if(onSuccess){
+                            	onSuccess(question);
+                            }
+                        });
+                        
+                        this.element.html(this.view('init', this.model));
                     }
                 },
+                loadPageDownEditor : function(questionid, questionControls){
+                	var self = this;                	
+                    var options = {
+                        helpButton: { 
+                        	handler: function(){
+                        		//todo
+                        	},
+                        	delQuestionHandler: function(){
+                        		questionControls.delQuestionHandler(self.model);
+                        	},
+            				saveQuestionHandler: function(){           					
+            					questionControls.saveQuestionHandler(self.model);
+            				}
+                        }
+                    };
+                	var converter = Markdown.getSanitizingConverter();
+                	
+                	converter.hooks.chain("postConversion", function (text) {
+                		var res = self.renderCheckbox.call(self, text);
+                		self.model.qtext = text;
+                        return res;
+                    });
+                    
+                	var editor = new Markdown.Editor(converter, "-" + (questionid).toString(), options);
+                	editor.run();
+                	
+                	return editor;
+                },
+                renderCheckbox : function(text){
+                	var self = this;
+                	this.model.answers = [];
+                	
+                	return text.replace(/\?\[([\+-]?)\]/gm, function (whole, correct) {
+                    	if(correct === "+"){
+                    		self.onNewCheckbox.call(self, 'T');
+                    		
+                			return "<input type='checkbox' onclick='return false' onkeydown='return false' checked='checked'/>\n";	
+                    	}else{
+                    		self.onNewCheckbox.call(self, 'F');
+                    		
+                			return "<input type='checkbox' onclick='return false' onkeydown='return false'/>\n";	
+                    	}                        	
+                        
+                    });                	
+                },
+                onNewCheckbox : function(correct){
+                	var model = this.model;
+                	
+                	var answer = new Object();
+                	
+            		answer.id = model.answers.length + 1;
+            		answer.correct = correct;
+            		answer.atext = "atext";// TODO ??
+            		
+            		model.answers.push(answer);                	
+                },
                 set_question : function(question){
-                    this.model.qid = question.qid;
-                    this.model.nextquestionid = question.nextquestionid;
+                    this.model.id = question.id;
                     this.model.quizid = question.quizid;
                     this.model.qtext = question.qtext;
                     this.model.answers = question.answers;
                 },
-                ".add-checked click" : function(el){
-                    var correct = this.model.correct;
-                    if( correct === 'F'){
-                        correct = 'T';
-                        el.children("i:first").
-                            removeClass("icon-ban-circle").
-                            addClass("icon-ok");
-                    }else{
-                        correct = 'F';
-                        el.children("i:first").
-                            addClass("icon-ban-circle").
-                            removeClass("icon-ok");
-                    }
-                    this.model.correct = correct;
-                },
-                ".qanswer-check click" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    var answer = this.model.get_answer_by_id(id);
-                    var correct = answer.correct;
-                    if( correct === 'F'){
-                        correct = 'T';
-                        el.children("i:first").
-                            removeClass("icon-ban-circle").
-                            addClass("icon-ok");
-                    }else{
-                        correct = 'F';
-                        el.children("i:first").
-                            addClass("icon-ban-circle").
-                            removeClass("icon-ok");
-                    }
-                    answer.correct = correct;
-                },
-                ".qanswer-delete click" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    this.model.remove_answer_by_id(id);
-                    el.closest(".qanswer").remove();
-                },
-                ".qanswer-add click" : function(el){
-                    var answers = this.model.answers;
-                    var maxid = 0;
-                    for(var i=0; i < answers.length; i++){
-                        if( maxid < answers[i].id ){
-                            maxid = answers[i].id;
-                        }
-                    }
-                    maxid++;
-
-                    var answer = {};
-                    answer.id = maxid;
-                    answer.correct = this.model.correct;
-
-                    var atext = this.model.atext;
-
-                    if(!atext || /^\s*$/.test(atext)){
-                        answer.atext = "Type your answer here...";
-                    }else{
-                        answer.atext = atext;
-                    }
-
-                    this.model.answers.push(answer);
-
-                    this.element.find(".answers").prepend(this.view('answer', {answer: answer}));
-                    this.element.find(".add-input").attr("value", "");
-                    this.model.atext = "";
-                    
-                    if(this.model.correct === "F"){
-                    	this.element.find(".add-checked").find(".icon-ban-circle").removeClass("icon-ban-circle").addClass("icon-ok");
-                    	this.model.correct = "T";
-                    }
-                },
-                ".add-input keyup" : function(el){
-                    this.model.atext = el.attr("value") ;
-                },
-                ".qanswer-input keyup" : function(el){
-                    var id = parseInt(el.closest(".qanswer").attr("id").split("answer")[1]);
-                    this.model.get_answer_by_id(id).atext = el.attr("value") ;
-                },
-                ".question-save click" : function(data){
-                    var question = this.model;
-                    question.save( function(){
-                        Pagemessage.Message.Item.show_message("Success", "Saved");
-                    });
-                },
-                ".question-create click" : function(data){
-                    var question = this.model;//jQuery.extend(true, {}, this.model);;
-                    question.create( function(data){
-                        var newQuestion = question.to_object();
-                        newQuestion.qid = data.qid;
-
-                        Quizpage.Quiz.Navigator.add_question_edit(newQuestion);
-                        Pagemessage.Message.Item.show_message("Success", "Created");
-                    });
-                },
-                ".question-delete-btn click" : function(){
-                    var question = this.model;
-                    question.destroy(function(data){
-                        Quizpage.Quiz.Navigator.remove_question_by_id(question.qid);
-                        Pagemessage.Message.Item.show_message("Success", "Deleted");
-                    })
-                },
+                clean : function(){
+                	this.model.clean();
+                },                
                 ".question-view-btn click" : function(el){
-                    document.location.href = '/quiz/'+this.model.quizid+'/';
+                    document.location.href = '/quiz/' + this.model.quizid + '/';
                 },
-                ".qtext keyup" : function(el){
-                    this.model.qtext = el.attr("value") ;
+                onQuestionEnter : function(){
+                	
+                },
+                onQuestionLeave : function(){
+                	
                 }
             });
     });

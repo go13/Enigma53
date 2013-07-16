@@ -5,15 +5,28 @@ steal(
     'questionpage/models/models.js',
     'questionpage/question/edit',
 
-    'pagemessage/message/item',
-    function(){					// configure your application
-        $("#quiz-navigator").quizpage_quiz_navigator();
+    'quizpage/quiz/cquizedit',
+    
+    'quizpage/quizmap/cmapedit',
+    
+    'quizpage/csettings',   
+    
+    'js/d3.v3.min.js',    
 
-        $(".question-new").questionpage_question_edit({type:"new",
-            quizid:Quizpage.Quiz.Navigator.instance.model.quizid});
-
-        $(".question-edit").each(function(){
-            Quizpage.Quiz.Navigator.load_question_edit(this);
-        });
-        $(".page-message").pagemessage_message_item();
-    })
+    //'libs/jquery.timeago.js',
+    
+    function(){	// configure your application
+    	$("#question-map").quizpage_quizmap_cmapedit();
+    	    	
+    	$("#quiz-navigator").quizpage_quiz_cquizedit({onSuccess : function (){
+    		Quizpage.Quizmap.Cmapedit.loadPoints();    		
+    	}});
+    	
+    	$("#tab-settings").quizpage_csettings();
+    	
+        Messenger.options = {
+        		extraClasses: 'messenger-fixed messenger-on-bottom',
+        		'maxMessages': 3,
+        		theme: 'air',
+        };
+})

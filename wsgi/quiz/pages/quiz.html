@@ -1,41 +1,97 @@
-{% extends "quiz_base.html" %}
+{% extends "base.html" %}
 
-{% block body %}
-<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
+{% block content %} 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-<div class="container" style="width: 800px;">
-    <div id="quiz-navigator" name="quiz{{quiz.id}}" class="tabbable tabs-right">
-        <ul id="tabs" class="nav nav-tabs">
-            {%for item in quiz.questions %}
-            {% if loop.first %}
-            <li id="tab-question{{item.id}}" class="active question-tab">
-                <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
-            </li>
-            {% else %}
-            <li id="tab-question{{item.id}}" class="question-tab">
-                <a href="#tab-question-page{{item.id}}" data-toggle="tab">Question {{item.id}}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        <div id="tabs-container" class="tab-content">
-            {%for item in quiz.questions %}
-            {% if loop.first %}
-            <div class="tab-pane active" id="tab-question-page{{item.id}}">
-                <div class='question-item' name='question{{item.id}}'></div>
-            </div>
-            {% else %}
-            <div class="tab-pane" id="tab-question-page{{item.id}}">
-                <div class='question-item' name='question{{item.id}}'></div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+<style>
+	#question-map img {
+	  max-width: none;
+	}
+	
+	#question-map img { 
+	  max-width: none;
+	}
+	
+	#question-map label { 
+	  width: auto; display : inline; 
+	}
+	
+	#question-map{
+	   top : 40px;
+	   height : 100%; 
+	}
+	
+	.full-stretch{
+	   position : fixed;
+	   top : 0;
+	   left : 0;
+	   right : 0;
+	   bottom : 0;
+	}
+	
+	#content-on-map{
+	   overflow : auto;
+	   position: fixed;
+	   top : 40px;
+	   right : 0; 
+	   padding: 25px;  
+	   width : 60%;
+	   min-width: 700px;   
+	   bottom : 0; 
+	   background-color : #ffffff; 
+	   opacity : 0.9;
+	   box-sizing: border-box; 	   
+	   filter : alpha(opacity=90);
+	}
+	
+</style>
+
+<div class="full-stretch">
+	<div id="question-map" class="full-stretch"></div> 
 </div>
 
-{% endblock body %}
+<div id="content-on-map">
+	<div id="legend">
+	  <legend>Quiz - {{ quiz.title }}</legend>
+	</div>
+	<!-- TODO: change to normal buttons!!! -->
+	<div class="tabbable"> 
+		<div class="tabbable" style="margin-right:140px">
+		  <ul class="nav nav-pills">
+			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
+		  </ul>
+		</div>
+	</div>	
+	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
+	    <ul id="tabs" class="nav nav-tabs">
+	        {%for item in quiz.questions %}
+	        {% if loop.first %}
+	        <li id="tab-question{{item.qid}}" class="active question-tab tab-question-item">
+	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
+	        </li>
+	        {% else %}
+	        <li id="tab-question{{item.qid}}" class="question-tab tab-question-item">
+	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
+	        </li>
+	        {% endif %}
+	        {% endfor %}
+	    </ul>
+	    <div id="tabs-container" class="tab-content">
+	        {%for item in quiz.questions %}
+	        {% if loop.first %}
+	        <div class="tab-pane active" id="tab-question-page{{item.qid}}">
+	            <div class='question-item' name='question{{item.qid}}'></div>
+	        </div>
+	        {% else %}
+	        <div class="tab-pane" id="tab-question-page{{item.qid}}">
+	            <div class='question-item' name='question{{item.qid}}'></div>
+	        </div>
+	        {% endif %}
+	        {% endfor %}
+	    </div>
+	</div>
+</div>
+ 
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 
-{% block quiz_menu %}	
-<a class="btn btn-primary" style="width:145px; margin-bottom:40px" href="/quiz/{{quiz.id}}/finish/">Finish Quiz</a>
-{% endblock quiz_menu %}
+{% endblock content %}

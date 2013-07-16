@@ -1,26 +1,26 @@
-steal( 'jquery/controller',
-		'jquery/view/ejs',
-	    'quizpage/quiz/listitem')
-	    .then(function($){
-	$.Controller('Quizpage.Quiz.Quizlist',
-        {
-        },{
-        	quiztitle : "",
-        	
-        	init : function(){        		
-        	},
-        	
-	        ".quiz-list-create click" : function(){
-	        	var c = this;
-	        	var qlist = this.element.find(".quiz-list-table");
-	        	Quizpage.Quiz.Listitem.create(this.quiztitle, function(model, el){
-	        		qlist.prepend(el);	
-	        		quiztitle = "";
-	        		$(".input-quiz-list").attr("value", quiztitle);
-	        	});	        	
-	        },
-	        ".input-quiz-list keyup" : function(el){
-	        	this.quiztitle = el.attr("value");
-            },
-        });        
+steal('jquery/controller', 'jquery/view/ejs').then(function($){
+	    	
+		$.Controller('Quizpage.Quiz.Quizlist', {
+	    },{     
+	    	listitems : null,
+	    
+	    	init : function(){
+	    		var self = this;
+	    		this.listitems = [];
+	    		var onSuccess = this.options.onSuccess;
+	    		var els = this.element.find(".quiz-list-item");	    		
+	    		
+            	$(els).each(function(i){
+            		$(this).quizpage_quiz_listitem({onSuccess : function(listitem){            			
+            			
+            			self.listitems.push(listitem);
+            			
+            			if(onSuccess && (i === els.length - 1)){
+            				onSuccess(self.listitems);
+            			}
+            			
+            		}});            		
+            	});
+	    	}
+	    });        
 });

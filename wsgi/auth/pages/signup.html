@@ -1,0 +1,22 @@
+{% from "messaging.html" import render_bootstrap_errors %}
+
+{% extends "base.html" %} 
+
+{% block content %}
+<div class="container">	
+	<div class="row">
+		<div class="span4 offset4 ">
+			<legend>Please Sign Up</legend>
+
+			{{ render_bootstrap_errors(errors) }}
+			
+			<form method="POST" action="{{ url_for('auth_bp.signup')}}" accept-charset="UTF-8">
+				{{ form.username(class_ = 'span4', placeholder = 'Username') }}
+				{{ form.email(class_ = 'span4', placeholder = 'Email') }}
+      			{{ form.password(class_ = 'span4', placeholder = 'Password') }}
+				<button type="submit" name="submit" value="Login" class="btn btn-primary">Sign Up</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

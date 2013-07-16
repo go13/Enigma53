@@ -1,0 +1,2 @@
+date	correct	total	rate	id{% for item in results[-20:] %}
+{% if item.nquestion != none and item.ncorrect != none %}{{ item.historysession.starttime.strftime('%d-%b-%y %H:%M:%S')|e }}	{{item.ncorrect|e}}	{{item.nquestion|e}}	{% if item.nquestion > 0 %}{{(item.ncorrect/item.nquestion)|e}}{% else %}{{item.nquestion|e}}{% endif %}	{{item.sessionid|e}}{% endif %}{% endfor %}

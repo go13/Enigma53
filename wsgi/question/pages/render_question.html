@@ -1,0 +1,28 @@
+{% macro render_question_edit(question) %}
+<div class='question-edit' data-lat="{{question.question_revision.latitude}}" data-lon="{{question.question_revision.longitude}}" name='question{{question.qid}}'>
+	<div id="wmd-panel-{{ question.qid }}" class="wmd-panel">
+            <div id="wmd-button-bar-{{ question.qid }}"></div>
+            <textarea id="wmd-input-{{ question.qid }}" class="qtext wmd-input" rows="7" style="width:100%" placeholder="Type your question...">{{question.question_revision.qtext}}</textarea>
+    </div>
+    
+    <button class="question-back btn-link pull-left" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button" >Next question</button>
+	
+    <div id="wmd-preview-{{ question.qid }}" class="wmd-panel wmd-preview form-actions" style="margin-top:40px"></div>
+       
+    <button class="question-back btn-link pull-left" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button" >Next question</button>
+</div>
+{% endmacro %}
+
+{% macro render_question_result(questionresult) %}
+
+<div data-questionid="{{questionresult.question.qid}}"  class='question-result'>
+							 
+    <div id="question-text-{{questionresult.question.qid}}" class="form-actions">
+    </div>
+	<button class="question-back btn-link" type="button">Previous question</button> 
+	<button class="question-next btn-link pull-right" type="button">Next question</button>
+</div>
+
+{% endmacro %}

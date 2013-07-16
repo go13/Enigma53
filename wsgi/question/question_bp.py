@@ -1,208 +1,293 @@
-from flask import Flask, Blueprint, render_template, request, jsonify
-from sqlalchemy import Table, Column, Integer, String
+from datetime import datetime
+from flask import Blueprint, render_template, request, jsonify, current_app
+from modules.jsonschema import validate, Draft4Validator
 
 from model import db
+from quiz.quiz import Quiz
 from question import Question
-from modules.answer import Answer
-from quiz.quiz_result import QuizResult
+from answer.answer import Answer
+from question_revision import QuestionRevision
 from question_result import QuestionResult
 from answer_result import AnswerResult
-from modules.results import Historysession
+from results.historysession import Historysession
 from flask_login import login_required, current_user
 
-question_bp = Blueprint('question_bp', __name__, template_folder='pages')
+question_bp = Blueprint('question_bp', __name__, template_folder = 'pages')
 
-@question_bp.route('/<int:question_id>/')
-@login_required
+auth_failure_message = u"You don't have permissions to "
+
+#@question_bp.route('/<int:question_id>/')
 def question(question_id):
-    question=Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
-        return render_template('question.html', question=question)
+        return render_template('question.html', question = question)
     else:
         return render_template('404.html')
 
-@question_bp.route('/<int:question_id>/edit/')
-@login_required
+#@question_bp.route('/<int:question_id>/edit/')
+#@login_required
 def question_edit(question_id):
-    question=Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
     if question:
-        return render_template('question_edit.html', question=question)
+        return render_template('question_edit.html', question = question)
     else:
         return render_template('404.html')
-
-
-@question_bp.route('/edit_question_submit/', methods=['POST'])
-def edit_question_submit():
-    # validate
-    #for item in request.json:
-
-    print 'got a post ', request.json
-
-    questionid = request.json['qid']
-    print 'submitting a question ', questionid
-
-    question = Question.get_question_by_id(questionid)
-    print 'got a question from DB ', questionid
-
-    if question:
-        answers = request.json['answers']
-        qtext = request.json['qtext']
-
-        question.qtext = qtext
-
-        Question.update_question_by_id(questionid, {'qtext':qtext}, False)
-        #query.filter_by(id=questionid).update({'qtext':qtext})
-        Answer.delete_answer_by_question_id(questionid, False)
-
-        for answer in answers:
-            atext = answer['atext']
-            if answer['correct']=='T':
-                correct = 'T'
-            else:
-                correct = 'F';
-            Answer.create_answer(questionid, atext, correct, False)
-        db.session.commit()
-
-        return jsonify(status='OK', redirect='/question/'+questionid)
-    else:
-        return jsonify(status='Error')
 
 @question_bp.route('/jget/<int:question_id>/')
+@login_required
 def jget(question_id):
-    question=Question.get_question_by_id(question_id)
+    current_app.logger.debug("jget - " + str(question_id))
+    question = Question.get_active_question_by_id(question_id)
     if question:
-        result = {'jstaus':'OK'}
-        result.update(question.serialize)
-        return jsonify(result)
+        if current_user.id == question.user_id:
+            result = {'jstaus':'OK'}
+            result.update(question.serialize)
+            current_app.logger.warning("jget result = " + str(result))
+            return jsonify(result)
+        else:
+            msg = auth_failure_message + u"view this question"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})   
     else:
-        return jsonify({"status":"ERROR"})
+        msg = u"No such question found!"
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
 
 @question_bp.route('/jget_for_edit/<int:question_id>/')
+@login_required
 def jget_for_edit(question_id):
-    question=Question.get_question_by_id(question_id)
+    current_app.logger.debug("jget_for_edit - " + str(question_id))
+    question = Question.get_active_question_by_id(question_id)
     if question:
-        result = {'jstaus':'OK'}
-        result.update(question.serialize_for_edit)
-        return jsonify(result)
+        if current_user.id == question.userid:
+            result = {'jstaus':'OK'}
+            result.update(question.serialize_for_edit)
+            
+            current_app.logger.debug("jget_for_edit - " + str(result))
+            
+            return jsonify(result)
+        else:
+            msg = auth_failure_message + u"edit this question"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})        
     else:
-        return jsonify({"status":"ERROR"})
-
+        msg = u"No such question found!"
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
 
 @question_bp.route('/jupd/<int:question_id>/',methods=['POST'])
+@login_required
 def jupd(question_id):
-    question=Question.get_question_by_id(question_id)
+    current_app.logger.debug("question.jupd. - " + str(question_id))    
+    
+    question = Question.get_active_question_by_id(question_id)
+    
     if question:
-        print 'got a question from DB, id = ', question_id
-        print 'qid ', request.json['qid']
-        print 'qtext ', request.json['qtext']
-        print 'answers ', request.json['answers']
+        if current_user.id == question.user_id:
+            
+            current_app.logger.warning(request.json)
 
-        qid = request.json['qid']
-        qtext = request.json['qtext']
-        answers = request.json['answers']
-        
-        Question.update_question_by_id(question_id, {'qtext':qtext}, False)
-        Answer.delete_answers_by_question_id(question_id, True)
+            schema = {
+                    "type" : "object",
+                    "properties" : {            
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
+                        "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                                                                  "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False},
+                                                                  "atext" : {"type" : "string", "maxLength" : 128, "optional" : False} 
+                                                                  }}, "maxItems" : 7, "optional" : True},
+                        "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        }
+                    }
+                
+            v = Draft4Validator(schema)
+            errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
-        for answer in answers:
-            atext = answer['atext']
-            correct = 'F'
-            if answer['correct']=='T':
-                correct = 'T'
-            Answer.create_answer(question_id, atext, correct, True)
-        db.session.commit()
+            qid = request.json['id']
+            qtext = request.json['qtext']
+            answers = request.json['answers']
+            latitude = request.json['lat']
+            longitude = request.json['lon']
 
-        result = {'jstaus':'OK'}
-        return jsonify(result)
+            if len(errors) == 0:
+                #TODO - allow displaying unallowed tags as non html tags
+                #scrubb = scrubber.Scrubber()                
+                #qtext = jinja2.Markup(scrubb.scrub(qtext))
+                
+                current_app.logger.debug("got a question from DB, id = " + str(question_id))
+                current_app.logger.debug("id = " + str(qid))
+                current_app.logger.debug("qtext = '" + qtext + "'")
+                current_app.logger.debug("answers = " + str(answers))
+                current_app.logger.debug("latitude = " + str(latitude))
+                current_app.logger.debug("longitude = " + str(longitude))
+
+                results = QuestionResult.get_question_results_by_revision_id(question.revision_id)
+
+                if len(results) > 0:
+                    Question.update_question_by_id_and_create_revision(question_id, qtext, latitude, longitude)
+                else:
+                    Question.update_question_by_id(question_id, qtext, latitude, longitude)
+
+                db.session.commit()
+
+                current_app.logger.debug("Status - OK")
+                
+                result = {'staus':'OK'}
+                return jsonify(result)
+            else:
+                if len(qtext) > 4096:
+                    msg = u"Question text is too long. It must be less than 4096 symbols"
+                    current_app.logger.warning(msg)
+                    return jsonify({"status" : "ERROR", "message" : msg})
+                elif len(answers) > 7:
+                    msg = u"Number of answers must not be greater than 7"
+                    current_app.logger.warning(msg)
+                    return jsonify({"status" : "ERROR", "message" : msg})                    
+                else:
+                    msg = u"Error : "
+                    for e in errors:
+                        msg = msg + str(list(e.path)[len(list(e.path))-1]) + " - " + e.message.decode("UTF-8")
+    
+                    current_app.logger.warning(msg)
+                    return jsonify({"status" : "ERROR", "message" : msg})
+        else:
+            msg = auth_failure_message + u"update this question"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})            
     else:
-        return jsonify({"status":"ERROR"})
+        msg = u"No such question found!"
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
 
-
+#TODO - add adding a quiz revizion
 @question_bp.route('/jcreate/',methods=['POST'])
+@login_required
 def jcreate():
-    print 'got a question to create'
-    print 'qtext ', request.json['qtext']
-    print 'quizid ', request.json['quizid']
-    print 'answers ', request.json['answers']
+    current_app.logger.debug("jcreate. " + str(request.json))
+    
+    if current_user.id >= 0:
+        
+        schema = {
+                    "type" : "object",
+                    "properties" : {            
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},                        
+                        "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
+                        }
+                    }
+                
+        v = Draft4Validator(schema)
+        errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
 
-    qtext = request.json['qtext']
-    quizid = request.json['quizid']
-    answers = request.json['answers']
+        if len(errors) == 0:        
+        
+            qtext = request.json['qtext']
+            quiz_id = request.json['quizid']
+            answers = request.json['answers']
+            latitude = request.json['lat']
+            longitude = request.json['lon']
 
-    newQuestion=Question(quizid=quizid, nextquestionid=2, qtext=qtext, type=1, answers=answers)
-    db.session.add(newQuestion)
-    db.session.commit()
+            quiz = Quiz.get_quiz_only_by_id(quiz_id)
 
-    for answer in answers:
-        atext = answer['atext']
-        id = answer['id']
-        correct = 'F'
-        if answer['correct'] == 1:
-            correct = 'T'
+            new_question = Question.create_question(quiz_id, current_user.id,\
+                                                   qtext, qtext, latitude, longitude)
 
-        newAnswer = Answer(newQuestion.id, atext, correct)
-        db.session.add(newAnswer)
+            db.session.commit()
+                    
+            result = {'jstaus' : 'OK', 'id' : new_question.qid}
+            return jsonify(result)
+        else:
+            msg = "Error in json"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
+    else:
+        msg = "You should be logged in to create a question"
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message" : msg})
 
-    db.session.commit()
-
-    result = {'jstaus':'OK', 'qid':newQuestion.id}
-    return jsonify(result)
-
-
+#TODO - add adding a quiz revizion
 @question_bp.route('/jdelete/<int:question_id>/',methods=['POST'])
+@login_required
 def jdelete(question_id):
-    print 'deleting a question ', question_id
+    current_app.logger.debug("jdelete. " + str(question_id))
 
-    question=Question.get_question_by_id(question_id)
+    question = Question.get_question_only_by_id(question_id)
 
     if question:
-        for answer in question.answers:
-            db.session.delete(answer)
+        if current_user.id == question.user_id:
 
-        db.session.delete(question)
-        db.session.commit()
+            question.delete_question()
 
-    result = {'jstaus':'OK'}
-    return jsonify(result)
+            db.session.commit()
+    
+            result = {'jstaus':'OK'}
+            return jsonify(result)
+        else:
+            msg = auth_failure_message + u"delete this page"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
+    else:
+        return jsonify({"status" : "ERROR"})
 
 @question_bp.route('/jsubmit/<int:question_id>/', methods=['POST'])
 def jsubmit(question_id):
-    print 'jsubmit', question_id
+
+    hs = Historysession.get_current_history_session_by_user_id_quiz_id(current_user.id)
+    session_id = hs.hsid
+
+    current_app.logger.debug("jsubmit - " + str(question_id) + ", session_id - " + str(session_id))
+    current_app.logger.debug("json in jsubmit - " + str(request.json))
     
-    hs=Historysession.get_current_historysession_by_userid(current_user.id)
-    
-    sessionid=hs.id
-    
-    print sessionid
-    
-    question=Question.get_question_by_id(question_id)
+    question = Question.get_active_question_by_id(question_id)
 
     if question:
-        qid = request.json['qid']
-        receivedanswers = request.json['answers']
-        correct = True
+        if current_user.id == question.user_id:
+            schema = {
+                    "type" : "object",
+                    "properties" : {            
+                        "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                        "answers" : {"type": "array", "items": { "type" : "object", "properties": {
+                                                                  "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
+                                                                  "value" : {"type" : "string", "enum" : ["T", "F"], "optional" : False} 
+                                                                  }}, "maxItems" : 7, "optional" : True}
+                        }
+                    }
 
-        for i in range(0, len(receivedanswers)):
-            item = receivedanswers[i]
-            aid = item['id']
-
-            value = 'F'
-            if item['value'] == 'T':
-                value = 'T'
+            v = Draft4Validator(schema)
+            errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
             
-            print '------------------------', sessionid, ' value - ', value,' aid - ', aid 
-            AnswerResult.add_answer_result(sessionid, aid, value, False)
+            if len(errors) > 0:
+                msg = u"Error in json format"
+                current_app.logger.warning(msg)
+                return jsonify({"status" : "ERROR", "message" : msg})
+            else:            
+                qid = request.json['id']
+                received_answers = request.json['answers']
 
-            correct = correct and (value == question.answers[i].correct)
-            
-            print i, ' - ', question.answers[i].correct
-            print 'value - ', value, ' answer = ', question.answers[i].correct, ', correct - ', correct
+                correct = True
+                for i in range(0, len(received_answers)):
+                    item = received_answers[i]
+                    aid = item['id']
+                    value = item['value']
 
-        QuestionResult.add_question_result(sessionid, qid, correct, False)
-        db.session.commit()
+                    AnswerResult.add_answer_result(session_id, aid, question.revision_id, value)
         
-        result = {'jstaus':'OK'}
-        return jsonify(result)
-    else:
-        return jsonify({"status":"ERROR"})
+                    correct = correct and (value == question.answers[i].correct)                    
+                    
+                    current_app.logger.debug("a# = " + str(i) + ", value = " + str(value) + ", answer = " + str(question.answers[i].correct) + ", correct = " + str(correct))
 
+                QuestionResult.add_question_result(session_id, question.qid, question.revision_id, correct)
+                db.session.commit()
+                
+                result = {'jstaus':'OK'}
+                return jsonify(result)
+        else:
+            msg = auth_failure_message + u"submit this question"
+            current_app.logger.warning(msg)
+            return jsonify({"status" : "ERROR", "message" : msg})
+    else:
+        return jsonify({"status" : "ERROR"})

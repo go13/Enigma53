@@ -1,6 +1,11 @@
 {% extends "base.html" %}
- 
+
 {% block content %}
-    <h2>{{ page.title }}</h2>
-    {{ page.html|safe }}
+<div class="container" style="width: 800px;">
+	<div id="legend">
+	  <legend>{% block title %}{% endblock title %}</legend>
+	</div>
+	{% block body %}{% endblock body %}	
+</div>
+
 {% endblock content %}
