@@ -71,7 +71,7 @@ def index():
     if current_user.id > 0:
         return redirect('/quiz/list/')
     else:
-        return render_template('test.html')
+        return redirect('/auth/login/')
 
 @application.route('/<path:path>/')
 def page(path):

@@ -50,7 +50,7 @@
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li id="quizes-menu-item" {% if active_page and active_page in ("quiz_list", "quiz_edit") %} class="active" {% endif %}><a href="{{ url_for('quiz_bp.quiz_list')}}"><i class="icon-th-list"></i> Quizes</a></li>
-                        <li><a href="{{ url_for('index')}}">Articles</a></li>
+                        /*<li><a href="{{ url_for('index')}}">Articles</a></li>*/
                     </ul>
 					<ul class="nav pull-right">
 						{% if current_user.is_authenticated() %}
