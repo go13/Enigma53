@@ -62,7 +62,7 @@ login_manager.refresh_view = "auth_bp.reauth"
 def load_user(uid):
     return User.get_user_by_id(int(uid))
 
-login_manager.setup_app(application)
+login_manager.init_app(application)
 
 #-------routings-------
 
