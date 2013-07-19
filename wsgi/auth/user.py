@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
     
     @staticmethod
     def get_user_by_email(email):
-        return User.query.filter(func.lower(email)==func.lower(email)).first()
+        return User.query.filter(User.email == email).first()
 
     @staticmethod
     def update_user(user):
