@@ -61,7 +61,7 @@ def quiz_list():
     lat = 37.4419
     lon = -122.1419
     
-    if len(quizes) > 0:
+    if (len(quizes) > 0) and quizes[0].latitude and quizes[0].longitude:
         lat = quizes[0].latitude
         lon = quizes[0].longitude
     
