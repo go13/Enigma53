@@ -12,21 +12,21 @@ def get_email_field():
     return TextField('Email', [
         validators.Length(min = 6, max = 25),
         validators.Required(),
-        validators.Email(message = u'Invalid email address')        
+        validators.Email(message=u'Invalid email address')
         ])
     
 def get_username_field():
     return TextField('Username', [
-        validators.Length(min = 4, max = 25),
+        validators.Length(min=4, max=25),
         validators.Required(),
-        validators.Regexp('^[A-Za-z1-9\ ]+$', message = u'Username should contain only characters or numbers')
+        validators.Regexp('[^~@#\^\$&\*\(\)\+=\[\]\{\}\|\\,\?\s]+$', message=u'Username should contain only characters or numbers')
         ])
 
 class LoginForm(Form):
     email = get_email_field()
     password = PasswordField('Password', [
         validators.Required(),
-        validators.Length(min = 6, max = 25)
+        validators.Length(min=6, max=25)
     ])
     remember = BooleanField('Remember Me')
 
@@ -35,7 +35,7 @@ class SignupForm(Form):
     email = get_email_field()
     password = PasswordField('Password', [
         validators.Required(),
-        validators.Length(min = 6, max = 25)
+        validators.Length(min=6, max=25)
     ])
 
 class ProfileForm(Form):
@@ -43,7 +43,7 @@ class ProfileForm(Form):
     email = get_email_field()
     password = PasswordField('Password', [
         validators.Required(),
-        validators.Length(min = 6, max = 25)
+        validators.Length(min=6, max=25)
         #validators.EqualTo('confirm', message = u'Passwords must match')
     ])
     #confirm = PasswordField('Repeat Password')
