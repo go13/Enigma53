@@ -71,6 +71,9 @@ class Quiz(db.Model):
             if questions and len(questions) > 0:
                 quiz.latitude = questions[0].question_revision.latitude
                 quiz.longitude = questions[0].question_revision.longitude
+            else:
+                quiz.latitude = 37.4419
+                quiz.longitude = -122.1419
             quiz.questions = questions
         return quiz_list
 
