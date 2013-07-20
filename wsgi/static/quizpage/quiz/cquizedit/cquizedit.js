@@ -127,9 +127,9 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
 
                 var data = window.jsdata.quiz_results;
 
-                if(data &&  data.length > 0){
+                if(data){ // &&  data.length > 0
 
-                    var margin = {top: 40, right: 10, bottom: 20, left: 45},
+                    var margin = {top: 40, right: 10, bottom: 50, left: 45},
                         width = 700 - margin.left - margin.right,
                         height = 280 - margin.top - margin.bottom;
 
@@ -144,7 +144,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                     var formatDate = d3.time.format("%d-%b-%Y");
 
                     var x = d3.scale.ordinal()
-                        .rangeRoundBands([0, width], .1);
+                        .rangeRoundBands([0, width], 0.1);
 
                     var y = d3.scale.linear()
                         .range([height, 0]);
@@ -166,7 +166,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                     function mousedown(d) {
-                        window.location.href = "/quiz/results/"+d.id;
+                        window.location.href = "/quiz/results/" + d.id;
                     }
 
                     data.forEach(function (d, i) {
@@ -190,85 +190,107 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                         })
                     );
 
-                    y.domain([0, d3.max(data, function(d) {
-                        return d.rate;
-                    })]);
+                    y.domain([0, 1]);
 
-                    svg.append("g")
-                      .attr("class", "x axis")
-                      .attr("transform", "translate(0," + height + ")")
-                      .call(xAxis);
+                    if(data.length <= 0){
 
-                    svg.append("g")
-                      .attr("class", "y axis")
-                      .call(yAxis)
-                    .append("text")
-                      .attr("transform", "rotate(-90)")
-                      .attr("y", 6)
-                      .attr("dy", ".71em")
-                      .style("text-anchor", "end")
-                      .text("Correct");
+                        svg.append("g")
+                            .append("text")
+                              .attr("class", "chart-title")
+                              .attr("x", "0.4em")
+                              .attr("dy", "1.9em")
+                              .text("No results found yet");
 
-                    var bar = svg.selectAll(".bar")
-                    .data(data)
-                    .enter()
-                    .append("g")
-                    .attr("class", "bar")
-                    .attr("transform", function(d) {
-                            return "translate(" + x(d.id) + ",0)";
-                        });
+                        svg.append("g")
+                            .append("text")
+                              .attr("class", "chart-title")
+                              .attr("x", "0.4em")
+                              .attr("dy", "1.9em")
+                              .text("");
 
-                    bar.append("rect")
-                    .attr("class", "bar-rect")
-                    .attr("width", x.rangeBand())
-                    .attr("y", function(d) {
-                            return y(d.rate);
+                    }else{
+
+                        svg.append("g")
+                          .attr("class", "y axis")
+                          .call(yAxis)
+                        .append("text")
+                          .attr("x", "-3.2em")
+                          .attr("dy", "-1.2em")
+                          .text("Correct answers (%)");
+
+
+                         svg.append("g")
+                          .attr("class", "x axis")
+                          .attr("transform", "translate(0," + height + ")")
+                          .call(xAxis)
+                        .append("text")
+                          .attr("x", "5.2em")
+                          .attr("dy", "3.2em")
+                          .text("Your results (Correct questions/Total questions)");
+
+                        var bar = svg.selectAll(".bar")
+                        .data(data)
+                        .enter()
+                        .append("g")
+                        .attr("class", "bar")
+                        .attr("transform", function(d) {
+                                return "translate(" + x(d.i) + ",0)";
+                            });
+
+                        bar.append("rect")
+                        .attr("class", "bar-rect")
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) {
+                                return y(d.rate);
+                            })
+                        .attr("height", function(d) {
+                                return height - y(d.rate);
+                            })
+                        .on("mousedown", mousedown);
+
+
+                        bar.filter(function(d) {
+                            return (2*d.rate > (d3.max(data, function(d) {
+                                return d.rate;
+                            }) - d3.min(data, function(d) {
+                                return d.rate;
+                            })))
                         })
-                    .attr("height", function(d) {
-                            return height - y(d.rate);
-                        })
-                    .on("mousedown", mousedown);
-
-                    bar.filter(function(d) {
-                        return (2*d.rate > (d3.max(data, function(d) {
-                            return d.rate;
-                        }) - d3.min(data, function(d) {
-                            return d.rate;
-                        })))
-                    })
-                    .append("text")
-                    .attr("class", "bar-text")
-                    .attr("dy", ".3em")
-                    .attr("dx", ".7em")
-                    .attr("transform", function(d) {
-                            return "translate(" + x.rangeBand()/2 + ","+ height +")rotate(-90)";
-                        })
-                    .attr("text-anchor", "start")
-                    .text(function(d) {
-                            return formatDate(d.date);
-                        })
-                    .on("mousedown", mousedown);
+                        .append("text")
+                        .attr("class", "bar-text")
+                        .attr("dy", ".3em")
+                        .attr("dx", ".7em")
+                        .attr("transform", function(d) {
+                                return "translate(" + x.rangeBand()/2 + ","+ height +")rotate(-90)";
+                            })
+                        .attr("text-anchor", "start")
+                        .text(function(d) {
+                                return formatDate(d.date);
+                            })
+                        .on("mousedown", mousedown);
 
 
-                    bar.filter(function(d) {
-                        return (2*d.rate <= (d3.max(data, function(d) {
-                            return d.rate;
-                        }) - d3.min(data, function(d) {
-                            return d.rate;
-                        }))) })
+                        bar.filter(function(d) {
+                            return (2*d.rate <= (d3.max(data, function(d) {
+                                return d.rate;
+                            }) - d3.min(data, function(d) {
+                                return d.rate;
+                            })))
+                        })
+                        .append("text")
+                        .attr("class", "bar-text")
+                        .attr("dy", ".3em")
+                        .attr("dx", ".7em")
+                        .attr("transform", function(d) {
+                                return "translate(" + x.rangeBand()/2 + ","+ y(d.rate)+")rotate(-90)";
+                            })
+                        .attr("text-anchor", "start")
+                        .text(function(d) {
+                                return formatDate(d.date)
+                            })
+                        .on("mousedown", mousedown);
+                    }
 
-                    .append("text")
-                    .attr("class", "bar-text")
-                    .attr("dy", ".3em")
-                    .attr("dx", ".7em")
-                    .attr("transform", function(d) {
-                            return "translate(" + x.rangeBand()/2 + ","+ y(d.rate)+")rotate(-90)";
-                        })
-                    .attr("text-anchor", "start")
-                    .text(function(d) {
-                            return formatDate(d.date)
-                        })
-                    .on("mousedown", mousedown);
 
                 }
         	}

@@ -27,6 +27,6 @@ steal(
         Messenger.options = {
         		extraClasses: 'messenger-fixed messenger-on-bottom',
         		'maxMessages': 3,
-        		theme: 'air',
+        		theme: 'air'
         };
 })
