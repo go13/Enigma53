@@ -88,22 +88,23 @@
 	
     <script type="text/javascript">
 		var onQuizesMenuItemClick = null;
-		
-		$("#quizes-menu-item").click(function(){
-			var el = $("#quizes-menu-item"); 
 
-			el.toggleClass("active");
+        var quizMenuItemHandler = function(){
+                var el = $("#quizes-menu-item");
 
-			if(onQuizesMenuItemClick){
-				
-				onQuizesMenuItemClick(el.is('.active'));
-				
-				return false;	
-			}else{
-				window.location.href = "/quiz/list/";
-				return true;
-			}
-		});		
+                el.toggleClass("active");
+
+                if(onQuizesMenuItemClick){
+
+                    onQuizesMenuItemClick(el.is('.active'));
+
+                    return false;
+                }else{
+                    window.location.href = "/quiz/list/";
+                    return true;
+                }
+            };
+        $("#quizes-menu-item").click(quizMenuItemHandler);
 	</script>
  
     {% block bottom %}
