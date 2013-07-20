@@ -64,6 +64,8 @@ def quiz_list():
     if (len(quizes) > 0) and quizes[0].latitude and quizes[0].longitude:
         lat = quizes[0].latitude
         lon = quizes[0].longitude
+        current_app.logger.debug("lat " + str(lat))
+        current_app.logger.debug("lon " + str(lon))
     
     jsdata = {
               "latitude": lat,
