@@ -1097,6 +1097,7 @@ else
             return text;
         }
 
+
         function _DoBlockQuotes(text) {
 
             /*
@@ -1580,7 +1581,7 @@ else
         savequestion: "Save Question",
 
         addcheckbox: "Add Checkbox ?[+]",
-        addexplanation: "Add Explanation ![Put text here]"
+        addexplanation: "Add Explanation %[ Put text here ]%"
     };
 
 
@@ -3254,8 +3255,8 @@ else
     }
 
     commandProto.doAddExplanation = function (chunk, postProcessing) {
-        if(!(/\%\[.*?\]/.test(chunk.selection))){
-            chunk.selection = " %[ " + chunk.selection + " ] ";
+        if(!(/\%\[.*?\]\%/.test(chunk.selection))){
+            chunk.selection = " %[ " + chunk.selection + " ]% ";
         }
     }
 

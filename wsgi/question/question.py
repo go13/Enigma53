@@ -51,7 +51,7 @@ class Question(db.Model):
     @property
     def serialize_for_result(self):
         return {
-            'qtext' : self.question_revision.qtextcache,
+            'qtext' : self.question_revision.qtext,
             'id' : self.qid,
             'lat' : self.question_revision.latitude,
             'lon' : self.question_revision.longitude
@@ -142,6 +142,11 @@ class Question(db.Model):
 
         qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext)
 
+        def repl_explanation(m):
+            return ''
+
+        qtextcache = re.sub(r"\%\[((.|\n)*?)\]\%", repl_explanation, qtextcache)
+
         qr = QuestionRevision.create_question_revision(question.qid, qtext, qtextcache, latitude, longitude)
         question.revision_id = qr.qrid
         question.question_revision = qr
@@ -157,7 +162,7 @@ class Question(db.Model):
 
         question = Question.get_active_question_by_id(question_id)
 
-        def repl(m):
+        def repl_answers(m):
             correct = m.group(1)
             if correct == '+':
                 Answer.create_answer(question_id, question.revision_id, 'T')
@@ -167,7 +172,12 @@ class Question(db.Model):
 
         Answer.delete_answers_by_question_id_revision_id(question_id, question.revision_id)
 
-        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext)
+        qtextcache = re.sub(r"\?\[([\+-]?)\]", repl_answers, qtext)
+
+        def repl_explanation(m):
+            return ''
+
+        qtextcache = re.sub(r"\%\[((.|\n)*?)\]\%", repl_explanation, qtextcache)
 
         QuestionRevision.update_question_revision_by_id(question.revision_id, qtext, qtextcache, latitude, longitude)
 

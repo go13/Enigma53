@@ -95,7 +95,7 @@ def jupdate(quiz_id):
                     msg = u"Title length should be greater than 4 and less than 55 symbols"                    
                 else:
                     for e in errors:
-                        msg = msg +e.message.decode("UTF-8")
+                        msg = msg + e.message.decode("UTF-8")
                     
                 result = {"status" : "ERROR", "message" : msg}        
                 current_app.logger.warning(result)

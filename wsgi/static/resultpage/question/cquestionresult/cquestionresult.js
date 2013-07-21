@@ -14,7 +14,9 @@ steal('jquery/controller',
         		
             	this.converter.hooks.chain("postConversion", function (text){
             		if(self.renderCheckbox){
-            			return self.renderCheckbox.call(self, text, self.id);
+            			var res = self.renderCheckbox.call(self, text, self.id);
+                        res = self.renderExplanation.call(self, res);
+                        return res;
             		}else{
             			return text;
             		}                        
@@ -43,6 +45,13 @@ steal('jquery/controller',
         		var qtext = self.converter.makeHtml(this.model.qtext);
         		this.element.find("#question-text-" + id).html(qtext);
         	},
+            renderExplanation : function(text){
+                var self = this;
+
+                return text.replace(/\%\[((.|\n)*?)\]\%/gm, function (whole, content) {
+                    return "<div class='alert alert-info'>" + content + "</div>";
+                });
+            },
         	renderCheckbox : function(text, id) {
         		var self = this;
         		var i = 0;            	

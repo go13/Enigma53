@@ -81,6 +81,7 @@ steal( 'jquery/controller',
                 	
                 	converter.hooks.chain("postConversion", function (text) {
                 		var res = self.renderCheckbox.call(self, text);
+                		res = self.renderExplanation.call(self, res);
                 		self.model.qtext = text;
                         return res;
                     });
@@ -106,6 +107,13 @@ steal( 'jquery/controller',
                     	}                        	
                         
                     });                	
+                },
+                renderExplanation : function(text){
+                	var self = this;
+
+                	return text.replace(/\%\[((.|\n)*?)\]\%/gm, function (whole, content) {
+                        return "<div class='alert alert-info'>" + content + "</div>";
+                    });
                 },
                 onNewCheckbox : function(correct){
                 	var model = this.model;
