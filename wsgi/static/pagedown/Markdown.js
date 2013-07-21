@@ -2997,7 +2997,9 @@ else
             buttons.addcheckbox = makeButton("wmd-addcheckbox-button", getString("addcheckbox"), "-320px", bindCommand(function (chunk, postProcessing) {
                 return this.doAddCheckbox(chunk, postProcessing);
             }));
-            buttons.addexplanation = makeButton("wmd-addexplanation-button", getString("addexplanation"), "-340px");
+            buttons.addexplanation = makeButton("wmd-addexplanation-button", getString("addexplanation"), "-340px", bindCommand(function (chunk, postProcessing) {
+                return this.doAddExplanation(chunk, postProcessing);
+            }));
             makeSpacer(2);
             buttons.bold = makeButton("wmd-bold-button", getString("bold"), "0px", bindCommand("doBold"));
             buttons.italic = makeButton("wmd-italic-button", getString("italic"), "-20px", bindCommand("doItalic"));
@@ -3246,7 +3248,16 @@ else
     }
 
     commandProto.doAddCheckbox = function (chunk, postProcessing) {
-       chunk.selection = "?[+]";
+        if(!chunk.selection || chunk.selection.length == 0){
+            chunk.selection = " ?[+] ";
+        }
+    }
+
+    commandProto.doAddExplanation = function (chunk, postProcessing) {
+        if(!(/\%\[.*\]/.test(chunk.selection)) &&
+                !(/\%\[/.test(chunk.before) && /\]/.test(chunk.after))){
+            chunk.selection = " %[ " + chunk.selection + " ] ";
+        }
     }
 
     commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
