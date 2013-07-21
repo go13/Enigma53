@@ -3254,7 +3254,7 @@ else
     }
 
     commandProto.doAddExplanation = function (chunk, postProcessing) {
-        if(!(/\%\[.*\]/.test(chunk.selection))){
+        if(!(/\%\[.*?\]/.test(chunk.selection))){
             chunk.selection = " %[ " + chunk.selection + " ] ";
         }
     }
