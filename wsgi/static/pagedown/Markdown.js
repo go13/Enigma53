@@ -1577,8 +1577,10 @@ else
         
         newquestion: "New Question",
         delquestion: "Delete Question",
-        savequestion: "Save Question"
-        
+        savequestion: "Save Question",
+
+        addcheckbox: "Add Checkbox ?[+]",
+        addexplanation: "Add Explanation ![Put text here]"
     };
 
 
@@ -2992,9 +2994,14 @@ else
             buttons.newquestion = makeButton("wmd-newquestion-button", getString("newquestion"), "-260px");
             buttons.savequestion = makeButton("wmd-savequestion-button", getString("savequestion"), "-280px");
             makeSpacer(1);
+            buttons.addcheckbox = makeButton("wmd-addcheckbox-button", getString("addcheckbox"), "-320px", bindCommand(function (chunk, postProcessing) {
+                return this.doAddCheckbox(chunk, postProcessing);
+            }));
+            buttons.addexplanation = makeButton("wmd-addexplanation-button", getString("addexplanation"), "-340px");
+            makeSpacer(2);
             buttons.bold = makeButton("wmd-bold-button", getString("bold"), "0px", bindCommand("doBold"));
             buttons.italic = makeButton("wmd-italic-button", getString("italic"), "-20px", bindCommand("doItalic"));
-            makeSpacer(2);
+
             buttons.link = makeButton("wmd-link-button", getString("link"), "-40px", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, false);
             }));
@@ -3003,7 +3010,6 @@ else
             buttons.image = makeButton("wmd-image-button", getString("image"), "-100px", bindCommand(function (chunk, postProcessing) {
                 return this.doLinkOrImage(chunk, postProcessing, true);
             }));
-            makeSpacer(3);
             buttons.olist = makeButton("wmd-olist-button", getString("olist"), "-120px", bindCommand(function (chunk, postProcessing) {
                 this.doList(chunk, postProcessing, true);
             }));
@@ -3012,7 +3018,7 @@ else
             }));
             buttons.heading = makeButton("wmd-heading-button", getString("heading"), "-160px", bindCommand("doHeading"));
             buttons.hr = makeButton("wmd-hr-button", getString("hr"), "-180px", bindCommand("doHorizontalRule"));
-            makeSpacer(4);
+            makeSpacer(3);
             buttons.undo = makeButton("wmd-undo-button", getString("undo"), "-200px", null);
             buttons.undo.execute = function (manager) { if (manager) manager.undo(); };
 
@@ -3022,7 +3028,7 @@ else
 
             buttons.redo = makeButton("wmd-redo-button", redoTitle, "-220px", null);
             buttons.redo.execute = function (manager) { if (manager) manager.redo(); };
-            makeSpacer(5);
+            makeSpacer(4);
             buttons.delquestion = makeButton("wmd-delquestion-button", getString("delquestion"), "-300px");
             
             if (helpOptions) {
@@ -3030,7 +3036,7 @@ else
             	buttons.newquestion.onclick = helpOptions.newQuestionHandler;
             	buttons.savequestion.onclick = helpOptions.saveQuestionHandler;
             	buttons.delquestion.onclick = helpOptions.delQuestionHandler;
-            	
+
                 var helpButton = document.createElement("li");
                 var helpButtonImage = document.createElement("span");
                 helpButton.appendChild(helpButtonImage);
@@ -3038,7 +3044,7 @@ else
                 helpButton.id = "wmd-help-button" + postfix;
                 helpButton.XShift = "-240px";
                 helpButton.isHelp = true;
-                helpButton.style.right = "0px";
+                helpButton.style.right = "-15px";
                 helpButton.title = getString("help");
                 helpButton.onclick = helpOptions.handler;
 
@@ -3237,6 +3243,10 @@ else
             }
             return title ? link + ' "' + title + '"' : link;
         });
+    }
+
+    commandProto.doAddCheckbox = function (chunk, postProcessing) {
+       chunk.selection = "?[+]";
     }
 
     commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {

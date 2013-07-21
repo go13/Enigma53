@@ -1,13 +1,12 @@
 from flask import Blueprint, render_template, jsonify, request, redirect, current_app
 from modules.jsonschema import validate, Draft4Validator
 
-from datetime import datetime
 from model import db
 from quiz import Quiz
 from quiz_result import QuizResult
 from flask_login import login_required, current_user
 
-quiz_bp = Blueprint('quiz_bp', __name__, template_folder = 'pages')
+quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 auth_failure_message = u"You don't have permissions to "
 
 @quiz_bp.route('/<int:quiz_id>/')
