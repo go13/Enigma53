@@ -29,18 +29,19 @@ class AnswerResult(db.Model):
            }
 
     @staticmethod
-    def get_answer_results_by_session_id_question_id_revision_id(session_id, question_id, revision_id):
-        results = []
+    def get_answer_results_by_session_id_question_id(session_id, question_id):
 
-        answers = Answer.get_active_answers_by_question_id_revision_id(question_id, revision_id)
+        query = db.session.query(AnswerResult).filter(
+            Answer.aid == AnswerResult.answer_id,
+            Answer.revision_id == AnswerResult.revision_id,
+        ).filter(Answer.question_id == question_id, AnswerResult.session_id == session_id)
 
-        for a in answers:
-            r = AnswerResult.query.filter_by(session_id=session_id, answer_id=a.aid).first()
-            if r:
-                results.append(r)
-                r.answer = a
+        answer_results = query.all()
 
-        return results
+        for ar in answer_results:
+            ar.answer = Answer.get_answer_by_id(ar.answer_id)
+
+        return answer_results
 
     @staticmethod
     def add_answer_result(session_id, answer_id, revision_id, value):

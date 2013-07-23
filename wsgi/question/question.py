@@ -92,7 +92,7 @@ class Question(db.Model):
         q = Question.query.filter_by(qid=qid, active=1).first()
         q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
         if q is not None:
-            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
+            q.answers = Answer.get_answers_by_question_id_revision_id(q.qid, q.revision_id)
             return q
         return None
 
@@ -101,7 +101,7 @@ class Question(db.Model):
         qr = QuestionRevision.get_question_revision_by_id(revision_id)
         if qr:
             q = Question.query.filter_by(qid=qr.question_id).first()
-            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
+            q.answers = Answer.get_answers_by_question_id_revision_id(q.qid, q.revision_id)
             q.question_revision = qr
         return q
 
@@ -121,7 +121,7 @@ class Question(db.Model):
     def get_all_active_questions_by_quiz_id(quiz_id):
         questions = Question.query.filter_by(quiz_id=quiz_id, active=1).order_by(Question.qid.asc()).all()
         for q in questions:
-            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
+            q.answers = Answer.get_answers_by_question_id_revision_id(q.qid, q.revision_id)
             q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
             current_app.logger.debug(q.answers)
         return questions

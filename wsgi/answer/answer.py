@@ -41,11 +41,15 @@ class Answer(db.Model):
            }
 
     @staticmethod
+    def get_answer_by_id(aid):
+        return Answer.query.filter_by(aid=aid).first()
+
+    @staticmethod
     def get_answers_by_question_id(question_id):
         return Answer.query.filter_by(question_id=question_id).all()
 
     @staticmethod
-    def get_active_answers_by_question_id_revision_id(question_id, revision_id):
+    def get_answers_by_question_id_revision_id(question_id, revision_id):
         return Answer.query.filter_by(question_id=question_id, revision_id=revision_id).all()
 
     @staticmethod
