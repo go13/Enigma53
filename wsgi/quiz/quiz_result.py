@@ -78,7 +78,7 @@ class QuizResult(db.Model):
 
     @staticmethod
     def get_quiz_results_only_by_quiz_id(quiz_id):
-        quiz_results = QuizResult.query.filter_by(quiz_id=quiz_id).all()
+        quiz_results = QuizResult.query.filter_by(quiz_id=quiz_id).order_by(QuizResult.session_id.asc()).limit(15).all()
         for qr in quiz_results:
             qr.historysession = Historysession.get_historysession_by_id(qr.session_id)
         return quiz_results
