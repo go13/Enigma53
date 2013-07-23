@@ -92,7 +92,7 @@ class Question(db.Model):
         q = Question.query.filter_by(qid=qid, active=1).first()
         q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
         if q is not None:
-            q.answers = Answer.get_answers_by_question_id(q.qid)
+            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
             return q
         return None
 
@@ -101,7 +101,7 @@ class Question(db.Model):
         qr = QuestionRevision.get_question_revision_by_id(revision_id)
         if qr:
             q = Question.query.filter_by(qid=qr.question_id).first()
-            q.answers = Answer.get_answers_by_question_id(q.qid)
+            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
             q.question_revision = qr
         return q
 
@@ -115,13 +115,13 @@ class Question(db.Model):
     @staticmethod
     def get_question_only_by_id(qid):
         current_app.logger.debug("get_question_only_by_id - " + str(qid))
-        return Question.query.filter_by(qid = qid).first()
+        return Question.query.filter_by(qid=qid).first()
 
     @staticmethod
     def get_all_active_questions_by_quiz_id(quiz_id):
         questions = Question.query.filter_by(quiz_id=quiz_id, active=1).order_by(Question.qid.asc()).all()
         for q in questions:
-            q.answers = Answer.get_answers_by_question_id(q.qid)
+            q.answers = Answer.get_active_answers_by_question_id_revision_id(q.qid, q.revision_id)
             q.question_revision = QuestionRevision.get_question_revision_by_id(q.revision_id)
             current_app.logger.debug(q.answers)
         return questions
@@ -132,12 +132,14 @@ class Question(db.Model):
 
         question = Question.get_active_question_by_id(question_id)
 
+        qr = QuestionRevision.create_question_revision(question.qid, qtext, 'TODO', latitude, longitude)
+
         def repl(m):
             correct = m.group(1)
             if correct == '+':
-                Answer.create_answer(question_id, question.revision_id, 'T')
+                Answer.create_answer(question_id, qr.qrid, 'T')
             else:
-                Answer.create_answer(question_id, question.revision_id, 'F')
+                Answer.create_answer(question_id, qr.qrid, 'F')
             return '?[-]'
 
         qtextcache = re.sub(r"\?\[([\+-]?)\]", repl, qtext)
@@ -145,9 +147,9 @@ class Question(db.Model):
         def repl_explanation(m):
             return ''
 
-        qtextcache = re.sub(r"\%\[((.|\n)*?)\]\%", repl_explanation, qtextcache)
+        qr.qtextcache = re.sub(r"\%\[((.|\n)*?)\]\%", repl_explanation, qtextcache)
+        db.session.merge(qr)
 
-        qr = QuestionRevision.create_question_revision(question.qid, qtext, qtextcache, latitude, longitude)
         question.revision_id = qr.qrid
         question.question_revision = qr
 

@@ -45,7 +45,7 @@ class QuestionResult(db.Model):
         question_result_list = QuestionResult.query.filter_by(session_id=session_id).all()
         for qr in question_result_list:
             qr.question = Question.get_question_by_revision_id(qr.revision_id)
-            qr.answer_results = AnswerResult.get_answer_results_by_session_id_question_id(session_id, qr.question.qid)
+            qr.answer_results = AnswerResult.get_answer_results_by_session_id_question_id_revision_id(session_id, qr.question.qid, qr.question.revision_id)
         return question_result_list
         
     @staticmethod

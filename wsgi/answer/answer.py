@@ -45,6 +45,10 @@ class Answer(db.Model):
         return Answer.query.filter_by(question_id=question_id).all()
 
     @staticmethod
+    def get_active_answers_by_question_id_revision_id(question_id, revision_id):
+        return Answer.query.filter_by(question_id=question_id, revision_id=revision_id).all()
+
+    @staticmethod
     def create_answer(question_id, revision_id, correct):
         a = Answer(question_id, revision_id, correct)
         db.session.add(a)

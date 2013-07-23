@@ -29,10 +29,10 @@ class AnswerResult(db.Model):
            }
 
     @staticmethod
-    def get_answer_results_by_session_id_question_id(session_id, question_id):
+    def get_answer_results_by_session_id_question_id_revision_id(session_id, question_id, revision_id):
         results = []
 
-        answers = Answer.get_answers_by_question_id(question_id)
+        answers = Answer.get_active_answers_by_question_id_revision_id(question_id, revision_id)
 
         for a in answers:
             r = AnswerResult.query.filter_by(session_id=session_id, answer_id=a.aid).first()
