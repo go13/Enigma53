@@ -250,19 +250,19 @@ blockquote {
 	  </legend>
 	</div>
 	<div class="tabbable"> 
-		<div class="tabbable" style="margin-right:140px">
+		<div id="quiz-menu" class="tabbable" style="margin-right:140px">
 		  <ul class="nav nav-pills">
-			  <li><a href="#tab4" data-toggle="tab">Results</a></li>
-			  <li  class="active"><a href="#tab2" data-toggle="tab">Edit</a></li>		  
-			  <li><a href="#tab-settings" data-toggle="tab">Settings</a></li>
+			  <li ><a href="#tab-results" data-toggle="tab">Results</a></li>
+			  <li class="active" ><a href="#tab-edit" data-toggle="tab">Edit</a></li>
+			  <li ><a href="#tab-settings" data-toggle="tab">Settings</a></li>
 			  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.qid}}/">Start Quiz</a></li>
 		  </ul>
 		</div>
 	  <div class="tab-content">
-	    <div class="tab-pane" id="tab4">
+	    <div class="tab-pane" id="tab-results">
 	      <div id="results-chart"></div>
 	    </div>
-	    <div class="tab-pane active" id="tab2">
+	    <div class="tab-pane active" id="tab-edit">
 	      <div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right" >
 			<ul id="tabs" class="nav nav-tabs">
 			    {%for item in quiz.questions %}
@@ -305,6 +305,29 @@ blockquote {
 </script>
 <script id="jsdata" type="text/javascript">
 	var jsdata = {{ jsdata|tojson|safe }};
+</script>
+<script>
+    var hash = location.hash;
+    if(hash == "#edit" || hash == ""){
+        $('#quiz-menu a:[href="#tab-edit"]').tab('show');
+    }else if(hash == "#settings"){
+        $('#quiz-menu a:[href="#tab-settings"]').tab('show');
+    }else if(hash == "#results"){
+        $('#quiz-menu a:[href="#tab-results"]').tab('show');
+    }
+
+    $('#quiz-menu a:[href="#tab-edit"]').click(function (e) {
+        location.hash = "";
+    })
+
+    $('#quiz-menu a:[href="#tab-settings"]').click(function (e) {
+        location.hash = "#settings";
+    })
+
+    $('#quiz-menu a:[href="#tab-results"]').click(function (e) {
+        location.hash = "#results";
+    })
+
 </script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
 {% endblock bottom %}

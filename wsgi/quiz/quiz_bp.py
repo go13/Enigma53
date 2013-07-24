@@ -43,7 +43,7 @@ def quiz_map_edit(quiz_id):
 
     if quiz:
         if current_user.id == quiz.user_id:
-            return render_template("quiz_map_edit.html", quiz=quiz, quizes=quizes, active_page="quiz_edit", jsdata=jsdata)
+            return render_template("quiz_map_edit.html", quiz=quiz, quizes=quizes, active_page='quiz_edit', jsdata=jsdata)
         else:
             return render_template("auth_failure.html")
     else:
