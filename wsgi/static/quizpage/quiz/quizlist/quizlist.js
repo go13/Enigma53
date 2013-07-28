@@ -21,6 +21,12 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
             			
             		}});            		
             	});
-	    	}
+	    	},
+            "#create-question-btn click": function(){
+                var item = new Listitem();
+                item.create(function(quizid){
+                    window.location.href='/quiz/' + quizid + '/edit/';
+                });
+            }
 	    });        
 });

@@ -15,14 +15,16 @@ steal('jquery/model', function(){
 					title : model.title
 			};
 			$.ajax({
-	            type: "CREATE",
+	            type: "POST",
 	            url: "/quiz/jcreate/",
 	            dataType: "json",
 	            contentType: "application/json; charset=utf-8",
 	            data: JSON.stringify(obj),
 	            success :  function (data){
 	            	model.quizid = data.quizid;
-	            	success();
+                    if(success){
+	            	    success(data.quizid);
+                    }
 	            },
 	            error: function (error){
 	                alert("There was an error posting the data to the server: " + error.responseText);

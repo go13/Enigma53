@@ -165,40 +165,17 @@ def jdelete(quiz_id):
         current_app.logger.warning(msg)        
         return jsonify({"status" : "ERROR", "message" : msg})
     
-#@quiz_bp.route('/jcreate/', methods = ['POST'])
-#@login_required
+@quiz_bp.route('/jcreate/', methods = ['POST'])
+@login_required
 def jcreate():
     current_app.logger.debug("jcreate")
-    
-    schema = {
-        "type" : "object",
-        "properties" : {            
-            "title" : {"type" : "string", "minLength" : 5,"maxLength" : 55, "optional" : False}
-            }
-        }
-        
-    v = Draft4Validator(schema)
-    errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
-        
-    if len(errors) > 0:
-        msg = u"Error : "
-        if len(request.json['title']) < 5 or len(request.json['title']) > 55:
-            msg = u"Title length should be greater than 4 and less than 55 symbols"                    
-        else:
-            for e in errors:
-                msg = msg + e.message.decode("UTF-8")
-            
-        result = {"status" : "ERROR", "message" : msg}
-        current_app.logger.warning(result)
-        return jsonify(result)
-    else:        
-        title = request.json['title']
-        
-        quiz = Quiz.create_quiz(title, current_user.id)
-        
-        current_app.logger.debug('Quiz created. quiz.id - ' + str(id))   
-        
-        return jsonify({"status" : "OK", "quizid" : quiz.id})
+
+    quiz = Quiz.create_quiz(current_user.id)
+    db.session.commit()
+
+    current_app.logger.debug('Quiz created. quiz.id - ' + str(quiz.qid))
+
+    return jsonify({"status": "OK", "quizid": quiz.qid})
 
 @quiz_bp.route('/create/')
 @login_required

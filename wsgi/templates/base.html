@@ -12,13 +12,9 @@
     <link href="{{ url_for('static', filename="bootstrap/css/bootstrap-responsive.min.css") }}" rel="stylesheet">
     <link href="{{ url_for('static', filename="css/messenger.css") }}" rel="stylesheet">
     <link href="{{ url_for('static', filename="css/messenger-theme-air.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="css/bootstrap-tour.min.css") }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename="css/main.css") }}" rel="stylesheet">
     <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        min-width:1000px;
-        width: auto !important;
-        width:1000px;
-      }
     {% block style %}
     {% endblock style %}
     </style>
@@ -34,7 +30,14 @@
     
     <script type="text/javascript" src="{{ url_for('static', filename="js/messenger.min.js") }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename="js/messenger-theme-future.js") }}"></script>
-        
+    <script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap-tour.js") }}"></script>
+    <!--<script type="text/javascript" src="url_for('static', filename="zurb-joyride/jquery.joyride-2.1.js") "></script>-->
+
+    <script type="text/javascript" src="{{ url_for('static', filename="js/jquery.cookie.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap-tooltip.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap-popover.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap-tour.js") }}"></script>
+
     {% block header %}
     {% endblock header %}
 
@@ -88,7 +91,7 @@
     
 	{% block content %}
     {% endblock content %}
-	
+
     <script type="text/javascript">
 		var onQuizesMenuItemClick = null;
 
@@ -107,11 +110,27 @@
                     return true;
                 }
             };
+
+        var showHideQuizMenuItem = function(toShow){
+            var el = $("#quizes-menu-item");
+            var isShown = el.is('.active');
+
+            if(!toShow && isShown || toShow && !isShown){
+                el.toggleClass("active");
+                if(onQuizesMenuItemClick){
+                        onQuizesMenuItemClick(!isShown);
+                        return !isShown;
+                }
+            }
+
+            return isShown;
+        }
+
         $("#quizes-menu-item").click(quizMenuItemHandler);
 	</script>
- 
+
     {% block bottom %}
     {% endblock bottom %}
-	 	
+
 </body>
 </html>
