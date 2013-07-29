@@ -12,11 +12,12 @@
 	<div id="data-quiz-{{qz.qid}}" class="media quiz-list-item" {% if qz.latitude and qz.longitude %} data-lat="{{qz.latitude}}" data-lon="{{qz.longitude}}"{% endif %}>
 		<a class="pull-left" href="/quiz/{{ qz.qid }}/edit/"></a>
 		<div class="media-body">
-			<h5 class="media-heading" style="margin-top:10px">
+			<h5 class="media-heading" style="margin-top:10px; float: left">
 				<a id="quiz-title-{{ qz.qid }}" class="nolink" href="/quiz/{{ qz.qid }}/edit/">
 				{{ qz.title }}
 				</a>
 			</h5>
+            <button class="close close-list">×</button>
 			<a class="nolink quiz-text" href="/quiz/{{ qz.qid }}/edit/"></a>
 		</div>
     </div>
