@@ -25,10 +25,10 @@ class QuestionResult(db.Model):
     @property
     def serialize_for_result(self):
         return {
-            'questionid' : self.question_id,
-            'correct' : self.correct,
-            'answer_results' : [i.serialize_for_result for i in self.answer_results],
-            'question' : self.question.serialize_for_result
+            'questionid': self.question_id,
+            'correct': self.correct,
+            'answer_results': [i.serialize_for_result for i in self.answer_results],
+            'question': self.question.serialize_for_result
            }
 
     @staticmethod

@@ -28,11 +28,11 @@ class QuizResult(db.Model):
     @property
     def serialize_for_result(self):
         return {
-            'session_id' : self.session_id,
-            'ncorrect' : self.ncorrect,
-            'nquestion' : self.nquestion,            
-            'question_results' : [i.serialize_for_result for i in self.question_results],
-            'quiz' : self.quiz.serialize_for_result
+            'session_id': self.session_id,
+            'ncorrect': self.ncorrect,
+            'nquestion': self.nquestion,
+            'question_results': [i.serialize_for_result for i in self.question_results],
+            'quiz': self.quiz.serialize_for_result
            }
 
     @property

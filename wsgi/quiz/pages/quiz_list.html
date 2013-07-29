@@ -22,6 +22,8 @@
 
 {% block bottom %}
 
+<!--{ render_tour() }-->
+
 <script>
 	onQuizesMenuItemClick = function(visible){
 		if(visible){
@@ -36,9 +38,6 @@
         window.tour.showStep(0);
     }
 </script>
-
-{{ render_tour() }}
-
 
 <script id="jsdata" type="text/javascript">
 	var jsdata = {{ jsdata|tojson|safe }};

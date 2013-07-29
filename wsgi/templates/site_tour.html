@@ -2,32 +2,36 @@
 <script type="text/javascript">
     var tour = new Tour();
 
-    var step1 = {
+    tour.addSteps([{
+            path: "/quiz/list/",
             next: -1,
             element: "#create-question-btn",
             title: "",
             content: "Click here to create a new quiz",
             placement: 'bottom'
-        };
-
-    var step2 = {
+        }, {
             prev: -1,
             element: "#question-map-hint",
             title: "",
             content: "Right click on the map to create a question associated with this place",
             placement: 'bottom'
-        };
-
-    var step3 = {
-            element: "#tabs-container",
+        }, {
+            element: ".wmd-button-row",
             title: "",
-            content: "This is a Markdown editor allows to add <b>Checkboxes</b> and <b>Explanation sections</b>. <br><br>" +
-                    "Checkboxes are marekd as <b>?[+]</b> for correct answers and <b>?[-]</b> for incorrect. <br><br>" +
-                    "Explanation sections are marked as <b>%[ This explanation text is shown on the results page ]%</b>",
+            content: "This is a Markdown editor which allows you to add <b>Checkboxes</b> and <b>Explanation sections</b>. <br><br>",
             placement: 'left'
-        };
-    var step4 = {
-            element: "#tabs-container",
+        },{
+            element: ".wmd-button[title='Add Checkbox ?[+]']",
+            title: "",
+            content: "Checkboxes are marekd as <b>?[+]</b> for correct answers and <b>?[-]</b> for incorrect. You can either click here to add one or put it manually in the editor.<br><br>",
+            placement: 'left'
+        }, {
+            element: ".wmd-button[title='Add Explanation %[ Put text here ]%']",
+            title: "",
+            content: "Explanation sections are marked as <b>%[ This explanation text is shown on the page of results ]%</b>. You can either click here to add one or put it manually in the editor.</b>",
+            placement: 'left'
+        }, {
+            element: ".wmd-input",
             title: "",
             content: "Put the following text to see it rendered in the field below the editor: <br><br>" +
             "Who is the main character of Lewis Carroll's book?<br><br>" +
@@ -36,8 +40,7 @@
             "?[-] No correct answers<br><br>" +
             "%[ The book is 'Alice in wonderland' ]%",
             placement: 'left'
-        }
-    tour.addSteps([step1, step2, step3, step4]);
+        }]);
 
     tour.start();
 

@@ -1,4 +1,5 @@
-steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
+steal('jquery/controller',
+    'quizpage/quiz/navigator').then(function($){
 	Quizpage.Quiz.Navigator('Quizpage.Quiz.Cquizedit', {
 
             add_question_edit : function(question){
@@ -62,9 +63,9 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
         },{        	
         	init : function(){
         		this._super();
-        		this.loadProgressChart(this.quizid, "#results-chart");        		
-        		
-        		this.parse_quiz_edit(this.options.onSuccess);        	
+        		this.loadProgressChart(this.quizid, "#results-chart");
+
+        		this.parse_quiz_edit(this.options.onSuccess);
         	},        	
             parse_quiz_edit : function(onSuccess){
             	var self = this;
@@ -290,8 +291,6 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                             })
                         .on("mousedown", mousedown);
                     }
-
-
                 }
         	}
         });

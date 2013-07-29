@@ -8,6 +8,9 @@ steal(
     'quizpage/quiz/cquizedit',
     
     'quizpage/quizmap/cmapedit',
+
+    'quizpage/quiz/quizlist',
+    'quizpage/quiz/listitem',
     
     'quizpage/csettings',   
     
@@ -23,6 +26,8 @@ steal(
     	}});
     	
     	$("#tab-settings").quizpage_csettings();
+
+    	$(".quiz-list-container").quizpage_quiz_quizlist();
     	
         Messenger.options = {
         		extraClasses: 'messenger-fixed messenger-on-bottom',

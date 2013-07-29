@@ -33,12 +33,22 @@ def quiz_map_edit(quiz_id):
 
     quizes = Quiz.get_quizes_by_user_id(current_user.id)
 
+    for q in quizes:
+        q.quiz_results = QuizResult.get_quiz_results_only_by_quiz_id(q.qid)
+
     quiz = Quiz.get_quiz_by_id(quiz_id)
 
     quiz_results = QuizResult.get_quiz_results_only_by_quiz_id(quiz_id)
 
+    def serialize_for_left_menu(q):
+        return {
+            "quiz_results": [qr.serialize_for_statistics for qr in q.quiz_results],
+            "quiz": q.serialize_for_result
+        }
+
     jsdata = {
-              "quiz_results": [i.serialize_for_statistics for i in quiz_results]
+              "quiz_results": [i.serialize_for_statistics for i in quiz_results],
+              "quizes": [serialize_for_left_menu(q) for q in quizes]
               }
 
     if quiz:
@@ -57,6 +67,9 @@ def quiz_list():
 
     quizes = Quiz.get_quizes_by_user_id(current_user.id)
 
+    for q in quizes:
+        q.quiz_results = QuizResult.get_quiz_results_only_by_quiz_id(q.qid)
+
     lat = 37.4419
     lon = -122.1419
 
@@ -64,14 +77,21 @@ def quiz_list():
         lat = quizes[0].latitude
         lon = quizes[0].longitude
 
+    def serialize_for_left_menu(q):
+        return {
+            "quiz_results": [qr.serialize_for_statistics for qr in q.quiz_results],
+            "quiz": q.serialize_for_result
+        }
+
     jsdata = {
               "latitude": lat,
-              "longitude": lon
+              "longitude": lon,
+              "quizes": [serialize_for_left_menu(q) for q in quizes]
               }
 
     return render_template("quiz_list.html", quizes=quizes, jsdata=jsdata, active_page="quiz_list")
 
-@quiz_bp.route('/jupdate/<int:quiz_id>/', methods = ["GET", "POST"])
+@quiz_bp.route('/jupdate/<int:quiz_id>/', methods=["GET", "POST"])
 def jupdate(quiz_id):
     current_app.logger.debug("jupdate. quiz_id - " + str(quiz_id))
     
@@ -80,9 +100,9 @@ def jupdate(quiz_id):
     if quiz:
         if current_user.id == quiz.user_id:
             schema = {
-                "type" : "object",
-                "properties" : {            
-                    "title" : {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional" : False},
+                "type": "object",
+                "properties": {
+                    "title": {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional" : False},
                     }
                 }
 

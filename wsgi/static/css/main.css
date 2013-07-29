@@ -3,6 +3,35 @@
   width:300px;
 }
 
+.mini-chart-line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.quiz-list-item{
+    height: 64px;
+    margin-top: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.quiz-list-item:hover{
+    background-color: rgb(248, 248, 248);
+    margin-top: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.quiz-list-item > a{
+    text-decoration: none !important;
+}
+
+.no-results-mini-chart{
+    font: bold 20px serif;
+    fill: rgb(189, 189, 189);
+    color: #000;
+    text-decoration: none !important;
+}
+
 #question-map img {
   max-width: none;
 }

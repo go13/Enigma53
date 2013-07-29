@@ -37,7 +37,9 @@ class Quiz(db.Model):
     def serialize_for_result(self):
         return {
             'id': self.qid,
-            'title': self.title
+            'title': self.title,
+            'latitude': self.latitude,
+            'longitude': self.longitude
         }
 
     @staticmethod
