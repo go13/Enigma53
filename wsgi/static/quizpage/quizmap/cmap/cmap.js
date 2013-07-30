@@ -165,6 +165,7 @@ steal('jquery/controller').then(function($){
          			    streetViewControl: false,
          			    mapTypeControl: false,
          			    overviewMapControl: true,
+                        disableDoubleClickZoom: true,
          			    mapTypeId: google.maps.MapTypeId.ROADMAP
         		};
 
@@ -189,6 +190,10 @@ steal('jquery/controller').then(function($){
 				self.polyLine.setMap(self.questionMap);
 
 				google.maps.event.addListener(self.questionMap, 'rightclick', function(event){
+					Quizpage.Quizmap.Cmap.onMapRightClick(event);
+				});
+
+                google.maps.event.addListener(self.questionMap, 'dblclick', function(event){
 					Quizpage.Quizmap.Cmap.onMapRightClick(event);
 				});
 				
