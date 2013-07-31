@@ -16,15 +16,20 @@ def profile():
         
     if request.method == "POST":
         form = ProfileForm(request.form)
-        if form.validate():                    
-            current_user.name = form.username.data
-            current_user.email = form.email.data
-            current_user.password = form.password.data
-            
-            User.update_user(current_user)
-            
-            current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))
-            flash("Your profile was successfully updated", "info")
+        if form.validate():
+
+            if (current_user.email != form.email.data) and (len(User.get_users_by_email(form.email.data)) >= 1):
+                flash("this email already registered, please choose another email", "error")
+            else:
+
+                current_user.name = form.username.data
+                current_user.email = form.email.data
+                current_user.password = form.password.data
+
+                User.update_user(current_user)
+
+                current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))
+                flash("Your profile was successfully updated", "info")
         else:
             for field, err in form.errors.items():
                 for error in err:                    

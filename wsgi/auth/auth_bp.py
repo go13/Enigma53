@@ -61,8 +61,9 @@ def login():
             password = form.password.data.decode("UTF-8")
             remember = form.remember.data
             
-            user = User.get_user_by_email(email)
-            if user and user.password == password:
+            users = User.get_users_by_email(email)
+            if (len(users) > 0) and users[0].password == password:
+                user = users[0]
                 current_app.logger.debug("login and passwords are OK for user: " + user.name)    
                             
                 if login_user(user, remember):
@@ -102,9 +103,9 @@ def signup():
             password = form.password.data            
             username = form.username.data
             
-            user = User.get_user_by_email(email)
+            users = User.get_users_by_email(email)
 
-            if not user:
+            if len(users) <= 0:
                 user = User.add_user(username, email, password)           
                 if login_user(user, True):
                     msg = u"Account created for " + username                    
