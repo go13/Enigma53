@@ -29,6 +29,8 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
                 onSuccess(this);
     		}
     	},
+        ".close-list click" : function(){
+        },
         loadMiniProgressChart : function(quiz_id, data){
 
             if(data){
