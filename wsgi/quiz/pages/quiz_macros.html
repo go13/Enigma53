@@ -26,14 +26,15 @@
         if($(window).has("#content-on-map")){
 
             var wWidth = $(window).width();
-            var l = $("#content-on-map").offset().left;
+            if($("#content-on-map").length > 0){
+                var l = $("#content-on-map").offset().left;
 
-            if(979 < wWidth ){
-                $("#left-menu").css('width', l + "px");
-            }else{
-                $("#left-menu").css('width', wWidth/2 + "px");
+                if(979 < wWidth ){
+                    $("#left-menu").css('width', l + "px");
+                }else{
+                    $("#left-menu").css('width', wWidth/2 + "px");
+                }
             }
-
         }
     }
     $(window).bind("resize", updateLeftMenuWidth);
