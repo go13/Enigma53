@@ -69,7 +69,7 @@
        opacity : 0.9;
        box-sizing: border-box;
        filter : alpha(opacity=90);
-       z-index: 5;
+       z-index: 3;
     }
 }
 @media (max-width: 979px){
@@ -88,7 +88,7 @@
    opacity : 0.9;
    box-sizing: border-box;
    filter : alpha(opacity=90);
-   z-index: 5;
+   z-index: 3;
   }
 }
 
