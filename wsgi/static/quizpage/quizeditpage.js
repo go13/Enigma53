@@ -34,4 +34,59 @@ steal(
         		'maxMessages': 3,
         		theme: 'air'
         };
+
+        var tour = new Tour({
+            name: "tour",
+            container: "#tour-container"
+        });
+
+        tour.addSteps([
+            {
+                element: "#question-map-hint",
+                title: "1/7",
+                content: "<b>Right click</b> on the map to create a question associated with this place.",
+                placement: "bottom",
+                onShow: function(tour) {
+                    onQuizesMenuItemClick(false);
+                }
+            },{
+                element: ".wmd-button-row",
+                title: "2/7",
+                content: "This is a Markdown editor which allows you to add <b>Checkboxes</b> and <b>Explanation sections</b>.",
+                placement: 'left'
+            } ,{
+                element: ".wmd-button[title='Add Checkbox ?[+]']",
+                title: "3/7",
+                content: "Checkboxes are marekd as <b>?[+]</b> for correct answers and <b>?[-]</b> for incorrect.<br><br> You can either click here to add one or put it manually in the editor.<br><br>",
+                placement: 'left'
+            }, {
+                element: ".wmd-button[title='Add Explanation %[ Put text here ]%']",
+                title: "4/7",
+                content: "Explanation sections are marked as <br><br><b>%[ This explanation text is shown on the page of results ]%</b><br><br> You can either click here to add one or put it manually to the editor</b>.",
+                placement: 'left'
+            }, {
+                element: ".wmd-input",
+                title: "5/7",
+                content: "Put the following text to see it rendered in the field below the editor: <br><br>" +
+                "Who is the main character of Lewis Carroll's book?<br><br>" +
+                "?[+] Alice<br><br>" +
+                "?[-] Bob<br><br>" +
+                "?[-] No correct answers<br><br>" +
+                "%[ The book is 'Alice in wonderland' ]%",
+                placement: 'left'
+            },{
+                element: ".wmd-button[title='Save Question']",
+                title: "6/7",
+                content: "Click this button to save current question.",
+                placement: 'left'
+            },{
+                element: "#startquiz",
+                title: "7/7",
+                content: "Finally, start the quiz you created.",
+                placement: 'left'
+            }
+        ]);
+
+        tour.restart();
+        tour.showStep(0);
 })

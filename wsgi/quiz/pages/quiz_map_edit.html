@@ -1,13 +1,12 @@
 {% from "render_question.html" import render_question_edit %}
 {% from "quiz_macros.html" import render_left_menu %}
-{% from "site_tour.html" import render_tour %}
 
 {% extends "base.html" %}
 
 {% block header %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-<div id="question-map-hint" style="position : fixed; left:250px; top:350px;">.</div>
+<div id="question-map-hint" style="position : fixed; left:200px; top:350px; z-index: 4; z-index: -7" >.</div>
 
 {% endblock header %}
 
@@ -31,7 +30,7 @@
 			  <li ><a href="#tab-results" data-toggle="tab">Results</a></li>
 			  <li class="active" ><a href="#tab-edit" data-toggle="tab">Edit</a></li>
 			  <li ><a href="#tab-settings" data-toggle="tab">Settings</a></li>
-			  <li class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.qid}}/">Start Quiz</a></li>
+			  <li id="startquiz" class="pull-right"><a style="background-color: rgb(224, 28, 28); color:#fff;" href="/quiz/{{quiz.qid}}/">Start Quiz</a></li>
 		  </ul>
 		</div>
 	  <div class="tab-content">
@@ -70,6 +69,9 @@
 {% endblock content %}
 
 {% block bottom %}
+
+<div id="tour-container"></div>
+
 <script>
 	onQuizesMenuItemClick = function(visible){
 		if(visible){
@@ -84,14 +86,7 @@
 	var jsdata = {{ jsdata|tojson|safe }};
 </script>
 
- <!--{render_tour()}-->
-
 <script>
-
-    if(window.tour){
-        showHideQuizMenuItem(false);
-        window.tour.showStep(1);
-    }
 
     var hash = location.hash;
     if(hash == "#edit" || hash == ""){
@@ -115,5 +110,11 @@
     })
 
 </script>
+
+<script type="text/javascript">
+
+
+</script>
+
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
 {% endblock bottom %}
