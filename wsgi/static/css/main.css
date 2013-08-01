@@ -3,6 +3,13 @@
   width:300px;
 }
 
+#navigator-top {
+    z-index: 5;
+    position: fixed;
+    margin-right: 0;
+    margin-left: 0;
+}
+
 .close-list{
     margin-right: 10px;
     margin-top: 10px;
@@ -42,33 +49,49 @@
   max-width: none;
 }
 
-#question-map img {
-  max-width: none;
-}
-
 #question-map label {
   width : auto; display : inline;
 }
 
 #question-map{
-   top : 40px;
    height : 100%;
 }
-
-#left-menu{
-   /* display : none; */
+@media (min-width: 979px){
+    #left-menu{
+       overflow : auto;
+       position : fixed;
+       padding: 25px;
+       top : 41px;
+       left : 0;
+       width : 40%;
+       bottom : 0;
+       background-color : #ffffff;
+       opacity : 0.9;
+       box-sizing: border-box;
+       filter : alpha(opacity=90);
+       z-index: 5;
+    }
+}
+@media (max-width: 979px){
+  #left-menu {
    overflow : auto;
    position : fixed;
-   padding: 25px;
-   top : 40px;
+   padding-top: 25px;
+   padding-bottom: 25px;
+   padding-right: 5px;
+   padding-left: 5px;
+   top : 50px;
    left : 0;
-   width : 40%;
+   width : 50%;
    bottom : 0;
    background-color : #ffffff;
    opacity : 0.9;
    box-sizing: border-box;
    filter : alpha(opacity=90);
+   z-index: 5;
+  }
 }
+
 
 .nolink, .nolink:hover{
     color: #000;
@@ -76,57 +99,51 @@
     border: 0;
 }
 
-.full-stretch{
+.map-full-stretch{
    position : fixed;
-   top : 0;
+   top : 35px;
    left : 0;
    right : 0;
-   bottom : 0;
+   bottom : 0px;
 }
-
-.full-stretch{
-   position : fixed;
-   top : 0;
-   left : 0;
-   right : 0;
-   bottom : 0;
+@media (min-width: 979px){
+    #content-on-map{
+       overflow : auto;
+       position : fixed;
+       top : 40px;
+       right : 0;
+       bottom : 0;
+       padding: 25px;
+       width : 60%;
+       min-width: 720px;
+       background-color : #ffffff;
+       opacity : 0.9;
+       box-sizing: border-box;
+       filter : alpha(opacity=90);
+    }
 }
+@media (max-width: 979px){
+    #content-on-map{
+       position : fixed;
+       overflow : auto;
+       padding-bottom: 25px;
+       padding-top: 25px;
+       padding-left: 8px;
+       padding-right: 5px;
+       top : 40px;
+       right : 0;
+       bottom: 0;
+       width : 60%;
+       min-width: 650px;
+       background-color : #ffffff;
+       opacity : 0.9;
+       box-sizing: border-box;
+       filter : alpha(opacity=90);
+    }
 
-#content-on-map{
-   overflow : auto;
-   position: fixed;
-   top : 40px;
-   right : 0;
-   padding: 25px;
-   width : 60%;
-   min-width: 500px;
-   bottom : 0;
-   background-color : #ffffff;
-   opacity : 0.9;
-   box-sizing: border-box;
-   filter : alpha(opacity=90);
-}
-
-.close-edit {
-    float: left;
-    margin-right: 15px;
-    margin-left: 5px;
-    margin-top: 10px;
-}
-
-#left-menu{
-   /* display : none; */
-   overflow : auto;
-   position : fixed;
-   padding: 25px;
-   top : 40px;
-   left : 0;
-   width : 40%;
-   bottom : 0;
-   background-color : #ffffff;
-   opacity : 0.9;
-   box-sizing: border-box;
-   filter : alpha(opacity=90);
+    .tabs-right>.nav-tabs {
+        margin-left: 2px;
+    }
 }
 
 .axis path,
@@ -156,12 +173,6 @@
 
 body
 {
-    font-family: sans-serif;
-
-    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    min-width:1000px;
-    width: auto !important;
-    width:1000px;
 }
 
 input[type="checkbox"] {
@@ -176,7 +187,7 @@ blockquote {
 
 .wmd-panel
 {
-	min-width: 500px;
+	min-width: 490px;
 }
 
 .wmd-button-bar
@@ -187,7 +198,6 @@ blockquote {
 
 .wmd-input
 {
-	/* width: 100%; */
 	margin-right: 5px;
 	background-color: Gainsboro;
 	border: 1px solid DarkGray;
@@ -196,7 +206,6 @@ blockquote {
 .wmd-preview
 {
 	margin-right:-10px;
-/* 	background-color: #c0e0ff; */
 }
 
 .wmd-button-row
@@ -289,12 +298,6 @@ blockquote {
 	font-family: trebuchet MS, helvetica, sans-serif;
 	font-size: 0.8em;
 	font-weight: bold;
-}
-
-.nolink, .nolink:hover{
-	color: #000;
-	text-decoration: none;
-	border: 0;
 }
 
 .close-edit{

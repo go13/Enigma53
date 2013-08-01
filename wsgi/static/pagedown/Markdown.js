@@ -3040,7 +3040,7 @@ else
             	buttons.savequestion.onclick = helpOptions.saveQuestionHandler;
             	buttons.delquestion.onclick = helpOptions.delQuestionHandler;
 
-                var helpButton = document.createElement("li");
+                /*var helpButton = document.createElement("li");
                 var helpButtonImage = document.createElement("span");
                 helpButton.appendChild(helpButtonImage);
                 helpButton.className = "wmd-button wmd-help-button";
@@ -3053,7 +3053,7 @@ else
 
                 setupButton(helpButton, true);
                 buttonRow.appendChild(helpButton);
-                buttons.help = helpButton;
+                buttons.help = helpButton;*/
             }
 
             setUndoRedoButtonStates();
