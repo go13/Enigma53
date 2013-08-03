@@ -18,6 +18,7 @@
 {{ render_left_menu(quizes) }}
 
 <div id="content-on-map" title="{{ quiz.qid }}">
+
 	<div id="legend">
 	  <legend id="quiz-title-legend">
 	  Quiz - {{ quiz.title }}
@@ -108,11 +109,6 @@
     $('#quiz-menu a:[href="#tab-results"]').click(function (e) {
         location.hash = "#results";
     })
-
-</script>
-
-<script type="text/javascript">
-
 
 </script>
 

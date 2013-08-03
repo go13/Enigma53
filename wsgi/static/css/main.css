@@ -56,6 +56,11 @@
 #question-map{
    height : 100%;
 }
+
+.form-actions{
+    word-wrap: break-word;
+}
+
 @media (min-width: 979px){
     #left-menu{
        overflow : auto;

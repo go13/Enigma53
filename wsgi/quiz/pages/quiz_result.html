@@ -30,8 +30,15 @@
     <div id="quiz-results">
     
 	{%for qr in result.question_results %}
+         {% if loop.last %}
 
-	     {{render_question_result(qr) }}
+            {{ render_question_result(qr, None) }}
+
+         {% else %}
+
+            {{ render_question_result(qr, result.question_results[loop.index0+1]) }}
+
+         {% endif %}
 
 	{% endfor %}
 

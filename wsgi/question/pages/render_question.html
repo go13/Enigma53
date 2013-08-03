@@ -15,14 +15,17 @@
 </div>
 {% endmacro %}
 
-{% macro render_question_result(questionresult) %}
+{% macro render_question_result(questionresult, next_result) %}
 
 <div data-questionid="{{questionresult.question.qid}}"  class='question-result'>
-							 
-    <div id="question-text-{{questionresult.question.qid}}" class="form-actions">
-    </div>
-	<button class="question-back btn-link" type="button">Previous question</button> 
-	<button class="question-next btn-link pull-right" type="button">Next question</button>
+
+    <div id="question-text-{{questionresult.question.qid}}" class="form-actions"></div>
+
+	<a class="question-back btn-link" href="#question-text-{{questionresult.question.qid}}" type="button">Previous question</a>
+
+    {% if next_result %}
+	<a class="question-next btn-link pull-right" href="#question-text-{{next_result.question.qid}}" type="button">Next question</a>
+    {% endif %}
 </div>
 
 {% endmacro %}
