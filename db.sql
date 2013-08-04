@@ -113,7 +113,7 @@ create table users
    trained              integer default 0,
    PRIMARY KEY (id)
 );
-insert into users values (1, 'Dmitriy', '1@gmail.com', '1234567');
+insert into users values (1, 'Dmitriy', '1@gmail.com', '1234567', 0);
 
 /*==============================================================*/
 /* Table: quizresults                                               */
