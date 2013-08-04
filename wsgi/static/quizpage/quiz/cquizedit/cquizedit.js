@@ -225,7 +225,7 @@ steal('jquery/controller',
                           .attr("transform", "translate(0," + height + ")")
                           .call(xAxis)
                         .append("text")
-                          .attr("x", "5.2em")
+                          .attr("x", "1.0em")
                           .attr("dy", "3.2em")
                           .text("Your results (Correct questions/Total questions)");
 

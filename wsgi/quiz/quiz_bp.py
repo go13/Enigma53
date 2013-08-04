@@ -53,7 +53,8 @@ def quiz_map_edit(quiz_id):
 
     if quiz:
         if current_user.id == quiz.user_id:
-            return render_template("quiz_map_edit.html", quiz=quiz, quizes=quizes, active_page='quiz_edit', jsdata=jsdata)
+            return render_template("quiz_map_edit.html", quiz=quiz, quizes=quizes, \
+                                   active_page='quiz_edit', jsdata=jsdata, showTour=(not current_user.isTrained()))
         else:
             return render_template("auth_failure.html")
     else:
@@ -89,7 +90,8 @@ def quiz_list():
               "quizes": [serialize_for_left_menu(q) for q in quizes]
               }
 
-    return render_template("quiz_list.html", quizes=quizes, jsdata=jsdata, active_page="quiz_list")
+    return render_template("quiz_list.html", quizes=quizes, jsdata=jsdata, \
+                           active_page="quiz_list", showTour=(not current_user.isTrained()))
 
 @quiz_bp.route('/jupdate/<int:quiz_id>/', methods=["GET", "POST"])
 def jupdate(quiz_id):
@@ -102,7 +104,7 @@ def jupdate(quiz_id):
             schema = {
                 "type": "object",
                 "properties": {
-                    "title": {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional" : False},
+                    "title": {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional": False},
                     }
                 }
 
@@ -117,7 +119,7 @@ def jupdate(quiz_id):
                     for e in errors:
                         msg = msg + e.message.decode("UTF-8")
                     
-                result = {"status" : "ERROR", "message" : msg}        
+                result = {"status": "ERROR", "message": msg}
                 current_app.logger.warning(result)
                 return jsonify(result)
             else:
@@ -128,15 +130,15 @@ def jupdate(quiz_id):
                 db.session.commit()
                 
                 current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)
-                return jsonify({"status" : "OK", "quizid" : quiz_id})
+                return jsonify({"status" : "OK", "quizid": quiz_id})
         else:
             msg = auth_failure_message + u"update this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
             current_app.logger.warning(msg)
-            return jsonify({"status" : "ERROR", "message" : msg})
+            return jsonify({"status" : "ERROR", "message": msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
-        return jsonify({"status" : "ERROR", "message" : msg})
+        return jsonify({"status": "ERROR", "message": msg})
 
 @quiz_bp.route('/jget/<int:quiz_id>/')
 def jget(quiz_id):
@@ -146,18 +148,18 @@ def jget(quiz_id):
     
     if quiz:
         if current_user.id == quiz.userid:
-            result = {'status' : 'OK'}
+            result = {'status': 'OK'}
             result.update(quiz.serialize)
            
             return jsonify(result)
         else:
             msg = auth_failure_message + u"view this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
             current_app.logger.warning(msg)
-            return jsonify({"status" : "ERROR", "message" : msg})
+            return jsonify({"status" : "ERROR", "message": msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
-        return jsonify({"status" : "ERROR", "message" : msg})
+        return jsonify({"status" : "ERROR", "message": msg})
 
 @quiz_bp.route('/jdelete/<int:quiz_id>/', methods = ['DELETE'])
 @login_required
@@ -175,17 +177,17 @@ def jdelete(quiz_id):
             db.session.commit()
             current_app.logger.debug("Quiz deleted")
 
-            return jsonify({"status":"OK"})
+            return jsonify({"status": "OK"})
         else:
             msg = auth_failure_message + u"delete this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
             current_app.logger.warning(msg)
-            return jsonify({"status" : "ERROR", "message" : msg})
+            return jsonify({"status": "ERROR", "message" : msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)        
-        return jsonify({"status" : "ERROR", "message" : msg})
+        return jsonify({"status": "ERROR", "message": msg})
     
-@quiz_bp.route('/jcreate/', methods = ['POST'])
+@quiz_bp.route('/jcreate/', methods=['POST'])
 @login_required
 def jcreate():
     current_app.logger.debug("jcreate")

@@ -6,18 +6,18 @@
 {% block header %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-<div id="question-map-hint" style="position : fixed; left:200px; top:350px; z-index: 4; z-index: -7" >.</div>
-
 {% endblock header %}
 
 {% block content %}
+<div id="question-map-hint" style="position : fixed; left:200px; top:350px; z-index: 4; z-index: -7" >.</div>
+
 <div class="map-full-stretch">
 	<div id="question-map"></div>
 </div>
 
 {{ render_left_menu(quizes) }}
 
-<div id="content-on-map" title="{{ quiz.qid }}">
+<div id="content-on-map" data-quizid="{{ quiz.qid }}">
 
 	<div id="legend">
 	  <legend id="quiz-title-legend">
@@ -36,7 +36,7 @@
 		</div>
 	  <div class="tab-content">
 	    <div class="tab-pane" id="tab-results">
-	      <div id="results-chart"></div>
+	      <div id="results-chart" title="Click on a bar to see detailed results"></div>
 	    </div>
 	    <div class="tab-pane active" id="tab-edit">
 	      <div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right" >
@@ -111,6 +111,110 @@
     })
 
 </script>
+{% if showTour %}
+<script type="text/javascript">
+        var editTab = $('#quiz-menu a:[href="#tab-edit"]');
+        var tour = new Tour({
+            name: "tour",
+            container: "#tour-container",
+            onStart: function(tour) {
+                location.hash = "#";
+                editTab.tab('show');
+            },
+            onEnd: function(tour){
+                var obj = {trained:'T'};
+                $.ajax({
+                    type: "POST",
+                    url: "/user/jtrain/",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(obj),
+                    success :  function(e){},
+                    error:  function (e){}
+                });
+            }
+        });
 
+        tour.addSteps([
+            {
+                element: "#question-map-hint",
+                title: "6/12",
+                content: "<b>Right click</b> on the map to create a question associated with this place.",
+                placement: "bottom",
+                onShow: function(tour) {
+                    showHideQuizMenuItem(false);
+                }
+            },{
+                element: "#tabs-container .tab-pane.active .wmd-button-row",
+                title: "7/12",
+                content: "This Markdown editor allows you to add <b>Checkboxes</b> and <b>Explanation sections</b>.",
+                placement: 'left',
+                onShow: function(tour) {
+                    if(hash != "#edit" || hash != ""){
+                        location.hash = "#";
+                        editTab.tab('show');
+                    }
+                }
+            } ,{
+                element: "#tabs-container .tab-pane.active .wmd-button[title='Add Checkbox ?[+]']",
+                title: "8/12",
+                content: "Checkboxes are marekd as <b>?[+]</b> for correct answers and <b>?[-]</b> for incorrect.<br><br> You can either click here to add one or put it manually in the editor.<br><br>",
+                placement: 'left',
+                onShow: function(tour) {
+                    if(hash != "#edit" || hash != ""){
+                        location.hash = "#";
+                        editTab.tab('show');
+                    }
+                }
+            }, {
+                element: "#tabs-container .tab-pane.active .wmd-button[title='Add Explanation %[ Put text here ]%']",
+                title: "9/12",
+                content: "Explanation sections are marked as <br><br><b>%[ This explanation text is shown on the page of results ]%</b><br><br> You can either click here to add one or put it manually to the editor</b>.",
+                placement: 'left',
+                onShow: function(tour) {
+                    if(hash != "#edit" || hash != ""){
+                        location.hash = "#";
+                        editTab.tab('show');
+                    }
+                }
+            }, {
+                element: "#tabs-container .tab-pane.active .wmd-input",
+                title: "10/12",
+                content: "Put the following text to see it rendered in the field below the editor: <br><br>" +
+                "Who is the main character of Lewis Carroll's book?<br><br>" +
+                "?[+] Alice<br><br>" +
+                "?[-] Bob<br><br>" +
+                "?[-] No correct answers<br><br>" +
+                "%[ The book is 'Alice in wonderland' ]%",
+                placement: 'left',
+                onShow: function(tour) {
+                    if(hash != "#edit" || hash != ""){
+                        location.hash = "#";
+                        editTab.tab('show');
+                    }
+                }
+            },{
+                element: "#tabs-container .tab-pane.active .wmd-button[title='Save Question']",
+                title: "11/12",
+                content: "And save current question.",
+                placement: 'left',
+                onShow: function(tour) {
+                    if(hash != "#edit" || hash != ""){
+                        location.hash = "#";
+                        editTab.tab('show');
+                    }
+                }
+            },{
+                element: "#startquiz",
+                title: "12/12",
+                content: "Finally, end the tour and start the quiz.",
+                placement: 'left'
+            }
+        ]);
+
+        tour.restart();
+        tour.showStep(0);
+</script>
+{% endif %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizeditpage.js"></script>
 {% endblock bottom %}

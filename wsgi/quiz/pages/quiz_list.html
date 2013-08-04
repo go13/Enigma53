@@ -2,6 +2,15 @@
 {% from "site_tour.html" import render_tour %}
 {% extends "base.html" %}
 
+{% block style %}
+#step-0 .arrow,
+#step-1 .arrow,
+#step-2 .arrow
+{
+        display: none;
+}
+{% endblock style %}
+
 {% block header %}
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -9,6 +18,8 @@
 {% endblock header %}
 
 {% block content %}
+
+<div id="question-map-hint" style="position : fixed; left:430px; top:50px; z-index: 4; z-index: -7" >.</div>
 
 <div class="map-full-stretch" style="z-index:-5">
 
@@ -22,7 +33,7 @@
 
 {% block bottom %}
 
-<!--{ render_tour() }-->
+<div id="tour-container"></div>
 
 <script>
 	onQuizesMenuItemClick = function(visible){
@@ -42,6 +53,77 @@
 <script id="jsdata" type="text/javascript">
 	var jsdata = {{ jsdata|tojson|safe }};
 </script>
+
+{% if showTour %}
+<script type="text/javascript">
+     var tour = new Tour({
+            name: "tour",
+            container: "#tour-container",
+            onEnd: function(tour){
+                var obj = {trained:'T'};
+                $.ajax({
+                    type: "POST",
+                    url: "/user/jtrain/",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(obj),
+                    success :  function(e){},
+                    error:  function (e){}
+                });
+            }
+        });
+
+        tour.addSteps([
+             {
+                element: "#question-map-hint",
+                title: "1/12, Welcome to mNemoCity",
+                content:
+                 "<a href='https://en.wikipedia.org/wiki/Forgetting_curve'>The forgetting curve</a> hypothesizes the decline of memory retention in time.<br><br>" +
+                 "This curve shows how information is lost over time when there is no attempt to retain it.<br><br>" +
+                 "<img src='/static/300px-ForgettingCurve.svg.png'>",
+                placement: "bottom",
+                onShow: function(tour) {
+                    showHideQuizMenuItem(false);
+                }
+            },{
+                element: "#question-map-hint",
+                title: "2/12, Welcome to mNemoCity",
+                content: "<b>mNemoCity</b> site aims to help you memorize efficiently by repeatedly taking quizzess.<br><br> " +
+                 "Quizzes contain questions associated with places and streets you know. <br><br>" +
+                 "So material in question is recalled by recalling places you know. <br><br>" +
+                 "<img src='/static/300px-ForgettingCurve.svg-Improved.png'>",
+                placement: "bottom",
+                onShow: function(tour) {
+                    showHideQuizMenuItem(false);
+                }
+            },{
+                element: "#question-map-hint",
+                title: "3/12, Welcome to mNemoCity",
+                content: "The process is simple:<br><br>" +
+                 "1 collect material to learn<br>" +
+                 "2 repitevely take quizzes<br>" +
+                 "3 check what you know<br>" +
+                 "4 track your progress<br><br>" +
+                 "Let's walk through the site...",
+                placement: "bottom",
+                onShow: function(tour) {
+                    showHideQuizMenuItem(false);
+                }
+            },{
+                element: "#create-question-btn",
+                title: "4/12, Create quizzes train and track progress",
+                content: "Click here to add a new quiz.",
+                placement: "bottom",
+                onShow: function(tour) {
+                    showHideQuizMenuItem(true);
+                }
+            }
+        ]);
+
+        tour.restart();
+        tour.showStep(0);
+</script>
+{% endif %}
 
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizlistpage.js"></script>
 {% endblock bottom %}

@@ -110,6 +110,7 @@ create table users
    username             text    not null,
    email                text    not null,
    password             text    not null,
+   trained              integer default 0,
    PRIMARY KEY (id)
 );
 insert into users values (1, 'Dmitriy', '1@gmail.com', '1234567');

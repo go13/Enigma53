@@ -39,9 +39,40 @@ def profile():
         form.username.data = current_user.name
         form.email.data = current_user.email
         
-    return render_template("profile.html", form = form)
-                
-@user_bp.route('/jupdate/', methods = ["UPDATE"])
+    return render_template("profile.html", form=form)
+
+@user_bp.route('/jtrain/', methods=["POST"])
+@login_required
+def jtrain():
+    current_app.logger.debug("jtrain")
+
+    schema = {
+        "type" : "object",
+        "properties" : {
+            "trained" : {"type" : "string", "enum" : ["T", "F"], "optional" : False}
+            }
+        }
+
+    v = Draft4Validator(schema)
+    errors = sorted(v.iter_errors(request.json), key=lambda e: e.path)
+
+    if len(errors) > 0:
+        msg = u"Fields are not valid"
+        current_app.logger.warning(msg)
+        return jsonify({"status" : "ERROR", "message": msg})
+    else:
+        trained = request.json['trained']
+        if trained == 'T':
+            current_user.trained = 1
+        else:
+            current_user.trained = 0
+
+        User.update_user(current_user)
+        current_app.logger.debug("User trained")
+
+        return jsonify({"status": "OK"})
+
+@user_bp.route('/jupdate/', methods=["UPDATE"])
 @login_required
 def jupdate():
     current_app.logger.debug("jupdate")
