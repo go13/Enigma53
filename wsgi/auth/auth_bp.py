@@ -62,7 +62,7 @@ def login():
             remember = form.remember.data
             
             users = User.get_users_by_email(email)
-            if (len(users) > 0) and users[0].password == password:
+            if (len(users) > 0) and users[0].checkPassword(password):
                 user = users[0]
                 current_app.logger.debug("login and passwords are OK for user: " + user.name)    
                             

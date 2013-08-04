@@ -24,7 +24,7 @@ def profile():
 
                 current_user.name = form.username.data
                 current_user.email = form.email.data
-                current_user.password = form.password.data
+                current_user.setPassword(form.password.data)
 
                 User.update_user(current_user)
 
@@ -97,7 +97,7 @@ def jupdate():
     else:
         current_user.name = request.json['username']
         current_user.email = request.json['email']
-        current_user.password = request.json['password']
+        current_user.setPassword(request.json['password'])
         
         User.update_user(current_user)
         

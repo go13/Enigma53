@@ -1,5 +1,7 @@
-from sqlalchemy import Integer, Unicode, func
+from sqlalchemy import Integer, Unicode
 from model import db
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 
 from flask_login import AnonymousUser, UserMixin
 
@@ -14,11 +16,17 @@ class User(db.Model, UserMixin):
     def __init__(self, name, email, password, trained):
         self.name = name
         self.email = email
-        self.password = password
+        self.setPassword(password)
         self.trained = trained
 
     def isTrained(self):
         return (self.trained==1)
+
+    def checkPassword(self, password):
+        return check_password_hash(self.password, password)
+
+    def setPassword(self, password):
+        self.password=generate_password_hash(password)
 
     @staticmethod
     def get_user_by_id(uid):
