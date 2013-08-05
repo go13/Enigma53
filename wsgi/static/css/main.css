@@ -3,6 +3,15 @@
   width:300px;
 }
 
+.landing-container{
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 15px;
+    width:600px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 #navigator-top {
     z-index: 5;
     position: fixed;
@@ -174,10 +183,26 @@
 .chart-title {
   font: 60px serif;
   fill: rgb(189, 189, 189);
+  color: rgb(189, 189, 189);
 }
 
-body
-{
+
+.edit-caption-mini {
+  font: serif;
+  fill: rgb(189, 189, 189);
+  color: rgb(189, 189, 189);
+}
+
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.btn-link{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.unstyled{
+    margin: 0 0 0 25px;
 }
 
 input[type="checkbox"] {

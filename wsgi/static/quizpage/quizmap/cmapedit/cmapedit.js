@@ -16,7 +16,7 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
     	},
     	
         onMapRightClick : function(event){
-        	
+
        	    var qm = new Questionedit();
 
             qm.quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
@@ -26,7 +26,7 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
             qm.answers = new Array();
 
             this.addPoint(qm, false);
-            
+
             qm.create(function(){
             	Quizpage.Quiz.Cquizedit.add_question_edit(qm);
             	Quizpage.Quiz.Cquizedit.to_tab_by_id(qm.id, false);

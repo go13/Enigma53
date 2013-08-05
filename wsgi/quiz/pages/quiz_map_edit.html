@@ -53,6 +53,12 @@
 			         {{render_question_edit(item) }}
 			    </div>
 			    {% endfor %}
+                {% if (quiz.questions|length)<=0 %}
+                <div id="if-no-questions">
+                    <div class="chart-title" style="margin-top: 99px;margin-left: 69px;">No questions found</div>
+                    <div class="edit-caption-mini" style="margin-top: 10px; margin-left: 159px;">Right click on the map to add a new question</div>
+                </div>
+                {% endif %}
 			</div>	
 		  </div>
 	    </div>
@@ -60,6 +66,7 @@
 			<label style="float:left; margin-right:15px">Title</label>
 			<input id="quiz-title-input" type="text" value="{{ quiz.title }}" class="input-xlarge" >
 			<p style="margin-left:40px">Quiz title can contain any letters or numbers</p>
+            <legend style="width:400px"></legend>
 			<button id="settings-save-btn" class="btn btn-success">Save</button>
 			<button id="settings-delete-btn" class="btn-link">Delete</button>
 	    </div>
@@ -180,7 +187,7 @@
             }, {
                 element: "#tabs-container .tab-pane.active .wmd-input",
                 title: "10/12, Create quizzes train and track progress",
-                content: "Put the following text to see it rendered in the field below the editor: <br><br>" +
+                content: "Put the following text to <b>the editor</b> to see it rendered in the field below the editor: <br><br>" +
                 "Who is the main character of Lewis Carroll's book?<br><br>" +
                 "?[+] Alice<br><br>" +
                 "?[-] Bob<br><br>" +

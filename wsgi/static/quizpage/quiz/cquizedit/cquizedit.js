@@ -4,7 +4,9 @@ steal('jquery/controller',
 
             add_question_edit : function(question){
             	var nav = Quizpage.Quiz.Navigator.instance;
-            	
+
+                nav.element.find("#if-no-questions").html("");
+
                 nav.element.find("#tabs")
                     .append("<li id='tab-question" + question.id + "' class='question-tab tab-question-item'>" +
                         "<a href='#tab-question-page" + question.id + "' data-toggle='tab'>Question " + question.id + "</a>" +
@@ -59,6 +61,12 @@ steal('jquery/controller',
                 Quizpage.Quiz.Navigator.instance.element.find("#tab-question-page"+qst.id).remove();
 
                 Quizpage.Quiz.Navigator.instance.model.remove_question_by_id(qst.id);
+
+                if(Quizpage.Quiz.Navigator.instance.model.questions.length == 0){
+                    Quizpage.Quiz.Navigator.instance.element.find("#if-no-questions")
+                        .html('<div class="chart-title" style="margin-top: 99px;margin-left: 69px;">No questions found</div>'+
+                    '<div class="edit-caption-mini" style="margin-top: 10px; margin-left: 159px;">Right click on the map to add a new question</div>');
+                }
             }
         },{        	
         	init : function(){
