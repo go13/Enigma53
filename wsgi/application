@@ -24,7 +24,7 @@ from quiz.quiz_bp import quiz_bp
 from auth.auth_bp import auth_bp
 from auth.user import User, Anonymous
 
-DEBUG = True
+DEBUG = False
 FLATPAGES_AUTO_RELOAD = DEBUG
 TRAP_BAD_REQUEST_ERRORS = True
 FLATPAGES_EXTENSION = '.md'
@@ -71,8 +71,7 @@ def index():
     if current_user.id > 0:
         return redirect('/quiz/list/')
     else:
-        return redirect('/auth/login')
-        #return render_template('landing.html')
+        return render_template('landing.html')
 
 @application.route('/<path:path>/')
 def page(path):
