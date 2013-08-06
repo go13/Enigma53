@@ -3250,13 +3250,19 @@ else
 
     commandProto.doAddCheckbox = function (chunk, postProcessing) {
         if(!chunk.selection || chunk.selection.length == 0){
-            chunk.selection = " ?[+] ";
+            chunk.before = chunk.before + " ?[+] ";
         }
     }
 
     commandProto.doAddExplanation = function (chunk, postProcessing) {
         if(!(/\%\[.*?\]\%/.test(chunk.selection))){
-            chunk.selection = " %[ " + chunk.selection + " ]% ";
+            if(chunk.selection == ""){
+                chunk.before = chunk.before + " %[ ]% ";
+            }else{
+                if(!/(\?\[\+\])|(\?\[\-\])/.test(chunk.selection)){
+                    chunk.selection = " %[ " + chunk.selection + " ]% ";
+                }
+            }
         }
     }
 

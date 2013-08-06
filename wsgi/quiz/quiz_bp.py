@@ -17,8 +17,9 @@ def quiz(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     if quiz:            
         if current_user.id == quiz.user_id:
-            QuizResult.start_session(quiz_id, current_user.id)
-            db.session.commit()
+            if (len(quiz.questions) > 0):
+                QuizResult.start_session(quiz_id, current_user.id)
+                db.session.commit()
             return render_template('quiz.html', quiz=quiz)
         else:
             return render_template('auth_failure.html')            

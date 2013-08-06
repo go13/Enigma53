@@ -3,7 +3,7 @@
 <div id="left-menu" class="quiz-list-container">
 
     <legend style="margin-bottom:3px">
-        <button class="close close-edit pull-right" onClick="quizMenuItemHandler();">&times;</button>
+        <button title="Click here to close left area"  class="close close-edit pull-right" onClick="quizMenuItemHandler();">&times;</button>
 		Quiz list   <button id="create-question-btn" class="btn btn-success pull-right">Create</button>
 	</legend>
 
@@ -24,7 +24,6 @@
 <script type="text/javascript">
     function updateLeftMenuWidth(){
         if($(window).has("#content-on-map")){
-
             var wWidth = $(window).width();
             if($("#content-on-map").length > 0){
                 var l = $("#content-on-map").offset().left;

@@ -21,8 +21,8 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
 
             qm.quizid = Quizpage.Quiz.Navigator.instance.model.quizid;
             
-            qm.lat = event.latLng.jb;
-            qm.lon = event.latLng.kb;
+            qm.lat = event.latLng.lat();
+            qm.lon = event.latLng.lng();
             qm.answers = new Array();
 
             this.addPoint(qm, false);
@@ -34,8 +34,8 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
         },
         
         onMarkerMove : function(mk){
-        	mk.question.lat = mk.position.jb;
-        	mk.question.lon = mk.position.kb;
+        	mk.question.lat = mk.position.lat();
+        	mk.question.lon = mk.position.lng();
         	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
         }
         

@@ -22,7 +22,7 @@
 	<div id="legend">
 	  <legend id="quiz-title-legend">
 	  Quiz - {{ quiz.title }}
-	  <button class="close close-edit" onClick="window.location.href='/quiz/list/'">&times;</button>
+	  <button title="Click here to close right area" class="close close-edit" onClick="window.location.href='/quiz/list/'">&times;</button>
 	  </legend>
 	</div>
 	<div class="tabbable"> 
@@ -36,7 +36,7 @@
 		</div>
 	  <div class="tab-content">
 	    <div class="tab-pane" id="tab-results">
-	      <div id="results-chart" title="Click on a bar to see detailed results"></div>
+	      <div id="results-chart"></div>
 	    </div>
 	    <div class="tab-pane active" id="tab-edit">
 	      <div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right" >
@@ -145,15 +145,15 @@
         tour.addSteps([
             {
                 element: "#question-map-hint",
-                title: "6/12, Create quizzes train and track progress",
-                content: "Find some familiar place and <b>right click</b> on it to create questions associated with this place.",
+                title: "4/10, Create quizzes train and track progress",
+                content: "Find some familiar places and <b>right click</b> there to create questions associated with these places.",
                 placement: "bottom",
                 onShow: function(tour) {
                     showHideQuizMenuItem(false);
                 }
             },{
                 element: "#tabs-container .tab-pane.active .wmd-button-row",
-                title: "7/12, Create quizzes train and track progress",
+                title: "5/10, Create quizzes train and track progress",
                 content: "This Markdown editor allows you to add <b>Checkboxes</b> and <b>Explanation sections</b>.",
                 placement: 'left',
                 onShow: function(tour) {
@@ -164,7 +164,7 @@
                 }
             } ,{
                 element: "#tabs-container .tab-pane.active .wmd-button[title='Add Checkbox ?[+]']",
-                title: "8/12, Create quizzes train and track progress",
+                title: "6/10, Create quizzes train and track progress",
                 content: "Checkboxes are marekd as <b>?[+]</b> for correct answers and <b>?[-]</b> for incorrect.<br><br> You can either click here to add one or put it manually in the editor.<br><br>",
                 placement: 'left',
                 onShow: function(tour) {
@@ -175,7 +175,7 @@
                 }
             }, {
                 element: "#tabs-container .tab-pane.active .wmd-button[title='Add Explanation %[ Put text here ]%']",
-                title: "9/12, Create quizzes train and track progress",
+                title: "7/10, Create quizzes train and track progress",
                 content: "Explanation sections are marked as <br><br><b>%[ This explanation text is shown on the page of results ]%</b><br><br> You can either click here to add one or put it manually to the editor</b>.",
                 placement: 'left',
                 onShow: function(tour) {
@@ -186,7 +186,7 @@
                 }
             }, {
                 element: "#tabs-container .tab-pane.active .wmd-input",
-                title: "10/12, Create quizzes train and track progress",
+                title: "8/10, Create quizzes train and track progress",
                 content: "Put the following text to <b>the editor</b> to see it rendered in the field below the editor: <br><br>" +
                 "Who is the main character of Lewis Carroll's book?<br><br>" +
                 "?[+] Alice<br><br>" +
@@ -202,7 +202,7 @@
                 }
             },{
                 element: "#tabs-container .tab-pane.active .wmd-button[title='Save Question']",
-                title: "11/12, Create quizzes train and track progress",
+                title: "9/10, Create quizzes train and track progress",
                 content: "And save current question.",
                 placement: 'left',
                 onShow: function(tour) {
@@ -213,7 +213,7 @@
                 }
             },{
                 element: "#startquiz",
-                title: "12/12, Finish",
+                title: "10/10, Finish",
                 content: "Finally, end the tour and start the quiz.",
                 placement: 'left'
             }

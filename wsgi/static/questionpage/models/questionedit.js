@@ -65,6 +65,7 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
+            cache: false,
             success : function(data){
             	if(data.status == "ERROR"){
                 	Messenger().post({
@@ -98,6 +99,7 @@ $.Model('Questionedit',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: "kill",
+                cache: false,
                 success : function(data){
                 	if(data.status == "ERROR"){
                     	Messenger().post({
@@ -134,6 +136,7 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
+            cache: false,
             success : function(data){
             	if(data.status == "ERROR"){
                 	Messenger().post({
@@ -190,6 +193,7 @@ $.Model('Questionedit',
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(obj),
+            cache: false,
             success : function(data){
             	if(data.status == "ERROR"){
                 	Messenger().post({

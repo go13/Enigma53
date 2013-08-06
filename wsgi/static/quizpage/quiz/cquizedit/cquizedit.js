@@ -219,6 +219,8 @@ steal('jquery/controller',
 
                     }else{
 
+                        $(place).attr('title', "Click on a bar to see detailed results");
+
                         svg.append("g")
                           .attr("class", "y axis")
                           .call(yAxis)

@@ -84,6 +84,8 @@
        box-sizing: border-box;
        filter : alpha(opacity=90);
        z-index: 3;
+       -moz-box-sizing: border-box;
+       box-sizing: border-box;
     }
 }
 @media (max-width: 979px){
@@ -103,6 +105,8 @@
    box-sizing: border-box;
    filter : alpha(opacity=90);
    z-index: 3;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
   }
 }
 

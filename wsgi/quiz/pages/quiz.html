@@ -11,40 +11,50 @@
 	<div id="legend">
 	  <legend>Quiz - {{ quiz.title }}</legend>
 	</div>
-	<!-- TODO: change to normal buttons!!! -->
 	<div class="tabbable"> 
 		<div class="tabbable" style="margin-right:140px">
 		  <ul class="nav nav-pills">
+              {% if  quiz.questions|length > 0 %}
 			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
+              {% else %}
+              <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/edit/">Edit Quiz</a></li>
+              {% endif %}
 		  </ul>
 		</div>
 	</div>	
 	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
 	    <ul id="tabs" class="nav nav-tabs">
-	        {%for item in quiz.questions %}
-	        {% if loop.first %}
-	        <li id="tab-question{{item.qid}}" class="active question-tab tab-question-item">
-	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
-	        </li>
-	        {% else %}
-	        <li id="tab-question{{item.qid}}" class="question-tab tab-question-item">
-	            <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
-	        </li>
-	        {% endif %}
-	        {% endfor %}
+            {% if  quiz.questions|length > 0 %}
+                {%for item in quiz.questions %}
+                {% if loop.first %}
+                <li id="tab-question{{item.qid}}" class="active question-tab tab-question-item">
+                    <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
+                </li>
+                {% else %}
+                <li id="tab-question{{item.qid}}" class="question-tab tab-question-item">
+                    <a href="#tab-question-page{{item.qid}}" data-toggle="tab">Question {{item.qid}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
 	    </ul>
 	    <div id="tabs-container" class="tab-content">
-	        {%for item in quiz.questions %}
-	        {% if loop.first %}
-	        <div class="tab-pane active" id="tab-question-page{{item.qid}}">
-	            <div class='question-item' name='question{{item.qid}}'></div>
-	        </div>
-	        {% else %}
-	        <div class="tab-pane" id="tab-question-page{{item.qid}}">
-	            <div class='question-item' name='question{{item.qid}}'></div>
-	        </div>
-	        {% endif %}
-	        {% endfor %}
+            {% if  quiz.questions|length > 0 %}
+                {%for item in quiz.questions %}
+                {% if loop.first %}
+                <div class="tab-pane active" id="tab-question-page{{item.qid}}">
+                    <div class='question-item' name='question{{item.qid}}'></div>
+                </div>
+                {% else %}
+                <div class="tab-pane" id="tab-question-page{{item.qid}}">
+                    <div class='question-item' name='question{{item.qid}}'></div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="chart-title" style="margin-top: 99px;margin-left: 69px;">No questions found</div>
+                <div class="edit-caption-mini" style="margin-top: 10px; margin-left: 210px;">Please <a href="/quiz/{{quiz.qid}}/edit/">add a few questions</a></div>
+            {% endif %}
 	    </div>
 	</div>
 </div>

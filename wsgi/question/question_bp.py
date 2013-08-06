@@ -187,11 +187,8 @@ def jcreate():
         
             qtext = request.json['qtext']
             quiz_id = request.json['quizid']
-            answers = request.json['answers']
             latitude = request.json['lat']
             longitude = request.json['lon']
-
-            quiz = Quiz.get_quiz_only_by_id(quiz_id)
 
             new_question = Question.create_question(quiz_id, current_user.id,\
                                                    qtext, qtext, latitude, longitude)

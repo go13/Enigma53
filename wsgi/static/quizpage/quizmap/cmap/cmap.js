@@ -138,8 +138,8 @@ steal('jquery/controller').then(function($){
 	        	this.loadPoints();
 	        }, 
 	        onMarkerMove : function(mk){
-	        	mk.question.lat = mk.position.jb;
-	        	mk.question.lon = mk.position.kb;
+	        	mk.question.lat = mk.position.lat();
+	        	mk.question.lon = mk.position.lng();
 	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
 	        	
 	        	if(this.doMarkerMove){
