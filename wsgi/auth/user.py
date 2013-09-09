@@ -8,9 +8,9 @@ from flask_login import AnonymousUser, UserMixin
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column('id', Integer, primary_key=True)
-    name = db.Column('username', Unicode)
-    email = db.Column('email', Unicode)
-    password = db.Column('password', Unicode)
+    name = db.Column('username', Unicode(convert_unicode=False))
+    email = db.Column('email', Unicode(convert_unicode=False))
+    password = db.Column('password', Unicode(convert_unicode=False))
     trained = db.Column('trained', Integer)
 
     def __init__(self, name, email, password, trained):
@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
         self.trained = trained
 
     def isTrained(self):
-        return (self.trained==1)
+        return self.trained == 1
 
     def checkPassword(self, password):
         return check_password_hash(self.password, password)

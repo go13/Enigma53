@@ -1,8 +1,6 @@
-from sqlalchemy.orm import join
-from sqlalchemy import Integer, Unicode, TIMESTAMP
+from sqlalchemy import Integer, Unicode, UnicodeText
 
 from model import db
-from datetime import datetime
 from question.question import Question
 
 
@@ -11,8 +9,8 @@ class Quiz(db.Model):
 
     qid = db.Column('id', Integer, primary_key=True)
     user_id = db.Column('userid', Integer)
-    title = db.Column('title', Unicode)
-    description = db.Column('description', Unicode)
+    title = db.Column('title', Unicode(convert_unicode=False))
+    description = db.Column('description', UnicodeText(convert_unicode=False))
 
     latitude = None
     longitude = None

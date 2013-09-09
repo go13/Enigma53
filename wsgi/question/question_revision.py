@@ -1,17 +1,17 @@
 __author__ = 'dmitriy'
 
 from model import db
-from sqlalchemy import Integer, Unicode, TIMESTAMP
+from sqlalchemy import Integer, Unicode, UnicodeText
 
 class QuestionRevision(db.Model):
     __tablename__ = 'questionrevisions'
 
     qrid = db.Column('id', Integer, primary_key=True)
     question_id = db.Column('questionid', Integer)
-    qtext = db.Column('qtext', Unicode)
-    qtextcache = db.Column('qtextcache', Unicode)
-    latitude = db.Column('latitude', Unicode)
-    longitude = db.Column('longitude', Unicode)
+    qtext = db.Column('qtext', UnicodeText(convert_unicode=False))
+    qtextcache = db.Column('qtextcache', UnicodeText(convert_unicode=False))
+    latitude = db.Column('latitude', Unicode(convert_unicode=False))
+    longitude = db.Column('longitude', Unicode(convert_unicode=False))
     answers = []
 
     def __init__(self, question_id, qtext, qtextcache, latitude, longitude):
@@ -34,7 +34,7 @@ class QuestionRevision(db.Model):
 
     @staticmethod
     def update_question_revision_by_id(qrid, qtext, qtextcache, latitude, longitude):
-        qr = QuestionRevision.query.filter_by(qrid = qrid).first()
+        qr = QuestionRevision.query.filter_by(qrid=qrid).first()
         qr.qtext = qtext
         qr.qtextcache = qtextcache
         qr.latitude = latitude

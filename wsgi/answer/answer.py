@@ -1,8 +1,7 @@
 from flask import current_app
-from sqlalchemy import Integer, Unicode, String
+from sqlalchemy import Integer, String
 
 from model import db
-from answer_revision import AnswerRevision
 
 class Answer(db.Model):
     __tablename__ = 'answers'
