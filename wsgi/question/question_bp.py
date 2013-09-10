@@ -96,7 +96,7 @@ def jupd(question_id):
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                                                                   "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False},
                                                                   "atext" : {"type" : "string", "maxLength" : 128, "optional" : False} 
-                                                                  }}, "maxItems" : 7, "optional" : True},
+                                                                  }}, "maxItems" : 25, "optional" : True},
                         "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
                         "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},
                         }
@@ -141,8 +141,8 @@ def jupd(question_id):
                     msg = u"Question text is too long. It must be less than 4096 symbols"
                     current_app.logger.warning(msg)
                     return jsonify({"status" : "ERROR", "message" : msg})
-                elif len(answers) > 7:
-                    msg = u"Number of answers must not be greater than 7"
+                elif len(answers) > 25:
+                    msg = u"Number of answers must not be greater than 25"
                     current_app.logger.warning(msg)
                     return jsonify({"status" : "ERROR", "message" : msg})                    
                 else:
@@ -250,7 +250,7 @@ def jsubmit(question_id):
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {
                                                                   "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                                                                   "value" : {"type" : "string", "enum" : ["T", "F"], "optional" : False} 
-                                                                  }}, "maxItems" : 7, "optional" : True}
+                                                                  }}, "maxItems" : 25, "optional" : True}
                         }
                     }
 
