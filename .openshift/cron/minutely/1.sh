@@ -1,2 +1,2 @@
 #!/bin/bash
-'test' >> ~/python/logs/cron.log
+echo "test" >> ~/python/logs/cron.log
