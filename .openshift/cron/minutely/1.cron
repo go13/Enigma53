@@ -1,7 +1,0 @@
-SHELL=/bin/sh
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-MAILTO=dima.blinkov@gmail.com
-
-#period in days   delay in minutes   job-identifier   command
-
-1         1     cron "test" >> ~/python/logs/cron.log
