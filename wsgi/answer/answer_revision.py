@@ -1,7 +1,7 @@
 __author__ = 'dmitriy'
 
 from datetime import datetime
-from sqlalchemy import Integer, TIMESTAMP, UnicodeText, String
+from sqlalchemy import Integer, TIMESTAMP, String
 
 from model import db
 
@@ -9,7 +9,7 @@ class AnswerRevision(db.Model):
     __tablename__ = 'answerrevisions'
 
     arid = db.Column('id', Integer, primary_key=True)
-    atext = db.Column('atext', UnicodeText(convert_unicode=False))
+    atext = db.Column('atext', String)
     correct = db.Column('correct', String)
     change_time = db.Column('changetime', TIMESTAMP)
 

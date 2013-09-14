@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Unicode, UnicodeText
+from sqlalchemy import Integer, String
 
 from model import db
 from question.question import Question
@@ -9,8 +9,8 @@ class Quiz(db.Model):
 
     qid = db.Column('id', Integer, primary_key=True)
     user_id = db.Column('userid', Integer)
-    title = db.Column('title', Unicode(convert_unicode=False))
-    description = db.Column('description', UnicodeText(convert_unicode=False))
+    title = db.Column('title', String)
+    description = db.Column('description', String)
 
     latitude = None
     longitude = None

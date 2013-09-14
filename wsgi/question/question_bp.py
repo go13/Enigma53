@@ -94,8 +94,7 @@ def jupd(question_id):
                         "quizid" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "qtext" : {"type" : "string", "maxLength" : 4096, "optional" : False},
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {"id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
-                                                                  "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False},
-                                                                  "atext" : {"type" : "string", "maxLength" : 128, "optional" : False} 
+                                                                  "correct" : {"type" : "string", "enum" : ["T", "F"], "optional" : False}
                                                                   }}, "maxItems" : 25, "optional" : True},
                         "lat" : {"type" : "number", "maxLength" : 12, "optional" : False},
                         "lon" : {"type" : "number", "maxLength" : 12, "optional" : False},

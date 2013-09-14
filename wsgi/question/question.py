@@ -1,7 +1,6 @@
 import re
-from datetime import datetime
 from flask import current_app
-from sqlalchemy import Integer, Unicode, TIMESTAMP
+from sqlalchemy import Integer
 from question_revision import QuestionRevision
 
 from model import db
