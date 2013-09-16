@@ -19,24 +19,21 @@ class Answer(db.Model):
     @property
     def serialize(self):
         return {
-            'id':self.aid,
-            'atext':'self.atext'
+            'id': self.aid
            }
 
     @property
     def serialize_for_edit(self):
         return {
-            'id':self.aid,
-            'question_id':self.question_id,
-            'atext':'self.atext',
-            'correct':self.correct
+            'id': self.aid,
+            'question_id': self.question_id,
+            'correct': self.correct
            }
         
     @property
     def serialize_for_result(self):
         return {
-            'id':self.aid,
-            'atext':'self.atext'
+            'id': self.aid
            }
 
     @staticmethod

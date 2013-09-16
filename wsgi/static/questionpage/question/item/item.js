@@ -25,6 +25,8 @@ steal(
                         question.lon = parseFloat(question.lon);
                         question.lat = parseFloat(question.lat);
 
+                        question.answers.sort(function(a, b) { return a.id - b.id });
+
                         for(var i = 0; i < question.answers.length; i++){
                         	console.log( "answer:" + i + " id= " + question.answers[i].id);
                             question.answers[i].value = 'F';                            
