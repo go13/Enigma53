@@ -26,34 +26,34 @@ class Question(db.Model):
     @property
     def serialize(self):
         return {
-            'quizid' : self.quiz_id,
-            'nextquestionid' : -1,
-            'qtext' : self.question_revision.qtextcache,
-            'id' : self.qid,
-            'lat' : self.question_revision.latitude,
-            'lon' : self.question_revision.longitude,
-            'answers' : [i.serialize for i in self.answers]
+            'quizid': self.quiz_id,
+            'nextquestionid': -1,
+            'qtext': self.question_revision.qtextcache,
+            'id': self.qid,
+            'lat': self.question_revision.latitude,
+            'lon': self.question_revision.longitude,
+            'answers': [i.serialize for i in self.answers]
            }
 
     @property
     def serialize_for_edit(self):
         return {
-            'quizid' : self.quiz_id,
-            'nextquestionid' : self.question_revision.nextquestionid,
-            'qtext' : self.question_revision.qtext,
-            'id' : self.qid,
-            'lat' : self.question_revision.latitude,
-            'lon' : self.question_revision.longitude,
-            'answers' : [i.serialize_for_edit for i in self.answers]
+            'quizid': self.quiz_id,
+            'nextquestionid': self.question_revision.nextquestionid,
+            'qtext': self.question_revision.qtext,
+            'id': self.qid,
+            'lat': self.question_revision.latitude,
+            'lon': self.question_revision.longitude,
+            'answers': [i.serialize_for_edit for i in self.answers]
            }
 
     @property
     def serialize_for_result(self):
         return {
-            'qtext' : self.question_revision.qtext,
-            'id' : self.qid,
-            'lat' : self.question_revision.latitude,
-            'lon' : self.question_revision.longitude
+            'qtext': self.question_revision.qtext,
+            'id': self.qid,
+            'lat': self.question_revision.latitude,
+            'lon': self.question_revision.longitude
            }
 
     def delete_question(self):

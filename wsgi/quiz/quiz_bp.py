@@ -17,10 +17,14 @@ def quiz(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     if quiz:            
         if current_user.id == quiz.user_id:
-            if (len(quiz.questions) > 0):
+            jsdata = {
+                      "questions": [i.serialize for i in quiz.questions]
+                      }
+            if (len(quiz.questions)>0):
                 QuizResult.start_session(quiz_id, current_user.id)
                 db.session.commit()
-            return render_template('quiz.html', quiz=quiz)
+            return render_template('quiz.html', quiz=quiz, jsdata=jsdata)
+
         else:
             return render_template('auth_failure.html')            
     else:
