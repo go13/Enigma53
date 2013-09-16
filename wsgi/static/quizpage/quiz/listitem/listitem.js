@@ -61,7 +61,7 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
                         return x(d.i);
                     })
                     .y(function(d) {
-                        return y(d.correct/d.total);
+                        return y(d.rate);
                     });
 
                 var svg = d3.select("#data-quiz-" + quiz_id + " > a").append("svg")
@@ -89,11 +89,11 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
                     return d.i;
                 }));
                 y.domain(d3.extent(data, function(d) {
-                    return d.correct/d.total;
+                    return d.rate;
                 }));
 
-                function xx(d) { return x(d.i); };
-                function yy(d) { return y(d.correct/d.total); };
+                function xx(d) { return x(d.i); }
+                function yy(d) { return y(d.rate); }
 
                 if(data.length <= 0){
 
