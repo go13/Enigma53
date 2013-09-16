@@ -105,7 +105,7 @@ def jupdate(quiz_id):
             schema = {
                 "type": "object",
                 "properties": {
-                    "title": {"type" : "string", "minLength" : 5, "maxLength" : 55, "optional": False},
+                    "title": {"type" : "string", "minLength" : 4, "maxLength" : 55, "optional": False},
                     }
                 }
 
@@ -114,8 +114,8 @@ def jupdate(quiz_id):
     
             if len(errors) > 0:
                 msg = u"Error : "
-                if len(request.json['title']) < 5 or len(request.json['title']) > 55:
-                    msg = u"Title length should be greater than 4 and less than 55 symbols"                    
+                if len(request.json['title']) < 4 or len(request.json['title']) > 55:
+                    msg = u"Title length should be greater than 3 and less than 55 symbols"
                 else:
                     for e in errors:
                         msg = msg + e.message.decode("UTF-8")
