@@ -9,7 +9,8 @@ steal('jquery/model', function(){
 	        lat : NaN,
 	        lon : NaN,
 	        answers : new Array(),
-	        gmarker : null
+	        gmarker : null,
+            answered: false
 	    },
 	    findAll: "/questions.json",
 		findOne : "/question/jget/{id}/"
@@ -25,6 +26,8 @@ steal('jquery/model', function(){
 	        return result;
 	    },
 	    submit_question : function(success, error){
+            this.answered = true;
+
 	        var obj = new Object();
 	        obj.id = this.id;
 	        obj.answers = new Array();
