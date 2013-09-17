@@ -106,6 +106,11 @@ steal('jquery/controller').then(function($){
 	    	},
 	    	loadPoints : function(){
 	    		var self = Quizpage.Quiz.Navigator.instance;
+
+                self.model.questions.sort(function(a, b){
+                    return a.id - b.id;
+                });
+
 	    		if(!this.pointsLoaded && this.mapLoaded){
 		    		var qlist = self.model.questions;
 		    		for(var i = 0; i < qlist.length; i++){	    			

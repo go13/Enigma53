@@ -61,7 +61,7 @@ steal('jquery/controller').then(function($){
 			    		
 			    	    if(onSuccess){
 			    	    	onSuccess(marker);
-			    	    };
+			    	    }
 	    			}	    			
 	
 		    	    return marker;
@@ -127,7 +127,7 @@ steal('jquery/controller').then(function($){
 	        	if(this.doMarkerMove){
 	        		this.doMarkerMove(mk);
 	        	}
-	        },  
+	        }
         },{ 
         	init : function(){
         		var cself = Quizpage.Quizmap.Cabstractmap;

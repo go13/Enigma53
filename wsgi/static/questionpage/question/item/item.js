@@ -72,7 +72,7 @@ steal(
                 },
                 ".question-submit-btn click" : function(el){
                     this.model.submit_question();
-                    Quizpage.Quiz.Navigator.to_next_tab();
+                    Quizpage.Quiz.Navigator.instance.to_next_unanswered_question();
                 },
                 ".answer-checkbox click" : function(el){
                 	var self = this;
