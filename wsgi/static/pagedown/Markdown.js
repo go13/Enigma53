@@ -1580,7 +1580,7 @@ else
         delquestion: "Delete Question",
         savequestion: "Save Question",
 
-        addcheckbox: "Add Checkbox ?[+] Ctrl+J",
+        addcheckbox: "Add Checkbox ?[+] Ctrl+W",
         //addcheckboxminus: "Add Checkbox ?[] Ctrl+A",
         addexplanation: "Add Explanation %[ Put text here ]%"
     };
@@ -2805,7 +2805,7 @@ else
                             doClick(buttons.undo);
                         }
                         break;
-                    case "j":
+                    case "w":
                         doClick(buttons.addcheckbox);
                         break;
                     /*case "q":
