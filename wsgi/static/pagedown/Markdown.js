@@ -1580,7 +1580,7 @@ else
         delquestion: "Delete Question",
         savequestion: "Save Question",
 
-        addcheckbox: "Add Checkbox ?[+] Ctrl+Q",
+        addcheckbox: "Add Checkbox ?[+] Ctrl+A",
         //addcheckboxminus: "Add Checkbox ?[] Ctrl+A",
         addexplanation: "Add Explanation %[ Put text here ]%"
     };
