@@ -2805,7 +2805,7 @@ else
                             doClick(buttons.undo);
                         }
                         break;
-                    case "q":
+                    case "a":
                         doClick(buttons.addcheckbox);
                         break;
                     /*case "q":
