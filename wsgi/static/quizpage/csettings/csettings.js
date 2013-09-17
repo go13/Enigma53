@@ -65,18 +65,20 @@ steal('jquery/controller').then(function($){
 	        	});	        	
 	        },
 	        "#settings-delete-btn click" : function(){
-	        	console.log('Trying to delete the question!');	
-	        	Quizpage.Csettings.quiz_delete(function(data){
-	        		if(data.status === "OK"){
-	        			window.location.href = "/quiz/list/";
-	        		}else{
-                        Messenger().post({
-                  		  message: data.message,
-                  		  type : 'error',
-                  		  showCloseButton: true
-                      });	        			
-	        		}	        		
-	        	});	        	
+	        	console.log('Trying to delete the question!');
+                if (confirm("Do you really want to delete this quiz?") == true){
+                    Quizpage.Csettings.quiz_delete(function(data){
+                        if(data.status === "OK"){
+                            window.location.href = "/quiz/list/";
+                        }else{
+                            Messenger().post({
+                              message: data.message,
+                              type : 'error',
+                              showCloseButton: true
+                          });
+                        }
+                    });
+                }
 	        }
         });        
 });

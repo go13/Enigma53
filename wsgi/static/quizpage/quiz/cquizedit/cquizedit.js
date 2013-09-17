@@ -123,14 +123,16 @@ steal('jquery/controller',
                 });
         	},
         	delQuestionHandler : function(question){
-            	question.destroy(function(data){
-            		Quizpage.Quiz.Cquizedit.remove_question(question);   
-            		
-                    Messenger().post({
-                		  message: 'Question deleted',
-                		  showCloseButton: true
-                		});
-                });
+                if (confirm("Do you really want to delete this question?") == true){
+                    question.destroy(function(data){
+                        Quizpage.Quiz.Cquizedit.remove_question(question);
+
+                        Messenger().post({
+                              message: 'Question deleted',
+                              showCloseButton: true
+                            });
+                    });
+                }
             },
         	loadProgressChart : function(quizid, place){
 
