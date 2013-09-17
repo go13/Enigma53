@@ -71,8 +71,13 @@ steal(
                     });                	
                 },
                 ".question-submit-btn click" : function(el){
-                    this.model.submit_question();
-                    Quizpage.Quiz.Navigator.instance.to_next_unanswered_question();
+                    var quizid = this.model.quizid;
+                    this.model.submit_question(function(){
+                        var r = Quizpage.Quiz.Navigator.instance.to_next_unanswered_question();
+                        if (!r && (confirm("Do you want to finish the quiz?") == true)){
+                            window.location = "/quiz/" + quizid + "/finish/";
+                        }
+                    });
                 },
                 ".answer-checkbox click" : function(el){
                 	var self = this;
