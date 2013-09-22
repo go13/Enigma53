@@ -109,7 +109,7 @@ def jupdate(quiz_id):
             schema = {
                 "type": "object",
                 "properties": {
-                    "title": {"type" : "string", "minLength" : 4, "maxLength" : 55, "optional": False},
+                    "title": {"type": "string", "minLength": 4, "maxLength": 55, "optional": False},
                     }
                 }
 
@@ -160,13 +160,13 @@ def jget(quiz_id):
         else:
             msg = auth_failure_message + u"view this quiz(id = " + str(quiz_id).decode("UTF-8")+")"
             current_app.logger.warning(msg)
-            return jsonify({"status" : "ERROR", "message": msg})
+            return jsonify({"status": "ERROR", "message": msg})
     else:
         msg = u"No quiz found with such quiz_id" + str(quiz_id).decode("UTF-8")
         current_app.logger.warning(msg)
         return jsonify({"status" : "ERROR", "message": msg})
 
-@quiz_bp.route('/jdelete/<int:quiz_id>/', methods = ['DELETE'])
+@quiz_bp.route('/jdelete/<int:quiz_id>/', methods=['DELETE'])
 @login_required
 def jdelete(quiz_id):
     current_app.logger.debug("jdelete. quiz_id - " + str(quiz_id))

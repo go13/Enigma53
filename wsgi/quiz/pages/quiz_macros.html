@@ -22,6 +22,8 @@
 </div>
 
 <script type="text/javascript">
+    window.menu_width = 0;
+
     function updateLeftMenuWidth(){
         if($(window).has("#content-on-map")){
             var wWidth = $(window).width();
@@ -29,8 +31,10 @@
                 var l = $("#content-on-map").offset().left;
 
                 if(979 < wWidth ){
+                    window.menu_width = l;
                     $("#left-menu").css('width', l + "px");
                 }else{
+                    window.menu_width = wWidth/2;
                     $("#left-menu").css('width', wWidth/2 + "px");
                 }
             }

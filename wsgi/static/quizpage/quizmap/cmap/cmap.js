@@ -62,7 +62,7 @@ steal('jquery/controller').then(function($){
 	
 		    	    if(success){
 		    	    	success();
-		    	    };
+		    	    }
 	
 		    	    return marker;
 	    		}else{
@@ -92,7 +92,7 @@ steal('jquery/controller').then(function($){
 	        		var worldCoordinateCenter = self.questionMap.getProjection()
 	        					.fromLatLngToPoint(new google.maps.LatLng(lat, lon));
 	        		
-	        		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+	        		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
 	
 	        		var worldCoordinateNewCenter = new google.maps.Point(
 	        		    worldCoordinateCenter.x - pixelOffset.x,
@@ -117,7 +117,23 @@ steal('jquery/controller').then(function($){
 		    			this.addPoint(qlist[i]);
 		    		}
 		    		if(qlist.length > 0){
-			    		this.offsetCenter(qlist[0].lat, qlist[0].lon)
+
+                        var bounds = new google.maps.LatLngBounds();
+                        qlist.forEach(function(i){
+                            bounds.extend(new google.maps.LatLng(i.lat, i.lon));
+                        });
+
+                        if(window.menu_width > 0){
+                            var l = bounds.getSouthWest().lng() +
+                                1.35 * $(window).width() * Math.abs(bounds.getNorthEast().lng() - bounds.getSouthWest().lng()) / window.menu_width;
+
+                            bounds.extend(new google.maps.LatLng(bounds.getSouthWest().lat(), l));
+                        }
+
+                        Quizpage.Quizmap.Cmap.instance.questionMap.fitBounds(bounds);
+
+                        this.offsetCenter(qlist[0].lat, qlist[0].lon);
+
 			    		this.pointsLoaded = true;
 		    		}
 	    		}
