@@ -46,6 +46,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                 }
                 if(unanswered !== null){
                     Quizpage.Quiz.Navigator.to_tab_by_id(unanswered.id);
+                    Quizpage.Quizmap.Cmap.offsetCenter(unanswered.lat, unanswered.lon)
                     return true;
                 }else{
                     return false;

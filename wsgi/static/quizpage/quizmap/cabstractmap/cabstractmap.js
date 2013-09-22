@@ -26,15 +26,21 @@ steal('jquery/controller').then(function($){
 	    		if(this.mapLoaded){
 	    			var items = this.items;
 	    			this.items = [];
-	    			
+
+                    var bounds = new google.maps.LatLngBounds();
+
 	    			for(var i = 0; i < items.length; i++){
 	    				var item = items[i];
 	    				
 			    		var lat = item.lat;
 			    		var lon = item.lon;
+
+                        var pos = new google.maps.LatLng(lat, lon);
+
+                        bounds.extend(pos);
 		
 			    		var marker = new google.maps.Marker({
-			      	         position: new google.maps.LatLng(lat, lon),
+			      	         position: pos,
 			      	         draggable: false
 			      	    });
 		
@@ -57,12 +63,16 @@ steal('jquery/controller').then(function($){
 			    	    });
 			    	    
 			    		marker.setMap(this.itemMap);
-			    		this.offsetCenter(lat, lon);
 			    		
 			    	    if(onSuccess){
 			    	    	onSuccess(marker);
 			    	    }
-	    			}	    			
+	    			}
+
+                    if(items.length > 0){
+                        this.itemMap.fitBounds(bounds);
+                        this.offsetCenter(items[0].lat, items[0].lon);
+                    }
 	
 		    	    return marker;
 	    		}else{
