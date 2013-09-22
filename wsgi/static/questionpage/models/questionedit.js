@@ -118,7 +118,6 @@ $.Model('Questionedit',
     },    
     destroy : function(success, error){
             // TODO refactor answers so they don't have unnecessary fields
-            this.hideInfoWindow();
 
             $.ajax({
                 type: "POST",

@@ -49,8 +49,6 @@ steal('jquery/controller',
                 });
             },
             remove_question : function(qst){
-                qst.hideInfoWindow();
-
             	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.id);
             	if(el.hasClass("active")){
             		if(!Quizpage.Quiz.Navigator.to_prev_tab()){
