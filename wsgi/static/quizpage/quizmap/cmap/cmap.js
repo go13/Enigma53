@@ -165,6 +165,8 @@ steal('jquery/controller').then(function($){
 	        onMarkerMove : function(mk){
 	        	mk.question.lat = mk.position.lat();
 	        	mk.question.lon = mk.position.lng();
+                mk.question.updateInfoWindow();
+
 	        	Quizpage.Quiz.Navigator.to_tab_by_id(mk.question.id, false);
 	        	
 	        	if(this.doMarkerMove){

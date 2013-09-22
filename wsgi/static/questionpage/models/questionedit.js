@@ -19,29 +19,39 @@ $.Model('Questionedit',
 	init : function(){
 		this.answers = new Array();
 	},
-    showInfoWindow : function(){
-        var iw = new google.maps.InfoWindow();
-        this.gmarker.infoWindow = iw;
-        var qst = this;
+    updateInfoWindow : function(){
+        var iw = this.gmarker.infoWindow;
+        var self = this;
 
-        Questionpage.Question.Edit.geocoder.geocode({'latLng':  this.gmarker.getPosition()}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[1]) {
-            iw.setContent(results[0].formatted_address);
-          } else {
-            iw.setContent("Question " + qst.id);
-          }
-        } else {
-            iw.setContent("Question " + qst.id);
+        if(iw){
+            Questionpage.Question.Edit.geocoder.geocode({'latLng':  this.gmarker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    iw.setContent(results[0].formatted_address);
+                  } else {
+                    iw.setContent("Question " + self.id);
+                  }
+                } else {
+                    iw.setContent("Question " + self.id);
+                }
+            });
         }
-      });
+    },
+    showInfoWindow : function(){
+        if(this.gmarker.infoWindow){
+            this.gmarker.infoWindow.open(this.gmarker.map, this.gmarker);
+        }else{
+            var iw = new google.maps.InfoWindow();
+            this.gmarker.infoWindow = iw;
 
-      iw.open(this.gmarker.map, this.gmarker);
+            this.updateInfoWindow();
+
+            iw.open(this.gmarker.map, this.gmarker);
+        }
     },
     hideInfoWindow : function(){
         if(this.gmarker.infoWindow){
             this.gmarker.infoWindow.close();
-            this.gmarker.infoWindow = null;
         }
     },
     to_object : function(){
@@ -118,6 +128,7 @@ $.Model('Questionedit',
     },    
     destroy : function(success, error){
             // TODO refactor answers so they don't have unnecessary fields
+            var self = this;
 
             $.ajax({
                 type: "POST",
@@ -134,6 +145,8 @@ $.Model('Questionedit',
                     		  showCloseButton: true
                     		});
                 	}else{
+                        self.gmarker.infoWindow.close();
+                        self.gmarker.infoWindow = null;
     	            	if(success){
     	            		success();
     	            	}
