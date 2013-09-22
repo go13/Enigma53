@@ -5,7 +5,7 @@ steal('jquery/controller').then(function($){
         	instance : null,
 	        mapLoaded : false,
 	        pointsLoaded : false,
-	        
+
         	defaults : {
 		        questionMap : null,
 		        markers : null,
@@ -16,7 +16,8 @@ steal('jquery/controller').then(function($){
 		        onMarkerClick : null,
 		        onMarkerRightClick : null,
 		        doMapReady : null,
-		        onMarkerMove : null
+		        onMarkerMove : null,
+                druggable : true
         	},
 	    	addPoint : function(qst, success){
 	    		var self = Quizpage.Quizmap.Cmap.instance;
@@ -28,7 +29,7 @@ steal('jquery/controller').then(function($){
 	
 		    		var marker = new google.maps.Marker({
 		      	         position: new google.maps.LatLng(lat, lng),
-		      	         draggable: true
+		      	         draggable: self.druggable
 		      	    });
 	
 		    		marker.question = qst;            		

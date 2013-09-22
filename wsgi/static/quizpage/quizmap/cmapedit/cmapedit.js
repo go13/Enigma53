@@ -26,7 +26,7 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
             qm.lon = event.latLng.lng();
             qm.answers = new Array();
 
-            this.addPoint(qm, false);
+            this.addPoint(qm);
 
             qm.create(function(){
             	Quizpage.Quiz.Cquizedit.add_question_edit(qm);
@@ -43,6 +43,7 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
 	},{
 		init : function(){
 			this._super();
+            Quizpage.Quizmap.Cmap.instance.druggable = true;
 			Quizpage.Quizmap.Cmap.doMapRightClick = Quizpage.Quizmap.Cmapedit.onMapRightClick;			
 		}
 	});
