@@ -14,6 +14,10 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     var navigator = Quizpage.Quiz.Navigator.instance;
                     var el = navigator.element.find("#tabs > .question-tab.active");
                     if(el.next().length > 0){
+                        if(navigator.model.current_question){
+                            navigator.model.current_question.hideInfoWindow();
+                        }
+
                         el.removeClass("active");
                         el.next().addClass("active");
 
@@ -27,6 +31,8 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                         navigator.model.set_current_question_by_id(id);
                         var qst = navigator.model.get_question_by_id(id);
 
+                        qst.showInfoWindow();
+
                         Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                         return true;
                     }else{
@@ -37,6 +43,10 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     var navigator = Quizpage.Quiz.Navigator.instance;
                     var el = navigator.element.find("#tabs > .question-tab.active");
                     if(el.prev().length > 0){
+                        if(navigator.model.current_question){
+                            navigator.model.current_question.hideInfoWindow();
+                        }
+
                         el.removeClass("active");
                         el.prev().addClass("active");
 
@@ -50,6 +60,8 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                         navigator.model.set_current_question_by_id(id);
                         var qst = navigator.model.get_question_by_id(id);
 
+                        qst.showInfoWindow();
+
                         Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
 
                         return true;
@@ -60,6 +72,11 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                 to_tab_by_id : function(id, do_focus){
                     var navel = Quizpage.Quiz.Navigator.instance.element;
                     var navigator = Quizpage.Quiz.Navigator.instance;
+
+                    if(navigator.model.current_question){
+                        navigator.model.current_question.hideInfoWindow();
+                    }
+
                     var el = navel.find("#tabs > .question-tab");
                     if(el){
                     	var ela = navel.find("#tabs > .question-tab.active");
@@ -78,9 +95,9 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                         el = navel.find("#tabs-container > #tab-question-page" + id);
                         el.addClass("active");
                         var id_num = parseInt(id);
+                        var qst = navigator.model.get_question_by_id(id);
+                        qst.showInfoWindow();
                         if(do_focus){
-	                        var qst = navigator.model.get_question_by_id(id);
-
 	                        Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                         }
                         navigator.model.set_current_question_by_id(id_num);
@@ -118,9 +135,16 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     Quizpage.Quiz.Navigator.to_prev_tab();
                 },
                 ".tab-question-item click" : function(el){
+                    if(this.model.current_question){
+                        this.model.current_question.hideInfoWindow();
+                    }
+
                 	var id = parseInt(el.attr("id").split("tab-question")[1]);
                     this.model.set_current_question_by_id(id);
+
                     var qst = this.model.get_question_by_id(id);
+
+                    qst.showInfoWindow();
 
                     Quizpage.Quizmap.Cmap.offsetCenter(qst.lat, qst.lon);
                 }

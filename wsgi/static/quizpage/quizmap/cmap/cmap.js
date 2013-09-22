@@ -117,6 +117,8 @@ steal('jquery/controller').then(function($){
 		    			this.addPoint(qlist[i]);
 		    		}
 		    		if(qlist.length > 0){
+                        self.model.current_question = qlist[0];
+                        self.model.current_question_num = 0;
 
                         var bounds = new google.maps.LatLngBounds();
                         qlist.forEach(function(i){
@@ -133,6 +135,7 @@ steal('jquery/controller').then(function($){
                         Quizpage.Quizmap.Cmap.instance.questionMap.fitBounds(bounds);
 
                         this.offsetCenter(qlist[0].lat, qlist[0].lon);
+                        qlist[0].showInfoWindow();
 
 			    		this.pointsLoaded = true;
 		    		}

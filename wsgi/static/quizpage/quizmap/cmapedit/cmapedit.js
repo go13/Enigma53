@@ -9,7 +9,8 @@ steal('jquery/controller', 'quizpage/quizmap/cmap').then(function($){
         		if(self.markers[i] === qst.gmarker){
         			self.polyLine.getPath().removeAt(i);
         			self.markers.splice(i, 1);
-        			qst.gmarker.setMap(null); 
+        			qst.gmarker.setMap(null);
+                    qst.hideInfoWindow();
         			break;
         		}
         	}			

@@ -8,7 +8,7 @@ steal( 'jquery/controller',
     ).then('./views/init.ejs', function($){
 
         $.Controller('Questionpage.Question.Edit',{
-        
+                geocoder : null
         },{
                 model : null,
                 editor : null,
@@ -17,7 +17,8 @@ steal( 'jquery/controller',
                 	var self = this;
                     var type = this.options.type;
                     var onSuccess = this.options.onSuccess;
-                    var questionControls = this.options.questionControls; 
+                    var questionControls = this.options.questionControls;
+                    Questionpage.Question.Edit.geocoder = new google.maps.Geocoder();
                     
                     if(type === "add"){
                         
@@ -53,7 +54,7 @@ steal( 'jquery/controller',
                         	self.model = question; 
                             question.lon = parseFloat(data.lon);
                             question.lat = parseFloat(data.lat);
-                            
+
                             if(onSuccess){
                             	onSuccess(question);
                             }

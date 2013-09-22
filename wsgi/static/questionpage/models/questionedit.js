@@ -19,6 +19,31 @@ $.Model('Questionedit',
 	init : function(){
 		this.answers = new Array();
 	},
+    showInfoWindow : function(){
+        var iw = new google.maps.InfoWindow();
+        this.gmarker.infoWindow = iw;
+        var qst = this;
+
+        Questionpage.Question.Edit.geocoder.geocode({'latLng':  this.gmarker.getPosition()}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            iw.setContent(results[0].formatted_address);
+          } else {
+            iw.setContent("Question " + qst.id);
+          }
+        } else {
+            iw.setContent("Question " + qst.id);
+        }
+      });
+
+      iw.open(this.gmarker.map, this.gmarker);
+    },
+    hideInfoWindow : function(){
+        if(this.gmarker.infoWindow){
+            this.gmarker.infoWindow.close();
+            this.gmarker.infoWindow = null;
+        }
+    },
     to_object : function(){
         var obj = new Object();
         obj.id = this.id;
@@ -93,6 +118,8 @@ $.Model('Questionedit',
     },    
     destroy : function(success, error){
             // TODO refactor answers so they don't have unnecessary fields
+            this.hideInfoWindow();
+
             $.ajax({
                 type: "POST",
                 url: "/question/jdelete/"+this.id+"/",

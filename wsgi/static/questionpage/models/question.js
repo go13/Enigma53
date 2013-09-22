@@ -25,6 +25,31 @@ steal('jquery/model', function(){
 	        }
 	        return result;
 	    },
+        showInfoWindow : function(){
+            var iw = new google.maps.InfoWindow();
+            this.gmarker.infoWindow = iw;
+            var qst =this;
+
+            Questionpage.Question.Item.geocoder.geocode({'latLng':  this.gmarker.getPosition()}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                iw.setContent(results[0].formatted_address);
+              } else {
+                iw.setContent("Question" + qst.id);
+              }
+            } else {
+                iw.setContent("Question" + qst.id);
+            }
+          });
+
+          iw.open(this.gmarker.map, this.gmarker);
+        },
+        hideInfoWindow : function(){
+            if(this.gmarker.infoWindow){
+                this.gmarker.infoWindow.close();
+                this.gmarker.infoWindow = null;
+            }
+        },
 	    submit_question : function(success, error){
             this.answered = true;
 

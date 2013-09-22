@@ -6,9 +6,8 @@ steal(
     
     'pagedown/Markdown.js').then('./views/init.ejs', function($){
     	
-        $.Controller('Questionpage.Question.Item',
-            {
-               
+        $.Controller('Questionpage.Question.Item', {
+                geocoder : null
             },{
             	converter : null,            	
                 model : null,
@@ -16,7 +15,8 @@ steal(
                 init : function(){
                 	var self = this;
                 	var id = parseInt(self.element.attr("name").split("question")[1]);
-                	
+                    Questionpage.Question.Item.geocoder = new google.maps.Geocoder();
+
                 	var onSuccess = self.options.onSuccess;
                     var questionControls = self.options.questionControls;
                     
