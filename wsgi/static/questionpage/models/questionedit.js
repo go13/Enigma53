@@ -43,6 +43,7 @@ $.Model('Questionedit',
         }else{
             var iw = new google.maps.InfoWindow();
             this.gmarker.infoWindow = iw;
+            iw.setOptions({disableAutoPan:true});
 
             this.updateInfoWindow();
 

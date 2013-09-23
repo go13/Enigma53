@@ -27,6 +27,7 @@ steal('jquery/model', function(){
 	    },
         showInfoWindow : function(){
             var iw = new google.maps.InfoWindow();
+            iw.setOptions({disableAutoPan:true});
             this.gmarker.infoWindow = iw;
             var qst =this;
 
