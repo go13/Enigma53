@@ -4,7 +4,7 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
 		load_question_item : function(el, success){
             var qc = new Questionpage.Question.Item($(el), {onSuccess : function(qst){
                 var nav = Quizpage.Quiz.Navigator.instance;
-                nav.model.add_question(qc.model);
+                nav.model.add_question(qst);
                 Quizpage.Quizmap.Cmap.addPoint(qst);
                 if(success){
                      success(qst);

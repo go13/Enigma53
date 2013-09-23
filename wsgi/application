@@ -2,9 +2,9 @@
 import os
 #import jinja2, scrubber
 
-virtenv = os.environ['APPDIR'] + '/virtenv/'
+#virtenv = os.environ['APPDIR'] + '/virtenv/'
 
-#virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
+virtenv = 'E:/PianoHackaton/PianoOpenshift/wsgi/virtenv/'
 os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python-2.6/site-packages')
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
@@ -24,7 +24,7 @@ from quiz.quiz_bp import quiz_bp
 from auth.auth_bp import auth_bp
 from auth.user import User, Anonymous
 
-DEBUG = False
+DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 TRAP_BAD_REQUEST_ERRORS = True
 FLATPAGES_EXTENSION = '.md'
@@ -70,7 +70,7 @@ login_manager.init_app(application)
 def index():
     if current_user.id > 0:
         return redirect('/quiz/list/')
-    else:
+    else:        
         return render_template('landing.html')
 
 @application.route('/<path:path>/')
