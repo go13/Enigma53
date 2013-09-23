@@ -41,20 +41,22 @@ steal('jquery/controller').then(function($){
                     Quizpage.Quizmap.Cmaplist.geocoder.geocode({'latLng':  marker.getPosition()}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                           if (results[1]) {
-                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
-                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>" +
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>" +
                                 " </br>" + results[0].formatted_address
                             );
                           } else {
-                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
-                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
-                                "<a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>");
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>"
+                            );
                           }
                         } else {
-                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
-                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
-                                " </br><a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>");
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>"
+                            );
                         }
                     });
                     iw.open(self.questionMap, marker);
