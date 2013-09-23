@@ -7,6 +7,7 @@ steal('jquery/controller').then(function($){
 	        pointsLoaded : false,
 	        listitems : null,
 	        markers : null,
+            geocoder : null,
 	        
         	defaults : {
 		        questionMap : null,		        
@@ -33,6 +34,30 @@ steal('jquery/controller').then(function($){
 	
 		    		marker.quiz = quiz;            		
 		    		quiz.gmarker = marker;
+
+                    var iw = new google.maps.InfoWindow();
+                    marker.infoWindow = iw;
+
+                    Quizpage.Quizmap.Cmaplist.geocoder.geocode({'latLng':  marker.getPosition()}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                          if (results[1]) {
+                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
+                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>" +
+                                " </br>" + results[0].formatted_address
+                            );
+                          } else {
+                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
+                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
+                                "<a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>");
+                          }
+                        } else {
+                            iw.setContent("Quiz " + quiz.quiz.quiz.id +
+                                " - <b>" + quiz.quiz.quiz.title +"</b>" +
+                                " </br><a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Take this quiz</a>");
+                        }
+                    });
+                    iw.open(self.questionMap, marker);
 	
 		    	    this.markers.push(marker);
 	
@@ -166,6 +191,8 @@ steal('jquery/controller').then(function($){
         },{ 
         	init : function(){
 	 			var self = this;
+
+                Quizpage.Quizmap.Cmaplist.geocoder = new google.maps.Geocoder();
 	 			
 	 			Quizpage.Quizmap.Cmaplist.mapLoaded = false;
 	 			Quizpage.Quizmap.Cmaplist.pointsLoaded = false;	 			
