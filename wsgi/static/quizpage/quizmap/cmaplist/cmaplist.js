@@ -172,6 +172,7 @@ steal('jquery/controller').then(function($){
 	    		}
 	    	},
 	        onMarkerClick : function(mk){
+                mk.infoWindow.open(Quizpage.Quizmap.Cmaplist.instance.questionMap, mk);
 	        	if(this.doMarkerClick){
 	        		this.doMarkerClick(mk);
 	        	}
