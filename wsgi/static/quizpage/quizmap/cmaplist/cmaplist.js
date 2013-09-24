@@ -139,10 +139,6 @@ steal('jquery/controller').then(function($){
 				    	}
 				    	//  Fit these bounds to the map
 				    	self.questionMap.fitBounds (bounds);
-				    	var curzoom = self.questionMap.getZoom();
-				    	if(curzoom > 0){
-				    		self.questionMap.setZoom(curzoom - 1);	
-				    	}
 	    			}else{
 	    				self.questionMap.setCenter(this.markers[0].position);
 	    				self.questionMap.setZoom(7);
