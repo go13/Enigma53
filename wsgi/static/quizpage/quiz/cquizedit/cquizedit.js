@@ -49,12 +49,12 @@ steal('jquery/controller',
                 });
             },
             remove_question : function(qst){
-            	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question"+qst.id);
+            	var el = Quizpage.Quiz.Navigator.instance.element.find("#tab-question" + qst.id);
             	if(el.hasClass("active")){
             		if(!Quizpage.Quiz.Navigator.to_prev_tab()){
             			Quizpage.Quiz.Navigator.to_next_tab();
             		}
-            	};                	
+            	}
                 el.remove();
                 
                 Quizpage.Quizmap.Cmapedit.remPoint(qst);
@@ -75,7 +75,7 @@ steal('jquery/controller',
         		this.loadProgressChart(this.quizid, "#results-chart");
 
         		this.parse_quiz_edit(this.options.onSuccess);
-        	},        	
+        	},
             parse_quiz_edit : function(onSuccess){
             	var self = this;
             	var els = self.element.find(".question-edit");

@@ -18,30 +18,29 @@ steal(
 
                 	var onSuccess = self.options.onSuccess;
                     var questionControls = self.options.questionControls;
-                    
-                    self.element.html(self.view('init', Question.findOne({id : id}, function(question){
-                    	self.model = question;                        
-                        question.lon = parseFloat(question.lon);
-                        question.lat = parseFloat(question.lat);
 
-                        question.answers.sort(function(a, b) { return a.id - b.id });
+                    this.model = new Question();
 
-                        for(var i = 0; i < question.answers.length; i++){
-                        	console.log( "answer:" + i + " id= " + question.answers[i].id);
-                            question.answers[i].value = 'F';                            
+                    for(var i = 0; i < window.jsdata.questions.length; i++){
+                        var question = window.jsdata.questions[i];
+                        if(question.id === id){
+                            self.set_question(question);
+
+                            this.converter = self.loadPageDownConverter(id, self.renderCheckbox, function(correct, i){
+                                return self.model.answers[i];
+                            });
+
+                            this.model.qtext = self.converter.makeHtml(question.qtext);
+
+                            self.element.html(self.view('init', self.model));
+
+                            break;
                         }
-                        
-                    	self.converter = self.loadPageDownConverter(id, self.renderCheckbox, function(correct, i){
-                    		return self.model.answers[i];
-                    	});
-                    	
-                    	question.qtext = self.converter.makeHtml(question.qtext);
-                    	
-                        if(onSuccess != null){
-                        	onSuccess(question);
-                        }
+                    }
 
-                    })));
+                    if(onSuccess != null){
+                        onSuccess(this.model);
+                    }
                 },    
                 loadPageDownConverter : function(questionid, renderCheckbox, onCheckbox){
                 	var converter = Markdown.getSanitizingConverter();
@@ -68,6 +67,21 @@ steal(
 						i = i+1;
 						return "<input id='answer-" + questionid + "-" + answer.id + "' type='checkbox' class='answer-checkbox'/>\n";
                     });                	
+                },
+                set_question : function(question){
+                    this.model.id = question.id;
+                    this.model.quizid = question.quizid;
+                    this.model.qtext = question.qtext;
+                    this.model.answers = question.answers;
+
+                    this.model.lon = parseFloat(question.lon);
+                    this.model.lat = parseFloat(question.lat);
+
+                    this.model.answers.sort(function(a, b) { return a.id - b.id });
+
+                    for(var i = 0; i < this.model.answers.length; i++){
+                        this.model.answers[i].value = 'F';
+                    }
                 },
                 ".question-submit-btn click" : function(el){
                     var quizid = this.model.quizid;

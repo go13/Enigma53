@@ -27,23 +27,21 @@ steal( 'jquery/controller',
                         this.editor = this.loadPageDownEditor(this.model.id, questionControls);
                         
                     }else if(type === "parse"){
-                    	                    	
-                    	var question = new Questionedit();                    	
+
+                    	var question = new Questionedit();
                     	this.model = question;
-                    	
+
                     	var question_name = this.element.attr("name");
                     	question.id = parseInt(question_name.split("question")[1]);
                     	question.lat = parseFloat(this.element.attr("data-lat"));
                     	question.lon = parseFloat(this.element.attr("data-lon"));
                     	question.qtext = this.element.find(".qtext").html();
-                    	
+
                 		this.editor = this.loadPageDownEditor(question.id, questionControls);
-                    	
+
                         if(onSuccess){
                         	onSuccess(question);
                         }
-                    }else if(type === "jsdata"){
-
                     }else{
 
                         var question_name = this.element.attr("name");

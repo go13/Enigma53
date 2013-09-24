@@ -59,9 +59,10 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 <script type="text/javascript">
-        window.menu_width = $("#content-on-map").offset().left;
+    window.menu_width = $("#content-on-map").offset().left;
+    var jsdata = {{ jsdata|tojson|safe }};
 </script>
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 
 {% endblock content %}
