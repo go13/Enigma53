@@ -32,7 +32,7 @@ steal(
 
                             this.model.qtext = self.converter.makeHtml(question.qtext);
 
-                            self.element.html(self.view('init', self.model));
+                            self.element.html(self.view('//questionpage/question/item/views/init.ejs', self.model));
 
                             break;
                         }
@@ -85,6 +85,7 @@ steal(
                 },
                 ".question-submit-btn click" : function(el){
                     var quizid = this.model.quizid;
+                    this.model.answered = true;
                     this.model.submit_question(function(){
                         var r = Quizpage.Quiz.Navigator.instance.to_next_unanswered_question();
                         if (!r && (confirm("Do you want to finish the quiz?") == true)){

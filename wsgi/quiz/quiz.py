@@ -11,6 +11,7 @@ class Quiz(db.Model):
     user_id = db.Column('userid', Integer)
     title = db.Column('title', String)
     description = db.Column('description', String)
+    permission = 'private'
 
     latitude = None
     longitude = None

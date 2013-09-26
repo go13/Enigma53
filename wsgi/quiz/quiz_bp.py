@@ -17,14 +17,23 @@ def quiz(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     if quiz:            
         if current_user.id == quiz.user_id:
+            can_persist = True
             jsdata = {
-                      "questions": [i.serialize for i in quiz.questions]
+                      "questions": [i.serialize for i in quiz.questions],
+                      "can_persist": can_persist
                       }
-            if (len(quiz.questions)>0):
+            if (len(quiz.questions) > 0):
                 QuizResult.start_session(quiz_id, current_user.id)
                 db.session.commit()
-            return render_template('quiz.html', quiz=quiz, jsdata=jsdata)
+            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, can_persist=can_persist)
 
+        elif quiz.permission == 'all':
+            can_persist = False
+            jsdata = {
+              "questions": [i.serialize for i in quiz.questions],
+              "can_persist": can_persist
+            }
+            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, can_persist=can_persist)
         else:
             return render_template('auth_failure.html')            
     else:

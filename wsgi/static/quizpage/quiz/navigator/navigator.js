@@ -3,6 +3,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
             /** @Prototype */
             {
                 instance : null,
+                can_persist : true,
 
                 defaults : {
                     model: null,
@@ -125,6 +126,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     var quiz_name = self.element.attr("name");
                     this.quizid = parseInt(quiz_name.split("quiz")[1]);                    
                     Quizpage.Quiz.Navigator.instance = self;
+                    Quizpage.Quiz.Navigator.can_persist = jsdata.can_persist;
 
                     self.model = new Navigator({quizid : this.quizid});
                 },

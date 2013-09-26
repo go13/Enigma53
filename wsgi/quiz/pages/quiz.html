@@ -15,7 +15,11 @@
 		<div class="tabbable" style="margin-right:140px">
 		  <ul class="nav nav-pills">
               {% if  quiz.questions|length > 0 %}
-			  <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
+                {% if can_persist %}
+                <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
+                {% else %}
+                <li class="pull-right"><a style="background-color: #08c; color: #fff;" onclick="" href="#finish">Finish Quiz</a></li>
+                {% endif %}
               {% else %}
               <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/edit/">Edit Quiz</a></li>
               {% endif %}
@@ -63,6 +67,9 @@
     window.menu_width = $("#content-on-map").offset().left;
     var jsdata = {{ jsdata|tojson|safe }};
 </script>
+{% if can_persist %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
-
+{% else %}
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/publicquizpage.js"></script>
+{% endif %}
 {% endblock content %}

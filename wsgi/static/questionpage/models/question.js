@@ -52,8 +52,6 @@ steal('jquery/model', function(){
             }
         },
 	    submit_question : function(success, error){
-            this.answered = true;
-
 	        var obj = new Object();
 	        obj.id = this.id;
 	        obj.answers = new Array();
