@@ -27,7 +27,7 @@ def quiz(quiz_id):
                 db.session.commit()
             return render_template('quiz.html', quiz=quiz, jsdata=jsdata, can_persist=can_persist)
 
-        elif quiz.permission == 'all':
+        elif quiz.permission == 'public':
             can_persist = False
             jsdata = {
               "questions": [i.serialize for i in quiz.questions],
@@ -119,6 +119,7 @@ def jupdate(quiz_id):
                 "type": "object",
                 "properties": {
                     "title": {"type": "string", "minLength": 4, "maxLength": 55, "optional": False},
+                    "is_private": {"type": "string", "minLength": 1, "maxLength": 1, "optional": False},
                     }
                 }
 
@@ -138,9 +139,11 @@ def jupdate(quiz_id):
                 return jsonify(result)
             else:
                 title = request.json['title']
-
-                Quiz.update_quiz_by_id(quiz_id, title, None)
-
+                is_private = request.json['is_private']
+                if is_private == 'T':
+                    Quiz.update_quiz_by_id(quiz_id, title, None, 'private')
+                else:
+                    Quiz.update_quiz_by_id(quiz_id, title, None, 'public')
                 db.session.commit()
                 
                 current_app.logger.debug('Quiz updated. quiz.id - ' + str(quiz_id) + ', title - ' + title)

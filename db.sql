@@ -71,7 +71,7 @@ create table quizes
    title                text,
    description          text,
    userid               integer not null,
-   permissionid         integer default 0,
+   permission           text,
    PRIMARY KEY (id)
 );
 

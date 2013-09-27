@@ -11,7 +11,7 @@ class Quiz(db.Model):
     user_id = db.Column('userid', Integer)
     title = db.Column('title', String)
     description = db.Column('description', String)
-    permission = 'private'
+    permission = db.Column('permission', String)
 
     latitude = None
     longitude = None
@@ -21,6 +21,7 @@ class Quiz(db.Model):
         self.user_id = user_id
         self.title = title
         self.description = description
+        self.permission = 'private'
 
     @property
     def serialize(self):
@@ -79,12 +80,14 @@ class Quiz(db.Model):
         return quiz_list
 
     @staticmethod
-    def update_quiz_by_id(quiz_id, title, description):
+    def update_quiz_by_id(quiz_id, title, description, permission):
         qdict = {}
         if title:
             qdict.update({'title':title})
         if description:
             qdict.update({'description':description})
+        if permission:
+            qdict.update({'permission':permission})
 
         Quiz.query.filter_by(qid=quiz_id).update(qdict)
 

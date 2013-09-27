@@ -1,9 +1,10 @@
 steal('jquery/controller').then(function($){
 	$.Controller('Quizpage.Csettings', {
-			quiz_update : function(title, success){
+			quiz_update : function(title, is_private, success){
 				var qid = Quizpage.Quiz.Navigator.instance.quizid;
 				var obj = {
-					title : title
+					title : title,
+                    is_private : is_private
 				};
 	        	$.ajax({
 		            type: "POST",
@@ -47,10 +48,11 @@ steal('jquery/controller').then(function($){
 			}
         },{        	
 	        "#settings-save-btn click" : function(){
-	        	var val = $('#quiz-title-input').attr("value"); 
-	        	Quizpage.Csettings.quiz_update(val, function(data){
+	        	var title = $('#quiz-title-input').attr("value");
+	        	var is_private = ($('#quiz-is-private').attr("checked")=="checked")?'T':'F';
+	        	Quizpage.Csettings.quiz_update(title, is_private, function(data){
 	        		if(data.status === "OK"){
-	        			$('#quiz-title-legend').text("Quiz - " + val);
+	        			$('#quiz-title-legend').text("Quiz - " + title);
                         Messenger().post({
                     		  message: 'Quiz settings updated',
                     		  showCloseButton: true
@@ -80,5 +82,5 @@ steal('jquery/controller').then(function($){
                     });
                 }
 	        }
-        });        
+        });
 });

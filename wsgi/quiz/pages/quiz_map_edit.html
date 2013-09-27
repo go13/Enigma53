@@ -66,8 +66,13 @@
 			<label style="float:left; margin-right:15px">Title</label>
 			<input id="quiz-title-input" type="text" value="{{ quiz.title }}" class="input-xlarge" >
             <p style="margin-left:45px">Quiz title can contain any letters or numbers</p>
+            <label style="margin-left: 45px; margin-top: 20px" class="checkbox">
+              <input id="quiz-is-private" style="margin-top: 5px;"
+                     type="checkbox" value="{% if quiz.permission == 'private' %}checked{% endif %}">
+              Is a private quiz
+            </label>
 
-            <legend style="width:400px; margin-top:45px"></legend>
+            <legend style="width:400px; margin-top:25px"></legend>
 
             <button id="settings-save-btn" class="btn btn-success">Save</button>
 			<button id="settings-delete-btn" class="btn-link">Delete</button>
