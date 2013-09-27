@@ -10,7 +10,6 @@ quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 auth_failure_message = u"You don't have permissions to "
 
 @quiz_bp.route('/<int:quiz_id>/')
-@login_required
 def quiz(quiz_id):
     current_app.logger.debug("quiz. quiz_id - " + str(quiz_id))
     
