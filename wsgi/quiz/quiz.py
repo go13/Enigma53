@@ -17,11 +17,11 @@ class Quiz(db.Model):
     longitude = None
     questions = []
 
-    def __init__(self, user_id, title, description):
+    def __init__(self, user_id, title, description, permission):
         self.user_id = user_id
         self.title = title
         self.description = description
-        self.permission = 'private'
+        self.permission = permission
 
     @property
     def serialize(self):
@@ -44,7 +44,7 @@ class Quiz(db.Model):
 
     @staticmethod
     def create_quiz(user_id):
-        quiz = Quiz(user_id, 'New Quiz', '')
+        quiz = Quiz(user_id, 'New Quiz', '', 'private')
         db.session.add(quiz)
         db.session.flush()
 

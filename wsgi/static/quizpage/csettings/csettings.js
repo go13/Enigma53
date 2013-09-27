@@ -52,7 +52,7 @@ steal('jquery/controller').then(function($){
 	        	var is_private = ($('#quiz-is-private').attr("checked")=="checked")?'T':'F';
 	        	Quizpage.Csettings.quiz_update(title, is_private, function(data){
 	        		if(data.status === "OK"){
-	        			$('#quiz-title-legend').text("Quiz - " + title);
+	        			$('#quiz-title-text').text("Quiz - " + title);
                         Messenger().post({
                     		  message: 'Quiz settings updated',
                     		  showCloseButton: true

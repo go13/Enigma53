@@ -21,8 +21,8 @@
 
 	<div id="legend">
 	  <legend id="quiz-title-legend">
-	  Quiz - {{ quiz.title }}
-	  <button title="Click here to close right area" class="close close-edit" onClick="window.location.href='/quiz/list/'">&times;</button>
+        <button title="Click here to close right area" class="close close-edit" onClick="window.location.href='/quiz/list/'">&times;</button>
+        <div id="quiz-title-text">Quiz - {{ quiz.title }}</div>
 	  </legend>
 	</div>
 	<div class="tabbable"> 
@@ -68,7 +68,7 @@
             <p style="margin-left:45px">Quiz title can contain any letters or numbers</p>
             <label style="margin-left: 45px; margin-top: 20px" class="checkbox">
               <input id="quiz-is-private" style="margin-top: 5px;"
-                     type="checkbox" value="{% if quiz.permission == 'private' %}checked{% endif %}">
+                     type="checkbox" {% if quiz.permission == 'private' %}checked{% endif %}>
               Is a private quiz
             </label>
 
