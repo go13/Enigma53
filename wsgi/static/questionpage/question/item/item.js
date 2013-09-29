@@ -30,7 +30,7 @@ steal(
                                 return self.model.answers[i];
                             });
 
-                            this.model.qtext = self.converter.makeHtml(question.qtext);
+                            this.model.rendered_qtext = self.converter.makeHtml(question.qtext);
 
                             self.element.html(self.view('//questionpage/question/item/views/init.ejs', self.model));
 

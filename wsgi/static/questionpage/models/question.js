@@ -6,11 +6,13 @@ steal('jquery/model', function(){
 	        id : -1,
 	        quizid : 0,
 	        qtext : "",
+	        rendered_qtext : "",
 	        lat : NaN,
 	        lon : NaN,
-	        answers : new Array(),
+	        answers : [],
 	        gmarker : null,
-            answered: false
+            answered: false,
+            correct: 'N'
 	    },
 	    findAll: "/questions.json",
 		findOne : "/question/jget/{id}/"
@@ -29,7 +31,7 @@ steal('jquery/model', function(){
             var iw = new google.maps.InfoWindow();
             iw.setOptions({disableAutoPan:true});
             this.gmarker.infoWindow = iw;
-            var qst =this;
+            var qst = this;
 
             Questionpage.Question.Item.geocoder.geocode({'latLng':  this.gmarker.getPosition()}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -52,11 +54,11 @@ steal('jquery/model', function(){
             }
         },
 	    submit_question : function(success, error){
-	        var obj = new Object();
+	        var obj = {};
 	        obj.id = this.id;
-	        obj.answers = new Array();
+	        obj.answers = [];
 	        for(var i = 0; i < this.answers.length; i++ ){
-	            obj.answers.push(new Object());
+	            obj.answers.push({});
 	            obj.answers[i].value = this.answers[i].value;
 	            obj.answers[i].id = this.answers[i].id;
 	        }

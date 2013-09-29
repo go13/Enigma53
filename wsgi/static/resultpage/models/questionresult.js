@@ -9,7 +9,7 @@ steal('jquery/model', function(){
 	        qtext : "",
 	        lat : NaN,
 	        lon : NaN,
-	        answers : new Array(),
+	        answers : [],
 	        gmarker : null
 	    },
 	    findAll: "/questions.json",

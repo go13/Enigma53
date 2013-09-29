@@ -36,6 +36,18 @@ class Question(db.Model):
            }
 
     @property
+    def serialize_with_answers(self):
+        return {
+            'quizid': self.quiz_id,
+            'nextquestionid': -1,
+            'qtext': self.question_revision.qtextcache,
+            'id': self.qid,
+            'lat': self.question_revision.latitude,
+            'lon': self.question_revision.longitude,
+            'answers': [i.serialize_with_answers for i in self.answers]
+           }
+
+    @property
     def serialize_for_edit(self):
         return {
             'quizid': self.quiz_id,

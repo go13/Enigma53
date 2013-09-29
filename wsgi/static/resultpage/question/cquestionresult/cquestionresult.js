@@ -1,53 +1,73 @@
-steal('jquery/controller', 
-		'resultpage/quiz/cquizresult',
-		'pagedown/Markdown.js').then(function($){
+steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
 
-	$.Controller('Resultpage.Question.Cquestionresult', {         
-        },{
-        	converter : null,
-        	model : null,
-        	
-        	init : function(){
-        		var self = this;
-        		var id = parseInt(this.element.attr("data-questionid"));
-        		this.converter = Markdown.getSanitizingConverter();
-        		
-            	this.converter.hooks.chain("postConversion", function (text){
+	$.Controller('Resultpage.Question.Cquestionresult', {
+            add_question_result : function(model){
+                var question_result = $("<div data-questionid='" + model.id + "' class='question-result'></div>");
+        		var self = new Resultpage.Question.Cquestionresult(question_result);
+                self.converter = Markdown.getSanitizingConverter();
+                self.model = model;
+
+            	self.converter.hooks.chain("postConversion", function (text){
+            		if(self.renderCheckbox){
+            			var res = self.renderCheckbox.call(self, text, model.id);
+                        res = self.renderExplanation.call(self, res);
+                        return res;
+            		}else{
+            			return text;
+            		}
+                });
+
+        		model.rendered_qtext = self.converter.makeHtml(model.qtext);
+
+                self.element.html(self.view('//resultpage/question/cquestionresult/views/init.ejs', self.model));
+
+                return self;
+            },
+            add_question_result_from_jsdata : function(el){
+        		var self = new Resultpage.Question.Cquestionresult(el);
+                self.converter = Markdown.getSanitizingConverter();
+        		var id = parseInt(self.element.attr("data-questionid"));
+
+            	self.converter.hooks.chain("postConversion", function (text){
             		if(self.renderCheckbox){
             			var res = self.renderCheckbox.call(self, text, self.id);
                         res = self.renderExplanation.call(self, res);
                         return res;
             		}else{
             			return text;
-            		}                        
+            		}
                 });
 
             	var question_result = null;
-        		var results = window.jsdata;
         		for(var i = 0; i < jsdata.question_results.length; i++) {
         			if(jsdata.question_results[i].questionid === id){
         				question_result = jsdata.question_results[i];
         				break;
         			}
         		}
-            	
-            	this.model = new Questionresult();
-            	this.model.id = id;
 
-            	this.model.lat = parseFloat(question_result.question.lat);
-            	this.model.lon = parseFloat(question_result.question.lon);
-            	this.model.qtext = question_result.question.qtext;
-            	
-            	this.model.answers = question_result.answer_results;
-            	
-            	this.model.gmarker = Resultpage.Map.Cresultmap.addPoint(this.model);            	
-            	            
-        		var qtext = self.converter.makeHtml(this.model.qtext);
-        		this.element.find("#question-text-" + id).html(qtext);
+            	self.model = new Questionresult();
+            	self.model.id = id;
+
+            	self.model.lat = parseFloat(question_result.question.lat);
+            	self.model.lon = parseFloat(question_result.question.lon);
+            	self.model.qtext = question_result.question.qtext;
+
+            	self.model.answers = question_result.answer_results;
+
+            	self.model.gmarker = Resultpage.Map.Cresultmap.addPoint(self.model);
+
+        		var qtext = self.converter.makeHtml(self.model.qtext);
+        		self.element.find("#question-text-" + id).html(qtext);
+
+                return self;
+            }
+        },{
+        	converter : null,
+        	model : null,
+        	init : function(){
         	},
             renderExplanation : function(text){
-                var self = this;
-
                 return text.replace(/\%\[((.|\n)*?)\]\%/gm, function (whole, content) {
                     return "<div class='alert alert-info'>" + content + "</div>";
                 });

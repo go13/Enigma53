@@ -17,7 +17,7 @@ $.Model('Questionedit',
     findOne : "/question/jget_for_edit/{id}/"
 },{
 	init : function(){
-		this.answers = new Array();
+		this.answers = [];
 	},
     updateInfoWindow : function(){
         var iw = this.gmarker.infoWindow;
@@ -56,7 +56,7 @@ $.Model('Questionedit',
         }
     },
     to_object : function(){
-        var obj = new Object();
+        var obj = {};
         obj.id = this.id;
         obj.quizid = this.quizid;
         obj.qtext = this.qtext;

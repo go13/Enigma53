@@ -1,5 +1,12 @@
-steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
+steal('jquery/controller',
+    'quizpage/quiz/navigator',
+    'pagedown/Markdown.js',
+    'resultpage/question/cquestionresult').then(function($){
 	Quizpage.Quiz.Navigator('Quizpage.Quiz.Cpublicquiz', {
+
+            instance: null,
+            converter: null,
+
             load_jsdata_item : function(el, success){
                 var qc = new Questionpage.Question.Publicitem($(el), {onSuccess : function(qst){
                     var nav = Quizpage.Quiz.Navigator.instance;
@@ -57,7 +64,10 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
             init : function(){
                 this._super();
 
+                this.converter = Markdown.getSanitizingConverter();
                 var onSuccess = this.options.onSuccess;
+
+                Quizpage.Quiz.Cpublicquiz.instance = this;
 
                 var n = 0;
 
@@ -75,7 +85,26 @@ steal('jquery/controller', 'quizpage/quiz/navigator').then(function($){
                         }
                     });
                 });
-            }
+            },
+            show_question_results : function(){
+                this.element.find(".show-quiz").hide();
+                this.element.find(".show-results").show();
 
+                var all_results = $("");
+                for(var i = 0; i < this.model.questions.length; i++){
+                    if(i < this.model.questions.length - 1){
+                        this.model.questions[i].nextquestionid = this.model.questions[i + 1].id;
+                    }else{
+                        this.model.questions[i].nextquestionid = null;
+                    }
+                    var question_result = Resultpage.Question.Cquestionresult
+                                                .add_question_result(this.model.questions[i]);
+                    all_results = all_results.add(question_result.element);
+                }
+                this.element.find("#question-results").append(all_results);
+            },
+            "#finish-public-quiz-btn click" : function(){
+                this.show_question_results();
+            }
     });
 });

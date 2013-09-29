@@ -23,6 +23,13 @@ class Answer(db.Model):
            }
 
     @property
+    def serialize_with_answers(self):
+        return {
+            'id': self.aid,
+            'correct': self.correct
+           }
+
+    @property
     def serialize_for_edit(self):
         return {
             'id': self.aid,

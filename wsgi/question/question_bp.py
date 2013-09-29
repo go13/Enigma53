@@ -6,7 +6,6 @@ from model import db
 from quiz.quiz import Quiz
 from question import Question
 from answer.answer import Answer
-from question_revision import QuestionRevision
 from question_result import QuestionResult
 from answer_result import AnswerResult
 from results.historysession import Historysession
@@ -247,14 +246,14 @@ def jsubmit(question_id):
                     "properties" : {            
                         "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
                         "answers" : {"type": "array", "items": { "type" : "object", "properties": {
-                                                                  "id" : {"type" : "integer", "maxLength" : 8, "optional" : False},
-                                                                  "value" : {"type" : "string", "enum" : ["T", "F"], "optional" : False} 
+                                                                  "id" : {"type": "integer", "maxLength": 8, "optional": False},
+                                                                  "value" : {"type" : "string", "enum" : ["T", "F", "N"], "optional" : False}
                                                                   }}, "maxItems" : 25, "optional" : True}
                         }
                     }
 
             v = Draft4Validator(schema)
-            errors = sorted(v.iter_errors(request.json), key = lambda e: e.path)
+            errors = sorted(v.iter_errors(request.json), key=lambda e: e.path)
             
             if len(errors) > 0:
                 msg = u"Error in json format"

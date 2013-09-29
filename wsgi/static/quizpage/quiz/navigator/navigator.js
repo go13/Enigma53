@@ -3,7 +3,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
             /** @Prototype */
             {
                 instance : null,
-                can_persist : true,
+                show_private_page : true,
 
                 defaults : {
                     model: null,
@@ -95,6 +95,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
 
                         el = navel.find("#tabs-container > #tab-question-page" + id);
                         el.addClass("active");
+
                         var id_num = parseInt(id);
                         var qst = navigator.model.get_question_by_id(id);
                         qst.showInfoWindow();
@@ -107,6 +108,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                 get_current_question_id : function(){
                     var navigator = Quizpage.Quiz.Navigator.instance;
                     var el = navigator.element.find("#tabs > .question-tab.active");
+
                     var idstr = el.attr("id");
                     idstr = idstr.split("tab-question")[1];
                     return parseInt(idstr);
@@ -126,7 +128,7 @@ steal( 'jquery/controller', 'jquery/view/ejs', 'jquery/controller/view').then(fu
                     var quiz_name = self.element.attr("name");
                     this.quizid = parseInt(quiz_name.split("quiz")[1]);                    
                     Quizpage.Quiz.Navigator.instance = self;
-                    Quizpage.Quiz.Navigator.can_persist = jsdata.can_persist;
+                    Quizpage.Quiz.Navigator.show_private_page = jsdata.show_private_page;
 
                     self.model = new Navigator({quizid : this.quizid});
                 },

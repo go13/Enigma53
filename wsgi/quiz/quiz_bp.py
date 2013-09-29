@@ -16,23 +16,23 @@ def quiz(quiz_id):
     quiz = Quiz.get_quiz_by_id(quiz_id)
     if quiz:            
         if current_user.id == quiz.user_id:
-            can_persist = True
+            show_private_page = True
             jsdata = {
                       "questions": [i.serialize for i in quiz.questions],
-                      "can_persist": can_persist
+                      "show_private_page": show_private_page
                       }
-            if (len(quiz.questions) > 0):
+            if (len(quiz.questions)>0):
                 QuizResult.start_session(quiz_id, current_user.id)
                 db.session.commit()
-            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, can_persist=can_persist)
+            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, show_private_page=show_private_page)
 
         elif quiz.permission == 'public':
-            can_persist = False
+            show_private_page = False
             jsdata = {
-              "questions": [i.serialize for i in quiz.questions],
-              "can_persist": can_persist
+              "questions": [i.serialize_with_answers for i in quiz.questions],
+              "show_private_page": show_private_page
             }
-            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, can_persist=can_persist)
+            return render_template('quiz.html', quiz=quiz, jsdata=jsdata, show_private_page=show_private_page)
         else:
             return render_template('auth_failure.html')            
     else:

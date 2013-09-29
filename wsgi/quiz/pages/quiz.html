@@ -11,23 +11,26 @@
 	<div id="legend">
 	  <legend>Quiz - {{ quiz.title }}</legend>
 	</div>
-	<div class="tabbable"> 
-		<div class="tabbable" style="margin-right:140px">
-		  <ul class="nav nav-pills">
-              {% if  quiz.questions|length > 0 %}
-                {% if can_persist %}
-                <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
-                {% else %}
-                <li class="pull-right"><a style="background-color: #08c; color: #fff;" onclick="" href="#finish">Finish Quiz</a></li>
-                {% endif %}
-              {% else %}
-              <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/edit/">Edit Quiz</a></li>
-              {% endif %}
-		  </ul>
-		</div>
-	</div>	
+
 	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
-	    <ul id="tabs" class="nav nav-tabs">
+        <div class="tabbable">
+            <div class="tabbable" style="margin-right:140px">
+              <ul class="nav nav-pills">
+                  {% if  quiz.questions|length > 0 %}
+                    {% if show_private_page %}
+                    <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
+                    {% else %}
+                    <li class="pull-right show-quiz"><a style="background-color: #08c; color: #fff;" id="finish-public-quiz-btn" href="#finish">Finish Quiz</a></li>
+                    <li style="display: none" class="pull-right show-results"><a id="try-again-public-quiz-btn" style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/">Try again</a></li>
+                    {% endif %}
+                  {% else %}
+                    <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/edit/">Edit Quiz</a></li>
+                  {% endif %}
+              </ul>
+            </div>
+        </div>
+
+	    <ul id="tabs" class="nav nav-tabs show-quiz">
             {% if  quiz.questions|length > 0 %}
                 {%for item in quiz.questions %}
                 {% if loop.first %}
@@ -42,7 +45,7 @@
                 {% endfor %}
             {% endif %}
 	    </ul>
-	    <div id="tabs-container" class="tab-content">
+	    <div id="tabs-container" class="tab-content show-quiz">
             {% if  quiz.questions|length > 0 %}
                 {%for item in quiz.questions %}
                 {% if loop.first %}
@@ -60,14 +63,21 @@
                 <div class="edit-caption-mini" style="margin-top: 10px; margin-left: 210px;">Please <a href="/quiz/{{quiz.qid}}/edit/">add a few questions</a></div>
             {% endif %}
 	    </div>
+
+        {% if not show_private_page %}
+        <div style="display:none" id="question-results" class="show-results">
+        </div>
+        {% endif %}
+
 	</div>
+
 </div>
 
 <script type="text/javascript">
     window.menu_width = $("#content-on-map").offset().left;
     var jsdata = {{ jsdata|tojson|safe }};
 </script>
-{% if can_persist %}
+{% if show_private_page %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
 {% else %}
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/publicquizpage.js"></script>
