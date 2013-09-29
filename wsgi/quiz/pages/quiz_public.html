@@ -14,12 +14,11 @@
 
 	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
         <div class="tabbable">
-            <div class="tabbable" style="margin-right:140px">
+            <div class="tabbable" style="margin-right:10px">
               <ul class="nav nav-pills">
                   {% if  quiz.questions|length > 0 %}
-                    <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/finish/">Finish Quiz</a></li>
-                  {% else %}
-                    <li class="pull-right"><a style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/edit/">Edit Quiz</a></li>
+                    <li class="pull-right show-quiz"><a style="background-color: #08c; color: #fff;" id="finish-public-quiz-btn" href="#finish">Finish Quiz</a></li>
+                    <li style="display: none" class="pull-right show-results"><a id="try-again-public-quiz-btn" style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/">Try again</a></li>
                   {% endif %}
               </ul>
             </div>
@@ -55,15 +54,18 @@
                 {% endfor %}
             {% else %}
                 <div class="chart-title" style="margin-top: 99px;margin-left: 69px;">No questions found</div>
-                <div class="edit-caption-mini" style="margin-top: 10px; margin-left: 210px;">Please edit <a href="/quiz/{{quiz.qid}}/edit/">this quiz</a> to add a few questions</div>
             {% endif %}
 	    </div>
+
+        <div style="display:none" id="question-results" class="show-results">
+        </div>
 	</div>
+
 </div>
 
 <script type="text/javascript">
     window.menu_width = $("#content-on-map").offset().left;
     var jsdata = {{ jsdata|tojson|safe }};
 </script>
-<script type="text/javascript" src="/static/steal/steal.js?quizpage/quizpage.js"></script>
+<script type="text/javascript" src="/static/steal/steal.js?quizpage/publicquizpage.js"></script>
 {% endblock content %}
