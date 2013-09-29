@@ -107,6 +107,10 @@ steal('jquery/controller',
                     all_results = all_results.add(question_result.element);
                 }
                 this.element.find("#question-results").append(all_results);
+
+                $("#content-on-map").scroll(function() {
+                    Resultpage.Question.Cquestionresult.instance.onScroll();
+                });
             },
             "#finish-public-quiz-btn click" : function(){
                 this.show_question_results();

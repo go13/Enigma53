@@ -1,6 +1,8 @@
 steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
 
 	$.Controller('Resultpage.Question.Cquestionresult', {
+            instance : null,
+
             add_question_result : function(model){
                 var question_result = $("<div data-questionid='" + model.id + "' class='question-result'></div>");
         		var self = new Resultpage.Question.Cquestionresult(question_result);
@@ -67,11 +69,14 @@ steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
         	converter : null,
         	model : null,
         	init : function(){
+                Resultpage.Question.Cquestionresult.instance = this;
         	},
             renderExplanation : function(text){
                 return text.replace(/\%\[((.|\n)*?)\]\%/gm, function (whole, content) {
                     return "<div class='alert alert-info'>" + content + "</div>";
                 });
+            },
+            onScroll : function(){
             },
         	renderCheckbox : function(text, id) {
         		var self = this;

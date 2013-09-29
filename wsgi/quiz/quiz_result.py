@@ -1,4 +1,4 @@
-import datetime
+import operator
 from flask import current_app
 from question.question_result import QuestionResult
 from quiz import Quiz
@@ -78,7 +78,8 @@ class QuizResult(db.Model):
 
     @staticmethod
     def get_quiz_results_only_by_quiz_id(quiz_id):
-        quiz_results = QuizResult.query.filter_by(quiz_id=quiz_id).order_by(QuizResult.session_id.asc()).limit(15).all()
+        quiz_results = QuizResult.query.filter_by(quiz_id=quiz_id).order_by(QuizResult.session_id.desc()).limit(10).all()
+        quiz_results = sorted(quiz_results, key=operator.attrgetter('session_id'), reverse=False)
         for qr in quiz_results:
             qr.historysession = Historysession.get_historysession_by_id(qr.session_id)
         return quiz_results
