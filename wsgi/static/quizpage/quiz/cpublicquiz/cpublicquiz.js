@@ -97,6 +97,11 @@ steal('jquery/controller',
                     }else{
                         this.model.questions[i].nextquestionid = null;
                     }
+                    if(i > 0){
+                        this.model.questions[i].prevquestionid = this.model.questions[i - 1].id;
+                    }else{
+                        this.model.questions[i].prevquestionid = null;
+                    }
                     var question_result = Resultpage.Question.Cquestionresult
                                                 .add_question_result(this.model.questions[i]);
                     all_results = all_results.add(question_result.element);

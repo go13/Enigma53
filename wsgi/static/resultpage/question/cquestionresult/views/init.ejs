@@ -1,10 +1,9 @@
 <div data-questionid="<%==id %>" class='question-result'>
-
     <div id="question-text-<%==id %>" class="form-actions"><%== rendered_qtext %></div>
 
-	<a class="question-back btn-link" href="#question-text-<%==id %>" type="button">Previous question</a>
+	<a class="btn-link" href="#question-text-<%==id %>" type="button">Previous question</a>
 
     <% if(nextquestionid != null){ %>
-	<a class="question-next btn-link pull-right" href="#question-text-<%==nextquestionid %>" type="button">Next question</a>
+	<a class="btn-link pull-right" href="#question-text-<%==nextquestionid %>" type="button">Next question</a>
 	<% } %>
 </div>

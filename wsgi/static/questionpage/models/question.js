@@ -12,7 +12,9 @@ steal('jquery/model', function(){
 	        answers : [],
 	        gmarker : null,
             answered: false,
-            correct: 'N'
+            correct: 'N',
+            prevquestionid: -1,
+            nextquestionid: -1
 	    },
 	    findAll: "/questions.json",
 		findOne : "/question/jget/{id}/"

@@ -117,7 +117,7 @@ steal( 'jquery/controller',
                 onNewCheckbox : function(correct){
                 	var model = this.model;
                 	
-                	var answer = new Object();
+                	var answer = {};
                 	
             		answer.id = model.answers.length + 1;
             		answer.correct = correct;

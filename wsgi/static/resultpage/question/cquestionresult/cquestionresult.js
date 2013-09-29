@@ -48,6 +48,7 @@ steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
 
             	self.model = new Questionresult();
             	self.model.id = id;
+            	self.model.answered = true;
 
             	self.model.lat = parseFloat(question_result.question.lat);
             	self.model.lon = parseFloat(question_result.question.lon);
@@ -83,17 +84,24 @@ steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
 	            		if(answer.value !== 'T'){
 	            			ch = "";
 	            		}
-	            		if(answer.correct !== answer.value){
-		            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-								"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
-								"<span class='label label-important'>Error</span>" +
-								"\n";	
-	            		}else{
-		            		s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
-								"' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
-								"<span class='label label-success'> ok </span>" +
-		            			"\n";
-	            		}
+	            		if(self.model.answered){
+                            if(answer.correct !== answer.value){
+                                s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
+                                    "' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+                                    "<span class='label label-important'>Error</span>" +
+                                    "\n";
+                            }else{
+                                s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
+                                    "' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+                                    "<span class='label label-success'> Ok </span>" +
+                                    "\n";
+                            }
+                        }else{
+                                s = "<input id='answer-" + self.model.id + "-" + answer.answerid +
+                                    "' type='checkbox' class='answer-checkbox' onclick='return false' " + ch + " /> " +
+                                    "<span class='label label-important'>N/A</span>" +
+                                    "\n";
+                        }
             		}
 					i = i + 1;
 					return s;
