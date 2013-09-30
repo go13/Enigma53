@@ -6,6 +6,7 @@ steal('jquery/model', function(){
 	        id : -1,
 	        quizid : 0,
 	        qtext : "",
+	        qtext_with_explanations : "",
 	        rendered_qtext : "",
 	        lat : NaN,
 	        lon : NaN,

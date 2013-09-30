@@ -13,7 +13,8 @@ steal(
                 set_question : function(question){
                     this.model.id = question.id;
                     this.model.quizid = question.quizid;
-                    this.model.qtext = question.qtext;
+                    this.model.qtext = question.qtextcache;
+                    this.model.qtext_with_explanations = question.qtext;
                     this.model.answers = question.answers;
 
                     this.model.lon = parseFloat(question.lon);

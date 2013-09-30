@@ -19,7 +19,7 @@ steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
             		}
                 });
 
-        		model.rendered_qtext = self.converter.makeHtml(model.qtext);
+        		model.rendered_qtext = self.converter.makeHtml(model.qtext_with_explanations);
 
                 self.element.html(self.view('//resultpage/question/cquestionresult/views/init.ejs', self.model));
 
@@ -54,13 +54,14 @@ steal('jquery/controller', 'pagedown/Markdown.js').then(function($){
 
             	self.model.lat = parseFloat(question_result.question.lat);
             	self.model.lon = parseFloat(question_result.question.lon);
-            	self.model.qtext = question_result.question.qtext;
+            	self.model.qtext = question_result.question.qtextcache;
+            	self.model.qtext_with_explanations = question_result.question.qtext;
 
             	self.model.answers = question_result.answer_results;
 
             	self.model.gmarker = Resultpage.Map.Cresultmap.addPoint(self.model);
 
-        		var qtext = self.converter.makeHtml(self.model.qtext);
+        		var qtext = self.converter.makeHtml(self.model.qtext_with_explanations);
         		self.element.find("#question-text-" + id).html(qtext);
 
                 return self;

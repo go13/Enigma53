@@ -26,11 +26,11 @@ steal(
                         if(question.id === id){
                             self.set_question(question);
 
-                            this.converter = self.loadPageDownConverter(id, self.renderCheckbox, function(correct, i){
+                            self.converter = self.loadPageDownConverter(id, self.renderCheckbox, function(correct, i){
                                 return self.model.answers[i];
                             });
 
-                            this.model.rendered_qtext = self.converter.makeHtml(question.qtext);
+                            self.model.rendered_qtext = self.converter.makeHtml(self.model.qtext);
 
                             self.element.html(self.view('//questionpage/question/item/views/init.ejs', self.model));
 

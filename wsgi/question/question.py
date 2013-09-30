@@ -40,7 +40,8 @@ class Question(db.Model):
         return {
             'quizid': self.quiz_id,
             'nextquestionid': -1,
-            'qtext': self.question_revision.qtextcache,
+            'qtextcache': self.question_revision.qtextcache,
+            'qtext': self.question_revision.qtext,
             'id': self.qid,
             'lat': self.question_revision.latitude,
             'lon': self.question_revision.longitude,

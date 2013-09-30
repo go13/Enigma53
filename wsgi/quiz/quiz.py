@@ -39,11 +39,11 @@ class Quiz(db.Model):
     def serialize_for_result(self):
         if self.user:
             return {
-            'author':self.user.name,
-            'id': self.qid,
-            'title': self.title,
-            'latitude': self.latitude,
-            'longitude': self.longitude
+                'author':self.user.name,
+                'id': self.qid,
+                'title': self.title,
+                'latitude': self.latitude,
+                'longitude': self.longitude
             }
         else:
             return {
