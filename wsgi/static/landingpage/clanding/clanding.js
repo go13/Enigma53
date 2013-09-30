@@ -7,10 +7,9 @@ steal('jquery/controller').then(function($){
 	        pointsLoaded : false,
 	        markers : null,
             geocoder : null,
+            questionMap : null,
 
         	defaults : {
-		        questionMap : null,
-
 		        onMapRightClick : null,
 		        onMarkerClick : null,
 		        onMarkerRightClick : null,
@@ -19,9 +18,9 @@ steal('jquery/controller').then(function($){
         	},
 
 	    	addPoint : function(quiz, success){
-	    		var self = Landingpage.Clanding.instance;
+	    		var self = Landingpage.Clanding;
 
-	    		if(this.mapLoaded){
+	    		if(self.mapLoaded){
 
 		    		lat = quiz.latitude;
 		    		lng = quiz.longitude;
@@ -57,7 +56,7 @@ steal('jquery/controller').then(function($){
                     });
                     iw.open(self.questionMap, marker);
 
-		    	    this.markers.push(marker);
+		    	    self.markers.push(marker);
 
 		    		marker.setMap(self.questionMap);
 
@@ -82,14 +81,61 @@ steal('jquery/controller').then(function($){
 	    			return null;
 	    		}
 	    	},
+	    	loadPoints : function(){
+                var self = Landingpage.Clanding;
+	    		if(!self.pointsLoaded && self.mapLoaded){
+	    			self.pointsLoaded = true;
+
+	    			if(window.jsdata.quizes.length > 0){
+		    			for(var i = 0; i < window.jsdata.quizes.length; i++){
+		    				if(!isNaN(window.jsdata.quizes[i].latitude) && !isNaN(window.jsdata.quizes[i].longitude)){
+		    					Landingpage.Clanding.addPoint(window.jsdata.quizes[i]);
+		    				}
+		    			}
+		    			self.fitAllMarkers();
+	    			}
+	    		}
+	    	},
+            offsetCenter : function(lat, lon, offsetx, offsety) {
+	    		var self = Landingpage.Clanding;
+
+	    		if(self.mapLoaded && self.markers.length > 0 && !isNaN(lat) && !isNaN(lon)){
+
+	        		// latlng is the apparent centre-point
+	        		// offsetx is the distance you want that point to move to the right, in pixels
+	        		// offsety is the distance you want that point to move upwards, in pixels
+	        		// offset can be negative
+	        		// offsetx and offsety are both optional
+
+	        		var scale = Math.pow(2, self.questionMap.getZoom());
+	        		var nw = new google.maps.LatLng(
+	        				self.questionMap.getBounds().getNorthEast().lat(),
+	        				self.questionMap.getBounds().getSouthWest().lng()
+	        		);
+
+	        		var worldCoordinateCenter = self.questionMap.getProjection()
+	        					.fromLatLngToPoint(new google.maps.LatLng(lat, lon));
+
+	        		var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+	        		var worldCoordinateNewCenter = new google.maps.Point(
+	        		    worldCoordinateCenter.x - pixelOffset.x,
+	        		    worldCoordinateCenter.y + pixelOffset.y
+	        		);
+
+	        		var newCenter = self.questionMap.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+	        		self.questionMap.setCenter(newCenter);
+	    		}
+	    	},
 	    	fitAllMarkers : function(){
-	 			var self = Landingpage.Clanding.instance;
-	    		if(this.pointsLoaded && this.markers.length > 0){
-	    			if(this.markers.length > 1){
+	 			var self = Landingpage.Clanding;
+	    		if(self.pointsLoaded && self.markers.length > 0){
+	    			if(self.markers.length > 1){
 	    				var LatLngList = [];
 
-			    		for(var i = 0; i < this.markers.length; i++){
-			    			LatLngList.push(this.markers[i].position);
+			    		for(var i = 0; i < self.markers.length; i++){
+			    			LatLngList.push(self.markers[i].position);
 			    		}
 				    	//  Create a new viewpoint bound
 				    	var bounds = new google.maps.LatLngBounds();
@@ -104,23 +150,10 @@ steal('jquery/controller').then(function($){
 				    	if(curzoom > 0){
 				    		self.questionMap.setZoom(curzoom - 1);
 				    	}
+                        self.offsetCenter(bounds.getCenter().lat(), bounds.getCenter().lng(), 0, - 0.15 * $(window).height());
 	    			}else{
-	    				self.questionMap.setCenter(this.markers[0].position);
+	    				self.questionMap.setCenter(self.markers[0].position);
 	    				self.questionMap.setZoom(7);
-	    			}
-	    		}
-	    	},
-	    	loadPoints : function(){
-	    		if(!this.pointsLoaded && this.mapLoaded){
-	    			this.pointsLoaded = true;
-
-	    			if(window.jsdata.quizes.length > 0){
-		    			for(var i = 0; i < window.jsdata.quizes.length; i++){
-		    				if(!isNaN(window.jsdata.quizes[i].latitude) && !isNaN(window.jsdata.quizes[i].longitude)){
-		    					this.addPoint(window.jsdata.quizes[i]);
-		    				}
-		    			}
-		    			this.fitAllMarkers();
 	    			}
 	    		}
 	    	},
@@ -130,7 +163,7 @@ steal('jquery/controller').then(function($){
 	    		}
 	    	},
 	        onMarkerClick : function(mk){
-                mk.infoWindow.open(Landingpage.Clanding.instance.questionMap, mk);
+                mk.infoWindow.open(Landingpage.Clanding.questionMap, mk);
 	        	if(this.doMarkerClick){
 	        		this.doMarkerClick(mk);
 	        	}
@@ -141,8 +174,9 @@ steal('jquery/controller').then(function($){
 	        	}
 	        },
 	        onMapReady : function(){
-	        	this.mapLoaded = true;
-	        	this.loadPoints();
+                var self = Landingpage.Clanding;
+	        	self.mapLoaded = true;
+	        	self.loadPoints();
 	        },
 	        onMarkerMove : function(mk){
 	        	if(this.doMarkerMove){
@@ -151,15 +185,15 @@ steal('jquery/controller').then(function($){
 	        }
         },{
         	init : function(){
-	 			var self = this;
+	 			var self = Landingpage.Clanding;
 
-                Landingpage.Clanding.geocoder = new google.maps.Geocoder();
+                self.geocoder = new google.maps.Geocoder();
 
-	 			Landingpage.Clanding.mapLoaded = false;
-	 			Landingpage.Clanding.pointsLoaded = false;
-	 			Landingpage.Clanding.markers = [];
+	 			self.mapLoaded = false;
+	 			self.pointsLoaded = false;
+	 			self.markers = [];
 
-	 			Landingpage.Clanding.instance = self;
+	 			self.instance = this;
 
 	 			var lat = parseFloat(window.jsdata.latitude);
 	 			var lon = parseFloat(window.jsdata.longitude);
@@ -174,7 +208,7 @@ steal('jquery/controller').then(function($){
          			    mapTypeId: google.maps.MapTypeId.ROADMAP
         		};
 
-	 			this.questionMap = new google.maps.Map(self.element[0], mapOptions);
+	 			self.questionMap = new google.maps.Map(this.element[0], mapOptions);
 
 	 			var lineSymbol = {
 	 					    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
