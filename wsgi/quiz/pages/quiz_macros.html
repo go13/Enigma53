@@ -24,9 +24,9 @@
 
         <a class="nolink quiz-text" href="/quiz/{{ qz.qid }}/edit/"></a>
         {% if qz.permission == 'private' %}
-        <div style="position: absolute; right: 10px; bottom: 5px;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">private</a></div>
+        <div style="position: absolute; right: 10px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">private</a></div>
         {% else %}
-        <div style="position: absolute; right: 10px; bottom: 5px;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">public</a></div>
+        <div style="position: absolute; right: 10px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">public</a></div>
         {% endif %}
     </div>
 
