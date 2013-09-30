@@ -8,9 +8,8 @@
 	</legend>
 
 	{%for qz in quizes %}
-
 	<div id="data-quiz-{{qz.qid}}"
-            style="clear:both;cursor: pointer"
+            style="clear: both; cursor: pointer; position: relative;"
             class="quiz-list-item"
             onclick="window.location.href='/quiz/{{ qz.qid }}/edit/'"
             {% if qz.latitude and qz.longitude %}
@@ -21,7 +20,14 @@
         <a id="quiz-title-{{ qz.qid }}" class="nolink" href="/quiz/{{ qz.qid }}/edit/">
             <b>{{ qz.title }}</b>
         </a>
+        <div style="position: absolute; right: 10px;top: 0px;"><a href="/quiz/{{qz.qid}}/">Start</a></div>
+
         <a class="nolink quiz-text" href="/quiz/{{ qz.qid }}/edit/"></a>
+        {% if qz.permission == 'private' %}
+        <div style="position: absolute; right: 10px; bottom: 5px;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">private</a></div>
+        {% else %}
+        <div style="position: absolute; right: 10px; bottom: 5px;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">public</a></div>
+        {% endif %}
     </div>
 
     {% endfor %}

@@ -74,7 +74,7 @@
     #left-menu{
        overflow : auto;
        position : fixed;
-       padding: 25px;
+       padding: 15px 15px 15px 20px;
        top : 41px;
        left : 0;
        width : 40%;
