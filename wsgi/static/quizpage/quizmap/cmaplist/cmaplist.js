@@ -195,7 +195,7 @@ steal('jquery/controller').then(function($){
 	 			
 	 			Quizpage.Quizmap.Cmaplist.mapLoaded = false;
 	 			Quizpage.Quizmap.Cmaplist.pointsLoaded = false;	 			
-	 			Quizpage.Quizmap.Cmaplist.markers = new Array();
+	 			Quizpage.Quizmap.Cmaplist.markers = [];
 
 	 			Quizpage.Quizmap.Cmaplist.instance = self;
 	 			

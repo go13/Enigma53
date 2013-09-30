@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, func
 
 from model import db
 from question.question import Question
@@ -78,6 +78,20 @@ class Quiz(db.Model):
                 quiz.longitude = -122.1419
             quiz.questions = questions
         return quiz_list
+
+    @staticmethod
+    def get_random_public_quizzes(quizzes_number):
+        quizzes = Quiz.query.filter_by(permission='public').order_by(func.rand()).limit(quizzes_number).all()
+        for quiz in quizzes:
+            questions = Question.get_active_questions_with_revisions_by_quiz_id(quiz.qid)
+            if questions and len(questions) > 0:
+                quiz.latitude = questions[0].question_revision.latitude
+                quiz.longitude = questions[0].question_revision.longitude
+            else:
+                quiz.latitude = 37.4419
+                quiz.longitude = -122.1419
+            quiz.questions = questions
+        return quizzes
 
     @staticmethod
     def update_quiz_by_id(quiz_id, title, description, permission):

@@ -23,6 +23,7 @@ from quiz.quiz_results_bp import quiz_results_bp
 from quiz.quiz_bp import quiz_bp
 from auth.auth_bp import auth_bp
 from auth.user import User, Anonymous
+from quiz.quiz import Quiz
 
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
@@ -70,8 +71,23 @@ login_manager.init_app(application)
 def index():
     if current_user.id > 0:
         return redirect('/quiz/list/')
-    else:        
-        return render_template('landing.html')
+    else:
+        quizes = Quiz.get_random_public_quizzes(15)
+
+        lat = 32.4419
+        lon = -102.1419
+
+        if len(quizes) > 0:
+            lat = quizes[0].latitude
+            lon = quizes[0].longitude
+
+        jsdata = {
+                  "latitude": lat,
+                  "longitude": lon,
+                  "quizes": [q.serialize_for_result for q in quizes]
+                  }
+
+        return render_template("landing.html", quizes=quizes, jsdata=jsdata)
 
 @application.route('/<path:path>/')
 def page(path):

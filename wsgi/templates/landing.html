@@ -1,23 +1,35 @@
-{% from "messaging.html" import render_bootstrap_errors %}
-
 {% extends "base.html" %}
 
+{% block style %}
+#step-0 .arrow,
+#step-1 .arrow,
+#step-2 .arrow
+{
+        display: none;
+}
+{% endblock style %}
+
+{% block header %}
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+{% endblock header %}
+
 {% block content %}
-        <div class="landing-container" style="margin-top: 100px">
-            <h3 style="text-align: center">Welcome to mNemoCity</h3>
-        </div>
-        <div class="container">
-                <div class="row">
-                    <div class="span4 offset4 ">
-                        <form method="post" action="{{ url_for('auth_bp.signup') }}" accept-charset="UTF-8" style="top:50px; max-width: 250px; margin-left: 50px">
-                            <input style="margin-bottom: 15px; width: 250px" type="text" placeholder="Username" id="username" name="username">
-                            <input style="margin-bottom: 15px; width: 250px" type="text" placeholder="Email" id="email" name="email">
-                            <input style="margin-bottom: 15px; width: 250px" type="password" placeholder="Password" id="password" name="password">
-                            <input class="btn btn-primary btn-block" style="width: 265px" type="submit" id="sign-up" value="Sign Up">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <div class="landing-container">
-        </div>
+
+<div class="map-full-stretch" style="z-index:-5; height:50%">
+
+	<div id="quiz-map" style="height: 100%"></div>
+
+</div>
+
 {% endblock content %}
+
+{% block bottom %}
+
+<script id="jsdata" type="text/javascript">
+	var jsdata = {{ jsdata|tojson|safe }};
+</script>
+
+<script type="text/javascript" src="/static/steal/steal.js?landingpage/landingpage.js"></script>
+{% endblock bottom %}

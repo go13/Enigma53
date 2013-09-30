@@ -18,7 +18,6 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
             			if(onSuccess && (i === els.length - 1)){
             				onSuccess(self.listitems);
             			}
-            			
             		}});            		
             	});
 	    	},

@@ -11,7 +11,6 @@
 	<div id="legend">
 	  <legend>Quiz - {{ quiz.title }}</legend>
 	</div>
-
 	<div id="quiz-navigator" name="quiz{{quiz.qid}}" class="tabbable tabs-right">
         <div class="tabbable">
             <div class="tabbable" style="margin-right:10px">
@@ -60,11 +59,9 @@
         <div style="display:none" id="question-results" class="show-results">
         </div>
 	</div>
-
 </div>
 
 <script type="text/javascript">
-    window.menu_width = $("#content-on-map").offset().left;
     var jsdata = {{ jsdata|tojson|safe }};
 </script>
 <script type="text/javascript" src="/static/steal/steal.js?quizpage/publicquizpage.js"></script>
