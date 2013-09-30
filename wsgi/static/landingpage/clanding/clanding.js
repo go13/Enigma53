@@ -40,16 +40,19 @@ steal('jquery/controller').then(function($){
                         if (status == google.maps.GeocoderStatus.OK) {
                           if (results[1]) {
                             iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                                " by " + quiz.author + " " +
                                 " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>" +
                                 " </br>" + results[0].formatted_address
                             );
                           } else {
                             iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                                " by " + quiz.author + " " +
                                 " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>"
                             );
                           }
                         } else {
                             iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                                " by " + quiz.author + " " +
                                 " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>"
                             );
                         }

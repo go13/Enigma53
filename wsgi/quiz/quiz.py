@@ -2,6 +2,7 @@ from sqlalchemy import Integer, String, func
 
 from model import db
 from question.question import Question
+from auth.user import User
 
 
 class Quiz(db.Model):
@@ -16,6 +17,7 @@ class Quiz(db.Model):
     latitude = None
     longitude = None
     questions = []
+    user = None
 
     def __init__(self, user_id, title, description, permission):
         self.user_id = user_id
@@ -35,12 +37,21 @@ class Quiz(db.Model):
 
     @property
     def serialize_for_result(self):
-        return {
+        if self.user:
+            return {
+            'author':self.user.name,
             'id': self.qid,
             'title': self.title,
             'latitude': self.latitude,
             'longitude': self.longitude
-        }
+            }
+        else:
+            return {
+                'id': self.qid,
+                'title': self.title,
+                'latitude': self.latitude,
+                'longitude': self.longitude
+            }
 
     @staticmethod
     def create_quiz(user_id):
@@ -59,6 +70,7 @@ class Quiz(db.Model):
         q = Quiz.query.filter_by(qid=qid).first()
         if q:
             q.questions = Question.get_all_active_questions_by_quiz_id(q.qid)
+            q.user = User.get_user_by_id(q.user_id)
         return q
 
     @staticmethod
@@ -77,6 +89,7 @@ class Quiz(db.Model):
                 quiz.latitude = 37.4419
                 quiz.longitude = -122.1419
             quiz.questions = questions
+            quiz.user = User.get_user_by_id(quiz.user_id)
         return quiz_list
 
     @staticmethod
@@ -91,6 +104,7 @@ class Quiz(db.Model):
                 quiz.latitude = 37.4419
                 quiz.longitude = -122.1419
             quiz.questions = questions
+            quiz.user = User.get_user_by_id(quiz.user_id)
         return quizzes
 
     @staticmethod

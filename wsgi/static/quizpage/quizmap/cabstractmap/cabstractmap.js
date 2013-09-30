@@ -150,10 +150,10 @@ steal('jquery/controller').then(function($){
         		var mapOptions = {
          			    zoom: 8,		    
          			    center: new google.maps.LatLng(37.4419, -122.1419),
-         			    panControl: true,
+         			    panControl: false,
          			    streetViewControl: false,
          			    mapTypeControl: false,
-         			    overviewMapControl: true,
+         			    overviewMapControl: false,
          			    mapTypeId: google.maps.MapTypeId.ROADMAP
         		};
 
