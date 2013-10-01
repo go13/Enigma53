@@ -146,8 +146,10 @@ $.Model('Questionedit',
                     		  showCloseButton: true
                     		});
                 	}else{
-                        self.gmarker.infoWindow.close();
-                        self.gmarker.infoWindow = null;
+                        if(self.gmarker && self.gmarker.infoWindow){
+                            self.gmarker.infoWindow.close();
+                            self.gmarker.infoWindow = null;
+                        }
     	            	if(success){
     	            		success();
     	            	}
@@ -213,14 +215,14 @@ $.Model('Questionedit',
     	this.gmarker = null;
     },
     submit_question : function(success, error){
-        var obj = new Object();
+        var obj = {};
         obj.id = this.id;
         obj.lat = this.lat;
         obj.lon = this.lon;
-        obj.answers = new Array();
+        obj.answers = [];
 
         for(var i=0; i<this.answers.length; i++ ){
-            obj.answers.push(new Object());
+            obj.answers.push({});
             obj.answers[i].correct = this.answers[i].correct;
             obj.answers[i].id = this.answers[i].id;
         }
