@@ -55,8 +55,25 @@
 			    {% endfor %}
                 {% if (quiz.questions|length)<=0 %}
                     <div id="if-no-questions">
-                        <div class="chart-title" style="margin-top: 99px; text-align: center">No questions found</div>
-                        <div class="edit-caption-mini" style="margin-top: 10px; text-align: center">Right click on the map to add a new question</div>
+                        <div class="chart-title" style="margin-top: 60px;
+                                                text-align: center;
+                                                font-size: 48px;
+                                                font-family: serif">No questions found</div>
+                        <div class="edit-caption-mini"
+                             style="margin-top: 10px;
+                             margin-bottom: 50px;
+                             text-align: center;
+                             font-size: 36px;
+                             font-family: serif;
+                             color: rgba(35, 85, 131, 0.8)">
+                            <b>Right click the map to add a question</b>
+                            <div style="background-repeat: no-repeat;
+                                        margin-top: 25px;
+                                        height:120px;
+                                        opacity: 0.9;
+                                        background-image: url('/static/new_question_arrow.gif')">
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
 			</div>
