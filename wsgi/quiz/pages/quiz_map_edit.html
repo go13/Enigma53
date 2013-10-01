@@ -112,6 +112,9 @@
 			$("#left-menu").hide();
 		}		
 	};
+    {% if (quiz.questions|length)<=0 %}
+        window.showHideQuizMenuItem(false);
+    {% endif %}
 </script>
 
 <script id="jsdata" type="text/javascript">
