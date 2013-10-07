@@ -1,19 +1,92 @@
 {% extends "base.html" %}
 
+{% block style %}
+body{
+    background-color: #F8F8F8;
+}
+{% endblock style %}
+
 {% block content %}
 <style>
 img {
   max-width: none;
 }
+.landing-text-large{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-family: "urbana",sans-serif;
+    font-size: 40px;
+    color: #666;
+    text-align: center;
+}
 </style>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-<div class="map-full-stretch" style="z-index:-5; height:100%">
-
-	<div id="quiz-map" style="height: 100%"></div>
-
+<div style="text-align: center; padding-top: 50px;">
+    <ul type="none" style="margin-left: 0">
+        <li class="landing-text-large" style="line-height: normal;  margin-left: auto; margin-right: auto; width: 800px;">
+            <ul type="none">
+                <li style="color: #000; margin-bottom: 40px;">
+                    mNemoCity is:
+                </li>
+                <li style="margin-top: 20px; text-align: left;">
+                    - todo list
+                </li>
+                <li style="text-align: left; font-size: 18px; color: #aaa;margin-top: 10px;margin-left: 25px;">
+                    (to save all material you want to memorize)
+                </li>
+                <li style="margin-top: 20px; text-align: left;">
+                    - the Cherlock Holmes memory technique
+                </li>
+                <li style="text-align: left; font-size: 18px; color: #aaa;margin-top: 10px;margin-left: 25px;">
+                    (which associates information to remember with a familiar spatial position)
+                </li>
+                <li style="margin-top: 20px; text-align: left;">
+                    - spaced repetition
+                </li>
+                <li style="text-align: left; font-size: 18px; color: #aaa;margin-top: 10px;margin-left: 25px;">
+                    (in development...)
+                </li>
+            </ul>
+        </li>
+        <li class="landing-text-large">
+            1. Find or create a quiz
+        </li>
+        <li class="landing-text-large">
+            <img style="width: 800px; height: 600px" src="/static/edit.jpg"/>
+        </li>
+        <li class="landing-text-large">
+            2. Take the quiz
+        </li>
+        <li class="landing-text-large">
+            <img style="width: 800px; height: 600px" src="/static/quiz.jpg"/>
+        </li>
+        <li class="landing-text-large">
+            3. See your results and track your progress
+        </li>
+        <li class="landing-text-large">
+            <img style="width: 800px; height: 600px" src="/static/result.jpg"/>
+        </li>
+        <li class="landing-text-large">
+            Click any quiz to see how it works...
+        </li>
+        <li class="landing-text-large">
+            <div class="map-full-stretch" style="z-index:-5; height:300px; position: static; text-align: left">
+                <div id="quiz-map" style="height: 100%"></div>
+            </div>
+        </li>
+        <li class="landing-text-large">
+            <button style="width: 200px;
+                    margin-left: auto;
+                    margin-right: auto;"
+                    class="btn btn-large btn-block btn-primary"
+                    onclick="window.location.href='/auth/signup'"
+                    type="button">Sign up (Free!)</button>
+        </li>
+    </ul>
 </div>
+
 {% endblock content %}
 
 {% block bottom %}
