@@ -29,12 +29,11 @@ steal(
                 },
                 ".question-submit-btn click" : function(el){
                     this.model.answered = true;
-                    this.model.correct = 'N';
+                    this.model.correct = 'T';
                     for(var i = 0; i < this.model.answers.length; i++){
-                        if(this.model.answers[i].correct == this.model.answers[i].value){
-                            this.model.correct = 'T';
-                        }else{
+                        if(this.model.answers[i].correct != this.model.answers[i].value){
                             this.model.correct = 'F';
+                            break;
                         }
                     }
                     var r = Quizpage.Quiz.Cpublicquiz.instance.to_next_unanswered_question();
