@@ -28,7 +28,15 @@
 		</li>
 	</ul>
     <div id="quiz-results">
-    
+        {% if result.ncorrect == result.nquestion %}
+        <div id="quiz-result-summary" class="alert alert-success">
+        <b>Success!</b> Correct answers/Number of questions = {{result.ncorrect}}/{{result.nquestion}}
+        </div>
+        {% else %}
+        <div id="quiz-result-summary" class="alert alert-error">
+        <b>Some answers were wrong or missed!</b> Correct answers/Number of questions = {{result.ncorrect}}/{{result.nquestion}}
+        </div>
+        {% endif %}
 	{%for qr in result.question_results %}
          {% if loop.last %}
 

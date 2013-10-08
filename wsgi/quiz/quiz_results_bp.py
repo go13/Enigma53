@@ -19,7 +19,7 @@ def quiz_results(session_id):
         if current_user.id == quiz_result.quiz.user_id:
             jsdata = quiz_result.serialize_for_result
             current_app.logger.debug("jsdata - " + str(jsdata))
-            return render_template('quiz_result.html', result=quiz_result, quiz = quiz_result.quiz, jsdata = jsdata)
+            return render_template('quiz_result.html', result=quiz_result, quiz=quiz_result.quiz, jsdata=jsdata)
         else:
             return render_template('auth_failure.html')
     else:
