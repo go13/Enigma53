@@ -9,7 +9,7 @@ from flask_login import login_required, current_user
 quiz_bp = Blueprint('quiz_bp', __name__, template_folder='pages')
 auth_failure_message = u"You don't have permissions to "
 
-@quiz_bp.route('/<int:quiz_id>/')
+@quiz_bp.route('/<int:quiz_id>/start/')
 def quiz(quiz_id):
     current_app.logger.debug("quiz. quiz_id - " + str(quiz_id))
     
@@ -37,7 +37,7 @@ def quiz(quiz_id):
         current_app.logger.warning("No quiz found")
         return render_template('404.html')
 
-@quiz_bp.route('/<int:quiz_id>/edit/')
+@quiz_bp.route('/<int:quiz_id>/')
 @login_required
 def quiz_map_edit(quiz_id):
     current_app.logger.debug("quiz_edit. quiz_id - " + str(quiz_id))
@@ -223,7 +223,7 @@ def create():
 
     current_app.logger.debug('Quiz created. quiz.id - ' + str(quiz.qid))
 
-    return redirect("/quiz/" + str(quiz.qid) + "/edit/")
+    return redirect("/quiz/" + str(quiz.qid) + "/#edit")
 
 @quiz_bp.route('/<int:quiz_id>/finish/')
 @login_required

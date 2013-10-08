@@ -18,7 +18,7 @@
               <ul class="nav nav-pills">
                   {% if  quiz.questions|length > 0 %}
                     <li class="pull-right show-quiz"><a style="background-color: #08c; color: #fff;" id="finish-public-quiz-btn" href="#finish">Finish Quiz</a></li>
-                    <li style="display: none" class="pull-right show-results"><a id="try-again-public-quiz-btn" style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/">Try again</a></li>
+                    <li style="display: none" class="pull-right show-results"><a id="try-again-public-quiz-btn" style="background-color: #08c; color: #fff;" href="/quiz/{{quiz.qid}}/start/">Try again</a></li>
                   {% endif %}
               </ul>
             </div>

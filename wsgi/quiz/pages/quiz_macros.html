@@ -11,22 +11,22 @@
 	<div id="data-quiz-{{qz.qid}}"
             style="clear: both; cursor: pointer; position: relative;"
             class="quiz-list-item"
-            onclick="window.location.href='/quiz/{{ qz.qid }}/edit/'"
+            onclick="window.location.href='/quiz/{{ qz.qid }}/'"
             {% if qz.latitude and qz.longitude %}
                 data-lat="{{qz.latitude}}"
                 data-lon="{{qz.longitude}}"
             {% endif %}>
-		<a style="float:left; margin-right: 5px;" href="/quiz/{{ qz.qid }}/edit/"></a>
-        <a id="quiz-title-{{ qz.qid }}" class="nolink" href="/quiz/{{ qz.qid }}/edit/">
+		<a style="float:left; margin-right: 5px;" href="/quiz/{{ qz.qid }}/"></a>
+        <a id="quiz-title-{{ qz.qid }}" class="nolink" href="/quiz/{{ qz.qid }}/">
             <b>{{ qz.title }}</b>
         </a>
-        <div style="position: absolute; right: 10px;top: 0px;"><a href="/quiz/{{qz.qid}}/">Start</a></div>
+        <div style="position: absolute; right: 10px;top: 0px;"><a href="/quiz/{{qz.qid}}/start/">Start</a></div>
 
-        <a class="nolink quiz-text" href="/quiz/{{ qz.qid }}/edit/"></a>
+        <a class="nolink quiz-text" href="/quiz/{{ qz.qid }}/"></a>
         {% if qz.permission == 'private' %}
-        <div style="position: absolute; right: 8px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">private</a></div>
+        <div style="position: absolute; right: 8px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/#settings">private</a></div>
         {% else %}
-        <div style="position: absolute; right: 8px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/edit/#settings">public</a></div>
+        <div style="position: absolute; right: 8px; bottom: 2px; font-size: 8pt;"><a class="nolink" href="/quiz/{{qz.qid}}/#settings">public</a></div>
         {% endif %}
     </div>
 

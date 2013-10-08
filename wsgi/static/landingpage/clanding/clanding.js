@@ -39,21 +39,21 @@ steal('jquery/controller').then(function($){
                     Landingpage.Clanding.geocoder.geocode({'latLng':  marker.getPosition()}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                           if (results[1]) {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/start/'><b>" + quiz.title +"</b></a>" +
                                 " by " + quiz.author + " " +
-                                " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>" +
+                                " </br> <a href='/quiz/" + quiz.id + "/start/'>Start</a>" +
                                 " </br>" + results[0].formatted_address
                             );
                           } else {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/start/'><b>" + quiz.title +"</b></a>" +
                                 " by " + quiz.author + " " +
-                                " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>"
+                                " </br> <a href='/quiz/" + quiz.id + "/start/'>Start</a>"
                             );
                           }
                         } else {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/'><b>" + quiz.title +"</b></a>" +
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.id + "/start/'><b>" + quiz.title +"</b></a>" +
                                 " by " + quiz.author + " " +
-                                " </br> <a href='/quiz/" + quiz.id + "/'>Start</a>"
+                                " </br> <a href='/quiz/" + quiz.id + "/start/'>Start</a>"
                             );
                         }
                     });
@@ -149,10 +149,10 @@ steal('jquery/controller').then(function($){
 				    	}
 				    	//  Fit these bounds to the map
 				    	self.questionMap.fitBounds(bounds);
-				    	/*var curzoom = self.questionMap.getZoom();
+				    	var curzoom = self.questionMap.getZoom();
 				    	if(curzoom > 0){
 				    		self.questionMap.setZoom(curzoom - 1);
-				    	}*/
+				    	}
                         self.offsetCenter(bounds.getCenter().lat(), bounds.getCenter().lng(), 0, - 0.15 * $(window).height());
 	    			}else{
 	    				self.questionMap.setCenter(self.markers[0].position);

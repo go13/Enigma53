@@ -41,21 +41,21 @@ steal('jquery/controller').then(function($){
                     Quizpage.Quizmap.Cmaplist.geocoder.geocode({'latLng':  marker.getPosition()}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                           if (results[1]) {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>" +
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/#edit'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/#edit'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/start/'>Start</a>" +
                                 " </br>" + results[0].formatted_address
                             );
                           } else {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>"
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/#edit'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/#edit'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/start/'>Start</a>"
                             );
                           }
                         } else {
-                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/edit/'><b>" + quiz.quiz.quiz.title +"</b></a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/edit/'>Edit</a>" +
-                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/'>Start</a>"
+                            iw.setContent("<a class='nolink' href='/quiz/" + quiz.quiz.quiz.id + "/#edit'><b>" + quiz.quiz.quiz.title +"</b></a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/#edit'>Edit</a>" +
+                                " </br> <a href='/quiz/" + quiz.quiz.quiz.id + "/start/'>Start</a>"
                             );
                         }
                     });
