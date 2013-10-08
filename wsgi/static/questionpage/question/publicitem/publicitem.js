@@ -31,7 +31,7 @@ steal(
                     this.model.answered = true;
                     this.model.correct = 'N';
                     for(var i = 0; i < this.model.answers.length; i++){
-                        if(this.model.answers[i].correct === this.model.answers[i].value){
+                        if(this.model.answers[i].correct == this.model.answers[i].value){
                             this.model.correct = 'T';
                         }else{
                             this.model.correct = 'F';

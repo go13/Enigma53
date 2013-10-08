@@ -106,7 +106,7 @@ steal('jquery/controller',
                     var question_result = Resultpage.Question.Cquestionresult
                                                 .add_question_result(this.model.questions[i]);
                     all_results = all_results.add(question_result.element);
-                    if(this.model.questions[i].correct=='T'){
+                    if(this.model.questions[i].correct == 'T'){
                         correct_num++;
                     }
                 }
