@@ -90,6 +90,7 @@ steal('jquery/controller',
                 this.element.find(".show-quiz").hide();
                 this.element.find(".show-results").show();
 
+                var correct_num = 0;
                 var all_results = $("");
                 for(var i = 0; i < this.model.questions.length; i++){
                     if(i < this.model.questions.length - 1){
@@ -105,8 +106,18 @@ steal('jquery/controller',
                     var question_result = Resultpage.Question.Cquestionresult
                                                 .add_question_result(this.model.questions[i]);
                     all_results = all_results.add(question_result.element);
+                    if(this.model.questions[i].correct=='T'){
+                        correct_num++;
+                    }
                 }
                 this.element.find("#question-results").append(all_results);
+                if(correct_num === this.model.questions.length){
+                    this.element.find("#quiz-result-summary-correct").html("<b>Success!</b> Correct answers/Number of questions = " + correct_num + "/" + this.model.questions.length);
+                    this.element.find("#quiz-result-summary-correct").show();
+                }else{
+                    this.element.find("#quiz-result-summary-wrong").html("<b>Some answers were wrong or missed!</b> Correct answers/Number of questions = " + correct_num + "/" + this.model.questions.length);
+                    this.element.find("#quiz-result-summary-wrong").show();
+                }
 
                 $("#content-on-map").scroll(function() {
                     Resultpage.Question.Cquestionresult.instance.onScroll();

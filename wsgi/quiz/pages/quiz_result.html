@@ -37,7 +37,9 @@
         <b>Some answers were wrong or missed!</b> Correct answers/Number of questions = {{result.ncorrect}}/{{result.nquestion}}
         </div>
         {% endif %}
+
 	{%for qr in result.question_results %}
+
          {% if loop.last %}
 
             {{ render_question_result(qr, None) }}
