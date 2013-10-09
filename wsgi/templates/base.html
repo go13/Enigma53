@@ -63,7 +63,7 @@
 						{% if current_user.is_authenticated() %}
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, {{ current_user.name }} <b class="caret"></b></a>
 	                        <ul class="dropdown-menu">
-                                <li><a href="{{ url_for('user_bp.profile') }}"><i class="icon-cog"></i> Profile</a></li>
+                                <li><a href="{{ url_for('user_bp.settings') }}"><i class="icon-cog"></i> User settings</a></li>
                                 <li><a href="#" onclick="startTour('{{ url_for('quiz_bp.quiz_list') }}')"><i class="icon-question-sign"></i> Site tour</a></li>
 	                            <li class="divider"></li>
 	                            <li><a href="{{ url_for('auth_bp.logout') }}"><i class="icon-off"></i> Logout</a></li>

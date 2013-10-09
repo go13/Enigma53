@@ -9,9 +9,9 @@ from modules.jsonschema import Draft4Validator
 
 user_bp = Blueprint('user_bp', __name__, template_folder = 'pages')
 
-@user_bp.route('/profile/', methods = ["GET", "POST"])
+@user_bp.route('/settings/', methods = ["GET", "POST"])
 @login_required
-def profile():
+def settings():
     current_app.logger.debug(request.method + " User profile. user_id - " + str(current_user.id))
         
     if request.method == "POST":
@@ -28,8 +28,8 @@ def profile():
 
                 User.update_user(current_user)
 
-                current_app.logger.debug("Updated user profile. user_id -" + str(current_user.id))
-                flash("Your profile was successfully updated", "info")
+                current_app.logger.debug("Updated user settings. user_id -" + str(current_user.id))
+                flash("Your user settings were successfully updated", "info")
         else:
             for field, err in form.errors.items():
                 for error in err:                    
