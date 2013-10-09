@@ -36,7 +36,7 @@ steal('jquery/controller', 'jquery/view/ejs').then(function($){
             if(data){
 
                 var margin = {top: 3, right: 2, bottom: 3, left: 2},
-                    width = 128 - margin.left - margin.right,
+                    width = 110 - margin.left - margin.right,
                     height = 64 - margin.top - margin.bottom;
 
                 var parseDate = d3.time.format("%d-%b-%y %H:%M:%S").parse;
